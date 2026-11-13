@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#FFF9F4"/>
+  <!-- Plate -->
+  <ellipse cx="150" cy="160" rx="110" ry="45" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/>
+  <ellipse cx="150" cy="158" rx="95" ry="36" fill="#FFFFFF"/>
+  <!-- Crispy glazed wings -->
+  <path d="M90 150 Q110 120 145 135 Q135 155 105 160 Z" fill="#B7410E"/>
+  <path d="M130 140 Q160 115 195 130 Q185 155 145 155 Z" fill="#962D00"/>
+  <path d="M115 155 Q145 135 175 150 Q165 170 125 168 Z" fill="#C85215"/>
+  <!-- Green garnish -->
+  <circle cx="135" cy="142" r="3" fill="#40C4AA"/><circle cx="160" cy="138" r="3" fill="#40C4AA"/>
+</svg>

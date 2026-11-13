@@ -1,0 +1,1112 @@
+{
+  "categories": [
+    {
+      "id": "cat_all",
+      "name": "All Items",
+      "slug": "all"
+    },
+    {
+      "id": "cat_qashtuta",
+      "name": "Qashtuta (Tres Leches)",
+      "slug": "qashtuta"
+    },
+    {
+      "id": "cat_umm_ali",
+      "name": "Umm Ali (Warm)",
+      "slug": "umm_ali"
+    },
+    {
+      "id": "cat_koushiri",
+      "name": "Koushiri & Ambalyh",
+      "slug": "koushiri"
+    },
+    {
+      "id": "cat_bambooza",
+      "name": "Bambooza & Halibo",
+      "slug": "bambooza"
+    },
+    {
+      "id": "cat_loua",
+      "name": "Lou'a Bites",
+      "slug": "loua"
+    },
+    {
+      "id": "cat_signatures",
+      "name": "Signatures & Cakes",
+      "slug": "signatures"
+    },
+    {
+      "id": "cat_beverages",
+      "name": "Aseerathul & Drinks",
+      "slug": "beverages"
+    },
+    {
+      "id": "cat_combos",
+      "name": "Combos & Dips",
+      "slug": "combos"
+    }
+  ],
+  "addOnGroups": [
+    {
+      "id": "grp_sauces",
+      "name": "Extra Sauces & Drizzles",
+      "minSelect": 0,
+      "maxSelect": 3,
+      "items": [
+        {
+          "id": "top_pistachio",
+          "name": "Extra Pistachio Drizzle",
+          "price": 60,
+          "image": "/assets/products/sign_laban/Pistachio.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_lotus",
+          "name": "Extra Lotus Biscoff Sauce",
+          "price": 50,
+          "image": "/assets/products/sign_laban/Lotus.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_nutella",
+          "name": "Extra Warm Nutella",
+          "price": 50,
+          "image": "/assets/products/sign_laban/Nutella.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_belgian_choc",
+          "name": "Belgian Chocolate Sauce",
+          "price": 50,
+          "image": "/assets/products/sign_laban/Chocolate.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_kinder",
+          "name": "White Kinder Hazelnut Cream",
+          "price": 60,
+          "image": "/assets/products/sign_laban/PistachioKinderChocolate.png",
+          "isDefault": false
+        }
+      ]
+    },
+    {
+      "id": "grp_toppings",
+      "name": "Crunch & Add-ons",
+      "minSelect": 0,
+      "maxSelect": 2,
+      "items": [
+        {
+          "id": "top_kunafa_crunch",
+          "name": "Toasted Golden Kunafa",
+          "price": 40,
+          "image": "/assets/products/sign_laban/SAANKORITA.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_hazelnuts",
+          "name": "Roasted Hazelnuts & Praline",
+          "price": 45,
+          "image": "/assets/products/sign_laban/Nutellahazelnut.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_oreo",
+          "name": "Crushed Oreo Crumble",
+          "price": 35,
+          "image": "/assets/products/sign_laban/Oreo.png",
+          "isDefault": false
+        },
+        {
+          "id": "top_mango_cubes",
+          "name": "Fresh Alphonso Mango Cubes",
+          "price": 50,
+          "image": "/assets/products/sign_laban/Mango.png",
+          "isDefault": false
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_qashtuta_pistachio",
+      "name": "Qashtuta Pistachio",
+      "categoryId": "cat_qashtuta",
+      "price": 320,
+      "image": "/assets/products/sign_laban/QashtutaPistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Tres Leches Egyptian milk sponge cake soaked in pistachio milk, layered with fresh cream and rich Iranian pistachio paste.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_qashtuta_lotus",
+      "name": "Qashtuta Lotus",
+      "categoryId": "cat_qashtuta",
+      "price": 280,
+      "image": "/assets/products/sign_laban/QashtutaLotus.png",
+      "isPopular": true,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Soft milk sponge soaked in Biscoff infused milk, whipped cream, and crowned with caramelized Lotus cookie crumble.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_qashtuta_mango",
+      "name": "Qashtuta Mango",
+      "categoryId": "cat_qashtuta",
+      "price": 260,
+      "image": "/assets/products/sign_laban/QashtutaMango.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Tres Leches milk cake layered with fresh Alphonso mango pulp and succulent sweet mango cubes.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_qashtuta_nutella_hazelnut",
+      "name": "Qashtuta Nutella Hazelnut",
+      "categoryId": "cat_qashtuta",
+      "price": 290,
+      "image": "/assets/products/sign_laban/QashtutaNutellahazelnut.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Egyptian milk sponge drenched in chocolate milk, smothered with Nutella fudge and roasted crunchy hazelnuts.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_umm_ali_pistachio",
+      "name": "Umm Ali Pistachio",
+      "categoryId": "cat_umm_ali",
+      "price": 290,
+      "image": "/assets/products/sign_laban/UmmAliPistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Traditional warm Egyptian puff pastry pudding baked with hot vanilla milk, sweet Ashta cream, and roasted Iranian pistachios.",
+      "station": "Grill",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_umm_ali_lotus",
+      "name": "Umm Ali Lotus",
+      "categoryId": "cat_umm_ali",
+      "price": 270,
+      "image": "/assets/products/sign_laban/UmmAliLotus.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Warm flaky pastry pudding bathed in caramelized Lotus milk, topped with warm Biscoff spread and golden crumbs.",
+      "station": "Grill",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_umm_ali_nutella",
+      "name": "Umm Ali Nutella",
+      "categoryId": "cat_umm_ali",
+      "price": 270,
+      "image": "/assets/products/sign_laban/UmmAliNutella.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Warm Egyptian milk pudding covered with melted silky Nutella and toasted almond flakes.",
+      "station": "Grill",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_umm_ali_pistachio_nutella",
+      "name": "Umm Ali Pistachio Nutella",
+      "categoryId": "cat_umm_ali",
+      "price": 320,
+      "image": "/assets/products/sign_laban/UmmAliPistachioNutella.png",
+      "isPopular": true,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "The ultimate duo: half warm pistachio cream, half melted Nutella over baked Egyptian puff pudding.",
+      "station": "Grill",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_umm_ali_pistachio_lotus",
+      "name": "Umm Ali Pistachio Lotus",
+      "categoryId": "cat_umm_ali",
+      "price": 320,
+      "image": "/assets/products/sign_laban/UmmAliPistachioLotus.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Signature half-and-half bowl: rich warm pistachio praline and Belgian Lotus Biscoff glaze.",
+      "station": "Grill",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_koushiri_pistachio",
+      "name": "Koushiri Sweet Pistachio",
+      "categoryId": "cat_koushiri",
+      "price": 310,
+      "image": "/assets/products/sign_laban/KoushiriPistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Sweet dessert rendition of Egypt national dish: toasted crunchy kunafa noodles, velvety rice pudding cream, toasted nuts, and pistachio drizzle.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_koushiri_lotus",
+      "name": "Koushiri Sweet Lotus",
+      "categoryId": "cat_koushiri",
+      "price": 280,
+      "image": "/assets/products/sign_laban/KoushiriLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Crisp toasted kunafa threads layered with sweetened clotted milk cream and warm Lotus Biscoff caramel.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_ambalyh_mango",
+      "name": "Ambalyh Mango",
+      "categoryId": "cat_koushiri",
+      "price": 260,
+      "image": "/assets/products/sign_laban/AmbalyhMango.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Layered Egyptian custard pudding with sweet crushed biscuit base, thick Ashta, and sweet Alphonso mango cubes.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_ambalyh_lotus",
+      "name": "Ambalyh Lotus",
+      "categoryId": "cat_koushiri",
+      "price": 270,
+      "image": "/assets/products/sign_laban/AmbalyhLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Classic Egyptian dessert bowl with layers of milk cream custard, Lotus biscuit butter, and cinnamon aroma.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_bambooza_pistachio",
+      "name": "Bambooza Pistachio",
+      "categoryId": "cat_bambooza",
+      "price": 330,
+      "image": "/assets/products/sign_laban/BamboozaPistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Viral Egyptian Bambooza dessert bowl with soft milk cake base, crunchy toasted kunafa nest, and double pistachio cream.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_bambooza_lotus",
+      "name": "Bambooza Lotus",
+      "categoryId": "cat_bambooza",
+      "price": 290,
+      "image": "/assets/products/sign_laban/BamboozaLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Bambooza bowl layered with sweet soaked sponge, Biscoff cookie crunch, and velvety caramel glaze.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_bambooza_nutella",
+      "name": "Bambooza Nutella",
+      "categoryId": "cat_bambooza",
+      "price": 290,
+      "image": "/assets/products/sign_laban/BamboozaNutella.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Luscious Bambooza bowl drenched in rich Nutella hazelnut sauce and crunchy wafer crisps.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_bambooza_mango",
+      "name": "Bambooza Mango",
+      "categoryId": "cat_bambooza",
+      "price": 270,
+      "image": "/assets/products/sign_laban/BamboozaMango.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Tropical Bambooza bowl layered with chilled milk sponge, sweet mango cream, and fresh diced mango.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_halibo_pistachio",
+      "name": "Halibo Pistachio",
+      "categoryId": "cat_bambooza",
+      "price": 310,
+      "image": "/assets/products/sign_laban/HaliboPistachio.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Fluffy whipped milk mousse cup infused with real pistachio cream and crushed roasted nuts.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_halibo_nutella",
+      "name": "Halibo Nutella",
+      "categoryId": "cat_bambooza",
+      "price": 280,
+      "image": "/assets/products/sign_laban/HaliboNutella.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Chilled chocolate milk mousse cup with Nutella chocolate ribbons and biscuit crumble.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_halibo_lotus",
+      "name": "Halibo Lotus",
+      "categoryId": "cat_bambooza",
+      "price": 280,
+      "image": "/assets/products/sign_laban/HaliboLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Creamy whipped Ashta milk mousse layered with Lotus Biscoff butter and cookie crumbs.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_loua_pistachio",
+      "name": "Lou'a Pistachio Bites",
+      "categoryId": "cat_loua",
+      "price": 260,
+      "image": "/assets/products/sign_laban/LouaPistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Crispy golden fried sweet pastry bites smothered in warm silky pistachio cream.",
+      "station": "Fry",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_loua_nutella",
+      "name": "Lou'a Nutella Bites",
+      "categoryId": "cat_loua",
+      "price": 240,
+      "image": "/assets/products/sign_laban/LouaNutella.png",
+      "isPopular": true,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Crunchy Egyptian pastry bite cups drenched in melted Nutella fudge.",
+      "station": "Fry",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_loua_lotus",
+      "name": "Lou'a Lotus Bites",
+      "categoryId": "cat_loua",
+      "price": 240,
+      "image": "/assets/products/sign_laban/LouaLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Crispy golden bite cups generously coated in warm caramelized Lotus Biscoff glaze.",
+      "station": "Fry",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_loua_kinder",
+      "name": "Lou'a Kinder Cream Bites",
+      "categoryId": "cat_loua",
+      "price": 270,
+      "image": "/assets/products/sign_laban/LouaKinder.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Warm crispy pastry cups topped with melted white hazelnut Kinder cream and milk chocolate streaks.",
+      "station": "Fry",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_loua_nutella_pistachio",
+      "name": "Lou'a Nutella & Pistachio Duo",
+      "categoryId": "cat_loua",
+      "price": 290,
+      "image": "/assets/products/sign_laban/LouaNutellaPistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Half Nutella, half Pistachio sauce over warm, freshly fried crunchy pastry cups.",
+      "station": "Fry",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_loua_pistachio_lotus",
+      "name": "Lou'a Pistachio & Lotus Duo",
+      "categoryId": "cat_loua",
+      "price": 290,
+      "image": "/assets/products/sign_laban/LouaPistachioLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Duo of warm pistachio cream and Lotus Biscoff sauce poured over crispy sweet pastry cups.",
+      "station": "Fry",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_saankorita",
+      "name": "Saankorita Dessert Tower",
+      "categoryId": "cat_signatures",
+      "price": 360,
+      "image": "/assets/products/sign_laban/SAANKORITA.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "The viral Egyptian dessert sensation: multi-layered crunchy kunafa tower, fresh Ashta cream, Lotus crumble, and pistachio sauce.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_bomb",
+      "name": "The Egyptian Bomb",
+      "categoryId": "cat_signatures",
+      "price": 380,
+      "image": "/assets/products/sign_laban/bomb.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Signature crisp chocolate kunafa sphere filled with molten clotted cream, pistachio paste, and warm Nutella lava.",
+      "station": "Grill",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_deparis",
+      "name": "De Paris Mascarpone Kunafa",
+      "categoryId": "cat_signatures",
+      "price": 340,
+      "image": "/assets/products/sign_laban/deparis.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "French-Egyptian fusion pastry layered with whipped mascarpone cream, dark Belgian chocolate, and crispy pastry flakes.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_elsabika",
+      "name": "Elsabika Gold Ingot",
+      "categoryId": "cat_signatures",
+      "price": 350,
+      "image": "/assets/products/sign_laban/Elsabika.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Golden ingot dessert cake layered with sweet clotted Ashta cream, honey syrup, and roasted pistachios.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_almazeya",
+      "name": "Almazeya Rose Milk Cup",
+      "categoryId": "cat_signatures",
+      "price": 320,
+      "image": "/assets/products/sign_laban/almazeya.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Egyptian diamond dessert cup infused with natural rosewater milk, sweet cream, and crushed Iranian pistachios.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_kashkha",
+      "name": "Kashkha Royal Ashta",
+      "categoryId": "cat_signatures",
+      "price": 350,
+      "image": "/assets/products/sign_laban/KASHKHA.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Royal Egyptian dessert with rich fresh Ashta cream, toasted kunafa threads, and edible silver leaf garnishing.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_fazea",
+      "name": "Fazea Chocolate Pot",
+      "categoryId": "cat_signatures",
+      "price": 330,
+      "image": "/assets/products/sign_laban/fazea.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Decadent dark chocolate and crunchy kunafa pot with molten chocolate center and crushed biscuit base.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_fezea_pistachio_cake",
+      "name": "Fazea Pistachio Sponge Cake",
+      "categoryId": "cat_signatures",
+      "price": 360,
+      "image": "/assets/products/sign_laban/fezea-pistachio-cake.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Moist layered pistachio sponge cake smothered in rich pistachio ganache and toasted chopped pistachios.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_hazeel_nut_bar",
+      "name": "Hazelnut Praline Kunafa Bar",
+      "categoryId": "cat_signatures",
+      "price": 280,
+      "image": "/assets/products/sign_laban/hazeel-nut-bar.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Crunchy wafer and kunafa bar filled with roasted hazelnut praline, dipped in Belgian milk chocolate.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_london_love_story",
+      "name": "London Love Story Kunafa",
+      "categoryId": "cat_signatures",
+      "price": 350,
+      "image": "/assets/products/sign_laban/london-love-story.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Romantic dessert bowl with sweet fresh strawberries, clotted whipped cream, and Belgian milk chocolate kunafa.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_qishta",
+      "name": "Qishta Clotted Cream Bowl",
+      "categoryId": "cat_signatures",
+      "price": 260,
+      "image": "/assets/products/sign_laban/QISHTA.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Authentic traditional Egyptian clotted buffalo cream bowl served with pure mountain honey and raw almonds.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_kabsa",
+      "name": "Kab'sa Sweet Kunafa Bowl",
+      "categoryId": "cat_signatures",
+      "price": 340,
+      "image": "/assets/products/sign_laban/kabsa.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Playful dessert resembling golden saffron rice crafted with sweet toasted kunafa, saffron cream, and pistachios.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_rohhayati",
+      "name": "Roh Hayati Almond Milk Cup",
+      "categoryId": "cat_signatures",
+      "price": 330,
+      "image": "/assets/products/sign_laban/rohhayati.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Heart of Life Egyptian milk dessert perfumed with green cardamom, sweet cream, and slivered blanched almonds.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_aseerathul_pistachio",
+      "name": "Aseerathul Pistachio Shake",
+      "categoryId": "cat_beverages",
+      "price": 240,
+      "image": "/assets/products/sign_laban/Aseerathulpistachio.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Thick Egyptian chilled bottled shake blended with pure Iranian pistachio paste, cold milk, and crushed pistachios.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_aseerathul_nutella",
+      "name": "Aseerathul Nutella Shake",
+      "categoryId": "cat_beverages",
+      "price": 220,
+      "image": "/assets/products/sign_laban/AseerathulNutella.png",
+      "isPopular": true,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Rich and creamy chilled bottled shake with authentic Nutella and chocolate cream.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_aseerathul_lotus",
+      "name": "Aseerathul Lotus Shake",
+      "categoryId": "cat_beverages",
+      "price": 220,
+      "image": "/assets/products/sign_laban/Aseerathullotus.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Signature spiced Biscoff cookie shake blended with clotted cream and cold full-cream milk.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_mango_shake",
+      "name": "Pure Alphonso Mango Shake",
+      "categoryId": "cat_beverages",
+      "price": 180,
+      "image": "/assets/products/sign_laban/Mango.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "100% pure Alphonso mango pulp blended with chilled whole milk and sweet syrup.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_mango_strawberry",
+      "name": "Mango Strawberry Nectar",
+      "categoryId": "cat_beverages",
+      "price": 200,
+      "image": "/assets/products/sign_laban/MangoStrawberry.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Refreshing duo of golden Alphonso mango and fresh mountain strawberry nectar.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_mango_banana",
+      "name": "Mango Banana Smoothie",
+      "categoryId": "cat_beverages",
+      "price": 190,
+      "image": "/assets/products/sign_laban/MangoBanana.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Creamy tropical blend of sweet mango and ripe banana with honey.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_banana_strawberry",
+      "name": "Banana Strawberry Shake",
+      "categoryId": "cat_beverages",
+      "price": 190,
+      "image": "/assets/products/sign_laban/BananaStrawberry.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Classic combination of farm strawberries and fresh bananas with chilled cream.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_anar_coconut",
+      "name": "Anar Tender Coconut Nectar",
+      "categoryId": "cat_beverages",
+      "price": 210,
+      "image": "/assets/products/sign_laban/AnarTenderCoconut.png",
+      "isPopular": false,
+      "isHighlyRated": true,
+      "discountPercent": 0,
+      "description": "Fresh ruby pomegranate pearls infused in sweet coastal tender coconut water and malai.",
+      "station": "Cold",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_combo_nutella_bomb",
+      "name": "Aseerathul Nutella + Bomb Combo",
+      "categoryId": "cat_combos",
+      "price": 499,
+      "image": "/assets/products/sign_laban/img1.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 15,
+      "description": "Power combo: 1x Chilled Bottled Aseerathul Nutella Shake + 1x Signature Egyptian Chocolate Bomb.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_combo_lotus_loua",
+      "name": "Aseerathul Lotus + Lou'a Cup Combo",
+      "categoryId": "cat_combos",
+      "price": 449,
+      "image": "/assets/products/sign_laban/img2.png",
+      "isPopular": true,
+      "isHighlyRated": false,
+      "discountPercent": 10,
+      "description": "Signature combo: 1x Bottled Aseerathul Lotus Shake + 1x Lou'a Crispy Pastry Bites Bowl.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_combo_pistachio_kabsa",
+      "name": "Aseerathul Pistachio + Kab'sa Combo",
+      "categoryId": "cat_combos",
+      "price": 520,
+      "image": "/assets/products/sign_laban/img3.png",
+      "isPopular": true,
+      "isHighlyRated": true,
+      "discountPercent": 12,
+      "description": "The Royal Green combo: 1x Bottled Aseerathul Pistachio Shake + 1x Sweet Kab'sa Kunafa Bowl.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": [
+        "grp_sauces",
+        "grp_toppings"
+      ]
+    },
+    {
+      "id": "prod_dip_pistachio",
+      "name": "Pure Pistachio Spread Dip Jar",
+      "categoryId": "cat_combos",
+      "price": 75,
+      "image": "/assets/products/sign_laban/Pistachio.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Extra takeaway jar of 100% natural Iranian pistachio spread.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_lotus",
+      "name": "Lotus Biscoff Sauce Jar",
+      "categoryId": "cat_combos",
+      "price": 60,
+      "image": "/assets/products/sign_laban/Lotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Extra takeaway jar of warm caramelized Lotus Biscoff spread.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_nutella",
+      "name": "Warm Nutella Fudge Jar",
+      "categoryId": "cat_combos",
+      "price": 60,
+      "image": "/assets/products/sign_laban/Nutella.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Extra takeaway jar of velvety warm Nutella chocolate.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_belgian_choc",
+      "name": "Belgian Dark Chocolate Dip",
+      "categoryId": "cat_combos",
+      "price": 60,
+      "image": "/assets/products/sign_laban/Chocolate.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Rich melted Belgian chocolate sauce cup.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_nutella_lotus",
+      "name": "Nutella & Lotus Duo Dip",
+      "categoryId": "cat_combos",
+      "price": 70,
+      "image": "/assets/products/sign_laban/NutellaLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Split twin dip cup with Nutella and Lotus Biscoff sauces.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_nutella_pistachio",
+      "name": "Nutella & Pistachio Duo Dip",
+      "categoryId": "cat_combos",
+      "price": 75,
+      "image": "/assets/products/sign_laban/NutellaPistachio.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Split twin dip cup with melted Nutella and Iranian pistachio cream.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_nutella_hazelnut",
+      "name": "Nutella Hazelnut Crunch Dip",
+      "categoryId": "cat_combos",
+      "price": 75,
+      "image": "/assets/products/sign_laban/Nutellahazelnut.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Nutella sauce cup mixed with crushed roasted hazelnuts.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_pistachio_lotus",
+      "name": "Pistachio & Lotus Duo Dip",
+      "categoryId": "cat_combos",
+      "price": 75,
+      "image": "/assets/products/sign_laban/PistachioLotus.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Split twin dip cup with pistachio cream and Lotus Biscoff spread.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_pistachio_kinder",
+      "name": "Pistachio Kinder White Dip",
+      "categoryId": "cat_combos",
+      "price": 80,
+      "image": "/assets/products/sign_laban/PistachioKinderChocolate.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Warm pistachio sauce blended with melted white Kinder cream.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_pistachio_belgian",
+      "name": "Pistachio Belgian Chocolate Dip",
+      "categoryId": "cat_combos",
+      "price": 80,
+      "image": "/assets/products/sign_laban/PistachiobelgiumChocolate.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Pure pistachio cream swirled with Belgian chocolate.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    },
+    {
+      "id": "prod_dip_oreo",
+      "name": "Crushed Oreo Cookie Cup",
+      "categoryId": "cat_combos",
+      "price": 45,
+      "image": "/assets/products/sign_laban/Oreo.png",
+      "isPopular": false,
+      "isHighlyRated": false,
+      "discountPercent": 0,
+      "description": "Crunchy crushed Oreo cookies for topping over desserts.",
+      "station": "Expo",
+      "isAvailable": true,
+      "addOnGroupIds": []
+    }
+  ]
+}

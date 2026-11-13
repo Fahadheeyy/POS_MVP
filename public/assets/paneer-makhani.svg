@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#FFF8F0"/>
+  <ellipse cx="150" cy="82" rx="92" ry="42" fill="#D9822B"/>
+  <!-- Makhani gravy glaze -->
+  <path d="M65 118 Q150 130 235 118 Q230 132 150 135 Q70 132 65 118 Z" fill="#D84A1B"/>
+  <!-- Spiced Paneer Slab -->
+  <rect x="60" y="125" width="180" height="30" rx="8" fill="#FFFEEB" stroke="#E08734" stroke-width="4"/>
+  <!-- Spices on Paneer -->
+  <circle cx="90" cy="140" r="3" fill="#993311"/><circle cx="150" cy="138" r="3" fill="#337722"/><circle cx="200" cy="142" r="3" fill="#993311"/>
+  <!-- Onion rings -->
+  <ellipse cx="150" cy="162" rx="80" ry="10" fill="none" stroke="#C06C84" stroke-width="6"/>
+  <ellipse cx="150" cy="180" rx="86" ry="22" fill="#D9822B"/>
+</svg>

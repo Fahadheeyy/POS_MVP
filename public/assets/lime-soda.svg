@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#F7FDF9"/>
+  <path d="M110 70 L125 195 Q150 205 175 195 L190 70 Z" fill="#E8F8F0" opacity="0.9"/>
+  <!-- Lime wedge -->
+  <circle cx="185" cy="70" r="20" fill="#A4E538"/>
+  <circle cx="185" cy="70" r="16" fill="#D2F57C"/>
+  <!-- Mint leaves -->
+  <ellipse cx="135" cy="85" rx="14" ry="7" fill="#38A169" transform="rotate(-20 135 85)"/>
+  <!-- Bubbles -->
+  <circle cx="145" cy="140" r="4" fill="#FFFFFF" opacity="0.8"/><circle cx="155" cy="115" r="3" fill="#FFFFFF" opacity="0.8"/><circle cx="138" cy="165" r="4" fill="#FFFFFF" opacity="0.8"/>
+</svg>

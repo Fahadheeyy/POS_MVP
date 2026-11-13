@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#FFFDF5"/>
+  <!-- French Fry Box / Holder -->
+  <path d="M80 110 L95 210 L205 210 L220 110 Z" fill="#ff4750"/>
+  <path d="M80 110 Q150 130 220 110" stroke="#e84149" stroke-width="3" fill="none"/>
+  <!-- Crinkle Fries -->
+  <rect x="110" y="50" width="16" height="90" rx="4" fill="#F9C74F" transform="rotate(-12 110 50)"/>
+  <rect x="135" y="40" width="16" height="100" rx="4" fill="#F8961E" transform="rotate(-4 135 40)"/>
+  <rect x="160" y="45" width="16" height="95" rx="4" fill="#F9C74F" transform="rotate(10 160 45)"/>
+  <rect x="180" y="60" width="16" height="85" rx="4" fill="#F3722C" transform="rotate(18 180 60)"/>
+  <!-- Masala sprinkle -->
+  <circle cx="130" cy="70" r="2" fill="#B53239"/><circle cx="155" cy="65" r="2" fill="#B53239"/><circle cx="170" cy="80" r="2" fill="#B53239"/>
+</svg>

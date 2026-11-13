@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#f1f5f9" rx="24"/>
+  <circle cx="200" cy="180" r="90" fill="#e2e8f0"/>
+  <!-- Dessert bowl silhouette -->
+  <path d="M130 180 C130 230, 270 230, 270 180 Z" fill="#94a3b8"/>
+  <!-- Dessert cake/pudding top -->
+  <path d="M140 180 C140 145, 260 145, 260 180 Z" fill="#64748b"/>
+  <!-- Drizzle / garnish -->
+  <path d="M170 150 Q185 140 200 150 T230 150" stroke="#cbd5e1" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Foot of bowl -->
+  <path d="M185 228 L175 250 L225 250 L215 228 Z" fill="#64748b"/>
+  <!-- Subtle plate ring -->
+  <ellipse cx="200" cy="254" rx="80" ry="12" fill="#cbd5e1"/>
+  <!-- Label -->
+  <text x="200" y="310" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="14" font-weight="600" fill="#64748b" letter-spacing="0.5">SIGN LABAN DESSERT</text>
+</svg>
+

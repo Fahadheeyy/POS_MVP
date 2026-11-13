@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#FFF9F5"/>
+  <!-- Glass dessert cup -->
+  <path d="M105 90 Q150 120 195 90 L180 170 Q150 185 120 170 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+  <!-- Vanilla ice cream scoop -->
+  <circle cx="150" cy="85" r="35" fill="#FFFDE8"/>
+  <!-- Gulab Jamun balls -->
+  <circle cx="135" cy="105" r="20" fill="#5A2308"/>
+  <circle cx="168" cy="110" r="18" fill="#4A1A04"/>
+  <!-- Saffron & Pistachio garnish -->
+  <circle cx="145" cy="78" r="3" fill="#228B22"/><circle cx="155" cy="74" r="2" fill="#E89801"/>
+</svg>

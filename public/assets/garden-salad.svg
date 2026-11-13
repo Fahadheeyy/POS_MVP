@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#F4FAF6"/>
+  <!-- Bowl -->
+  <ellipse cx="150" cy="160" rx="90" ry="35" fill="#E2E8F0"/>
+  <path d="M60 145 Q150 215 240 145 Q240 135 150 135 Q60 135 60 145 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <!-- Fresh Greens -->
+  <ellipse cx="150" cy="130" rx="75" ry="30" fill="#58B35A"/>
+  <circle cx="120" cy="125" r="16" fill="#68C36A"/>
+  <circle cx="170" cy="122" r="18" fill="#48A34A"/>
+  <circle cx="145" cy="115" r="14" fill="#58B35A"/>
+  <!-- Cherry Tomatoes -->
+  <circle cx="130" cy="135" r="10" fill="#E63946"/><circle cx="180" cy="130" r="10" fill="#E63946"/>
+  <!-- Corn / Cucumber -->
+  <circle cx="155" cy="138" r="6" fill="#FFC201"/><circle cx="105" cy="130" r="8" fill="#A7E4D8"/>
+</svg>

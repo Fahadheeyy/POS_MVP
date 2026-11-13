@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#F8FAFC"/>
+  <!-- Can Body -->
+  <rect x="115" y="60" width="70" height="125" rx="12" fill="#0F172A"/>
+  <ellipse cx="150" cy="60" rx="35" ry="10" fill="#94A3B8"/>
+  <ellipse cx="150" cy="185" rx="35" ry="8" fill="#0F172A" stroke="#94A3B8" stroke-width="2"/>
+  <rect x="120" y="105" width="60" height="28" fill="#FF4750"/>
+  <text x="150" y="124" fill="#FFFFFF" font-size="14" font-weight="bold" text-anchor="middle" font-family="sans-serif">ZERO</text>
+</svg>

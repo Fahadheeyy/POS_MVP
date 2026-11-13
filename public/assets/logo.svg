@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 368 108" fill="none">
+  <!-- Pebble Icon with letter p -->
+  <g transform="translate(14, 14)">
+    <!-- Asymmetric organic rounded pebble shape -->
+    <path d="M 40 0 C 65 0, 80 16, 80 40 C 80 64, 62 80, 36 80 C 14 80, 0 68, 0 42 C 0 18, 16 0, 40 0 Z" fill="#ff4750"/>
+    <!-- Lowercase bold 'p' in white -->
+    <text x="40" y="55" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="46" font-weight="800" fill="#ffffff" text-anchor="middle" dominant-baseline="central">p</text>
+  </g>
+  <!-- Text 'pos.bits' -->
+  <text x="112" y="66" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="52" font-weight="800" letter-spacing="-1.5" fill="#111827">
+    pos<tspan fill="#ff4750">.</tspan>bits
+  </text>
+</svg>

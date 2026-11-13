@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" fill="none">
+  <rect width="300" height="240" rx="16" fill="#FFF9F2"/>
+  <!-- Top Bun -->
+  <ellipse cx="150" cy="85" rx="95" ry="45" fill="#E59846"/>
+  <ellipse cx="150" cy="80" rx="85" ry="38" fill="#F3B367"/>
+  <!-- Sesame seeds -->
+  <circle cx="120" cy="65" r="2.5" fill="#FFF2DF"/><circle cx="150" cy="60" r="2.5" fill="#FFF2DF"/><circle cx="175" cy="68" r="2.5" fill="#FFF2DF"/><circle cx="135" cy="75" r="2.5" fill="#FFF2DF"/>
+  <!-- Lettuce -->
+  <path d="M50 115 Q75 105 100 116 Q125 105 150 116 Q175 105 200 116 Q225 105 250 115 Q245 125 240 125 Q150 130 55 125 Z" fill="#58B35A"/>
+  <!-- Tomato -->
+  <rect x="65" y="120" width="170" height="12" rx="6" fill="#E63946"/>
+  <!-- Cheese -->
+  <polygon points="60,132 150,150 240,132 230,145 150,165 70,145" fill="#FFB703"/>
+  <!-- Patty 1 -->
+  <rect x="55" y="135" width="190" height="22" rx="10" fill="#5A2A18"/>
+  <!-- Patty 2 -->
+  <rect x="58" y="155" width="184" height="20" rx="10" fill="#421E11"/>
+  <!-- Bottom Bun -->
+  <path d="M60 175 Q60 170 80 170 L220 170 Q240 170 240 175 L235 195 Q235 210 150 210 Q65 210 65 195 Z" fill="#E59846"/>
+</svg>

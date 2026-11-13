@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Design Tokens from PNG Single Source of Truth */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Neutrals (Image 3022) */
+  --gray-50: #f0f0f2;
+  --gray-100: #d0d2d8;
+  --gray-200: #b9bcc5;
+  --gray-300: #989daa;
+  --gray-400: #858a99;
+  --gray-500: #666d80;
+  --gray-600: #5d6374;
+  --gray-700: #484d5b;
+  --gray-800: #383c46;
+  --gray-900: #2b2e36;
+
+  /* Primary Accent Coral/Red (Image 3022) */
+  --primary-50: #ffedee;
+  --primary-100: #ffc6c9;
+  --primary-500: #ff4750;
+  --primary-600: #e84149;
+  --primary-900: #6b1e22;
+
+  /* Accent Yellow */
+  --accent-50: #fff9e6;
+  --accent-100: #ffeeb0;
+  --accent-500: #ffc201;
+
+  /* Secondary Green */
+  --green-50: #ecf9f7;
+  --green-100: #c4ede5;
+  --green-500: #40c4aa;
+  --green-600: #3ab29b;
+
+  /* Surface Colors */
+  --bg-canvas: #f8fafc;
+  --bg-card: #ffffff;
+  --border-card: #e2e8f0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Thermal Receipt & Report Print Media Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-receipt, .printable-receipt * {
+    visibility: visible;
+  }
+  .printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    box-shadow: none !important;
+  }
+  .printable-report, .printable-report * {
+    visibility: visible;
+  }
+  .printable-report {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
