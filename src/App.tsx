@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAppStore } from './store';
 import { Role } from './types';
+import { api } from './services/api';
 import { AuthPage } from './features/auth/AuthPage';
 import { POSPage } from './features/pos/POSPage';
 import { TodayOrdersPage } from './features/orders/TodayOrdersPage';
@@ -47,6 +48,19 @@ const ProtectedRoute: React.FC<{
 };
 
 export const App: React.FC = () => {
+  const { currentUser, setCurrentUser, setCurrentRole } = useAppStore();
+
+  useEffect(() => {
+    if (!currentUser) {
+      api.getCurrentSession().then((user) => {
+        if (user) {
+          setCurrentUser(user);
+          setCurrentRole(user.role);
+        }
+      });
+    }
+  }, [currentUser]);
+
   return (
     <BrowserRouter>
       <Routes>

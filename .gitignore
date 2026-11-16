@@ -4,6 +4,11 @@ node_modules/
 # Production build
 dist/
 
+# Database
+*.db
+*.db-journal
+prisma/dev.db
+
 # System & temporary files
 .DS_Store
 *.log

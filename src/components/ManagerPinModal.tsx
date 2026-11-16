@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAppStore } from '../store';
 import { Keypad } from './Keypad';
 import { sounds } from '../utils/audio';
+import { api } from '../services/api';
 import { ShieldCheck, X } from 'lucide-react';
 
 interface ManagerPinModalProps {
@@ -42,8 +43,19 @@ export const ManagerPinModal: React.FC<ManagerPinModalProps> = ({
     setError(null);
   };
 
-  const handleVerify = () => {
-    // Check if entered PIN belongs to a Manager or Owner
+  const handleVerify = async () => {
+    // Check with real bcrypt manager verification backend
+    const res = await api.verifyManagerPin(pin, actionTitle);
+    if (res.success) {
+      sounds.playSuccess();
+      setPin('');
+      setError(null);
+      onSuccess();
+      onClose();
+      return;
+    }
+
+    // Local fallback
     const manager = users.find(
       (u) => (u.role === 'manager' || u.role === 'owner') && u.pin === pin && u.active
     );

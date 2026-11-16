@@ -4,6 +4,7 @@ import { useAppStore } from '../../store';
 import { User, Role } from '../../types';
 import { Keypad } from '../../components/Keypad';
 import { sounds } from '../../utils/audio';
+import { api } from '../../services/api';
 import { Search, Eye, EyeOff, Shield, ChefHat, Store, UserCheck, ArrowRight, Check, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const AuthPage: React.FC = () => {
@@ -71,8 +72,21 @@ export const AuthPage: React.FC = () => {
     }
   };
 
-  const handlePinSubmit = () => {
+  const handlePinSubmit = async () => {
     if (!selectedStaff) return;
+    
+    // Call real bcrypt / JWT authentication backend
+    const res = await api.loginWithPin(pin, selectedStaff.id, selectedRole);
+    if (res.success && res.user) {
+      sounds.playSuccess();
+      setCurrentUser(res.user);
+      setCurrentRole(selectedRole);
+      if (selectedRole === 'cashier') navigate('/pos');
+      else if (selectedRole === 'kitchen') navigate('/kds');
+      else if (selectedRole === 'admin') navigate('/admin');
+      return;
+    }
+
     if (pin === selectedStaff.pin || pin === '9999' || (selectedStaff.role === 'admin' && pin === '0000')) {
       sounds.playSuccess();
       setCurrentUser(selectedStaff);
@@ -82,12 +96,25 @@ export const AuthPage: React.FC = () => {
       else if (selectedRole === 'admin') navigate('/admin');
     } else {
       sounds.playError();
-      setPinError(`Incorrect PIN. (Demo PIN for ${selectedStaff.name} is ${selectedStaff.pin})`);
+      setPinError(res.error || `Incorrect PIN. (Demo PIN for ${selectedStaff.name} is ${selectedStaff.pin})`);
     }
   };
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Call real bcrypt / JWT authentication backend
+    const res = await api.loginWithCredentials(emailOrPhone, password, selectedRole);
+    if (res.success && res.user) {
+      sounds.playSuccess();
+      setCurrentUser(res.user);
+      setCurrentRole(selectedRole);
+      if (selectedRole === 'manager') navigate('/manager');
+      else if (selectedRole === 'owner') navigate('/owner');
+      else if (selectedRole === 'admin') navigate('/admin');
+      return;
+    }
+
     const user = users.find(
       (u) =>
         u.role === selectedRole &&
@@ -103,7 +130,7 @@ export const AuthPage: React.FC = () => {
       else if (selectedRole === 'admin') navigate('/admin');
     } else {
       sounds.playError();
-      setLoginError('Invalid credentials. Password is password123 or use PIN.');
+      setLoginError(res.error || 'Invalid credentials. Password is password123 or use PIN.');
     }
   };
 
