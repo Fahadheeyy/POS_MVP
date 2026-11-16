@@ -10,18 +10,41 @@ A complete, working, clickable prototype of a multi-app Quick Service Restaurant
 # 1. Install dependencies
 npm install
 
-# 2. Launch development server
+# 2. (Optional) Connect your Supabase project in .env:
+# VITE_SUPABASE_URL="https://your-project.supabase.co"
+# VITE_SUPABASE_ANON_KEY="your-anon-key"
+
+# 3. Launch development server (Runs Vite + Express Server concurrently)
 npm run dev
 
-# 3. Production build verification
+# 4. Production build verification
 npm run build
 ```
 
-The prototype runs at `http://localhost:5173`.
+The application runs at `http://localhost:5173`.
 
 ---
 
-## 2. Architecture & Role-Based Applications
+## 2. Real Supabase Authentication Integration
+
+The platform is integrated with **Supabase Auth** (`@supabase/supabase-js`) while preserving 100% of the pixel-perfect touch-first UI/UX:
+
+1. **Email & Password Authentication**:
+   - Store Managers, Franchise Owners, and Super Admins authenticate directly via `supabase.auth.signInWithPassword`.
+   - On success, retrieves the user's role and profile metadata from Supabase and establishes an encrypted session.
+2. **Fast 4-Digit Staff PIN Authentication**:
+   - Counter Cashiers and Kitchen Cook leads authenticate via rapid 4-digit PINs against Supabase `public.profiles`.
+   - Auto-submits on 4 digits or Enter keypress.
+3. **Supervisor PIN Verification**:
+   - High-privilege actions (order refunds, voiding tickets, drawer kicks, discounts) challenge the user for a Manager/Owner PIN validated directly against Supabase.
+4. **1-Click Supabase Database Migration**:
+   - Run [`supabase/schema.sql`](file:///Users/mac/Documents/POS_MVP/supabase/schema.sql) in your Supabase SQL Editor to instantly provision the `profiles` table, RLS security policies, and seed all demo staff members.
+5. **Zero-Downtime Local Fallback**:
+   - If Supabase environment variables are not yet configured or during local internet disconnects, the system automatically falls back to the embedded Express/Prisma engine, ensuring counter terminals never stall.
+
+---
+
+## 3. Architecture & Role-Based Applications
 
 The platform houses **6 interconnected applications** inside one web architecture with unified state and real-time tab synchronization:
 

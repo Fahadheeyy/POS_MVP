@@ -548,3 +548,4 @@ app.get('/api/shifts/active', async (_req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log(`🚀 QSR Production API Server running on http://localhost:${PORT}`);
 });
+

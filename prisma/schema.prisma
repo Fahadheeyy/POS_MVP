@@ -288,3 +288,4 @@ model AuditLog {
   timestamp   DateTime @default(now())
   metadataJson String  @default("{}")
 }
+

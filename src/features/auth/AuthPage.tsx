@@ -148,8 +148,18 @@ export const AuthPage: React.FC = () => {
               <span className="text-blue-700 text-xs font-bold uppercase tracking-wider">{settings.brandTagline || "India's First Egyptian Dessert"}</span>
             </div>
           </div>
-          <div className="text-xs text-gray-500 font-medium">
-            Demo Environment · Click role to test
+          <div className="text-xs text-gray-500 font-medium flex items-center gap-2">
+            {api.isSupabaseActive() ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Supabase Auth Connected
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-[11px] font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                Production Auth Active
+              </span>
+            )}
           </div>
         </div>
 
