@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Minimal Header -->
+    <rect x="0" y="0" width="1440" height="50" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(240, 15)">
+      <rect x="0" y="0" width="70" height="22" rx="4" fill="#1F2937"/>
+      <text x="10" y="15" font-size="10" class="bold" fill="#FFFFFF">POS.BITS</text>
+      <line x1="80" y1="2" x2="80" y2="20" stroke="#E5E7EB"/>
+      <text x="92" y="15" font-size="11" class="bold" fill="#111827">Sign Laban · India&apos;s First Egyptian Dessert</text>
+    </g>
+    <text x="1200" y="30" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Demo Environment · Click role to test</text>
+
+    <!-- Center Role Cards -->
+    <g transform="translate(270, 90)">
+      <text x="450" y="30" font-size="24" class="bold" fill="#111827" text-anchor="middle">Select Application &amp; Role</text>
+      <text x="450" y="52" font-size="12" class="medium" fill="#6B7280" text-anchor="middle">Each role grants access only to its authorized terminal and functions.</text>
+
+      <!-- 2x2 Grid of Role Cards -->
+      <!-- Card 1: POS Cashier -->
+      <g transform="translate(0, 80)">
+        <rect width="435" height="180" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect x="20" y="20" width="44" height="44" rx="10" fill="#F3F4F6" stroke="#E5E7EB"/>
+        <text x="42" y="47" font-size="16" class="bold" fill="#1F2937" text-anchor="middle">POS</text>
+        <rect x="345" y="20" width="70" height="22" rx="11" fill="#F3F4F6"/>
+        <text x="380" y="35" font-size="10" class="semi" fill="#4B5563" text-anchor="middle">PIN Auth</text>
+
+        <text x="20" y="90" font-size="15" class="bold" fill="#111827">1. POS Cashier</text>
+        <text x="20" y="112" font-size="11" class="regular" fill="#4B5563">Take dine-in and takeaway orders, process UPI/Cash/Card payments, manage cash drawer and print bills.</text>
+        
+        <line x1="20" y1="140" x2="415" y2="140" stroke="#F3F4F6"/>
+        <text x="20" y="160" font-size="11" class="semi" fill="#374151">Default: Priya Sharma (PIN 1234)</text>
+        <text x="415" y="160" font-size="12" class="bold" fill="#111827" text-anchor="end">→</text>
+      </g>
+
+      <!-- Card 2: KDS Kitchen Display -->
+      <g transform="translate(465, 80)">
+        <rect width="435" height="180" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect x="20" y="20" width="44" height="44" rx="10" fill="#F3F4F6" stroke="#E5E7EB"/>
+        <text x="42" y="47" font-size="16" class="bold" fill="#1F2937" text-anchor="middle">KDS</text>
+        <rect x="345" y="20" width="70" height="22" rx="11" fill="#F3F4F6"/>
+        <text x="380" y="35" font-size="10" class="semi" fill="#4B5563" text-anchor="middle">PIN Auth</text>
+
+        <text x="20" y="90" font-size="15" class="bold" fill="#111827">2. KDS Kitchen Display</text>
+        <text x="20" y="112" font-size="11" class="regular" fill="#4B5563">Kitchen station routing (Grill, Fry, Cold, Expo), live timers, rush tickets, item strikes, and bump pass.</text>
+        
+        <line x1="20" y1="140" x2="415" y2="140" stroke="#F3F4F6"/>
+        <text x="20" y="160" font-size="11" class="semi" fill="#374151">Default: Jesselyn Tan (PIN 1111)</text>
+        <text x="415" y="160" font-size="12" class="bold" fill="#111827" text-anchor="end">→</text>
+      </g>
+
+      <!-- Card 3: Manager Console -->
+      <g transform="translate(0, 280)">
+        <rect width="435" height="180" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect x="20" y="20" width="44" height="44" rx="10" fill="#F3F4F6" stroke="#E5E7EB"/>
+        <text x="42" y="47" font-size="16" class="bold" fill="#1F2937" text-anchor="middle">MGR</text>
+        <rect x="325" y="20" width="90" height="22" rx="11" fill="#F3F4F6"/>
+        <text x="370" y="35" font-size="10" class="semi" fill="#4B5563" text-anchor="middle">Manager Login</text>
+
+        <text x="20" y="90" font-size="15" class="bold" fill="#111827">3. Manager Console</text>
+        <text x="20" y="112" font-size="11" class="regular" fill="#4B5563">Menu item editing, out-of-stock toggles, staff PIN resets, live operations, and refund/discount approvals.</text>
+        
+        <line x1="20" y1="140" x2="415" y2="140" stroke="#F3F4F6"/>
+        <text x="20" y="160" font-size="11" class="semi" fill="#374151">Alex Rivera (alex@signlaban.in)</text>
+        <text x="415" y="160" font-size="12" class="bold" fill="#111827" text-anchor="end">→</text>
+      </g>
+
+      <!-- Card 4: Owner Dashboard -->
+      <g transform="translate(465, 280)">
+        <rect width="435" height="180" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect x="20" y="20" width="44" height="44" rx="10" fill="#F3F4F6" stroke="#E5E7EB"/>
+        <text x="42" y="47" font-size="16" class="bold" fill="#1F2937" text-anchor="middle">OWN</text>
+        <rect x="335" y="20" width="80" height="22" rx="11" fill="#F3F4F6"/>
+        <text x="375" y="35" font-size="10" class="semi" fill="#4B5563" text-anchor="middle">Full Access</text>
+
+        <text x="20" y="90" font-size="15" class="bold" fill="#111827">4. Owner Dashboard &amp; Reports</text>
+        <text x="20" y="112" font-size="11" class="regular" fill="#4B5563">Gross sales, GST tax breakdowns, payment mix charts, 30-day analytics, 9 exportable reports and settings.</text>
+        
+        <line x1="20" y1="140" x2="415" y2="140" stroke="#F3F4F6"/>
+        <text x="20" y="160" font-size="11" class="semi" fill="#374151">Vikram Sethi (vikram@signlaban.in)</text>
+        <text x="415" y="160" font-size="12" class="bold" fill="#111827" text-anchor="end">→</text>
+      </g>
+
+      <!-- Card 5: Developer & Sales Admin (Full width) -->
+      <g transform="translate(0, 480)">
+        <rect width="900" height="150" rx="18" fill="#1F2937" stroke="#374151"/>
+        <rect x="24" y="20" width="44" height="44" rx="10" fill="#374151"/>
+        <text x="46" y="47" font-size="16" class="bold" fill="#FFFFFF" text-anchor="middle">DEV</text>
+        
+        <rect x="650" y="20" width="130" height="24" rx="12" fill="#374151"/>
+        <text x="715" y="36" font-size="10" class="bold" fill="#D1D5DB" text-anchor="middle">Dev &amp; Sales Control</text>
+        <rect x="790" y="20" width="86" height="24" rx="12" fill="#111827" stroke="#4B5563"/>
+        <text x="833" y="36" font-size="10" class="bold" fill="#10B981" text-anchor="middle">PIN 0000</text>
+
+        <text x="24" y="90" font-size="16" class="bold" fill="#FFFFFF">5. Admin &amp; Developer Portal (Sales &amp; Multi-Tenant Hub)</text>
+        <text x="24" y="110" font-size="11" class="regular" fill="#9CA3AF">Add &amp; onboard franchise businesses, 1-click active outlet switching, configure feature flags (KDS, GST %, Add-ons, Auto-print, Cash timing), white-label receipts, and generate 30-day realistic demo transactions for sales pitches.</text>
+        <text x="876" y="132" font-size="12" class="bold" fill="#FFFFFF" text-anchor="end">Enter Operations Hub →</text>
+      </g>
+    </g>
+
+    <!-- Footer -->
+    <g transform="translate(270, 860)">
+      <line x1="0" y1="0" x2="900" y2="0" stroke="#E5E7EB"/>
+      <text x="0" y="20" font-size="11" class="medium" fill="#9CA3AF">Sign Laban · Indiranagar, Bengaluru</text>
+      <text x="900" y="20" font-size="11" class="medium" fill="#9CA3AF" text-anchor="end">pos.bits High-Speed QSR Architecture</text>
+    </g>
+  
+</svg>

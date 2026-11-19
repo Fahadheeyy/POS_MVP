@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="768" viewBox="0 0 1024 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1024" height="768" fill="#F3F4F6"/>
+  
+  
+    <rect x="0" y="0" width="1024" height="60" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 16)">
+      <rect x="0" y="0" width="76" height="28" rx="6" fill="#1F2937"/>
+      <text x="38" y="18" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">POS.BITS</text>
+      <text x="96" y="14" font-size="13" class="bold" fill="#111827">Tablet Order Detail</text>
+      <text x="96" y="26" font-size="10" class="medium" fill="#6B7280">Table 01 · Guest: Rahul Verma</text>
+    </g>
+
+    <!-- Tab navigation -->
+    <g transform="translate(360, 22)">
+      
+          <text x="0" y="16" font-size="12" class="bold" fill="#111827">Dine-In Tables</text>
+          <line x1="0" y1="22" x2="84" y2="22" stroke="#111827" stroke-width="2"/>
+        
+          <text x="110" y="16" font-size="12" class="medium" fill="#6B7280">New Order</text>
+          
+        
+          <text x="220" y="16" font-size="12" class="medium" fill="#6B7280">Orders Log</text>
+          
+        
+          <text x="330" y="16" font-size="12" class="medium" fill="#6B7280">Shift</text>
+          
+        
+    </g>
+
+    <!-- Right Profile -->
+    <g transform="translate(880, 14)">
+      <rect x="0" y="0" width="120" height="32" rx="16" fill="#F3F4F6"/>
+      <circle cx="16" cy="16" r="10" fill="#111827"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="16" font-size="11" class="bold" fill="#111827">Priya S.</text>
+      <text x="34" y="26" font-size="8" class="regular" fill="#6B7280">Cashier</text>
+    </g>
+  
+  <g transform="translate(24, 80)">
+    <!-- Split Layout: Left Order Breakdown (620w), Right Action Controls (330w) -->
+    
+    <!-- Left Panel -->
+    <rect x="0" y="0" width="620" height="650" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 24)">
+      <text x="0" y="20" font-size="16" class="bold" fill="#111827">Table 01 · Running Ticket #042</text>
+      <text x="0" y="38" font-size="12" class="regular" fill="#6B7280">Started 18m ago by Priya S. · Dine-in 4 Guests</text>
+
+      <!-- Table of items -->
+      <line x1="0" y1="55" x2="572" y2="55" stroke="#E5E7EB"/>
+      <text x="0" y="74" font-size="11" class="bold" fill="#9CA3AF">ITEM & MODIFIERS</text>
+      <text x="350" y="74" font-size="11" class="bold" fill="#9CA3AF">STATUS</text>
+      <text x="450" y="74" font-size="11" class="bold" fill="#9CA3AF">QTY</text>
+      <text x="572" y="74" font-size="11" class="bold" fill="#9CA3AF" text-anchor="end">TOTAL</text>
+
+      
+        <g transform="translate(0, 100)">
+          <text x="0" y="16" font-size="13" class="bold" fill="#111827">Classic Qashtuta (Belgian Chocolate)</text>
+          <rect x="350" y="2" width="64" height="20" rx="6" fill="#FEF3C7"/>
+          <text x="382" y="16" font-size="10" class="bold" fill="#B45309" text-anchor="middle">Cooking</text>
+          <text x="460" y="16" font-size="13" class="semi" fill="#111827">1</text>
+          <text x="572" y="16" font-size="13" class="bold" fill="#111827" text-anchor="end">₹280.00</text>
+          <line x1="0" y1="38" x2="572" y2="38" stroke="#F3F4F6"/>
+        </g>
+      
+        <g transform="translate(0, 164)">
+          <text x="0" y="16" font-size="13" class="bold" fill="#111827">Mango Rice Pudding (+Crushed Pistachio)</text>
+          <rect x="350" y="2" width="64" height="20" rx="6" fill="#ECFDF5"/>
+          <text x="382" y="16" font-size="10" class="bold" fill="#047857" text-anchor="middle">Ready</text>
+          <text x="460" y="16" font-size="13" class="semi" fill="#111827">2</text>
+          <text x="572" y="16" font-size="13" class="bold" fill="#111827" text-anchor="end">₹360.00</text>
+          <line x1="0" y1="38" x2="572" y2="38" stroke="#F3F4F6"/>
+        </g>
+      
+        <g transform="translate(0, 228)">
+          <text x="0" y="16" font-size="13" class="bold" fill="#111827">Karak Chai Glass (Cardamom)</text>
+          <rect x="350" y="2" width="64" height="20" rx="6" fill="#F3F4F6"/>
+          <text x="382" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Served</text>
+          <text x="460" y="16" font-size="13" class="semi" fill="#111827">1</text>
+          <text x="572" y="16" font-size="13" class="bold" fill="#111827" text-anchor="end">₹60.00</text>
+          <line x1="0" y1="38" x2="572" y2="38" stroke="#F3F4F6"/>
+        </g>
+      
+
+      <!-- Subtotal Breakdown -->
+      <g transform="translate(300, 340)">
+        <text x="0" y="20" font-size="12" class="regular" fill="#6B7280">Subtotal</text>
+        <text x="272" y="20" font-size="12" class="bold" fill="#111827" text-anchor="end">₹700.00</text>
+        <text x="0" y="44" font-size="12" class="regular" fill="#6B7280">GST (5% Combined)</text>
+        <text x="272" y="44" font-size="12" class="bold" fill="#111827" text-anchor="end">₹35.00</text>
+        <line x1="0" y1="60" x2="272" y2="60" stroke="#E5E7EB"/>
+        <text x="0" y="86" font-size="16" class="bold" fill="#111827">Total Bill</text>
+        <text x="272" y="86" font-size="18" class="bold" fill="#10B981" text-anchor="end">₹735.00</text>
+      </g>
+    </g>
+
+    <!-- Right Panel (Fast actions) -->
+    <g transform="translate(644, 0)">
+      <rect x="0" y="0" width="332" height="650" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <g transform="translate(24, 24)">
+        <text x="0" y="20" font-size="15" class="bold" fill="#111827">Table Operations</text>
+        
+        <rect x="0" y="45" width="284" height="48" rx="12" fill="#F3F4F6" stroke="#D1D5DB"/>
+        <text x="142" y="74" font-size="12" class="bold" fill="#374151" text-anchor="middle">+ Add More Items to Table</text>
+
+        <rect x="0" y="105" width="284" height="48" rx="12" fill="#F3F4F6" stroke="#D1D5DB"/>
+        <text x="142" y="134" font-size="12" class="bold" fill="#374151" text-anchor="middle">🖨 Print Pro-Forma KOT Check</text>
+
+        <rect x="0" y="165" width="284" height="48" rx="12" fill="#F3F4F6" stroke="#D1D5DB"/>
+        <text x="142" y="194" font-size="12" class="bold" fill="#374151" text-anchor="middle">↔ Transfer to Another Table</text>
+
+        <line x1="0" y1="235" x2="284" y2="235" stroke="#E5E7EB"/>
+
+        <!-- Fast Settle -->
+        <text x="0" y="265" font-size="14" class="bold" fill="#111827">Instant Checkout</text>
+        <rect x="0" y="285" width="284" height="60" rx="14" fill="#10B981"/>
+        <text x="142" y="318" font-size="14" class="bold" fill="#FFFFFF" text-anchor="middle">Settle Bill ₹735.00 →</text>
+
+        <rect x="0" y="355" width="284" height="44" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+        <text x="142" y="382" font-size="12" class="semi" fill="#6B7280" text-anchor="middle">Split Tender Payment</text>
+
+        <rect x="0" y="520" width="284" height="44" rx="12" fill="#FEE2E2" stroke="#FCA5A5"/>
+        <text x="142" y="547" font-size="12" class="bold" fill="#B91C1C" text-anchor="middle">Void / Cancel Table Session</text>
+      </g>
+    </g>
+  </g>
+
+</svg>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Owner Dashboard</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Sales, Mix &amp; Performance · Vikram Sethi</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="bold" fill="#111827">Overview</text>
+      <line x1="380" y1="44" x2="436" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="474" y="35" font-size="12" class="medium" fill="#6B7280">Reports</text>
+      
+    
+      <text x="560" y="35" font-size="12" class="medium" fill="#6B7280">Settings</text>
+      
+    
+    
+      <rect x="654" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="668" cy="31" r="4" fill="#10B981"/>
+      <text x="680" y="35" font-size="11" class="semi" fill="#111827">Today&apos;s Sales: ₹42,580</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(24, 75)">
+      <!-- Top Bar: Date Filter -->
+      <g transform="translate(0, 0)">
+        <text x="0" y="24" font-size="18" class="bold" fill="#111827">Business Overview</text>
+        <text x="0" y="42" font-size="11" class="medium" fill="#6B7280">Live revenue and sales mix for Sign Laban · Indiranagar</text>
+
+        <!-- Date Range Filter -->
+        <g transform="translate(1050, 10)">
+          <rect x="0" y="0" width="70" height="30" rx="15" fill="#1F2937"/>
+          <text x="35" y="19" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Today</text>
+
+          <rect x="75" y="0" width="85" height="30" rx="15" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="117" y="19" font-size="11" class="semi" fill="#374151" text-anchor="middle">Yesterday</text>
+
+          <rect x="165" y="0" width="75" height="30" rx="15" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="202" y="19" font-size="11" class="semi" fill="#374151" text-anchor="middle">7 Days</text>
+
+          <rect x="245" y="0" width="80" height="30" rx="15" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="285" y="19" font-size="11" class="semi" fill="#374151" text-anchor="middle">30 Days</text>
+        </g>
+      </g>
+
+      <!-- 4 Core KPIs -->
+      <g transform="translate(0, 60)">
+        <rect width="330" height="110" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">GROSS SALES (TODAY)</text>
+        <text x="20" y="65" font-size="26" class="bold" fill="#111827">₹42,580.00</text>
+        <text x="20" y="88" font-size="11" class="medium" fill="#10B981">+12.4% vs yesterday</text>
+
+        <g transform="translate(350, 0)">
+          <rect width="330" height="110" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">TOTAL ORDERS</text>
+          <text x="20" y="65" font-size="26" class="bold" fill="#111827">18 Tokens</text>
+          <text x="20" y="88" font-size="11" class="medium" fill="#10B981">+5 orders ahead of target</text>
+        </g>
+
+        <g transform="translate(700, 0)">
+          <rect width="330" height="110" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">AVERAGE ORDER VALUE (AOV)</text>
+          <text x="20" y="65" font-size="26" class="bold" fill="#111827">₹2,365.00</text>
+          <text x="20" y="88" font-size="11" class="medium" fill="#6B7280">Driven by family dessert bundles</text>
+        </g>
+
+        <g transform="translate(1050, 0)">
+          <rect width="340" height="110" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">NET GST COLLECTED (5%)</text>
+          <text x="20" y="65" font-size="26" class="bold" fill="#111827">₹2,129.00</text>
+          <text x="20" y="88" font-size="11" class="medium" fill="#6B7280">CGST ₹1,064.50 + SGST ₹1,064.50</text>
+        </g>
+      </g>
+
+      <!-- Middle: Hourly Sales Trend & Payment Mix -->
+      <g transform="translate(0, 190)">
+        <!-- Chart Box (Width: 920) -->
+        <rect width="920" height="340" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <g transform="translate(24, 25)">
+          <text x="0" y="0" font-size="14" class="bold" fill="#111827">Sales by Hour (₹ Revenue)</text>
+          
+          <g transform="translate(0, 30)">
+            <line x1="30" y1="240" x2="850" y2="240" stroke="#E5E7EB"/>
+            <line x1="30" y1="180" x2="850" y2="180" stroke="#F3F4F6"/>
+            <line x1="30" y1="120" x2="850" y2="120" stroke="#F3F4F6"/>
+            <line x1="30" y1="60" x2="850" y2="60" stroke="#F3F4F6"/>
+
+            <!-- Trend Polyline -->
+            <path d="M50 220 L130 200 L210 180 L290 140 L370 120 L450 160 L530 110 L610 80 L690 50 L770 40 L850 70" fill="none" stroke="#1F2937" stroke-width="3"/>
+            <text x="850" y="30" font-size="11" class="bold" fill="#111827" text-anchor="end">Peak: 9:00 PM (₹8,450)</text>
+          </g>
+        </g>
+
+        <!-- Payment Tender Breakdown Box (Width: 450) -->
+        <g transform="translate(940, 0)">
+          <rect width="450" height="340" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <g transform="translate(24, 25)">
+            <text x="0" y="0" font-size="14" class="bold" fill="#111827">Payment Tender Mix</text>
+            
+            <!-- Progress bars -->
+            <g transform="translate(0, 40)">
+              <!-- UPI -->
+              <text x="0" y="16" font-size="12" class="bold" fill="#111827">UPI Dynamic QR / VPA</text>
+              <text x="400" y="16" font-size="12" class="bold" fill="#111827" text-anchor="end">62% (₹26,400)</text>
+              <rect x="0" y="26" width="400" height="14" rx="7" fill="#F3F4F6"/>
+              <rect x="0" y="26" width="248" height="14" rx="7" fill="#1F2937"/>
+
+              <!-- Cash -->
+              <text x="0" y="70" font-size="12" class="bold" fill="#111827">Cash Counter Drawer</text>
+              <text x="400" y="70" font-size="12" class="bold" fill="#111827" text-anchor="end">24% (₹10,220)</text>
+              <rect x="0" y="80" width="400" height="14" rx="7" fill="#F3F4F6"/>
+              <rect x="0" y="80" width="96" height="14" rx="7" fill="#4B5563"/>
+
+              <!-- Card -->
+              <text x="0" y="124" font-size="12" class="bold" fill="#111827">Credit / Debit Card (EDC)</text>
+              <text x="400" y="124" font-size="12" class="bold" fill="#111827" text-anchor="end">14% (₹5,960)</text>
+              <rect x="0" y="134" width="400" height="14" rx="7" fill="#F3F4F6"/>
+              <rect x="0" y="134" width="56" height="14" rx="7" fill="#9CA3AF"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- Bottom: Top 5 Best Sellers -->
+      <g transform="translate(0, 550)">
+        <rect width="1390" height="230" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <g transform="translate(24, 20)">
+          <text x="0" y="0" font-size="14" class="bold" fill="#111827">Top 5 Selling Items (Today)</text>
+          <g transform="translate(0, 25)">
+            <rect width="1340" height="32" rx="6" fill="#F9FAFB"/>
+            <text x="16" y="20" font-size="10" class="bold" fill="#4B5563">ITEM</text>
+            <text x="400" y="20" font-size="10" class="bold" fill="#4B5563">CATEGORY</text>
+            <text x="700" y="20" font-size="10" class="bold" fill="#4B5563">UNITS SOLD</text>
+            <text x="1000" y="20" font-size="10" class="bold" fill="#4B5563">REVENUE</text>
+            <text x="1320" y="20" font-size="10" class="bold" fill="#4B5563" text-anchor="end">SHARE</text>
+
+            
+                  <g transform="translate(0, 32)">
+                    <text x="16" y="22" font-size="12" class="bold" fill="#111827">Qashtuta Nutella Pistachio</text>
+                    <text x="400" y="22" font-size="11" class="regular" fill="#4B5563">Egyptian Desserts</text>
+                    <text x="700" y="22" font-size="12" class="bold" fill="#111827">34 bowls</text>
+                    <text x="1000" y="22" font-size="12" class="bold" fill="#111827">₹10,880.00</text>
+                    <text x="1320" y="22" font-size="12" class="bold" fill="#10B981" text-anchor="end">25.5%</text>
+                  </g>
+                
+                  <g transform="translate(0, 68)">
+                    <text x="16" y="22" font-size="12" class="bold" fill="#111827">Umm Ali Royal Claypot</text>
+                    <text x="400" y="22" font-size="11" class="regular" fill="#4B5563">Baked Sweets</text>
+                    <text x="700" y="22" font-size="12" class="bold" fill="#111827">28 claypots</text>
+                    <text x="1000" y="22" font-size="12" class="bold" fill="#111827">₹6,160.00</text>
+                    <text x="1320" y="22" font-size="12" class="bold" fill="#10B981" text-anchor="end">14.5%</text>
+                  </g>
+                
+                  <g transform="translate(0, 104)">
+                    <text x="16" y="22" font-size="12" class="bold" fill="#111827">Qashtuta Lotus Biscoff</text>
+                    <text x="400" y="22" font-size="11" class="regular" fill="#4B5563">Egyptian Desserts</text>
+                    <text x="700" y="22" font-size="12" class="bold" fill="#111827">18 bowls</text>
+                    <text x="1000" y="22" font-size="12" class="bold" fill="#111827">₹5,760.00</text>
+                    <text x="1320" y="22" font-size="12" class="bold" fill="#10B981" text-anchor="end">13.5%</text>
+                  </g>
+                
+                  <g transform="translate(0, 140)">
+                    <text x="16" y="22" font-size="12" class="bold" fill="#111827">Saankorita Classic Mango</text>
+                    <text x="400" y="22" font-size="11" class="regular" fill="#4B5563">Cream Sweets</text>
+                    <text x="700" y="22" font-size="12" class="bold" fill="#111827">16 plates</text>
+                    <text x="1000" y="22" font-size="12" class="bold" fill="#111827">₹4,160.00</text>
+                    <text x="1320" y="22" font-size="12" class="bold" fill="#10B981" text-anchor="end">9.8%</text>
+                  </g>
+                
+          </g>
+        </g>
+      </g>
+    </g>
+  
+</svg>

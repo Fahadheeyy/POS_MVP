@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="768" viewBox="0 0 1024 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1024" height="768" fill="#F3F4F6"/>
+  
+  
+    <rect x="0" y="0" width="1024" height="60" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 16)">
+      <rect x="0" y="0" width="76" height="28" rx="6" fill="#1F2937"/>
+      <text x="38" y="18" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">POS.BITS</text>
+      <text x="96" y="14" font-size="13" class="bold" fill="#111827">Tablet Menu &amp; Cart</text>
+      <text x="96" y="26" font-size="10" class="medium" fill="#6B7280">Table 05 · Jesselyn</text>
+    </g>
+
+    <!-- Tab navigation -->
+    <g transform="translate(360, 22)">
+      
+          <text x="0" y="16" font-size="12" class="bold" fill="#111827">Dine-In Tables</text>
+          <line x1="0" y1="22" x2="84" y2="22" stroke="#111827" stroke-width="2"/>
+        
+          <text x="110" y="16" font-size="12" class="medium" fill="#6B7280">New Order</text>
+          
+        
+          <text x="220" y="16" font-size="12" class="medium" fill="#6B7280">Orders Log</text>
+          
+        
+          <text x="330" y="16" font-size="12" class="medium" fill="#6B7280">Shift</text>
+          
+        
+    </g>
+
+    <!-- Right Profile -->
+    <g transform="translate(880, 14)">
+      <rect x="0" y="0" width="120" height="32" rx="16" fill="#F3F4F6"/>
+      <circle cx="16" cy="16" r="10" fill="#111827"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="16" font-size="11" class="bold" fill="#111827">Priya S.</text>
+      <text x="34" y="26" font-size="8" class="regular" fill="#6B7280">Cashier</text>
+    </g>
+  
+  <g transform="translate(24, 76)">
+    <!-- Left Catalog Grid (640w) -->
+    <rect x="0" y="0" width="630" height="660" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+    
+    <!-- Category pills -->
+    <g transform="translate(20, 20)">
+      <rect x="0" y="0" width="60" height="32" rx="16" fill="#111827"/>
+      <text x="30" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">All</text>
+      <rect x="68" y="0" width="90" height="32" rx="16" fill="#F3F4F6"/>
+      <text x="113" y="20" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Qashtuta (6)</text>
+      <rect x="166" y="0" width="115" height="32" rx="16" fill="#F3F4F6"/>
+      <text x="223" y="20" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Rice Pudding (4)</text>
+      <rect x="289" y="0" width="80" height="32" rx="16" fill="#F3F4F6"/>
+      <text x="329" y="20" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Drinks (3)</text>
+    </g>
+
+    <!-- Product cards (3 cols x 2 rows) -->
+    <g transform="translate(20, 70)">
+      
+          <rect x="0" y="0" width="186" height="166" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="10" y="10" width="166" height="86" rx="10" fill="#F3F4F6"/>
+          <text x="93" y="56" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG: Classic Qa</text>
+          <text x="12" y="116" font-size="12" class="bold" fill="#111827">Classic Qashtuta</text>
+          <text x="12" y="134" font-size="12" class="bold" fill="#10B981">₹249</text>
+          <rect x="124" y="126" width="50" height="26" rx="8" fill="#111827"/>
+          <text x="149" y="143" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="198" y="0" width="186" height="166" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="208" y="10" width="166" height="86" rx="10" fill="#F3F4F6"/>
+          <text x="291" y="56" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG: Lotus Bisc</text>
+          <text x="210" y="116" font-size="12" class="bold" fill="#111827">Lotus Biscoff</text>
+          <text x="210" y="134" font-size="12" class="bold" fill="#10B981">₹299</text>
+          <rect x="322" y="126" width="50" height="26" rx="8" fill="#111827"/>
+          <text x="347" y="143" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="396" y="0" width="186" height="166" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="406" y="10" width="166" height="86" rx="10" fill="#F3F4F6"/>
+          <text x="489" y="56" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG: Pistachio </text>
+          <text x="408" y="116" font-size="12" class="bold" fill="#111827">Pistachio Supreme</text>
+          <text x="408" y="134" font-size="12" class="bold" fill="#10B981">₹349</text>
+          <rect x="520" y="126" width="50" height="26" rx="8" fill="#111827"/>
+          <text x="545" y="143" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="0" y="180" width="186" height="166" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="10" y="190" width="166" height="86" rx="10" fill="#F3F4F6"/>
+          <text x="93" y="236" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG: Mango Rice</text>
+          <text x="12" y="296" font-size="12" class="bold" fill="#111827">Mango Rice Pudding</text>
+          <text x="12" y="314" font-size="12" class="bold" fill="#10B981">₹180</text>
+          <rect x="124" y="306" width="50" height="26" rx="8" fill="#111827"/>
+          <text x="149" y="323" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="198" y="180" width="186" height="166" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="208" y="190" width="166" height="86" rx="10" fill="#F3F4F6"/>
+          <text x="291" y="236" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG: Nutella Cr</text>
+          <text x="210" y="296" font-size="12" class="bold" fill="#111827">Nutella Cream Bowl</text>
+          <text x="210" y="314" font-size="12" class="bold" fill="#10B981">₹280</text>
+          <rect x="322" y="306" width="50" height="26" rx="8" fill="#111827"/>
+          <text x="347" y="323" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="396" y="180" width="186" height="166" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="406" y="190" width="166" height="86" rx="10" fill="#F3F4F6"/>
+          <text x="489" y="236" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG: Karak Chai</text>
+          <text x="408" y="296" font-size="12" class="bold" fill="#111827">Karak Chai Glass</text>
+          <text x="408" y="314" font-size="12" class="bold" fill="#10B981">₹60</text>
+          <rect x="520" y="306" width="50" height="26" rx="8" fill="#111827"/>
+          <text x="545" y="323" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+    </g>
+
+    <!-- Right Cart Panel (320w) -->
+    <g transform="translate(654, 0)">
+      <rect x="0" y="0" width="322" height="660" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <g transform="translate(20, 20)">
+        <text x="0" y="20" font-size="15" class="bold" fill="#111827">Order Cart (2 items)</text>
+        <text x="0" y="38" font-size="11" class="medium" fill="#6B7280">Dine-in · Table 05</text>
+        
+        <!-- Cart Items -->
+        <g transform="translate(0, 60)">
+          <text x="0" y="16" font-size="12" class="bold" fill="#111827">1× Lotus Biscoff Qashtuta</text>
+          <text x="282" y="16" font-size="12" class="bold" fill="#111827" text-anchor="end">₹339.00</text>
+          <text x="0" y="32" font-size="10" class="regular" fill="#6B7280">+ Extra Biscoff Crunch · 50% Sugar</text>
+          <line x1="0" y1="46" x2="282" y2="46" stroke="#F3F4F6"/>
+        </g>
+        <g transform="translate(0, 120)">
+          <text x="0" y="16" font-size="12" class="bold" fill="#111827">1× Karak Chai Glass</text>
+          <text x="282" y="16" font-size="12" class="bold" fill="#111827" text-anchor="end">₹60.00</text>
+          <text x="0" y="32" font-size="10" class="regular" fill="#6B7280">Cardamom Spice</text>
+          <line x1="0" y1="46" x2="282" y2="46" stroke="#F3F4F6"/>
+        </g>
+
+        <!-- Totals -->
+        <g transform="translate(0, 420)">
+          <text x="0" y="16" font-size="12" class="regular" fill="#6B7280">Subtotal</text>
+          <text x="282" y="16" font-size="12" class="bold" fill="#111827" text-anchor="end">₹399.00</text>
+          <text x="0" y="36" font-size="12" class="regular" fill="#6B7280">GST Tax (5%)</text>
+          <text x="282" y="36" font-size="12" class="bold" fill="#111827" text-anchor="end">₹19.95</text>
+          <line x1="0" y1="52" x2="282" y2="52" stroke="#E5E7EB"/>
+          <text x="0" y="78" font-size="16" class="bold" fill="#111827">Total Payable</text>
+          <text x="282" y="78" font-size="18" class="bold" fill="#10B981" text-anchor="end">₹419.00</text>
+          
+          <rect x="0" y="100" width="282" height="52" rx="14" fill="#10B981"/>
+          <text x="141" y="132" font-size="14" class="bold" fill="#FFFFFF" text-anchor="middle">Proceed to Payment →</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

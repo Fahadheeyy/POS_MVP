@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Owner Reports</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">9 Detailed Business &amp; Tax Reports · Vikram Sethi</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">Overview</text>
+      
+    
+      <text x="474" y="35" font-size="12" class="bold" fill="#111827">Reports</text>
+      <line x1="474" y1="44" x2="523" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="560" y="35" font-size="12" class="medium" fill="#6B7280">Settings</text>
+      
+    
+    
+      <rect x="654" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="668" cy="31" r="4" fill="#10B981"/>
+      <text x="680" y="35" font-size="11" class="semi" fill="#111827">Today&apos;s Sales: ₹42,580</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(24, 75)">
+      <!-- Left: 9 Reports Sidebar (Width: 320) -->
+      <rect width="300" height="790" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <g transform="translate(20, 20)">
+        <text x="0" y="0" font-size="14" class="bold" fill="#111827">Available Reports</text>
+        <text x="0" y="16" font-size="10" class="regular" fill="#6B7280">Exportable CSV &amp; PDF summaries</text>
+
+        <g transform="translate(0, 35)">
+          
+                <g transform="translate(0, 0)">
+                  <rect width="260" height="38" rx="8" fill="#1F2937" stroke="#1F2937"/>
+                  <text x="14" y="24" font-size="11" class="bold" fill="#FFFFFF">1. Daily Sales Summary</text>
+                </g>
+              
+                <g transform="translate(0, 46)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">2. Product / Item Sales</text>
+                </g>
+              
+                <g transform="translate(0, 92)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">3. Category Breakdown</text>
+                </g>
+              
+                <g transform="translate(0, 138)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">4. Payment Mode Reconciliation</text>
+                </g>
+              
+                <g transform="translate(0, 184)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">5. Hourly Traffic & Sales</text>
+                </g>
+              
+                <g transform="translate(0, 230)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">6. Cashier Performance</text>
+                </g>
+              
+                <g transform="translate(0, 276)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">7. Discount & Void Audit</text>
+                </g>
+              
+                <g transform="translate(0, 322)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">8. GST Tax (CGST + SGST)</text>
+                </g>
+              
+                <g transform="translate(0, 368)">
+                  <rect width="260" height="38" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+                  <text x="14" y="24" font-size="11" class="semi" fill="#374151">9. End-of-Day Z-Report</text>
+                </g>
+              
+        </g>
+      </g>
+
+      <!-- Right: Report Detail Workspace (Width: 1070) -->
+      <g transform="translate(320, 0)">
+        <rect width="1070" height="790" rx="18" fill="#FFFFFF" stroke="#E5E7EB"/>
+        
+        <g transform="translate(30, 25)">
+          <!-- Report Header -->
+          <text x="0" y="0" font-size="16" class="bold" fill="#111827">Daily Sales Summary Report</text>
+          <text x="0" y="18" font-size="11" class="regular" fill="#6B7280">Store: Sign Laban Indiranagar · Period: Today</text>
+
+          <g transform="translate(750, -10)">
+            <rect x="0" y="0" width="120" height="34" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+            <text x="60" y="22" font-size="11" class="bold" fill="#374151" text-anchor="middle">📥 Export CSV</text>
+            
+            <rect x="130" y="0" width="120" height="34" rx="8" fill="#1F2937"/>
+            <text x="190" y="22" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">🖨️ Print Report</text>
+          </g>
+
+          <line x1="0" y1="40" x2="1010" y2="40" stroke="#E5E7EB"/>
+
+          <!-- Report Table Data -->
+          <g transform="translate(0, 60)">
+            <rect width="1010" height="36" rx="8" fill="#F9FAFB"/>
+            <text x="16" y="22" font-size="11" class="bold" fill="#4B5563">METRIC / LINE ITEM</text>
+            <text x="450" y="22" font-size="11" class="bold" fill="#4B5563">TRANSACTIONS</text>
+            <text x="750" y="22" font-size="11" class="bold" fill="#4B5563">PERCENTAGE</text>
+            <text x="990" y="22" font-size="11" class="bold" fill="#4B5563" text-anchor="end">TOTAL (₹)</text>
+
+            
+                  <g transform="translate(0, 36)">
+                    <rect width="1010" height="46" fill="#FFFFFF"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Gross Counter Sales</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">18 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">100%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹42,580.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 82)">
+                    <rect width="1010" height="46" fill="#FAFAFA"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Customer Discounts Granted</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">2 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">1.2%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">- ₹520.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 128)">
+                    <rect width="1010" height="46" fill="#FFFFFF"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Net Taxable Sales</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">18 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">98.8%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹42,060.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 174)">
+                    <rect width="1010" height="46" fill="#FAFAFA"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">CGST Collected (2.5%)</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">18 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">2.5%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹1,051.50</text>
+                  </g>
+                
+                  <g transform="translate(0, 220)">
+                    <rect width="1010" height="46" fill="#FFFFFF"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">SGST Collected (2.5%)</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">18 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">2.5%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹1,051.50</text>
+                  </g>
+                
+                  <g transform="translate(0, 266)">
+                    <rect width="1010" height="46" fill="#FAFAFA"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Total Round-off &amp; Final Revenue</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">18 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">100%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹44,163.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 312)">
+                    <rect width="1010" height="46" fill="#FFFFFF"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">UPI Collections</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">11 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">62.0%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹26,400.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 358)">
+                    <rect width="1010" height="46" fill="#FAFAFA"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Cash In Register Drawer</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">5 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">24.0%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹10,220.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 404)">
+                    <rect width="1010" height="46" fill="#FFFFFF"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Card Machine (EDC)</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">2 orders</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">14.0%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹5,960.00</text>
+                  </g>
+                
+                  <g transform="translate(0, 450)">
+                    <rect width="1010" height="46" fill="#FAFAFA"/>
+                    <line x1="0" y1="46" x2="1010" y2="46" stroke="#E5E7EB"/>
+                    <text x="16" y="28" font-size="12" class="bold" fill="#111827">Refunds / Voided Tickets</text>
+                    <text x="450" y="28" font-size="12" class="regular" fill="#4B5563">1 order</text>
+                    <text x="750" y="28" font-size="12" class="semi" fill="#374151">0.7%</text>
+                    <text x="990" y="28" font-size="13" class="bold" fill="#111827" text-anchor="end">₹320.00</text>
+                  </g>
+                
+          </g>
+        </g>
+      </g>
+    </g>
+  
+</svg>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- KDS Header -->
+    <rect x="0" y="0" width="1440" height="55" fill="#1F2937"/>
+    <g transform="translate(24, 15)">
+      <text x="0" y="16" font-size="14" class="bold" fill="#FFFFFF">KITCHEN DISPLAY (KDS)</text>
+      <text x="0" y="28" font-size="10" class="medium" fill="#9CA3AF">7 active orders in preparation pipeline</text>
+      
+      <!-- Station Filters -->
+      <g transform="translate(300, 0)">
+        <rect x="0" y="0" width="90" height="26" rx="6" fill="#374151"/>
+        <text x="45" y="17" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">All Stations</text>
+        <rect x="98" y="0" width="60" height="26" rx="6" fill="#111827"/>
+        <text x="128" y="17" font-size="10" class="semi" fill="#D1D5DB" text-anchor="middle">Grill (1)</text>
+        <rect x="165" y="0" width="60" height="26" rx="6" fill="#111827"/>
+        <text x="195" y="17" font-size="10" class="semi" fill="#D1D5DB" text-anchor="middle">Fry (0)</text>
+        <rect x="232" y="0" width="65" height="26" rx="6" fill="#111827"/>
+        <text x="264" y="17" font-size="10" class="semi" fill="#D1D5DB" text-anchor="middle">Cold (5)</text>
+        <rect x="304" y="0" width="65" height="26" rx="6" fill="#111827"/>
+        <text x="336" y="17" font-size="10" class="semi" fill="#D1D5DB" text-anchor="middle">Expo (7)</text>
+      </g>
+    </g>
+
+    <!-- Right Controls -->
+    <g transform="translate(1120, 15)">
+      <rect x="0" y="0" width="90" height="26" rx="6" fill="#374151"/>
+      <text x="45" y="17" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">Recall Last</text>
+      <rect x="100" y="0" width="105" height="26" rx="6" fill="#374151"/>
+      <text x="152" y="17" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">Bumped History</text>
+      <rect x="215" y="0" width="80" height="26" rx="6" fill="#374151"/>
+      <text x="255" y="17" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">🔒 Lock</text>
+    </g>
+
+    <!-- 3-Lane Touch Board (1440 width) -->
+    <g transform="translate(24, 75)">
+      <!-- Lane 1: Incoming Orders -->
+      <g transform="translate(0, 0)">
+        <rect width="450" height="800" rx="20" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect width="450" height="45" rx="20" fill="#F3F4F6"/>
+        <text x="20" y="28" font-size="13" class="bold" fill="#111827">1. Incoming Orders (3)</text>
+        <text x="430" y="28" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Drag to advance</text>
+
+        <!-- Ticket 1 -->
+        <g transform="translate(15, 60)">
+          <rect width="420" height="220" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <rect width="420" height="34" rx="14" fill="#FEF3C7"/>
+          <text x="15" y="22" font-size="13" class="bold" fill="#92400E">Token #106 · Dine-In (Table 04)</text>
+          <rect x="340" y="6" width="65" height="22" rx="11" fill="#FFFFFF"/>
+          <text x="372" y="21" font-size="11" class="bold" fill="#D97706" text-anchor="middle">⏱ 02:45</text>
+
+          <g transform="translate(15, 45)">
+            <text x="0" y="20" font-size="12" class="bold" fill="#111827">1x Qashtuta Nutella Pistachio</text>
+            <text x="15" y="34" font-size="10" class="regular" fill="#4B5563">Note: Extra crushed pistachio on top</text>
+            
+            <text x="0" y="60" font-size="12" class="bold" fill="#111827">2x Umm Ali Royal Claypot</text>
+            <text x="15" y="74" font-size="10" class="regular" fill="#4B5563">Station: Grill / Oven</text>
+
+            <text x="0" y="100" font-size="12" class="bold" fill="#111827">1x Egyptian Karkadeh Tea</text>
+            <text x="15" y="114" font-size="10" class="regular" fill="#4B5563">Station: Cold Beverage</text>
+          </g>
+
+          <!-- Action -->
+          <rect x="15" y="175" width="390" height="32" rx="8" fill="#1F2937"/>
+          <text x="210" y="195" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Start Cooking →</text>
+        </g>
+
+        <!-- Ticket 2 -->
+        <g transform="translate(15, 300)">
+          <rect width="420" height="180" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <rect width="420" height="34" rx="14" fill="#F3F4F6"/>
+          <text x="15" y="22" font-size="13" class="bold" fill="#111827">Token #107 · Takeaway</text>
+          <text x="405" y="22" font-size="11" class="bold" fill="#4B5563" text-anchor="end">⏱ 01:10</text>
+
+          <g transform="translate(15, 45)">
+            <text x="0" y="20" font-size="12" class="bold" fill="#111827">2x Saankorita Mango Cream</text>
+            <text x="0" y="50" font-size="12" class="bold" fill="#111827">1x Turkish Cardamom Coffee</text>
+          </g>
+
+          <rect x="15" y="135" width="390" height="32" rx="8" fill="#1F2937"/>
+          <text x="210" y="155" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Start Cooking →</text>
+        </g>
+      </g>
+
+      <!-- Lane 2: Cooking In Progress -->
+      <g transform="translate(470, 0)">
+        <rect width="450" height="800" rx="20" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect width="450" height="45" rx="20" fill="#FEF3C7"/>
+        <text x="20" y="28" font-size="13" class="bold" fill="#92400E">2. Cooking In Progress (2)</text>
+
+        <!-- Ticket 3: Cooking -->
+        <g transform="translate(15, 60)">
+          <rect width="420" height="210" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <rect width="420" height="34" rx="14" fill="#FEF3C7"/>
+          <text x="15" y="22" font-size="13" class="bold" fill="#92400E">Token #105 · Table 02</text>
+          <text x="405" y="22" font-size="11" class="bold" fill="#D97706" text-anchor="end">⏱ 06:14</text>
+
+          <g transform="translate(15, 45)">
+            <text x="0" y="20" font-size="12" class="bold" fill="#111827">☑ 1x Qashtuta Lotus Biscoff (Done)</text>
+            <text x="0" y="50" font-size="12" class="bold" fill="#111827">☐ 2x Umm Ali Royal Claypot (Baking)</text>
+          </g>
+
+          <!-- Advance -->
+          <rect x="15" y="165" width="390" height="32" rx="8" fill="#D97706"/>
+          <text x="210" y="185" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Mark Ready for Pass →</text>
+        </g>
+
+        <!-- Ticket 4: Delayed Rush -->
+        <g transform="translate(15, 290)">
+          <rect width="420" height="190" rx="14" fill="#FFFFFF" stroke="#EF4444" stroke-width="2"/>
+          <rect width="420" height="34" rx="14" fill="#FEE2E2"/>
+          <text x="15" y="22" font-size="13" class="bold" fill="#991B1B">Token #104 · RUSH DELAY (+8m)</text>
+          <text x="405" y="22" font-size="11" class="bold" fill="#DC2626" text-anchor="end">⏱ 14:22</text>
+
+          <g transform="translate(15, 45)">
+            <text x="0" y="20" font-size="12" class="bold" fill="#991B1B">☐ 3x Koushiri Rice Pudding</text>
+          </g>
+
+          <rect x="15" y="145" width="390" height="32" rx="8" fill="#DC2626"/>
+          <text x="210" y="165" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Priority Expedite → Ready</text>
+        </g>
+      </g>
+
+      <!-- Lane 3: Ready for Pass -->
+      <g transform="translate(940, 0)">
+        <rect width="450" height="800" rx="20" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <rect width="450" height="45" rx="20" fill="#D1FAE5"/>
+        <text x="20" y="28" font-size="13" class="bold" fill="#065F46">3. Ready for Pass / Pickup (2)</text>
+
+        <!-- Ticket 5: Ready -->
+        <g transform="translate(15, 60)">
+          <rect width="420" height="190" rx="14" fill="#FFFFFF" stroke="#10B981" stroke-width="2"/>
+          <rect width="420" height="34" rx="14" fill="#D1FAE5"/>
+          <text x="15" y="22" font-size="13" class="bold" fill="#065F46">Token #103 · Call Customer</text>
+          <text x="405" y="22" font-size="11" class="bold" fill="#059669" text-anchor="end">Ready (01:20)</text>
+
+          <g transform="translate(15, 45)">
+            <text x="0" y="20" font-size="12" class="semi" fill="#111827">☑ 2x Saankorita Classic Mango</text>
+            <text x="0" y="45" font-size="12" class="semi" fill="#111827">☑ 1x Sobia Coconut Milk Shake</text>
+          </g>
+
+          <!-- Bump Action -->
+          <rect x="15" y="145" width="390" height="32" rx="8" fill="#059669"/>
+          <text x="210" y="165" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">✓ Bump / Complete Order</text>
+        </g>
+      </g>
+    </g>
+  
+</svg>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="390" height="844" fill="#F3F4F6"/>
+  
+  
+    <!-- Mobile Status Bar -->
+    <rect x="0" y="0" width="390" height="44" fill="#FFFFFF"/>
+    <text x="24" y="30" font-size="12" class="bold" fill="#111827">9:41</text>
+    <circle cx="340" cy="26" r="3" fill="#111827"/>
+    <circle cx="348" cy="26" r="3" fill="#111827"/>
+    <rect x="356" y="21" width="18" height="10" rx="3" fill="none" stroke="#111827" stroke-width="1.5"/>
+    <rect x="358" y="23" width="12" height="6" rx="1.5" fill="#111827"/>
+
+    <!-- Mobile Nav Bar -->
+    <rect x="0" y="44" width="390" height="52" fill="#FFFFFF" stroke="#E5E7EB"/>
+    
+      <g transform="translate(16, 58)">
+        <circle cx="12" cy="12" r="12" fill="#F3F4F6"/>
+        <path d="M14 8L10 12L14 16" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    
+    <text x="52" y="76" font-size="15" class="bold" fill="#111827">Menu &amp; Customization</text>
+    <text x="370" y="76" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Table 05</text>
+  
+  
+  <!-- Category horizontal pill bar -->
+  <g transform="translate(20, 105)">
+    <rect x="0" y="0" width="60" height="28" rx="14" fill="#111827"/>
+    <text x="30" y="18" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">All</text>
+    <rect x="68" y="0" width="80" height="28" rx="14" fill="#F3F4F6"/>
+    <text x="108" y="18" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Qashtuta</text>
+    <rect x="156" y="0" width="90" height="28" rx="14" fill="#F3F4F6"/>
+    <text x="201" y="18" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Rice Pudding</text>
+    <rect x="254" y="0" width="70" height="28" rx="14" fill="#F3F4F6"/>
+    <text x="289" y="18" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Drinks</text>
+  </g>
+
+  <!-- Products list -->
+  <g transform="translate(20, 145)">
+    <!-- Product 1 -->
+    <rect x="0" y="0" width="350" height="96" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <rect x="12" y="12" width="72" height="72" rx="10" fill="#F3F4F6"/>
+    <text x="48" y="52" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    <text x="96" y="32" font-size="13" class="bold" fill="#111827">Qashtuta Classic</text>
+    <text x="96" y="48" font-size="11" class="regular" fill="#6B7280">Milk cake soaked in cream</text>
+    <text x="96" y="74" font-size="13" class="bold" fill="#111827">₹249</text>
+    <rect x="260" y="50" width="76" height="32" rx="16" fill="#111827"/>
+    <text x="298" y="70" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+
+    <!-- Product 2 (Active Customization Sheet Preview) -->
+    <rect x="0" y="110" width="350" height="96" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <rect x="12" y="122" width="72" height="72" rx="10" fill="#F3F4F6"/>
+    <text x="48" y="162" font-size="10" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    <text x="96" y="142" font-size="13" class="bold" fill="#111827">Lotus Biscoff Qashtuta</text>
+    <text x="96" y="158" font-size="11" class="regular" fill="#6B7280">Biscoff spread with biscuit crumbs</text>
+    <text x="96" y="184" font-size="13" class="bold" fill="#111827">₹299</text>
+    <rect x="260" y="160" width="76" height="32" rx="16" fill="#10B981"/>
+    <text x="298" y="180" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Customize</text>
+  </g>
+
+  <!-- Bottom Drawer Preview for Modifier -->
+  <g transform="translate(0, 480)">
+    <rect x="0" y="0" width="390" height="364" rx="24" fill="#FFFFFF" stroke="#D1D5DB"/>
+    <rect x="175" y="12" width="40" height="4" rx="2" fill="#D1D5DB"/>
+    <text x="24" y="46" font-size="15" class="bold" fill="#111827">Customize Lotus Biscoff</text>
+    <text x="24" y="64" font-size="11" class="regular" fill="#6B7280">Select sweetness, cream level and extra toppings</text>
+
+    <!-- Sweetness -->
+    <text x="24" y="98" font-size="12" class="bold" fill="#374151">Sweetness Level</text>
+    <g transform="translate(24, 108)">
+      <rect x="0" y="0" width="76" height="32" rx="8" fill="#F3F4F6"/>
+      <text x="38" y="20" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">30% (Low)</text>
+      <rect x="84" y="0" width="84" height="32" rx="8" fill="#111827"/>
+      <text x="126" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">50% (Std)</text>
+      <rect x="176" y="0" width="76" height="32" rx="8" fill="#F3F4F6"/>
+      <text x="214" y="20" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">100% (High)</text>
+    </g>
+
+    <!-- Free/Paid Toppings -->
+    <text x="24" y="172" font-size="12" class="bold" fill="#374151">Add Premium Toppings</text>
+    <g transform="translate(24, 184)">
+      <rect x="0" y="0" width="342" height="42" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <text x="16" y="25" font-size="12" class="semi" fill="#111827">Extra Biscoff Crunch</text>
+      <text x="326" y="25" font-size="12" class="bold" fill="#10B981" text-anchor="end">+₹40 [✓]</text>
+    </g>
+
+    <!-- Add to Cart CTA -->
+    <g transform="translate(24, 280)">
+      <rect x="0" y="0" width="342" height="50" rx="14" fill="#111827"/>
+      <text x="20" y="30" font-size="13" class="bold" fill="#FFFFFF">1 Item · ₹339</text>
+      <text x="322" y="30" font-size="13" class="bold" fill="#FFFFFF" text-anchor="end">Add to Order →</text>
+    </g>
+  </g>
+
+</svg>

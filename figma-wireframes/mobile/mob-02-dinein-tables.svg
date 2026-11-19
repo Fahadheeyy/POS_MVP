@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="390" height="844" fill="#F3F4F6"/>
+  
+  
+    <!-- Mobile Status Bar -->
+    <rect x="0" y="0" width="390" height="44" fill="#FFFFFF"/>
+    <text x="24" y="30" font-size="12" class="bold" fill="#111827">9:41</text>
+    <circle cx="340" cy="26" r="3" fill="#111827"/>
+    <circle cx="348" cy="26" r="3" fill="#111827"/>
+    <rect x="356" y="21" width="18" height="10" rx="3" fill="none" stroke="#111827" stroke-width="1.5"/>
+    <rect x="358" y="23" width="12" height="6" rx="1.5" fill="#111827"/>
+
+    <!-- Mobile Nav Bar -->
+    <rect x="0" y="44" width="390" height="52" fill="#FFFFFF" stroke="#E5E7EB"/>
+    
+    <text x="20" y="76" font-size="15" class="bold" fill="#111827">Dine-In Tables</text>
+    <text x="370" y="76" font-size="11" class="medium" fill="#6B7280" text-anchor="end">12 Tables · 4 Seated</text>
+  
+  
+  <!-- Sub-filter chips -->
+  <g transform="translate(20, 106)">
+    <rect x="0" y="0" width="60" height="30" rx="15" fill="#111827"/>
+    <text x="30" y="19" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">All (12)</text>
+    <rect x="68" y="0" width="80" height="30" rx="15" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="108" y="19" font-size="11" class="medium" fill="#4B5563" text-anchor="middle">Available (8)</text>
+    <rect x="156" y="0" width="76" height="30" rx="15" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="194" y="19" font-size="11" class="medium" fill="#4B5563" text-anchor="middle">Seated (3)</text>
+    <rect x="240" y="0" width="74" height="30" rx="15" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="277" y="19" font-size="11" class="medium" fill="#4B5563" text-anchor="middle">Billed (1)</text>
+  </g>
+
+  <!-- Tables Grid (2 cols) -->
+  <g transform="translate(20, 150)">
+    
+        <rect x="0" y="0" width="170" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="14" y="28" font-size="14" class="bold" fill="#111827">Table 01</text>
+        <rect x="95" y="14" width="62" height="18" rx="9" fill="#ECFDF5"/>
+        <text x="126" y="27" font-size="9" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+        <text x="14" y="54" font-size="11" class="regular" fill="#6B7280">4 Guests</text>
+        <text x="14" y="72" font-size="10" class="medium" fill="#9CA3AF">Active: 18m</text>
+        <line x1="14" y1="86" x2="156" y2="86" stroke="#F3F4F6"/>
+        <text x="14" y="104" font-size="12" class="bold" fill="#111827">₹840</text>
+        <text x="156" y="104" font-size="10" class="bold" fill="#3B82F6" text-anchor="end">View →</text>
+      
+        <rect x="180" y="0" width="170" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="194" y="28" font-size="14" class="bold" fill="#111827">Table 02</text>
+        <rect x="275" y="14" width="62" height="18" rx="9" fill="#F9FAFB"/>
+        <text x="306" y="27" font-size="9" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+        <text x="194" y="54" font-size="11" class="regular" fill="#6B7280">2 Guests</text>
+        <text x="194" y="72" font-size="10" class="medium" fill="#9CA3AF">Active: Empty</text>
+        <line x1="194" y1="86" x2="336" y2="86" stroke="#F3F4F6"/>
+        <text x="194" y="104" font-size="12" class="bold" fill="#111827">-</text>
+        <text x="336" y="104" font-size="10" class="bold" fill="#3B82F6" text-anchor="end">View →</text>
+      
+        <rect x="0" y="135" width="170" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="14" y="163" font-size="14" class="bold" fill="#111827">Table 03</text>
+        <rect x="95" y="149" width="62" height="18" rx="9" fill="#ECFDF5"/>
+        <text x="126" y="162" font-size="9" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+        <text x="14" y="189" font-size="11" class="regular" fill="#6B7280">6 Guests</text>
+        <text x="14" y="207" font-size="10" class="medium" fill="#9CA3AF">Active: 34m</text>
+        <line x1="14" y1="221" x2="156" y2="221" stroke="#F3F4F6"/>
+        <text x="14" y="239" font-size="12" class="bold" fill="#111827">₹1,420</text>
+        <text x="156" y="239" font-size="10" class="bold" fill="#3B82F6" text-anchor="end">View →</text>
+      
+        <rect x="180" y="135" width="170" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="194" y="163" font-size="14" class="bold" fill="#111827">Table 04</text>
+        <rect x="275" y="149" width="62" height="18" rx="9" fill="#FEF3C7"/>
+        <text x="306" y="162" font-size="9" class="bold" fill="#F59E0B" text-anchor="middle">Billed</text>
+        <text x="194" y="189" font-size="11" class="regular" fill="#6B7280">4 Guests</text>
+        <text x="194" y="207" font-size="10" class="medium" fill="#9CA3AF">Active: 45m</text>
+        <line x1="194" y1="221" x2="336" y2="221" stroke="#F3F4F6"/>
+        <text x="194" y="239" font-size="12" class="bold" fill="#111827">₹620</text>
+        <text x="336" y="239" font-size="10" class="bold" fill="#3B82F6" text-anchor="end">View →</text>
+      
+        <rect x="0" y="270" width="170" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="14" y="298" font-size="14" class="bold" fill="#111827">Table 05</text>
+        <rect x="95" y="284" width="62" height="18" rx="9" fill="#F9FAFB"/>
+        <text x="126" y="297" font-size="9" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+        <text x="14" y="324" font-size="11" class="regular" fill="#6B7280">2 Guests</text>
+        <text x="14" y="342" font-size="10" class="medium" fill="#9CA3AF">Active: Empty</text>
+        <line x1="14" y1="356" x2="156" y2="356" stroke="#F3F4F6"/>
+        <text x="14" y="374" font-size="12" class="bold" fill="#111827">-</text>
+        <text x="156" y="374" font-size="10" class="bold" fill="#3B82F6" text-anchor="end">View →</text>
+      
+        <rect x="180" y="270" width="170" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="194" y="298" font-size="14" class="bold" fill="#111827">Table 06</text>
+        <rect x="275" y="284" width="62" height="18" rx="9" fill="#F9FAFB"/>
+        <text x="306" y="297" font-size="9" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+        <text x="194" y="324" font-size="11" class="regular" fill="#6B7280">4 Guests</text>
+        <text x="194" y="342" font-size="10" class="medium" fill="#9CA3AF">Active: Empty</text>
+        <line x1="194" y1="356" x2="336" y2="356" stroke="#F3F4F6"/>
+        <text x="194" y="374" font-size="12" class="bold" fill="#111827">-</text>
+        <text x="336" y="374" font-size="10" class="bold" fill="#3B82F6" text-anchor="end">View →</text>
+      
+  </g>
+
+  <!-- Bottom Action Button -->
+  <g transform="translate(20, 755)">
+    <rect x="0" y="0" width="350" height="50" rx="14" fill="#111827"/>
+    <text x="175" y="31" font-size="14" class="bold" fill="#FFFFFF" text-anchor="middle">+ New Dine-in Table Order</text>
+  </g>
+
+</svg>

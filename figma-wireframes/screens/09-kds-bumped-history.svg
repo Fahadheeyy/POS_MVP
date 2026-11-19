@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Top Header -->
+    <rect x="0" y="0" width="1440" height="55" fill="#1F2937"/>
+    <g transform="translate(24, 15)">
+      <text x="0" y="16" font-size="14" class="bold" fill="#FFFFFF">KDS · Bumped Order History</text>
+      <text x="0" y="28" font-size="10" class="medium" fill="#9CA3AF">Completed tickets from the current shift · Click to recall back to active board</text>
+    </g>
+    <g transform="translate(1280, 15)">
+      <rect x="0" y="0" width="135" height="26" rx="6" fill="#374151"/>
+      <text x="67" y="17" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">← Back to Board</text>
+    </g>
+
+    <!-- Content Canvas -->
+    <g transform="translate(24, 80)">
+      <!-- Search & Filter Row -->
+      <rect x="0" y="0" width="400" height="38" rx="19" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="35" y="24" font-size="12" class="regular" fill="#9CA3AF">Search bumped order or token #...</text>
+
+      <g transform="translate(420, 4)">
+        <rect x="0" y="0" width="120" height="30" rx="15" fill="#1F2937"/>
+        <text x="60" y="19" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Last 2 Hours (12)</text>
+        <rect x="130" y="0" width="100" height="30" rx="15" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="180" y="19" font-size="11" class="semi" fill="#374151" text-anchor="middle">All Shift (24)</text>
+      </g>
+
+      <!-- Bumped Tickets Grid -->
+      <g transform="translate(0, 60)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="450" height="200" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <rect width="450" height="38" rx="16" fill="#F3F4F6"/>
+                <text x="16" y="24" font-size="13" class="bold" fill="#111827">Token #102 · Dine-In (Table 06)</text>
+                <text x="434" y="24" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Bumped 10:48 PM</text>
+
+                <g transform="translate(16, 52)">
+                  <rect x="0" y="0" width="100" height="20" rx="4" fill="#D1FAE5"/>
+                  <text x="50" y="14" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Prep: 04m 12s</text>
+                  
+                  <text x="0" y="45" font-size="12" class="semi" fill="#111827">1x Umm Ali Royal Claypot, 2x Egyptian Karkadeh Tea</text>
+                  <text x="0" y="65" font-size="10" class="regular" fill="#9CA3AF">Fulfillment channel: POS Express Counter</text>
+                </g>
+
+                <rect x="16" y="145" width="418" height="36" rx="8" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+                <text x="225" y="167" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">↺ Recall Ticket Back to Active Board</text>
+              </g>
+            
+              <g transform="translate(470, 0)">
+                <rect width="450" height="200" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <rect width="450" height="38" rx="16" fill="#F3F4F6"/>
+                <text x="16" y="24" font-size="13" class="bold" fill="#111827">Token #101 · Takeaway</text>
+                <text x="434" y="24" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Bumped 10:35 PM</text>
+
+                <g transform="translate(16, 52)">
+                  <rect x="0" y="0" width="100" height="20" rx="4" fill="#D1FAE5"/>
+                  <text x="50" y="14" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Prep: 03m 45s</text>
+                  
+                  <text x="0" y="45" font-size="12" class="semi" fill="#111827">2x Qashtuta Nutella Pistachio, 1x Turkish Cardamom Coffee</text>
+                  <text x="0" y="65" font-size="10" class="regular" fill="#9CA3AF">Fulfillment channel: POS Express Counter</text>
+                </g>
+
+                <rect x="16" y="145" width="418" height="36" rx="8" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+                <text x="225" y="167" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">↺ Recall Ticket Back to Active Board</text>
+              </g>
+            
+              <g transform="translate(940, 0)">
+                <rect width="450" height="200" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <rect width="450" height="38" rx="16" fill="#F3F4F6"/>
+                <text x="16" y="24" font-size="13" class="bold" fill="#111827">Token #100 · Dine-In (Table 03)</text>
+                <text x="434" y="24" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Bumped 10:22 PM</text>
+
+                <g transform="translate(16, 52)">
+                  <rect x="0" y="0" width="100" height="20" rx="4" fill="#D1FAE5"/>
+                  <text x="50" y="14" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Prep: 05m 10s</text>
+                  
+                  <text x="0" y="45" font-size="12" class="semi" fill="#111827">3x Koushiri Rice Pudding, 1x Sobia Coconut Milk Shake</text>
+                  <text x="0" y="65" font-size="10" class="regular" fill="#9CA3AF">Fulfillment channel: POS Express Counter</text>
+                </g>
+
+                <rect x="16" y="145" width="418" height="36" rx="8" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+                <text x="225" y="167" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">↺ Recall Ticket Back to Active Board</text>
+              </g>
+            
+              <g transform="translate(0, 220)">
+                <rect width="450" height="200" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <rect width="450" height="38" rx="16" fill="#F3F4F6"/>
+                <text x="16" y="24" font-size="13" class="bold" fill="#111827">Token #99 · Takeaway</text>
+                <text x="434" y="24" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Bumped 10:11 PM</text>
+
+                <g transform="translate(16, 52)">
+                  <rect x="0" y="0" width="100" height="20" rx="4" fill="#D1FAE5"/>
+                  <text x="50" y="14" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Prep: 02m 58s</text>
+                  
+                  <text x="0" y="45" font-size="12" class="semi" fill="#111827">1x Saankorita Classic Mango Cream</text>
+                  <text x="0" y="65" font-size="10" class="regular" fill="#9CA3AF">Fulfillment channel: POS Express Counter</text>
+                </g>
+
+                <rect x="16" y="145" width="418" height="36" rx="8" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+                <text x="225" y="167" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">↺ Recall Ticket Back to Active Board</text>
+              </g>
+            
+              <g transform="translate(470, 220)">
+                <rect width="450" height="200" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <rect width="450" height="38" rx="16" fill="#F3F4F6"/>
+                <text x="16" y="24" font-size="13" class="bold" fill="#111827">Token #98 · Dine-In (Table 01)</text>
+                <text x="434" y="24" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Bumped 09:55 PM</text>
+
+                <g transform="translate(16, 52)">
+                  <rect x="0" y="0" width="100" height="20" rx="4" fill="#D1FAE5"/>
+                  <text x="50" y="14" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Prep: 04m 30s</text>
+                  
+                  <text x="0" y="45" font-size="12" class="semi" fill="#111827">2x Umm Ali Royal Claypot, 2x Turkish Coffee</text>
+                  <text x="0" y="65" font-size="10" class="regular" fill="#9CA3AF">Fulfillment channel: POS Express Counter</text>
+                </g>
+
+                <rect x="16" y="145" width="418" height="36" rx="8" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+                <text x="225" y="167" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">↺ Recall Ticket Back to Active Board</text>
+              </g>
+            
+              <g transform="translate(940, 220)">
+                <rect width="450" height="200" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <rect width="450" height="38" rx="16" fill="#F3F4F6"/>
+                <text x="16" y="24" font-size="13" class="bold" fill="#111827">Token #97 · Takeaway</text>
+                <text x="434" y="24" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Bumped 09:40 PM</text>
+
+                <g transform="translate(16, 52)">
+                  <rect x="0" y="0" width="100" height="20" rx="4" fill="#D1FAE5"/>
+                  <text x="50" y="14" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Prep: 03m 15s</text>
+                  
+                  <text x="0" y="45" font-size="12" class="semi" fill="#111827">1x Qashtuta Lotus Biscoff</text>
+                  <text x="0" y="65" font-size="10" class="regular" fill="#9CA3AF">Fulfillment channel: POS Express Counter</text>
+                </g>
+
+                <rect x="16" y="145" width="418" height="36" rx="8" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+                <text x="225" y="167" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">↺ Recall Ticket Back to Active Board</text>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

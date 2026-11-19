@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Top Header -->
+    <rect x="0" y="0" width="1440" height="55" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="26" rx="4" fill="#1F2937"/>
+      <text x="12" y="17" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      <text x="95" y="18" font-size="13" class="bold" fill="#111827">Developer &amp; Sales Admin Hub · Multi-Tenant Control Center</text>
+    </g>
+    <g transform="translate(1180, 15)">
+      <rect x="0" y="0" width="110" height="26" rx="13" fill="#D1FAE5"/>
+      <text x="55" y="17" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Live Operations</text>
+      <rect x="120" y="0" width="120" height="26" rx="13" fill="#F3F4F6"/>
+      <text x="180" y="17" font-size="10" class="semi" fill="#374151" text-anchor="middle">Role: Admin (0000)</text>
+    </g>
+
+    <!-- Sub-Header: Quick Jumpers Bar -->
+    <g transform="translate(0, 55)">
+      <rect width="1440" height="45" fill="#111827"/>
+      <text x="24" y="27" font-size="12" class="semi" fill="#D1D5DB">Active Terminal Outlet: <tspan class="bold" fill="#FFFFFF">Sign Laban · Indiranagar</tspan> (GROWTH PLAN)</text>
+
+      <!-- Jumpers -->
+      <g transform="translate(850, 8)">
+        <rect x="0" y="0" width="130" height="28" rx="6" fill="#1F2937" stroke="#374151"/>
+        <text x="65" y="18" font-size="11" class="semi" fill="#FFFFFF" text-anchor="middle">🏪 Launch POS</text>
+
+        <rect x="140" y="0" width="130" height="28" rx="6" fill="#1F2937" stroke="#374151"/>
+        <text x="205" y="18" font-size="11" class="semi" fill="#FFFFFF" text-anchor="middle">🍳 Launch KDS</text>
+
+        <rect x="280" y="0" width="140" height="28" rx="6" fill="#1F2937" stroke="#374151"/>
+        <text x="350" y="18" font-size="11" class="semi" fill="#FFFFFF" text-anchor="middle">💼 Manager Console</text>
+
+        <rect x="430" y="0" width="130" height="28" rx="6" fill="#1F2937" stroke="#374151"/>
+        <text x="495" y="18" font-size="11" class="semi" fill="#FFFFFF" text-anchor="middle">👑 Owner Reports</text>
+      </g>
+    </g>
+
+    <!-- Main Workspace (Tabs) -->
+    <g transform="translate(24, 120)">
+      <!-- Tab Bar -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="230" height="36" rx="10" fill="#1F2937"/>
+        <text x="115" y="23" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">Client Businesses &amp; Outlets (4)</text>
+
+        <rect x="240" y="0" width="220" height="36" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="350" y="23" font-size="12" class="semi" fill="#374151" text-anchor="middle">Feature Flags &amp; Customisation</text>
+
+        <rect x="470" y="0" width="240" height="36" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="590" y="23" font-size="12" class="semi" fill="#374151" text-anchor="middle">Diagnostics &amp; Mock Engine</text>
+        
+        <text x="1390" y="23" font-size="12" class="bold" fill="#111827" text-anchor="end">Platform GMV: ₹1,28,450.00 · Total Orders: 54</text>
+      </g>
+
+      <!-- Action Search Bar -->
+      <g transform="translate(0, 50)">
+        <rect width="1390" height="50" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="24" y="30" font-size="12" class="regular" fill="#9CA3AF">Search brand, outlet name, address, or category...</text>
+        
+        <!-- Filter Dropdown -->
+        <rect x="450" y="8" width="130" height="34" rx="8" fill="#F3F4F6"/>
+        <text x="515" y="29" font-size="11" class="semi" fill="#374151" text-anchor="middle">Tier: All Tiers ▾</text>
+
+        <!-- Right Buttons -->
+        <g transform="translate(1060, 8)">
+          <rect x="0" y="0" width="120" height="34" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="60" y="21" font-size="11" class="bold" fill="#374151" text-anchor="middle">Export JSON</text>
+          
+          <rect x="130" y="0" width="190" height="34" rx="8" fill="#1F2937"/>
+          <text x="225" y="21" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Onboard New Business</text>
+        </g>
+      </g>
+
+      <!-- Outlets Grid (4 Cards) -->
+      <g transform="translate(0, 115)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="680" height="225" rx="18" fill="#FFFFFF" stroke="#1F2937" stroke-width="2"/>
+                
+                <!-- Brand Badge -->
+                <rect x="20" y="20" width="46" height="46" rx="12" fill="#1F2937"/>
+                <text x="43" y="48" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">SI</text>
+
+                <text x="78" y="38" font-size="15" class="bold" fill="#111827">Sign Laban · Indiranagar</text>
+                <text x="78" y="55" font-size="11" class="regular" fill="#6B7280">Dessert QSR · Slug: sign laban</text>
+
+                <rect x="540" y="20" width="120" height="24" rx="12" fill="#D1FAE5"/><text x="600" y="36" font-size="10" class="bold" fill="#065F46" text-anchor="middle">✓ Active Outlet</text>
+
+                <!-- Address Box -->
+                <rect x="20" y="78" width="640" height="45" rx="10" fill="#F9FAFB"/>
+                <text x="32" y="98" font-size="11" class="medium" fill="#374151">📍 12th Main Rd, Indiranagar, Bengaluru</text>
+                <text x="32" y="112" font-size="10" class="mono" fill="#6B7280">GSTIN: 29AABCS1429B1Z8 · Tax: 5% QSR</text>
+
+                <!-- Features Badges -->
+                <g transform="translate(20, 134)">
+                  <rect x="0" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="37" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">KDS Active</text>
+                  <rect x="85" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="122" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">GST 5%</text>
+                  <rect x="170" y="0" width="90" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="215" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Add-ons Engine</text>
+                  <rect x="270" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="307" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Auto-Print</text>
+                </g>
+
+                <!-- Bottom Buttons -->
+                <g transform="translate(20, 172)">
+                  <rect width="180" height="34" rx="8" fill="#D1FAE5"/><text x="90" y="21" font-size="11" class="bold" fill="#065F46" text-anchor="middle">✓ Active in System</text>
+                  <rect x="190" y="0" width="110" height="34" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="245" y="21" font-size="11" class="bold" fill="#374151" text-anchor="middle">Customise</text>
+
+                  <rect x="310" y="0" width="160" height="34" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+                  <text x="390" y="21" font-size="11" class="bold" fill="#92400E" text-anchor="middle">✨ Seed Sales Demo</text>
+                </g>
+              </g>
+            
+              <g transform="translate(710, 0)">
+                <rect width="680" height="225" rx="18" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+                
+                <!-- Brand Badge -->
+                <rect x="20" y="20" width="46" height="46" rx="12" fill="#1F2937"/>
+                <text x="43" y="48" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">SI</text>
+
+                <text x="78" y="38" font-size="15" class="bold" fill="#111827">Sign Laban · Koramangala</text>
+                <text x="78" y="55" font-size="11" class="regular" fill="#6B7280">Express QSR · Slug: sign laban</text>
+
+                <rect x="570" y="20" width="90" height="24" rx="12" fill="#F3F4F6"/><text x="615" y="36" font-size="10" class="bold" fill="#374151" text-anchor="middle">STARTER</text>
+
+                <!-- Address Box -->
+                <rect x="20" y="78" width="640" height="45" rx="10" fill="#F9FAFB"/>
+                <text x="32" y="98" font-size="11" class="medium" fill="#374151">📍 80 Feet Rd, 4th Block, Koramangala, BLR</text>
+                <text x="32" y="112" font-size="10" class="mono" fill="#6B7280">GSTIN: 29AABCS1429B1Z8 · Tax: 5% QSR</text>
+
+                <!-- Features Badges -->
+                <g transform="translate(20, 134)">
+                  <rect x="0" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="37" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">KDS Active</text>
+                  <rect x="85" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="122" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">GST 5%</text>
+                  <rect x="170" y="0" width="90" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="215" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Add-ons Engine</text>
+                  <rect x="270" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="307" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Auto-Print</text>
+                </g>
+
+                <!-- Bottom Buttons -->
+                <g transform="translate(20, 172)">
+                  <rect width="180" height="34" rx="8" fill="#1F2937"/><text x="90" y="21" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Switch to this Outlet</text>
+                  <rect x="190" y="0" width="110" height="34" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="245" y="21" font-size="11" class="bold" fill="#374151" text-anchor="middle">Customise</text>
+
+                  <rect x="310" y="0" width="160" height="34" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+                  <text x="390" y="21" font-size="11" class="bold" fill="#92400E" text-anchor="middle">✨ Seed Sales Demo</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 240)">
+                <rect width="680" height="225" rx="18" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+                
+                <!-- Brand Badge -->
+                <rect x="20" y="20" width="46" height="46" rx="12" fill="#1F2937"/>
+                <text x="43" y="48" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">KE</text>
+
+                <text x="78" y="38" font-size="15" class="bold" fill="#111827">Keventers · Brigade Road</text>
+                <text x="78" y="55" font-size="11" class="regular" fill="#6B7280">Beverages & Dairy · Slug: keventers</text>
+
+                <rect x="570" y="20" width="90" height="24" rx="12" fill="#F3F4F6"/><text x="615" y="36" font-size="10" class="bold" fill="#374151" text-anchor="middle">GROWTH</text>
+
+                <!-- Address Box -->
+                <rect x="20" y="78" width="640" height="45" rx="10" fill="#F9FAFB"/>
+                <text x="32" y="98" font-size="11" class="medium" fill="#374151">📍 Brigade Rd, Ashok Nagar, Bengaluru</text>
+                <text x="32" y="112" font-size="10" class="mono" fill="#6B7280">GSTIN: 29AAACK4921C1Z4 · Tax: 5% QSR</text>
+
+                <!-- Features Badges -->
+                <g transform="translate(20, 134)">
+                  <rect x="0" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="37" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">KDS Active</text>
+                  <rect x="85" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="122" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">GST 5%</text>
+                  <rect x="170" y="0" width="90" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="215" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Add-ons Engine</text>
+                  <rect x="270" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="307" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Auto-Print</text>
+                </g>
+
+                <!-- Bottom Buttons -->
+                <g transform="translate(20, 172)">
+                  <rect width="180" height="34" rx="8" fill="#1F2937"/><text x="90" y="21" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Switch to this Outlet</text>
+                  <rect x="190" y="0" width="110" height="34" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="245" y="21" font-size="11" class="bold" fill="#374151" text-anchor="middle">Customise</text>
+
+                  <rect x="310" y="0" width="160" height="34" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+                  <text x="390" y="21" font-size="11" class="bold" fill="#92400E" text-anchor="middle">✨ Seed Sales Demo</text>
+                </g>
+              </g>
+            
+              <g transform="translate(710, 240)">
+                <rect width="680" height="225" rx="18" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+                
+                <!-- Brand Badge -->
+                <rect x="20" y="20" width="46" height="46" rx="12" fill="#1F2937"/>
+                <text x="43" y="48" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">BE</text>
+
+                <text x="78" y="38" font-size="15" class="bold" fill="#111827">The Belgian Waffle Co</text>
+                <text x="78" y="55" font-size="11" class="regular" fill="#6B7280">Waffles & Bakery · Slug: belgian waffle</text>
+
+                <rect x="570" y="20" width="90" height="24" rx="12" fill="#F3F4F6"/><text x="615" y="36" font-size="10" class="bold" fill="#374151" text-anchor="middle">ENTERPRISE</text>
+
+                <!-- Address Box -->
+                <rect x="20" y="78" width="640" height="45" rx="10" fill="#F9FAFB"/>
+                <text x="32" y="98" font-size="11" class="medium" fill="#374151">📍 Phoenix Marketcity, Whitefield, Bengaluru</text>
+                <text x="32" y="112" font-size="10" class="mono" fill="#6B7280">GSTIN: 29AABCT8812D1Z9 · Tax: 5% QSR</text>
+
+                <!-- Features Badges -->
+                <g transform="translate(20, 134)">
+                  <rect x="0" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="37" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">KDS Active</text>
+                  <rect x="85" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="122" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">GST 5%</text>
+                  <rect x="170" y="0" width="90" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="215" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Add-ons Engine</text>
+                  <rect x="270" y="0" width="75" height="20" rx="4" fill="#E5E7EB"/>
+                  <text x="307" y="14" font-size="9" class="bold" fill="#374151" text-anchor="middle">Auto-Print</text>
+                </g>
+
+                <!-- Bottom Buttons -->
+                <g transform="translate(20, 172)">
+                  <rect width="180" height="34" rx="8" fill="#1F2937"/><text x="90" y="21" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Switch to this Outlet</text>
+                  <rect x="190" y="0" width="110" height="34" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="245" y="21" font-size="11" class="bold" fill="#374151" text-anchor="middle">Customise</text>
+
+                  <rect x="310" y="0" width="160" height="34" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+                  <text x="390" y="21" font-size="11" class="bold" fill="#92400E" text-anchor="middle">✨ Seed Sales Demo</text>
+                </g>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

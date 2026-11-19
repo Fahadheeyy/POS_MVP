@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="768" viewBox="0 0 1024 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1024" height="768" fill="#F3F4F6"/>
+  
+  
+    <rect x="0" y="0" width="1024" height="60" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 16)">
+      <rect x="0" y="0" width="76" height="28" rx="6" fill="#1F2937"/>
+      <text x="38" y="18" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">POS.BITS</text>
+      <text x="96" y="14" font-size="13" class="bold" fill="#111827">Tablet Dine-In Floor Plan</text>
+      <text x="96" y="26" font-size="10" class="medium" fill="#6B7280">Indiranagar · Main Floor</text>
+    </g>
+
+    <!-- Tab navigation -->
+    <g transform="translate(360, 22)">
+      
+          <text x="0" y="16" font-size="12" class="bold" fill="#111827">Dine-In Tables</text>
+          <line x1="0" y1="22" x2="84" y2="22" stroke="#111827" stroke-width="2"/>
+        
+          <text x="110" y="16" font-size="12" class="medium" fill="#6B7280">New Order</text>
+          
+        
+          <text x="220" y="16" font-size="12" class="medium" fill="#6B7280">Orders Log</text>
+          
+        
+          <text x="330" y="16" font-size="12" class="medium" fill="#6B7280">Shift</text>
+          
+        
+    </g>
+
+    <!-- Right Profile -->
+    <g transform="translate(880, 14)">
+      <rect x="0" y="0" width="120" height="32" rx="16" fill="#F3F4F6"/>
+      <circle cx="16" cy="16" r="10" fill="#111827"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="16" font-size="11" class="bold" fill="#111827">Priya S.</text>
+      <text x="34" y="26" font-size="8" class="regular" fill="#6B7280">Cashier</text>
+    </g>
+  
+  
+  <!-- Main layout -->
+  <g transform="translate(24, 80)">
+    <!-- KPI Header bar -->
+    <rect x="0" y="0" width="976" height="48" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="20" y="29" font-size="13" class="bold" fill="#111827">Live Seating Capacity: 16 / 48 Seats Seated (33%)</text>
+    <g transform="translate(680, 10)">
+      <circle cx="10" cy="14" r="5" fill="#10B981"/>
+      <text x="22" y="18" font-size="11" class="medium" fill="#374151">8 Available</text>
+      <circle cx="110" cy="14" r="5" fill="#3B82F6"/>
+      <text x="122" y="18" font-size="11" class="medium" fill="#374151">3 Seated</text>
+      <circle cx="200" cy="14" r="5" fill="#F59E0B"/>
+      <text x="212" y="18" font-size="11" class="medium" fill="#374151">1 Billed</text>
+    </g>
+
+    <!-- 12 Table Grid (4 cols x 3 rows) -->
+    <g transform="translate(0, 68)">
+      
+          <rect x="0" y="0" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="16" y="32" font-size="15" class="bold" fill="#111827">Table 01</text>
+          <rect x="140" y="16" width="76" height="22" rx="11" fill="#ECFDF5"/>
+          <text x="178" y="31" font-size="10" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+          <text x="16" y="60" font-size="12" class="regular" fill="#6B7280">Seating: 4 Pax</text>
+          <text x="16" y="80" font-size="11" class="medium" fill="#9CA3AF">Active: 18m</text>
+          <text x="16" y="104" font-size="14" class="bold" fill="#111827">Order: ₹840</text>
+          <line x1="16" y1="120" x2="216" y2="120" stroke="#F3F4F6"/>
+          <text x="16" y="142" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="248" y="0" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="264" y="32" font-size="15" class="bold" fill="#111827">Table 02</text>
+          <rect x="388" y="16" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="426" y="31" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="264" y="60" font-size="12" class="regular" fill="#6B7280">Seating: 2 Pax</text>
+          <text x="264" y="80" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="264" y="104" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="264" y1="120" x2="464" y2="120" stroke="#F3F4F6"/>
+          <text x="264" y="142" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="496" y="0" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="512" y="32" font-size="15" class="bold" fill="#111827">Table 03</text>
+          <rect x="636" y="16" width="76" height="22" rx="11" fill="#ECFDF5"/>
+          <text x="674" y="31" font-size="10" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+          <text x="512" y="60" font-size="12" class="regular" fill="#6B7280">Seating: 6 Pax</text>
+          <text x="512" y="80" font-size="11" class="medium" fill="#9CA3AF">Active: 34m</text>
+          <text x="512" y="104" font-size="14" class="bold" fill="#111827">Order: ₹1,420</text>
+          <line x1="512" y1="120" x2="712" y2="120" stroke="#F3F4F6"/>
+          <text x="512" y="142" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="744" y="0" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="760" y="32" font-size="15" class="bold" fill="#111827">Table 04</text>
+          <rect x="884" y="16" width="76" height="22" rx="11" fill="#FEF3C7"/>
+          <text x="922" y="31" font-size="10" class="bold" fill="#D97706" text-anchor="middle">Billed</text>
+          <text x="760" y="60" font-size="12" class="regular" fill="#6B7280">Seating: 4 Pax</text>
+          <text x="760" y="80" font-size="11" class="medium" fill="#9CA3AF">Active: 45m</text>
+          <text x="760" y="104" font-size="14" class="bold" fill="#111827">Order: ₹620</text>
+          <line x1="760" y1="120" x2="960" y2="120" stroke="#F3F4F6"/>
+          <text x="760" y="142" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="0" y="180" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="16" y="212" font-size="15" class="bold" fill="#111827">Table 05</text>
+          <rect x="140" y="196" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="178" y="211" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="16" y="240" font-size="12" class="regular" fill="#6B7280">Seating: 2 Pax</text>
+          <text x="16" y="260" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="16" y="284" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="16" y1="300" x2="216" y2="300" stroke="#F3F4F6"/>
+          <text x="16" y="322" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="248" y="180" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="264" y="212" font-size="15" class="bold" fill="#111827">Table 06</text>
+          <rect x="388" y="196" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="426" y="211" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="264" y="240" font-size="12" class="regular" fill="#6B7280">Seating: 4 Pax</text>
+          <text x="264" y="260" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="264" y="284" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="264" y1="300" x2="464" y2="300" stroke="#F3F4F6"/>
+          <text x="264" y="322" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="496" y="180" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="512" y="212" font-size="15" class="bold" fill="#111827">Table 07</text>
+          <rect x="636" y="196" width="76" height="22" rx="11" fill="#ECFDF5"/>
+          <text x="674" y="211" font-size="10" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+          <text x="512" y="240" font-size="12" class="regular" fill="#6B7280">Seating: 4 Pax</text>
+          <text x="512" y="260" font-size="11" class="medium" fill="#9CA3AF">Active: 12m</text>
+          <text x="512" y="284" font-size="14" class="bold" fill="#111827">Order: ₹510</text>
+          <line x1="512" y1="300" x2="712" y2="300" stroke="#F3F4F6"/>
+          <text x="512" y="322" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="744" y="180" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="760" y="212" font-size="15" class="bold" fill="#111827">Table 08</text>
+          <rect x="884" y="196" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="922" y="211" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="760" y="240" font-size="12" class="regular" fill="#6B7280">Seating: 8 Pax</text>
+          <text x="760" y="260" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="760" y="284" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="760" y1="300" x2="960" y2="300" stroke="#F3F4F6"/>
+          <text x="760" y="322" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="0" y="360" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="16" y="392" font-size="15" class="bold" fill="#111827">Table 09</text>
+          <rect x="140" y="376" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="178" y="391" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="16" y="420" font-size="12" class="regular" fill="#6B7280">Seating: 2 Pax</text>
+          <text x="16" y="440" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="16" y="464" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="16" y1="480" x2="216" y2="480" stroke="#F3F4F6"/>
+          <text x="16" y="502" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="248" y="360" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="264" y="392" font-size="15" class="bold" fill="#111827">Table 10</text>
+          <rect x="388" y="376" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="426" y="391" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="264" y="420" font-size="12" class="regular" fill="#6B7280">Seating: 4 Pax</text>
+          <text x="264" y="440" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="264" y="464" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="264" y1="480" x2="464" y2="480" stroke="#F3F4F6"/>
+          <text x="264" y="502" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="496" y="360" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="512" y="392" font-size="15" class="bold" fill="#111827">Table 11</text>
+          <rect x="636" y="376" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="674" y="391" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="512" y="420" font-size="12" class="regular" fill="#6B7280">Seating: 4 Pax</text>
+          <text x="512" y="440" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="512" y="464" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="512" y1="480" x2="712" y2="480" stroke="#F3F4F6"/>
+          <text x="512" y="502" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+          <rect x="744" y="360" width="232" height="162" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="760" y="392" font-size="15" class="bold" fill="#111827">Table 12</text>
+          <rect x="884" y="376" width="76" height="22" rx="11" fill="#F9FAFB"/>
+          <text x="922" y="391" font-size="10" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          <text x="760" y="420" font-size="12" class="regular" fill="#6B7280">Seating: 6 Pax</text>
+          <text x="760" y="440" font-size="11" class="medium" fill="#9CA3AF">Active: -</text>
+          <text x="760" y="464" font-size="14" class="bold" fill="#111827">Order: -</text>
+          <line x1="760" y1="480" x2="960" y2="480" stroke="#F3F4F6"/>
+          <text x="760" y="502" font-size="11" class="bold" fill="#3B82F6">Manage Table →</text>
+        
+    </g>
+  </g>
+
+</svg>

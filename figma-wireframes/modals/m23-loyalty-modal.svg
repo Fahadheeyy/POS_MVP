@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <rect width="1440" height="900" fill="rgba(17, 24, 39, 0.5)"/>
+    <g transform="translate(490, 240)">
+      <rect width="460" height="420" rx="24" fill="#FFFFFF" stroke="#E5E7EB" filter="drop-shadow(0 25px 50px rgba(0,0,0,0.25))"/>
+      
+  <g transform="translate(40, 40)">
+    <text x="0" y="24" font-size="18" class="bold" fill="#111827">Customer Loyalty Points</text>
+    <text x="0" y="46" font-size="12" class="regular" fill="#6B7280">Jesselyn Anamika · +91 98450 12345</text>
+
+    <rect x="0" y="70" width="380" height="90" rx="14" fill="#F0FDF4" stroke="#BBF7D0"/>
+    <text x="24" y="36" font-size="13" class="semi" fill="#166534">Available Loyalty Balance</text>
+    <text x="24" y="68" font-size="28" class="bold" fill="#15803D">★ 240 Points</text>
+    <text x="356" y="68" font-size="13" class="bold" fill="#166534" text-anchor="end">= ₹240 Discount</text>
+
+    <rect x="0" y="180" width="380" height="48" rx="12" fill="#111827"/>
+    <text x="190" y="210" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Redeem 200 Points (-₹200)</text>
+
+    <rect x="0" y="240" width="380" height="42" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+    <text x="190" y="266" font-size="12" class="semi" fill="#6B7280" text-anchor="middle">Don't Redeem (Save for Next Visit)</text>
+  </g>
+
+    </g>
+  
+</svg>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Manager Operations</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Store &amp; Shift Admin · Alex Rivera</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">Menu &amp; Catalog</text>
+      
+    
+      <text x="522" y="35" font-size="12" class="medium" fill="#6B7280">Staff &amp; PINs</text>
+      
+    
+      <text x="648" y="35" font-size="12" class="medium" fill="#6B7280">Approvals Queue</text>
+      
+    
+      <text x="798" y="35" font-size="12" class="bold" fill="#111827">Live Operations</text>
+      <line x1="798" y1="44" x2="903" y2="44" stroke="#111827" stroke-width="2"/>
+    
+    
+      <rect x="948" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="962" cy="31" r="4" fill="#10B981"/>
+      <text x="974" y="35" font-size="11" class="semi" fill="#111827">Today&apos;s Sales: ₹42,580</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(24, 80)">
+      <text x="0" y="24" font-size="16" class="bold" fill="#111827">Live Operations &amp; Shift Health</text>
+      
+      <!-- 4 KPI Cards -->
+      <g transform="translate(0, 45)">
+        <rect width="325" height="100" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">ACTIVE KITCHEN QUEUE</text>
+        <text x="20" y="65" font-size="28" class="bold" fill="#111827">7 Orders</text>
+        <text x="20" y="85" font-size="11" class="medium" fill="#10B981">Within standard targets</text>
+
+        <g transform="translate(355, 0)">
+          <rect width="325" height="100" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">AVERAGE FULFILLMENT TIME</text>
+          <text x="20" y="65" font-size="28" class="bold" fill="#111827">04m 12s</text>
+          <text x="20" y="85" font-size="11" class="medium" fill="#10B981">Target: &lt; 06m 00s</text>
+        </g>
+
+        <g transform="translate(710, 0)">
+          <rect width="325" height="100" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">STATION DELAY ALERTS</text>
+          <text x="20" y="65" font-size="28" class="bold" fill="#D97706">Cold: +5m</text>
+          <text x="20" y="85" font-size="11" class="medium" fill="#D97706">High rush on Qashtuta</text>
+        </g>
+
+        <g transform="translate(1065, 0)">
+          <rect width="325" height="100" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="30" font-size="11" class="bold" fill="#6B7280">TODAY&apos;S CASH SALES</text>
+          <text x="20" y="65" font-size="28" class="bold" fill="#111827">₹10,220.00</text>
+          <text x="20" y="85" font-size="11" class="medium" fill="#6B7280">Drawer verified at 8:00 AM</text>
+        </g>
+      </g>
+
+      <!-- Live Throughput & Security Audit Log -->
+      <g transform="translate(0, 165)">
+        <rect width="700" height="580" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <g transform="translate(24, 25)">
+          <text x="0" y="0" font-size="14" class="bold" fill="#111827">Kitchen Station Throughput (Last 6 Hours)</text>
+          
+          <!-- Mock Chart -->
+          <g transform="translate(0, 40)">
+            <line x1="30" y1="400" x2="630" y2="400" stroke="#E5E7EB"/>
+            <line x1="30" y1="300" x2="630" y2="300" stroke="#F3F4F6"/>
+            <line x1="30" y1="200" x2="630" y2="200" stroke="#F3F4F6"/>
+            <line x1="30" y1="100" x2="630" y2="100" stroke="#F3F4F6"/>
+
+            <!-- Bars -->
+            
+                  <rect x="50" y="280" width="40" height="120" rx="6" fill="#1F2937"/>
+                  <text x="70" y="420" font-size="10" class="medium" fill="#6B7280" text-anchor="middle">6 PM</text>
+                
+                  <rect x="145" y="220" width="40" height="180" rx="6" fill="#1F2937"/>
+                  <text x="165" y="420" font-size="10" class="medium" fill="#6B7280" text-anchor="middle">7 PM</text>
+                
+                  <rect x="240" y="140" width="40" height="260" rx="6" fill="#1F2937"/>
+                  <text x="260" y="420" font-size="10" class="medium" fill="#6B7280" text-anchor="middle">8 PM</text>
+                
+                  <rect x="335" y="90" width="40" height="310" rx="6" fill="#1F2937"/>
+                  <text x="355" y="420" font-size="10" class="medium" fill="#6B7280" text-anchor="middle">9 PM</text>
+                
+                  <rect x="430" y="120" width="40" height="280" rx="6" fill="#1F2937"/>
+                  <text x="450" y="420" font-size="10" class="medium" fill="#6B7280" text-anchor="middle">10 PM</text>
+                
+                  <rect x="525" y="210" width="40" height="190" rx="6" fill="#1F2937"/>
+                  <text x="545" y="420" font-size="10" class="medium" fill="#6B7280" text-anchor="middle">11 PM</text>
+                
+          </g>
+        </g>
+
+        <!-- Audit Log Right Box -->
+        <g transform="translate(730, 0)">
+          <rect width="660" height="580" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <g transform="translate(24, 25)">
+            <text x="0" y="0" font-size="14" class="bold" fill="#111827">Security &amp; Operational Audit Trail</text>
+            <text x="0" y="18" font-size="11" class="regular" fill="#6B7280">Track price overrides, voids, drawer openings without sale</text>
+
+            <g transform="translate(0, 40)">
+              
+                    <g transform="translate(0, 0)">
+                      <rect width="610" height="70" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+                      <text x="16" y="26" font-size="12" class="bold" fill="#111827">Manager PIN Auth: Shift Drawer Verification</text>
+                      <text x="16" y="46" font-size="10" class="medium" fill="#6B7280">By: Alex Rivera · 11:00 PM</text>
+                      <rect x="520" y="18" width="70" height="20" rx="4" fill="#E5E7EB"/>
+                      <text x="555" y="32" font-size="9" class="bold" fill="#374151" text-anchor="middle">Security</text>
+                    </g>
+                  
+                    <g transform="translate(0, 85)">
+                      <rect width="610" height="70" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+                      <text x="16" y="26" font-size="12" class="bold" fill="#111827">Approval Granted: Order Refund APP-902 (₹320)</text>
+                      <text x="16" y="46" font-size="10" class="medium" fill="#6B7280">By: Alex Rivera · 10:18 PM</text>
+                      <rect x="520" y="18" width="70" height="20" rx="4" fill="#E5E7EB"/>
+                      <text x="555" y="32" font-size="9" class="bold" fill="#374151" text-anchor="middle">Approval</text>
+                    </g>
+                  
+                    <g transform="translate(0, 170)">
+                      <rect width="610" height="70" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+                      <text x="16" y="26" font-size="12" class="bold" fill="#111827">Dish 86 Stocked Out: Saankorita Mango Cream</text>
+                      <text x="16" y="46" font-size="10" class="medium" fill="#6B7280">By: Jesselyn Tan · 09:45 PM</text>
+                      <rect x="520" y="18" width="70" height="20" rx="4" fill="#E5E7EB"/>
+                      <text x="555" y="32" font-size="9" class="bold" fill="#374151" text-anchor="middle">Stock</text>
+                    </g>
+                  
+                    <g transform="translate(0, 255)">
+                      <rect width="610" height="70" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+                      <text x="16" y="26" font-size="12" class="bold" fill="#111827">Drawer Opened Without Sale (No-Sale Approval)</text>
+                      <text x="16" y="46" font-size="10" class="medium" fill="#6B7280">By: Alex Rivera · 09:12 PM</text>
+                      <rect x="520" y="18" width="70" height="20" rx="4" fill="#E5E7EB"/>
+                      <text x="555" y="32" font-size="9" class="bold" fill="#374151" text-anchor="middle">Security</text>
+                    </g>
+                  
+                    <g transform="translate(0, 340)">
+                      <rect width="610" height="70" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+                      <text x="16" y="26" font-size="12" class="bold" fill="#111827">Shift Opened: Float ₹5,000.00 Verified</text>
+                      <text x="16" y="46" font-size="10" class="medium" fill="#6B7280">By: Priya Sharma · 08:00 AM</text>
+                      <rect x="520" y="18" width="70" height="20" rx="4" fill="#E5E7EB"/>
+                      <text x="555" y="32" font-size="9" class="bold" fill="#374151" text-anchor="middle">Shift</text>
+                    </g>
+                  
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  
+</svg>

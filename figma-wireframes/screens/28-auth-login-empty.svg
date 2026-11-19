@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="#F8FAFC"/>
+  <g transform="translate(420, 160)">
+    <rect x="0" y="0" width="600" height="580" rx="24" fill="#FFFFFF" stroke="#E2E8F0" filter="drop-shadow(0 25px 30px rgba(0,0,0,0.06))"/>
+    <g transform="translate(50, 48)">
+      <rect x="0" y="0" width="48" height="48" rx="12" fill="#111827"/>
+      <text x="24" y="31" font-size="20" class="bold" fill="#FFFFFF" text-anchor="middle">⚡</text>
+      
+      <text x="0" y="88" font-size="24" class="bold" fill="#111827">Welcome to POS.BITS</text>
+      <text x="0" y="112" font-size="13" class="regular" fill="#6B7280">Quick Service Restaurant Point of Sale platform</text>
+
+      <!-- Email Field -->
+      <text x="0" y="160" font-size="12" class="bold" fill="#374151">Email or Username</text>
+      <rect x="0" y="172" width="500" height="48" rx="12" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="18" y="202" font-size="14" class="regular" fill="#9CA3AF">Enter registered email address...</text>
+
+      <!-- Password Field -->
+      <text x="0" y="250" font-size="12" class="bold" fill="#374151">Password</text>
+      <rect x="0" y="262" width="500" height="48" rx="12" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="18" y="292" font-size="14" class="regular" fill="#9CA3AF">••••••••••••</text>
+
+      <!-- Remember & Forgot -->
+      <rect x="0" y="332" width="18" height="18" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="28" y="346" font-size="12" class="regular" fill="#4B5563">Remember this device</text>
+      <text x="500" y="346" font-size="12" class="bold" fill="#3B82F6" text-anchor="end">Forgot password?</text>
+
+      <!-- Sign In CTA (Disabled empty style) -->
+      <rect x="0" y="380" width="500" height="52" rx="14" fill="#E5E7EB"/>
+      <text x="250" y="412" font-size="14" class="bold" fill="#9CA3AF" text-anchor="middle">Sign In to POS Counter</text>
+      
+      <!-- Role PIN Switch -->
+      <line x1="0" y1="460" x2="500" y2="460" stroke="#F3F4F6"/>
+      <text x="250" y="490" font-size="13" class="semi" fill="#3B82F6" text-anchor="middle">Switch to Fast 4-Digit Staff PIN Sign-In →</text>
+    </g>
+  </g>
+
+</svg>

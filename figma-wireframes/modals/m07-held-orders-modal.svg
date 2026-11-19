@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Backdrop -->
+  <rect width="1440" height="900" fill="#111827" fill-opacity="0.45"/>
+  
+    <g transform="translate(420, 180)">
+      <rect width="600" height="520" rx="24" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <g transform="translate(35, 35)">
+        <text x="0" y="20" font-size="18" class="bold" fill="#111827">Held Orders (Paused Carts)</text>
+        <text x="0" y="40" font-size="11" class="regular" fill="#6B7280">Resume held customer carts to proceed with checkout</text>
+
+        <g transform="translate(0, 60)">
+          
+                <g transform="translate(0, 0)">
+                  <rect width="530" height="85" rx="12" fill="#F9FAFB" stroke="#E5E7EB"/>
+                  <text x="20" y="30" font-size="13" class="bold" fill="#111827">HOLD-02 · Table 05</text>
+                  <text x="20" y="48" font-size="11" class="medium" fill="#4B5563">2x Umm Ali Royal Claypot</text>
+                  <text x="20" y="65" font-size="10" class="regular" fill="#9CA3AF">Held 10:50 PM</text>
+                  
+                  <text x="400" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹440.00</text>
+
+                  <rect x="420" y="16" width="90" height="32" rx="6" fill="#1F2937"/>
+                  <text x="465" y="36" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Resume Cart</text>
+
+                  <rect x="420" y="52" width="90" height="22" rx="4" fill="#FEE2E2"/>
+                  <text x="465" y="67" font-size="9" class="bold" fill="#B91C1C" text-anchor="middle">Discard</text>
+                </g>
+              
+                <g transform="translate(0, 100)">
+                  <rect width="530" height="85" rx="12" fill="#F9FAFB" stroke="#E5E7EB"/>
+                  <text x="20" y="30" font-size="13" class="bold" fill="#111827">HOLD-01 · Customer phone call</text>
+                  <text x="20" y="48" font-size="11" class="medium" fill="#4B5563">1x Qashtuta Nutella, 1x Tea</text>
+                  <text x="20" y="65" font-size="10" class="regular" fill="#9CA3AF">Held 10:35 PM</text>
+                  
+                  <text x="400" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹460.00</text>
+
+                  <rect x="420" y="16" width="90" height="32" rx="6" fill="#1F2937"/>
+                  <text x="465" y="36" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Resume Cart</text>
+
+                  <rect x="420" y="52" width="90" height="22" rx="4" fill="#FEE2E2"/>
+                  <text x="465" y="67" font-size="9" class="bold" fill="#B91C1C" text-anchor="middle">Discard</text>
+                </g>
+              
+        </g>
+      </g>
+    </g>
+  
+</svg>

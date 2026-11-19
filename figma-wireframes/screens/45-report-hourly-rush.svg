@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Owner Financial Reports</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Hourly Rush &amp; Peak Volume Analysis</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">Dashboard</text>
+      
+    
+      <text x="482" y="35" font-size="12" class="bold" fill="#111827">Owner Reports</text>
+      <line x1="482" y1="44" x2="573" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="616" y="35" font-size="12" class="medium" fill="#6B7280">Settings</text>
+      
+    
+    
+      <rect x="710" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="724" cy="31" r="4" fill="#10B981"/>
+      <text x="736" y="35" font-size="11" class="semi" fill="#111827">Today: ₹42,580</text>
+    
+      <rect x="900" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="914" cy="31" r="4" fill="#10B981"/>
+      <text x="926" y="35" font-size="11" class="semi" fill="#111827">Monthly: ₹12,48,200</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(32, 80)">
+      <rect x="0" y="0" width="1376" height="740" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <g transform="translate(32, 32)">
+        <text x="0" y="24" font-size="20" class="bold" fill="#111827">Hourly Rush &amp; Peak Volume Analysis</text>
+        <text x="0" y="48" font-size="13" class="regular" fill="#6B7280">Lunch 12-2 PM &amp; Dinner 7-10 PM Peak Kitchen Demand</text>
+        
+        <!-- Filter bar -->
+        <g transform="translate(0, 75)">
+          <rect x="0" y="0" width="1312" height="48" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+          <text x="20" y="29" font-size="12" class="semi" fill="#374151">Date Range: Last 30 Days (Oct 13 - Nov 12, 2026)</text>
+          <rect x="1100" y="10" width="100" height="28" rx="6" fill="#111827"/>
+          <text x="1150" y="28" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Export CSV</text>
+          <rect x="1210" y="10" width="90" height="28" rx="6" fill="#F3F4F6" stroke="#D1D5DB"/>
+          <text x="1255" y="28" font-size="11" class="bold" fill="#374151" text-anchor="middle">🖨 Print PDF</text>
+        </g>
+
+        <!-- KPI 3 Cards -->
+        <g transform="translate(0, 145)">
+          <rect x="0" y="0" width="420" height="110" rx="14" fill="#F9FAFB" stroke="#E5E7EB"/>
+          <text x="24" y="36" font-size="13" class="regular" fill="#6B7280">Gross Sales Volume</text>
+          <text x="24" y="74" font-size="28" class="bold" fill="#111827">₹12,48,200</text>
+          <text x="24" y="96" font-size="11" class="bold" fill="#10B981">↑ +14.2% vs previous period</text>
+
+          <rect x="446" y="0" width="420" height="110" rx="14" fill="#F9FAFB" stroke="#E5E7EB"/>
+          <text x="470" y="36" font-size="13" class="regular" fill="#6B7280">Completed Orders</text>
+          <text x="470" y="74" font-size="28" class="bold" fill="#111827">3,480 Orders</text>
+          <text x="470" y="96" font-size="11" class="bold" fill="#10B981">Avg Order Value: ₹358.60</text>
+
+          <rect x="892" y="0" width="420" height="110" rx="14" fill="#F9FAFB" stroke="#E5E7EB"/>
+          <text x="916" y="36" font-size="13" class="regular" fill="#6B7280">Total Taxes Remitted</text>
+          <text x="916" y="74" font-size="28" class="bold" fill="#111827">₹62,410</text>
+          <text x="916" y="96" font-size="11" class="semi" fill="#374151">GST: 2.5% CGST + 2.5% SGST</text>
+        </g>
+
+        <!-- Data table preview -->
+        <g transform="translate(0, 280)">
+          <rect x="0" y="0" width="1312" height="340" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <rect x="0" y="0" width="1312" height="42" rx="12" fill="#F3F4F6"/>
+          <text x="24" y="26" font-size="12" class="bold" fill="#6B7280">METRIC / DISH / DATE</text>
+          <text x="400" y="26" font-size="12" class="bold" fill="#6B7280">UNITS / TRANSACTIONS</text>
+          <text x="750" y="26" font-size="12" class="bold" fill="#6B7280">SHARE %</text>
+          <text x="1288" y="26" font-size="12" class="bold" fill="#6B7280" text-anchor="end">TOTAL REVENUE (INR)</text>
+
+          
+            <g transform="translate(0, 42)">
+              <text x="24" y="32" font-size="13" class="bold" fill="#111827">Lotus Biscoff Qashtuta</text>
+              <text x="400" y="32" font-size="13" class="regular" fill="#4B5563">1,120 orders</text>
+              <text x="750" y="32" font-size="13" class="bold" fill="#10B981">32%</text>
+              <text x="1288" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹3,34,880.00</text>
+              <line x1="0" y1="54" x2="1312" y2="54" stroke="#F3F4F6"/>
+            </g>
+          
+            <g transform="translate(0, 96)">
+              <text x="24" y="32" font-size="13" class="bold" fill="#111827">Classic Qashtuta Milk Cake</text>
+              <text x="400" y="32" font-size="13" class="regular" fill="#4B5563">940 orders</text>
+              <text x="750" y="32" font-size="13" class="bold" fill="#10B981">27%</text>
+              <text x="1288" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹2,34,060.00</text>
+              <line x1="0" y1="54" x2="1312" y2="54" stroke="#F3F4F6"/>
+            </g>
+          
+            <g transform="translate(0, 150)">
+              <text x="24" y="32" font-size="13" class="bold" fill="#111827">Mango Rice Pudding Bowl</text>
+              <text x="400" y="32" font-size="13" class="regular" fill="#4B5563">620 orders</text>
+              <text x="750" y="32" font-size="13" class="bold" fill="#10B981">18%</text>
+              <text x="1288" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹1,11,600.00</text>
+              <line x1="0" y1="54" x2="1312" y2="54" stroke="#F3F4F6"/>
+            </g>
+          
+            <g transform="translate(0, 204)">
+              <text x="24" y="32" font-size="13" class="bold" fill="#111827">Pistachio Supreme Qashtuta</text>
+              <text x="400" y="32" font-size="13" class="regular" fill="#4B5563">480 orders</text>
+              <text x="750" y="32" font-size="13" class="bold" fill="#10B981">14%</text>
+              <text x="1288" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹1,67,520.00</text>
+              <line x1="0" y1="54" x2="1312" y2="54" stroke="#F3F4F6"/>
+            </g>
+          
+            <g transform="translate(0, 258)">
+              <text x="24" y="32" font-size="13" class="bold" fill="#111827">Traditional Karak Chai Glass</text>
+              <text x="400" y="32" font-size="13" class="regular" fill="#4B5563">320 orders</text>
+              <text x="750" y="32" font-size="13" class="bold" fill="#10B981">9%</text>
+              <text x="1288" y="32" font-size="14" class="bold" fill="#111827" text-anchor="end">₹19,200.00</text>
+              <line x1="0" y1="54" x2="1312" y2="54" stroke="#F3F4F6"/>
+            </g>
+          
+        </g>
+      </g>
+    </g>
+  
+</svg>

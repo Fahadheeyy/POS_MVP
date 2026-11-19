@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Backdrop -->
+  <rect width="1440" height="900" fill="#111827" fill-opacity="0.45"/>
+  
+    <g transform="translate(460, 220)">
+      <rect width="520" height="420" rx="24" fill="#FFFFFF" stroke="#EF4444" stroke-width="2"/>
+      <g transform="translate(35, 35)">
+        <text x="225" y="24" font-size="18" class="bold" fill="#B91C1C" text-anchor="middle">⚠️ Factory Database Reset</text>
+        <text x="225" y="48" font-size="12" class="regular" fill="#4B5563" text-anchor="middle">This will purge all offline transactions, order history and reset demo state.</text>
+
+        <rect x="0" y="80" width="450" height="60" rx="10" fill="#FEE2E2"/>
+        <text x="20" y="115" font-size="11" class="bold" fill="#B91C1C">Confirmation required: Type &apos;RESET&apos; in capital letters below</text>
+
+        <text x="0" y="175" font-size="11" class="bold" fill="#374151">Type RESET to confirm:</text>
+        <rect x="0" y="185" width="450" height="42" rx="8" fill="#FFFFFF" stroke="#EF4444"/>
+        <text x="16" y="211" font-size="14" class="bold mono" fill="#111827">RESET</text>
+
+        <g transform="translate(0, 270)">
+          <rect width="215" height="44" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="107" y="27" font-size="12" class="bold" fill="#374151" text-anchor="middle">Cancel / Abort</text>
+
+          <rect x="235" y="0" width="215" height="44" rx="10" fill="#DC2626"/>
+          <text x="342" y="27" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">Confirm Reset Database</text>
+        </g>
+      </g>
+    </g>
+  
+</svg>

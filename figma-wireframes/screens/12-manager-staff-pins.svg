@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Manager Operations</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Store &amp; Shift Admin · Alex Rivera</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">Menu &amp; Catalog</text>
+      
+    
+      <text x="522" y="35" font-size="12" class="bold" fill="#111827">Staff &amp; PINs</text>
+      <line x1="522" y1="44" x2="606" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="648" y="35" font-size="12" class="medium" fill="#6B7280">Approvals Queue</text>
+      
+    
+      <text x="798" y="35" font-size="12" class="medium" fill="#6B7280">Live Operations</text>
+      
+    
+    
+      <rect x="948" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="962" cy="31" r="4" fill="#10B981"/>
+      <text x="974" y="35" font-size="11" class="semi" fill="#111827">Today&apos;s Sales: ₹42,580</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(24, 80)">
+      <!-- Top Action Bar -->
+      <div class="header-row">
+        <text x="0" y="24" font-size="16" class="bold" fill="#111827">Staff Directory &amp; Security PINs</text>
+        <text x="0" y="42" font-size="11" class="regular" fill="#6B7280">Authorize staff terminals, manage 4-digit PINs, and toggle employment status</text>
+        
+        <rect x="1230" y="10" width="160" height="36" rx="10" fill="#1F2937"/>
+        <text x="1310" y="32" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add Team Member</text>
+      </div>
+
+      <!-- Staff Grid -->
+      <g transform="translate(0, 60)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="455" height="210" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+                
+                <!-- Avatar & Info -->
+                <circle cx="45" cy="45" r="22" fill="#1F2937"/>
+                <text x="45" y="50" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+                
+                <text x="80" y="38" font-size="14" class="bold" fill="#111827">Priya Sharma</text>
+                <text x="80" y="55" font-size="11" class="medium" fill="#6B7280">Head Cashier</text>
+                <text x="80" y="70" font-size="10" class="regular" fill="#9CA3AF">priya@signlaban.in</text>
+
+                <rect x="360" y="24" width="75" height="22" rx="11" fill="#D1FAE5"/>
+                <text x="397" y="38" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active</text>
+
+                <line x1="20" y1="95" x2="435" y2="95" stroke="#F3F4F6"/>
+
+                <!-- Security Box -->
+                <g transform="translate(20, 110)">
+                  <text x="0" y="16" font-size="11" class="bold" fill="#374151">Current Terminal PIN</text>
+                  <text x="0" y="32" font-size="16" class="bold mono" fill="#111827">•••• (Demo: 1234)</text>
+                  
+                  <rect x="290" y="6" width="125" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="352" y="26" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">Reset PIN</text>
+                </g>
+
+                <g transform="translate(20, 165)">
+                  <text x="0" y="16" font-size="11" class="regular" fill="#6B7280">Terminal Access Clearance: Active shift authorizations</text>
+                </g>
+              </g>
+            
+              <g transform="translate(475, 0)">
+                <rect width="455" height="210" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+                
+                <!-- Avatar & Info -->
+                <circle cx="45" cy="45" r="22" fill="#1F2937"/>
+                <text x="45" y="50" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">JE</text>
+                
+                <text x="80" y="38" font-size="14" class="bold" fill="#111827">Jesselyn Tan</text>
+                <text x="80" y="55" font-size="11" class="medium" fill="#6B7280">Kitchen Lead</text>
+                <text x="80" y="70" font-size="10" class="regular" fill="#9CA3AF">jesselyn@signlaban.in</text>
+
+                <rect x="360" y="24" width="75" height="22" rx="11" fill="#D1FAE5"/>
+                <text x="397" y="38" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active</text>
+
+                <line x1="20" y1="95" x2="435" y2="95" stroke="#F3F4F6"/>
+
+                <!-- Security Box -->
+                <g transform="translate(20, 110)">
+                  <text x="0" y="16" font-size="11" class="bold" fill="#374151">Current Terminal PIN</text>
+                  <text x="0" y="32" font-size="16" class="bold mono" fill="#111827">•••• (Demo: 1111)</text>
+                  
+                  <rect x="290" y="6" width="125" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="352" y="26" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">Reset PIN</text>
+                </g>
+
+                <g transform="translate(20, 165)">
+                  <text x="0" y="16" font-size="11" class="regular" fill="#6B7280">Terminal Access Clearance: Active shift authorizations</text>
+                </g>
+              </g>
+            
+              <g transform="translate(950, 0)">
+                <rect width="455" height="210" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+                
+                <!-- Avatar & Info -->
+                <circle cx="45" cy="45" r="22" fill="#1F2937"/>
+                <text x="45" y="50" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">MA</text>
+                
+                <text x="80" y="38" font-size="14" class="bold" fill="#111827">Marcus Chen</text>
+                <text x="80" y="55" font-size="11" class="medium" fill="#6B7280">Kitchen Staff (Fry/Grill)</text>
+                <text x="80" y="70" font-size="10" class="regular" fill="#9CA3AF">marcus@signlaban.in</text>
+
+                <rect x="360" y="24" width="75" height="22" rx="11" fill="#D1FAE5"/>
+                <text x="397" y="38" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active</text>
+
+                <line x1="20" y1="95" x2="435" y2="95" stroke="#F3F4F6"/>
+
+                <!-- Security Box -->
+                <g transform="translate(20, 110)">
+                  <text x="0" y="16" font-size="11" class="bold" fill="#374151">Current Terminal PIN</text>
+                  <text x="0" y="32" font-size="16" class="bold mono" fill="#111827">•••• (Demo: 2222)</text>
+                  
+                  <rect x="290" y="6" width="125" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="352" y="26" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">Reset PIN</text>
+                </g>
+
+                <g transform="translate(20, 165)">
+                  <text x="0" y="16" font-size="11" class="regular" fill="#6B7280">Terminal Access Clearance: Active shift authorizations</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 230)">
+                <rect width="455" height="210" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+                
+                <!-- Avatar & Info -->
+                <circle cx="45" cy="45" r="22" fill="#1F2937"/>
+                <text x="45" y="50" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">AL</text>
+                
+                <text x="80" y="38" font-size="14" class="bold" fill="#111827">Alex Rivera</text>
+                <text x="80" y="55" font-size="11" class="medium" fill="#6B7280">Shift & Store Manager</text>
+                <text x="80" y="70" font-size="10" class="regular" fill="#9CA3AF">alex@signlaban.in</text>
+
+                <rect x="360" y="24" width="75" height="22" rx="11" fill="#D1FAE5"/>
+                <text x="397" y="38" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active</text>
+
+                <line x1="20" y1="95" x2="435" y2="95" stroke="#F3F4F6"/>
+
+                <!-- Security Box -->
+                <g transform="translate(20, 110)">
+                  <text x="0" y="16" font-size="11" class="bold" fill="#374151">Current Terminal PIN</text>
+                  <text x="0" y="32" font-size="16" class="bold mono" fill="#111827">•••• (Demo: 9999)</text>
+                  
+                  <rect x="290" y="6" width="125" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="352" y="26" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">Reset PIN</text>
+                </g>
+
+                <g transform="translate(20, 165)">
+                  <text x="0" y="16" font-size="11" class="regular" fill="#6B7280">Terminal Access Clearance: Active shift authorizations</text>
+                </g>
+              </g>
+            
+              <g transform="translate(475, 230)">
+                <rect width="455" height="210" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+                
+                <!-- Avatar & Info -->
+                <circle cx="45" cy="45" r="22" fill="#1F2937"/>
+                <text x="45" y="50" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">VI</text>
+                
+                <text x="80" y="38" font-size="14" class="bold" fill="#111827">Vikram Sethi</text>
+                <text x="80" y="55" font-size="11" class="medium" fill="#6B7280">Franchise Owner</text>
+                <text x="80" y="70" font-size="10" class="regular" fill="#9CA3AF">vikram@signlaban.in</text>
+
+                <rect x="360" y="24" width="75" height="22" rx="11" fill="#D1FAE5"/>
+                <text x="397" y="38" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active</text>
+
+                <line x1="20" y1="95" x2="435" y2="95" stroke="#F3F4F6"/>
+
+                <!-- Security Box -->
+                <g transform="translate(20, 110)">
+                  <text x="0" y="16" font-size="11" class="bold" fill="#374151">Current Terminal PIN</text>
+                  <text x="0" y="32" font-size="16" class="bold mono" fill="#111827">•••• (Demo: 8888)</text>
+                  
+                  <rect x="290" y="6" width="125" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="352" y="26" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">Reset PIN</text>
+                </g>
+
+                <g transform="translate(20, 165)">
+                  <text x="0" y="16" font-size="11" class="regular" fill="#6B7280">Terminal Access Clearance: Active shift authorizations</text>
+                </g>
+              </g>
+            
+              <g transform="translate(950, 230)">
+                <rect width="455" height="210" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+                
+                <!-- Avatar & Info -->
+                <circle cx="45" cy="45" r="22" fill="#1F2937"/>
+                <text x="45" y="50" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">AD</text>
+                
+                <text x="80" y="38" font-size="14" class="bold" fill="#111827">Dev &amp; Sales Ops</text>
+                <text x="80" y="55" font-size="11" class="medium" fill="#6B7280">Platform Admin</text>
+                <text x="80" y="70" font-size="10" class="regular" fill="#9CA3AF">admin@posbits.io</text>
+
+                <rect x="360" y="24" width="75" height="22" rx="11" fill="#D1FAE5"/>
+                <text x="397" y="38" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active</text>
+
+                <line x1="20" y1="95" x2="435" y2="95" stroke="#F3F4F6"/>
+
+                <!-- Security Box -->
+                <g transform="translate(20, 110)">
+                  <text x="0" y="16" font-size="11" class="bold" fill="#374151">Current Terminal PIN</text>
+                  <text x="0" y="32" font-size="16" class="bold mono" fill="#111827">•••• (Demo: 0000)</text>
+                  
+                  <rect x="290" y="6" width="125" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="352" y="26" font-size="11" class="bold" fill="#1F2937" text-anchor="middle">Reset PIN</text>
+                </g>
+
+                <g transform="translate(20, 165)">
+                  <text x="0" y="16" font-size="11" class="regular" fill="#6B7280">Terminal Access Clearance: Active shift authorizations</text>
+                </g>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

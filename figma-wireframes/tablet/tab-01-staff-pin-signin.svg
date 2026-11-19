@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="768" viewBox="0 0 1024 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1024" height="768" fill="#F3F4F6"/>
+  
+  <rect width="1024" height="768" fill="#F8FAFC"/>
+  <!-- Center Auth Modal Card -->
+  <g transform="translate(182, 114)">
+    <rect x="0" y="0" width="660" height="540" rx="24" fill="#FFFFFF" stroke="#E2E8F0" filter="drop-shadow(0 20px 25px rgba(0,0,0,0.05))"/>
+    
+    <!-- Left Roster (280w) -->
+    <g transform="translate(32, 40)">
+      <text x="0" y="20" font-size="18" class="bold" fill="#111827">Select Staff Member</text>
+      <text x="0" y="38" font-size="12" class="regular" fill="#6B7280">Sign Laban · Counter 01</text>
+      
+      <!-- Staff cards -->
+      
+        <rect x="0" y="60" width="250" height="60" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+        <circle cx="28" cy="90" r="16" fill="#10B981"/>
+        <text x="28" y="95" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+        <text x="56" y="86" font-size="13" class="bold" fill="#111827">Priya Sharma</text>
+        <text x="56" y="102" font-size="11" class="regular" fill="#6B7280">Cashier</text>
+        <text x="236" y="95" font-size="12" class="bold" fill="#10B981" text-anchor="end">✓</text>
+      
+        <rect x="0" y="132" width="250" height="60" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
+        <circle cx="28" cy="162" r="16" fill="#374151"/>
+        <text x="28" y="167" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">CH</text>
+        <text x="56" y="158" font-size="13" class="bold" fill="#111827">Chef Tariq</text>
+        <text x="56" y="174" font-size="11" class="regular" fill="#6B7280">Kitchen KDS</text>
+        
+      
+        <rect x="0" y="204" width="250" height="60" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
+        <circle cx="28" cy="234" r="16" fill="#374151"/>
+        <text x="28" y="239" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">AL</text>
+        <text x="56" y="230" font-size="13" class="bold" fill="#111827">Alex Joseph</text>
+        <text x="56" y="246" font-size="11" class="regular" fill="#6B7280">Store Manager</text>
+        
+      
+        <rect x="0" y="276" width="250" height="60" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
+        <circle cx="28" cy="306" r="16" fill="#374151"/>
+        <text x="28" y="311" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">VI</text>
+        <text x="56" y="302" font-size="13" class="bold" fill="#111827">Vikram Mehta</text>
+        <text x="56" y="318" font-size="11" class="regular" fill="#6B7280">Business Owner</text>
+        
+      
+    </g>
+
+    <line x1="320" y1="40" x2="320" y2="500" stroke="#E2E8F0"/>
+
+    <!-- Right Keypad (300w) -->
+    <g transform="translate(360, 40)">
+      <text x="0" y="20" font-size="18" class="bold" fill="#111827">Enter 4-Digit PIN</text>
+      <text x="0" y="38" font-size="12" class="regular" fill="#6B7280">Logging in as Priya Sharma</text>
+      
+      <!-- PIN display dots -->
+      <g transform="translate(50, 60)">
+        <circle cx="20" cy="15" r="8" fill="#111827"/>
+        <circle cx="60" cy="15" r="8" fill="#111827"/>
+        <circle cx="100" cy="15" r="8" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1.5"/>
+        <circle cx="140" cy="15" r="8" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1.5"/>
+      </g>
+
+      <!-- Keypad buttons -->
+      <g transform="translate(20, 115)">
+        
+            <rect x="0" y="0" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="34" y="32" font-size="18" class="semi" fill="#111827" text-anchor="middle">1</text>
+          
+            <rect x="78" y="0" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="112" y="32" font-size="18" class="semi" fill="#111827" text-anchor="middle">2</text>
+          
+            <rect x="156" y="0" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="190" y="32" font-size="18" class="semi" fill="#111827" text-anchor="middle">3</text>
+          
+            <rect x="0" y="64" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="34" y="96" font-size="18" class="semi" fill="#111827" text-anchor="middle">4</text>
+          
+            <rect x="78" y="64" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="112" y="96" font-size="18" class="semi" fill="#111827" text-anchor="middle">5</text>
+          
+            <rect x="156" y="64" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="190" y="96" font-size="18" class="semi" fill="#111827" text-anchor="middle">6</text>
+          
+            <rect x="0" y="128" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="34" y="160" font-size="18" class="semi" fill="#111827" text-anchor="middle">7</text>
+          
+            <rect x="78" y="128" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="112" y="160" font-size="18" class="semi" fill="#111827" text-anchor="middle">8</text>
+          
+            <rect x="156" y="128" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="190" y="160" font-size="18" class="semi" fill="#111827" text-anchor="middle">9</text>
+          
+            <rect x="0" y="192" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="34" y="224" font-size="18" class="semi" fill="#111827" text-anchor="middle">C</text>
+          
+            <rect x="78" y="192" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="112" y="224" font-size="18" class="semi" fill="#111827" text-anchor="middle">0</text>
+          
+            <rect x="156" y="192" width="68" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+            <text x="190" y="224" font-size="18" class="semi" fill="#111827" text-anchor="middle">⌫</text>
+          
+      </g>
+
+      <!-- Quick demo login CTA -->
+      <rect x="20" y="390" width="224" height="42" rx="10" fill="#111827"/>
+      <text x="132" y="416" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Unlock Tablet POS →</text>
+    </g>
+  </g>
+
+</svg>

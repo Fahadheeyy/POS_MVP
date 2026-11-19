@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="#F8FAFC"/>
+  <g transform="translate(370, 130)">
+    <rect x="0" y="0" width="700" height="640" rx="24" fill="#FFFFFF" stroke="#EF4444" stroke-width="2" filter="drop-shadow(0 25px 35px rgba(239, 68, 68, 0.15))"/>
+    
+    <g transform="translate(60, 40)">
+      <rect x="0" y="0" width="580" height="56" rx="12" fill="#FEF2F2" stroke="#FCA5A5"/>
+      <text x="24" y="34" font-size="13" class="bold" fill="#B91C1C">⚠ Incorrect PIN entered. 2 attempts remaining before lock.</text>
+      
+      <text x="0" y="96" font-size="22" class="bold" fill="#111827">Staff PIN Verification</text>
+      <text x="0" y="118" font-size="13" class="regular" fill="#6B7280">Priya Sharma · Cashier Counter 01</text>
+
+      <!-- Shaking PIN Dots with red error fill -->
+      <g transform="translate(190, 140)">
+        <circle cx="20" cy="15" r="10" fill="#EF4444"/>
+        <circle cx="70" cy="15" r="10" fill="#EF4444"/>
+        <circle cx="120" cy="15" r="10" fill="#EF4444"/>
+        <circle cx="170" cy="15" r="10" fill="#EF4444"/>
+      </g>
+
+      <!-- Keypad -->
+      <g transform="translate(125, 200)">
+        
+            <rect x="0" y="0" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="50" y="38" font-size="22" class="semi" fill="#111827" text-anchor="middle">1</text>
+          
+            <rect x="115" y="0" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="165" y="38" font-size="22" class="semi" fill="#111827" text-anchor="middle">2</text>
+          
+            <rect x="230" y="0" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="280" y="38" font-size="22" class="semi" fill="#111827" text-anchor="middle">3</text>
+          
+            <rect x="0" y="76" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="50" y="114" font-size="22" class="semi" fill="#111827" text-anchor="middle">4</text>
+          
+            <rect x="115" y="76" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="165" y="114" font-size="22" class="semi" fill="#111827" text-anchor="middle">5</text>
+          
+            <rect x="230" y="76" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="280" y="114" font-size="22" class="semi" fill="#111827" text-anchor="middle">6</text>
+          
+            <rect x="0" y="152" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="50" y="190" font-size="22" class="semi" fill="#111827" text-anchor="middle">7</text>
+          
+            <rect x="115" y="152" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="165" y="190" font-size="22" class="semi" fill="#111827" text-anchor="middle">8</text>
+          
+            <rect x="230" y="152" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="280" y="190" font-size="22" class="semi" fill="#111827" text-anchor="middle">9</text>
+          
+            <rect x="0" y="228" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="50" y="266" font-size="22" class="semi" fill="#111827" text-anchor="middle">C</text>
+          
+            <rect x="115" y="228" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="165" y="266" font-size="22" class="semi" fill="#111827" text-anchor="middle">0</text>
+          
+            <rect x="230" y="228" width="100" height="62" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <text x="280" y="266" font-size="22" class="semi" fill="#111827" text-anchor="middle">⌫</text>
+          
+      </g>
+    </g>
+  </g>
+
+</svg>

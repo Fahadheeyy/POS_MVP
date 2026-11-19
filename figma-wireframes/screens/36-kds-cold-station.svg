@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="#111827"/>
+  <rect x="0" y="0" width="1440" height="60" fill="#1F2937" stroke="#374151"/>
+  <g transform="translate(24, 16)">
+    <text x="0" y="20" font-size="16" class="bold" fill="#FFFFFF">KDS — COLD / DESSERT STATION</text>
+    <text x="270" y="20" font-size="12" class="medium" fill="#38BDF8">Egyptian Desserts · Qashtuta & Rice Pudding</text>
+  </g>
+  <g transform="translate(24, 80)">
+    <rect x="0" y="0" width="445" height="790" rx="14" fill="#1F2937" stroke="#374151"/>
+    <g transform="translate(16, 20)">
+      <text x="0" y="14" font-size="14" class="bold" fill="#FFFFFF">COLD ORDERS (3 TICKETS)</text>
+      <g transform="translate(0, 30)">
+        <rect x="0" y="0" width="413" height="240" rx="12" fill="#111827" stroke="#38BDF8"/>
+        <rect x="0" y="0" width="413" height="42" rx="12" fill="#0284C7"/>
+        <text x="16" y="26" font-size="14" class="bold" fill="#FFFFFF">#336 · Lotus Biscoff Qashtuta</text>
+        <g transform="translate(16, 60)">
+          <text x="0" y="18" font-size="14" class="bold" fill="#FFFFFF">1× Lotus Biscoff Cake Portion</text>
+          <text x="0" y="34" font-size="12" class="regular" fill="#9CA3AF">• Sauce: Warm Biscoff Speculoos</text>
+          <text x="0" y="50" font-size="12" class="regular" fill="#9CA3AF">• Topping: Crushed Biscuit Crumbs</text>
+          <rect x="0" y="120" width="381" height="44" rx="8" fill="#10B981"/>
+          <text x="190" y="148" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">✓ BUMP COLD ITEM</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

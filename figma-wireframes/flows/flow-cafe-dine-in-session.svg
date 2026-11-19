@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <rect x="0" y="0" width="1440" height="900" fill="#FFFFFF"/>
+    <g transform="translate(60, 40)">
+      <text x="0" y="24" font-size="22" class="bold" fill="#111827">Café Dine-In Session &amp; Multi-Round Flow</text>
+      <text x="0" y="48" font-size="13" class="regular" fill="#6B7280">Table management, running rounds, kitchen KOT dispatch and bill settlement</text>
+
+      <g transform="translate(0, 100)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">1. Select Table & Guests</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Open table modal, set guest count & table #</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(330, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">2. Round 1 Order Entry</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Add beverages & starters to table cart</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(660, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">3. Send KOT to Kitchen</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Ticket dispatches to KDS with table badge</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(990, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">4. Hold / Resume Session</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Table status stays active while guests dine</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(0, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">5. Round 2 Desserts Added</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Additional dishes added to existing table bill</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(330, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">6. Print Estimate Bill</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Pro-forma bill printed for table review</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(660, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">7. Payment Settlement</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">UPI / Cash / Card settled on terminal</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+              <g transform="translate(990, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#374151"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">8. Table Freed / Closed</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Table session closed, receipt printed</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#D1FAE5"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#065F46" text-anchor="middle">Implemented</text>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

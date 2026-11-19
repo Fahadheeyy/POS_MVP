@@ -1,7 +1,15 @@
 # Dependencies
 node_modules/
+.pnp
+.pnp.js
 
-# Production build
+# Testing
+coverage/
+
+# Next.js build output
+.next/
+out/
+build/
 dist/
 
 # Database
@@ -11,6 +19,20 @@ prisma/dev.db
 
 # System & temporary files
 .DS_Store
+*.pem
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.zip
+
+# Environment & local files
 .env
-.env.local
+.env*.local
+!.env.example
+
+# Vercel
+.vercel
+
+# TypeScript build info
+*.tsbuildinfo

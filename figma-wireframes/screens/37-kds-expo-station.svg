@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="#111827"/>
+  <rect x="0" y="0" width="1440" height="60" fill="#1F2937" stroke="#374151"/>
+  <g transform="translate(24, 16)">
+    <text x="0" y="20" font-size="16" class="bold" fill="#FFFFFF">KDS — EXPO / PACKING DISPATCH</text>
+    <text x="310" y="20" font-size="12" class="medium" fill="#10B981">Final Quality & Bag Assembly Check</text>
+  </g>
+  <g transform="translate(24, 80)">
+    <rect x="0" y="0" width="910" height="790" rx="14" fill="#1F2937" stroke="#374151"/>
+    <g transform="translate(24, 24)">
+      <text x="0" y="20" font-size="16" class="bold" fill="#FFFFFF">ALL STATIONS COMPLETED · READY TO CALL TOKEN</text>
+      <!-- Expo Big Ticket Card -->
+      <g transform="translate(0, 45)">
+        <rect x="0" y="0" width="862" height="280" rx="14" fill="#111827" stroke="#10B981" stroke-width="2"/>
+        <rect x="0" y="0" width="862" height="52" rx="14" fill="#059669"/>
+        <text x="24" y="34" font-size="18" class="bold" fill="#FFFFFF">TOKEN #104 · TAKEAWAY BAG · 4 ITEMS</text>
+        <text x="838" y="34" font-size="14" class="bold" fill="#FFFFFF" text-anchor="end">All Items Ready ✓</text>
+
+        <g transform="translate(24, 80)">
+          <text x="0" y="20" font-size="15" class="bold" fill="#FFFFFF">1× Lotus Biscoff Qashtuta [Cold: Checked]</text>
+          <text x="0" y="50" font-size="15" class="bold" fill="#FFFFFF">1× Crispy Fries Large [Fry: Checked]</text>
+          <text x="0" y="80" font-size="15" class="bold" fill="#FFFFFF">1× Smash Burger [Grill: Checked]</text>
+          <text x="0" y="110" font-size="15" class="bold" fill="#FFFFFF">2× Karak Chai Glass [Drinks: Checked]</text>
+
+          <rect x="0" y="140" width="814" height="48" rx="10" fill="#10B981"/>
+          <text x="407" y="171" font-size="15" class="bold" fill="#FFFFFF" text-anchor="middle">📢 CALL CUSTOMER TOKEN #104 & BUMP ORDER</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

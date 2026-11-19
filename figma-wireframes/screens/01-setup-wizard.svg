@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Centered Setup Wizard Card -->
+    <rect x="360" y="50" width="720" height="800" rx="24" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    
+    <!-- Header -->
+    <g transform="translate(400, 80)">
+      <rect x="0" y="0" width="80" height="28" rx="6" fill="#1F2937"/>
+      <text x="12" y="19" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      <line x1="92" y1="2" x2="92" y2="26" stroke="#E5E7EB"/>
+      <text x="106" y="14" font-size="14" class="bold" fill="#111827">COUNTER SETUP WIZARD</text>
+      <text x="106" y="27" font-size="11" class="medium" fill="#6B7280">Initial store profile, hardware &amp; counter defaults</text>
+    </g>
+    <line x1="360" y1="130" x2="1080" y2="130" stroke="#E5E7EB"/>
+
+    <!-- Form Content -->
+    <g transform="translate(400, 150)">
+      <!-- Store Name & Tagline -->
+      <text x="0" y="15" font-size="11" class="bold" fill="#374151">Store / Business Name *</text>
+      <rect x="0" y="22" width="310" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="12" y="45" font-size="12" class="semi" fill="#111827">Sign Laban</text>
+
+      <text x="330" y="15" font-size="11" class="bold" fill="#374151">Brand Tagline</text>
+      <rect x="330" y="22" width="310" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="342" y="45" font-size="12" class="regular" fill="#4B5563">India&apos;s First Egyptian Dessert</text>
+
+      <!-- Store Address -->
+      <text x="0" y="85" font-size="11" class="bold" fill="#374151">Store Address</text>
+      <rect x="0" y="92" width="640" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="12" y="115" font-size="12" class="regular" fill="#4B5563">Shop 12, 100ft Road, HAL 2nd Stage, Indiranagar, Bengaluru 560038</text>
+
+      <!-- Default Payment Mode & Cash Timing -->
+      <text x="0" y="155" font-size="11" class="bold" fill="#374151">Default Payment Tender Under Cart</text>
+      <g transform="translate(0, 162)">
+        <rect x="0" y="0" width="100" height="32" rx="8" fill="#1F2937"/>
+        <text x="50" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">UPI (Default)</text>
+        <rect x="110" y="0" width="90" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="155" y="20" font-size="11" class="semi" fill="#374151" text-anchor="middle">Cash</text>
+        <rect x="210" y="0" width="90" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="255" y="20" font-size="11" class="semi" fill="#374151" text-anchor="middle">Card</text>
+      </g>
+
+      <text x="330" y="155" font-size="11" class="bold" fill="#374151">Cash Payment Timing Flow</text>
+      <g transform="translate(330, 162)">
+        <rect x="0" y="0" width="150" height="32" rx="8" fill="#1F2937"/>
+        <text x="75" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Before Checkout (Speed)</text>
+        <rect x="160" y="0" width="150" height="32" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="235" y="20" font-size="11" class="semi" fill="#374151" text-anchor="middle">After Checkout (Modal)</text>
+      </g>
+
+      <!-- Printer & GST -->
+      <text x="0" y="225" font-size="11" class="bold" fill="#374151">Receipt Printer Model</text>
+      <rect x="0" y="232" width="310" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="12" y="255" font-size="12" class="regular" fill="#111827">EPSON TM-T88VII Thermal (Ready)</text>
+
+      <text x="330" y="225" font-size="11" class="bold" fill="#374151">Auto-Print Thermal Bill on Checkout</text>
+      <g transform="translate(330, 232)">
+        <rect x="0" y="0" width="50" height="28" rx="14" fill="#1F2937"/>
+        <circle cx="36" cy="14" r="11" fill="#FFFFFF"/>
+        <text x="65" y="19" font-size="11" class="semi" fill="#111827">Enabled (Instant Print)</text>
+      </g>
+
+      <!-- Taxes: GST Enabled & Rate -->
+      <rect x="0" y="290" width="640" height="90" rx="12" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <g transform="translate(16, 305)">
+        <rect x="0" y="0" width="40" height="22" rx="11" fill="#10B981"/>
+        <circle cx="29" cy="11" r="8" fill="#FFFFFF"/>
+        <text x="50" y="16" font-size="12" class="bold" fill="#111827">Enable Indian GST Tax Calculation</text>
+        
+        <text x="0" y="45" font-size="11" class="bold" fill="#4B5563">GST Rate: 5% (Composite QSR)</text>
+        <text x="220" y="45" font-size="11" class="bold" fill="#4B5563">GSTIN: 29AABCS1429B1Z8</text>
+        <text x="440" y="45" font-size="11" class="bold" fill="#4B5563">FSSAI: 11223334000123</text>
+      </g>
+
+      <!-- Token Numbering -->
+      <text x="0" y="415" font-size="11" class="bold" fill="#374151">Order Token Prefix</text>
+      <rect x="0" y="422" width="310" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="12" y="445" font-size="12" class="semi" fill="#111827">Token #</text>
+
+      <text x="330" y="415" font-size="11" class="bold" fill="#374151">Starting Token Sequence</text>
+      <rect x="330" y="422" width="310" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="342" y="445" font-size="12" class="semi" fill="#111827">106</text>
+
+      <!-- Footer & Submit -->
+      <line x1="0" y1="480" x2="640" y2="480" stroke="#E5E7EB"/>
+      <g transform="translate(0, 500)">
+        <rect x="0" y="0" width="640" height="46" rx="12" fill="#1F2937"/>
+        <text x="320" y="28" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Save Configuration &amp; Launch POS Express Counter →</text>
+      </g>
+    </g>
+  
+</svg>

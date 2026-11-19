@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Top Header -->
+    <rect x="0" y="0" width="1440" height="55" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="26" rx="4" fill="#1F2937"/>
+      <text x="12" y="17" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      <text x="95" y="18" font-size="13" class="bold" fill="#111827">Feature Flags &amp; White-Label Receipt Designer</text>
+    </g>
+
+    <g transform="translate(24, 75)">
+      <!-- Outlet Selector -->
+      <g transform="translate(0, 0)">
+        <rect width="1390" height="50" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="24" y="30" font-size="12" class="bold" fill="#4B5563">CUSTOMISING OUTLET:</text>
+        <rect x="180" y="8" width="300" height="34" rx="8" fill="#F3F4F6"/>
+        <text x="200" y="29" font-size="12" class="bold" fill="#111827">Sign Laban · Indiranagar (Active) ▾</text>
+      </g>
+
+      <!-- 2-Column Split: Controls (Left 880) + Live Thermal Slip (Right 480) -->
+      <g transform="translate(0, 65)">
+        <!-- Left: Feature Switches & Branding -->
+        <g transform="translate(0, 0)">
+          <!-- Feature Switches Card -->
+          <rect width="880" height="380" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <g transform="translate(24, 25)">
+            <text x="0" y="0" font-size="15" class="bold" fill="#111827">Developer Feature Flags</text>
+            <text x="0" y="18" font-size="11" class="regular" fill="#6B7280">Enable or disable operational modules per business tenant</text>
+
+            <g transform="translate(0, 35)">
+              
+                    <g transform="translate(0, 0)">
+                      <line x1="0" y1="0" x2="830" y2="0" stroke="#F3F4F6"/>
+                      <text x="0" y="24" font-size="12" class="bold" fill="#111827">Kitchen Display System (KDS)</text>
+                      <text x="0" y="40" font-size="11" class="regular" fill="#6B7280">Route orders to Grill, Fry, Cold and Expo touch screens with bump timers</text>
+                      
+                      <!-- Toggle -->
+                      <g transform="translate(770, 16)">
+                        <rect width="46" height="24" rx="12" fill="#10B981"/>
+                        <circle cx="34" cy="12" r="9" fill="#FFFFFF"/>
+                      </g>
+                    </g>
+                  
+                    <g transform="translate(0, 60)">
+                      <line x1="0" y1="0" x2="830" y2="0" stroke="#F3F4F6"/>
+                      <text x="0" y="24" font-size="12" class="bold" fill="#111827">Indian GST Tax Engine (5% composite)</text>
+                      <text x="0" y="40" font-size="11" class="regular" fill="#6B7280">Compute CGST + SGST tax split on receipts, reports, and tax audits</text>
+                      
+                      <!-- Toggle -->
+                      <g transform="translate(770, 16)">
+                        <rect width="46" height="24" rx="12" fill="#10B981"/>
+                        <circle cx="34" cy="12" r="9" fill="#FFFFFF"/>
+                      </g>
+                    </g>
+                  
+                    <g transform="translate(0, 120)">
+                      <line x1="0" y1="0" x2="830" y2="0" stroke="#F3F4F6"/>
+                      <text x="0" y="24" font-size="12" class="bold" fill="#111827">Product Add-ons &amp; Modifiers Engine</text>
+                      <text x="0" y="40" font-size="11" class="regular" fill="#6B7280">Prompt cashier for extra toppings, syrups, and crust customizations on product tap</text>
+                      
+                      <!-- Toggle -->
+                      <g transform="translate(770, 16)">
+                        <rect width="46" height="24" rx="12" fill="#10B981"/>
+                        <circle cx="34" cy="12" r="9" fill="#FFFFFF"/>
+                      </g>
+                    </g>
+                  
+                    <g transform="translate(0, 180)">
+                      <line x1="0" y1="0" x2="830" y2="0" stroke="#F3F4F6"/>
+                      <text x="0" y="24" font-size="12" class="bold" fill="#111827">Auto-Print Thermal Receipt on Payment</text>
+                      <text x="0" y="40" font-size="11" class="regular" fill="#6B7280">Automatically trigger printer receipt immediately on successful checkout</text>
+                      
+                      <!-- Toggle -->
+                      <g transform="translate(770, 16)">
+                        <rect width="46" height="24" rx="12" fill="#10B981"/>
+                        <circle cx="34" cy="12" r="9" fill="#FFFFFF"/>
+                      </g>
+                    </g>
+                  
+                    <g transform="translate(0, 240)">
+                      <line x1="0" y1="0" x2="830" y2="0" stroke="#F3F4F6"/>
+                      <text x="0" y="24" font-size="12" class="bold" fill="#111827">Cash Payment Drawer Timing: After Checkout</text>
+                      <text x="0" y="40" font-size="11" class="regular" fill="#6B7280">Tender entered after order confirmation via payment modal</text>
+                      
+                      <!-- Toggle -->
+                      <g transform="translate(770, 16)">
+                        <rect width="46" height="24" rx="12" fill="#10B981"/>
+                        <circle cx="34" cy="12" r="9" fill="#FFFFFF"/>
+                      </g>
+                    </g>
+                  
+            </g>
+          </g>
+
+          <!-- White-Labeling & Receipt Branding Card -->
+          <g transform="translate(0, 400)">
+            <rect width="880" height="320" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+            <g transform="translate(24, 25)">
+              <text x="0" y="0" font-size="15" class="bold" fill="#111827">White-Labeling &amp; Receipt Branding</text>
+              <text x="0" y="18" font-size="11" class="regular" fill="#6B7280">Customize receipt headers, greetings, guest WiFi, and brand accent</text>
+
+              <g transform="translate(0, 35)">
+                <text x="0" y="15" font-size="11" class="bold" fill="#374151">Receipt Header Greeting</text>
+                <rect x="0" y="22" width="400" height="38" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <text x="14" y="46" font-size="12" class="mono" fill="#111827">*** SIGN LABAN INDIRANAGAR ***</text>
+
+                <text x="430" y="15" font-size="11" class="bold" fill="#374151">Receipt Footer Message</text>
+                <rect x="430" y="22" width="400" height="38" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <text x="444" y="46" font-size="12" class="regular" fill="#111827">Thank you for visiting! Follow @signlaban</text>
+
+                <text x="0" y="85" font-size="11" class="bold" fill="#374151">Guest Wi-Fi Network &amp; Password</text>
+                <rect x="0" y="92" width="400" height="38" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <text x="14" y="116" font-size="12" class="regular" fill="#111827">SignLabanGuest2026</text>
+
+                <text x="430" y="85" font-size="11" class="bold" fill="#374151">Brand Theme Accent Color</text>
+                <g transform="translate(430, 95)">
+                  
+                        <circle cx="16" cy="15" r="14" fill="#1F2937"/>
+                        <circle cx="16" cy="15" r="18" stroke="#111827" stroke-width="2" fill="none"/>
+                      
+                        <circle cx="61" cy="15" r="14" fill="#059669"/>
+                        
+                      
+                        <circle cx="106" cy="15" r="14" fill="#7C3AED"/>
+                        
+                      
+                        <circle cx="151" cy="15" r="14" fill="#D97706"/>
+                        
+                      
+                        <circle cx="196" cy="15" r="14" fill="#DC2626"/>
+                        
+                      
+                        <circle cx="241" cy="15" r="14" fill="#2563EB"/>
+                        
+                      
+                </g>
+
+                <!-- Save Changes -->
+                <rect x="0" y="165" width="830" height="44" rx="10" fill="#1F2937"/>
+                <text x="415" y="192" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">Save &amp; Apply Customisations to Active Outlet</text>
+              </g>
+            </g>
+          </g>
+        </g>
+
+        <!-- Right: Live Interactive Thermal Slip Preview (Width: 480) -->
+        <g transform="translate(910, 0)">
+          <rect width="480" height="720" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          
+          <g transform="translate(24, 20)">
+            <text x="0" y="0" font-size="14" class="bold" fill="#111827">Live Thermal Receipt Preview</text>
+            <text x="430" y="0" font-size="10" class="bold" fill="#10B981" text-anchor="end">Auto-updates</text>
+
+            <!-- 80mm Thermal Receipt Slip -->
+            <g transform="translate(30, 25)">
+              <rect width="370" height="640" rx="12" fill="#FEF3C7" fill-opacity="0.25" stroke="#D1D5DB"/>
+              
+              <g transform="translate(20, 25)">
+                <text x="165" y="10" font-size="15" class="bold" fill="#111827" text-anchor="middle">SIGN LABAN</text>
+                <text x="165" y="28" font-size="10" class="regular" fill="#4B5563" text-anchor="middle">India&apos;s First Egyptian Dessert</text>
+                <text x="165" y="42" font-size="9" class="regular" fill="#6B7280" text-anchor="middle">100ft Road, Indiranagar, Bengaluru</text>
+                <text x="165" y="56" font-size="9" class="mono" fill="#6B7280" text-anchor="middle">GSTIN: 29AABCS1429B1Z8</text>
+                
+                <text x="165" y="75" font-size="11" class="bold" fill="#111827" text-anchor="middle">*** SIGN LABAN INDIRANAGAR ***</text>
+
+                <line x1="0" y1="90" x2="330" y2="90" stroke="#9CA3AF" stroke-dasharray="4 4"/>
+
+                <!-- Metadata -->
+                <text x="0" y="110" font-size="10" class="mono" fill="#111827">Order: Token #106</text>
+                <text x="330" y="110" font-size="10" class="mono" fill="#111827" text-anchor="end">11:02 PM</text>
+
+                <text x="0" y="125" font-size="10" class="mono" fill="#111827">Type: Dine-In (Table 04)</text>
+                <text x="330" y="125" font-size="10" class="mono" fill="#111827" text-anchor="end">Cashier: Priya</text>
+
+                <line x1="0" y1="135" x2="330" y2="135" stroke="#9CA3AF" stroke-dasharray="4 4"/>
+
+                <!-- Items -->
+                <g transform="translate(0, 150)">
+                  <text x="0" y="12" font-size="11" class="bold mono" fill="#111827">1x Qashtuta Nutella Pistachio</text>
+                  <text x="330" y="12" font-size="11" class="bold mono" fill="#111827" text-anchor="end">320.00</text>
+                  <text x="15" y="25" font-size="9" class="mono" fill="#6B7280">+ Extra Pistachio Topping (40.00)</text>
+
+                  <text x="0" y="45" font-size="11" class="bold mono" fill="#111827">2x Umm Ali Royal Claypot</text>
+                  <text x="330" y="45" font-size="11" class="bold mono" fill="#111827" text-anchor="end">440.00</text>
+
+                  <text x="0" y="68" font-size="11" class="bold mono" fill="#111827">1x Egyptian Karkadeh Tea</text>
+                  <text x="330" y="68" font-size="11" class="bold mono" fill="#111827" text-anchor="end">140.00</text>
+                </g>
+
+                <line x1="0" y1="235" x2="330" y2="235" stroke="#9CA3AF" stroke-dasharray="4 4"/>
+
+                <!-- Totals -->
+                <g transform="translate(0, 250)">
+                  <text x="0" y="12" font-size="10" class="mono" fill="#374151">Subtotal:</text>
+                  <text x="330" y="12" font-size="10" class="mono" fill="#374151" text-anchor="end">940.00</text>
+
+                  <text x="0" y="28" font-size="10" class="mono" fill="#374151">CGST (2.5%):</text>
+                  <text x="330" y="28" font-size="10" class="mono" fill="#374151" text-anchor="end">23.50</text>
+
+                  <text x="0" y="44" font-size="10" class="mono" fill="#374151">SGST (2.5%):</text>
+                  <text x="330" y="44" font-size="10" class="mono" fill="#374151" text-anchor="end">23.50</text>
+
+                  <line x1="0" y1="55" x2="330" y2="55" stroke="#111827"/>
+                  <text x="0" y="74" font-size="14" class="bold mono" fill="#111827">TOTAL PAID (UPI):</text>
+                  <text x="330" y="74" font-size="14" class="bold mono" fill="#111827" text-anchor="end">₹987.00</text>
+                </g>
+
+                <line x1="0" y1="340" x2="330" y2="340" stroke="#9CA3AF" stroke-dasharray="4 4"/>
+
+                <!-- Footer -->
+                <g transform="translate(0, 360)">
+                  <text x="165" y="10" font-size="10" class="mono" fill="#374151" text-anchor="middle">Guest Wi-Fi: SignLabanGuest2026</text>
+                  <text x="165" y="26" font-size="10" class="regular" fill="#4B5563" text-anchor="middle">Thank you for visiting! Follow @signlaban</text>
+                  <text x="165" y="42" font-size="8" class="mono" fill="#9CA3AF" text-anchor="middle">pos.bits QSR Core Architecture</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  
+</svg>

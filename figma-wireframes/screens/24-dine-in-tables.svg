@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">POS Dine-In Management</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Counter 01 · Indiranagar Main Floor</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">POS Counter</text>
+      
+    
+      <text x="498" y="35" font-size="12" class="bold" fill="#111827">Dine-In Tables</text>
+      <line x1="498" y1="44" x2="596" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="640" y="35" font-size="12" class="medium" fill="#6B7280">Today&apos;s Orders (18)</text>
+      
+    
+    
+      <rect x="822" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="836" cy="31" r="4" fill="#10B981"/>
+      <text x="848" y="35" font-size="11" class="semi" fill="#111827">Active Tables: 4 / 12</text>
+    
+      <rect x="1012" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="1026" cy="31" r="4" fill="#10B981"/>
+      <text x="1038" y="35" font-size="11" class="semi" fill="#111827">Dining Sales: ₹24,800</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+
+  <g transform="translate(32, 80)">
+    <!-- Floor plan header & stats -->
+    <rect x="0" y="0" width="1376" height="54" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="24" y="33" font-size="14" class="bold" fill="#111827">Ground Floor Dine-In Layout · 48 Total Covers</text>
+    <g transform="translate(900, 14)">
+      <circle cx="10" cy="13" r="5" fill="#10B981"/>
+      <text x="22" y="17" font-size="12" class="medium" fill="#374151">8 Available</text>
+      <circle cx="120" cy="13" r="5" fill="#3B82F6"/>
+      <text x="132" y="17" font-size="12" class="medium" fill="#374151">3 Seated (Eating)</text>
+      <circle cx="250" cy="13" r="5" fill="#F59E0B"/>
+      <text x="262" y="17" font-size="12" class="medium" fill="#374151">1 Bill Requested</text>
+    </g>
+
+    <!-- Table Grid (4 cols x 3 rows) -->
+    <g transform="translate(0, 75)">
+      
+          <rect x="0" y="0" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="36" font-size="18" class="bold" fill="#111827">Table 01</text>
+          <rect x="220" y="18" width="88" height="24" rx="12" fill="#ECFDF5"/>
+          <text x="264" y="34" font-size="11" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+          
+          <text x="20" y="70" font-size="13" class="regular" fill="#4B5563">Capacity: 4 Pax · Server: Priya</text>
+          <text x="20" y="92" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: 18m</text>
+          
+          <line x1="20" y1="115" x2="308" y2="115" stroke="#F3F4F6"/>
+          
+          <text x="20" y="148" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="20" y="172" font-size="18" class="bold" fill="#111827">₹840</text>
+          
+          <rect x="200" y="140" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="254" y="164" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="352" y="0" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="372" y="36" font-size="18" class="bold" fill="#111827">Table 02</text>
+          <rect x="572" y="18" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="616" y="34" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="372" y="70" font-size="13" class="regular" fill="#4B5563">Capacity: 2 Pax · Server: -</text>
+          <text x="372" y="92" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="372" y1="115" x2="660" y2="115" stroke="#F3F4F6"/>
+          
+          <text x="372" y="148" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="372" y="172" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="552" y="140" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="606" y="164" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="704" y="0" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="724" y="36" font-size="18" class="bold" fill="#111827">Table 03</text>
+          <rect x="924" y="18" width="88" height="24" rx="12" fill="#ECFDF5"/>
+          <text x="968" y="34" font-size="11" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+          
+          <text x="724" y="70" font-size="13" class="regular" fill="#4B5563">Capacity: 6 Pax · Server: Priya</text>
+          <text x="724" y="92" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: 34m</text>
+          
+          <line x1="724" y1="115" x2="1012" y2="115" stroke="#F3F4F6"/>
+          
+          <text x="724" y="148" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="724" y="172" font-size="18" class="bold" fill="#111827">₹1,420</text>
+          
+          <rect x="904" y="140" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="958" y="164" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="1056" y="0" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="1076" y="36" font-size="18" class="bold" fill="#111827">Table 04</text>
+          <rect x="1276" y="18" width="88" height="24" rx="12" fill="#FEF3C7"/>
+          <text x="1320" y="34" font-size="11" class="bold" fill="#D97706" text-anchor="middle">Billed</text>
+          
+          <text x="1076" y="70" font-size="13" class="regular" fill="#4B5563">Capacity: 4 Pax · Server: Alex</text>
+          <text x="1076" y="92" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: 45m</text>
+          
+          <line x1="1076" y1="115" x2="1364" y2="115" stroke="#F3F4F6"/>
+          
+          <text x="1076" y="148" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="1076" y="172" font-size="18" class="bold" fill="#111827">₹620</text>
+          
+          <rect x="1256" y="140" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="1310" y="164" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="0" y="215" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="251" font-size="18" class="bold" fill="#111827">Table 05</text>
+          <rect x="220" y="233" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="264" y="249" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="20" y="285" font-size="13" class="regular" fill="#4B5563">Capacity: 2 Pax · Server: -</text>
+          <text x="20" y="307" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="20" y1="330" x2="308" y2="330" stroke="#F3F4F6"/>
+          
+          <text x="20" y="363" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="20" y="387" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="200" y="355" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="254" y="379" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="352" y="215" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="372" y="251" font-size="18" class="bold" fill="#111827">Table 06</text>
+          <rect x="572" y="233" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="616" y="249" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="372" y="285" font-size="13" class="regular" fill="#4B5563">Capacity: 4 Pax · Server: -</text>
+          <text x="372" y="307" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="372" y1="330" x2="660" y2="330" stroke="#F3F4F6"/>
+          
+          <text x="372" y="363" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="372" y="387" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="552" y="355" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="606" y="379" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="704" y="215" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="724" y="251" font-size="18" class="bold" fill="#111827">Table 07</text>
+          <rect x="924" y="233" width="88" height="24" rx="12" fill="#ECFDF5"/>
+          <text x="968" y="249" font-size="11" class="bold" fill="#10B981" text-anchor="middle">Seated</text>
+          
+          <text x="724" y="285" font-size="13" class="regular" fill="#4B5563">Capacity: 4 Pax · Server: Priya</text>
+          <text x="724" y="307" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: 12m</text>
+          
+          <line x1="724" y1="330" x2="1012" y2="330" stroke="#F3F4F6"/>
+          
+          <text x="724" y="363" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="724" y="387" font-size="18" class="bold" fill="#111827">₹510</text>
+          
+          <rect x="904" y="355" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="958" y="379" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="1056" y="215" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="1076" y="251" font-size="18" class="bold" fill="#111827">Table 08</text>
+          <rect x="1276" y="233" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="1320" y="249" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="1076" y="285" font-size="13" class="regular" fill="#4B5563">Capacity: 8 Pax VIP · Server: -</text>
+          <text x="1076" y="307" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="1076" y1="330" x2="1364" y2="330" stroke="#F3F4F6"/>
+          
+          <text x="1076" y="363" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="1076" y="387" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="1256" y="355" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="1310" y="379" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="0" y="430" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="20" y="466" font-size="18" class="bold" fill="#111827">Table 09</text>
+          <rect x="220" y="448" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="264" y="464" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="20" y="500" font-size="13" class="regular" fill="#4B5563">Capacity: 2 Pax · Server: -</text>
+          <text x="20" y="522" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="20" y1="545" x2="308" y2="545" stroke="#F3F4F6"/>
+          
+          <text x="20" y="578" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="20" y="602" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="200" y="570" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="254" y="594" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="352" y="430" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="372" y="466" font-size="18" class="bold" fill="#111827">Table 10</text>
+          <rect x="572" y="448" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="616" y="464" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="372" y="500" font-size="13" class="regular" fill="#4B5563">Capacity: 4 Pax · Server: -</text>
+          <text x="372" y="522" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="372" y1="545" x2="660" y2="545" stroke="#F3F4F6"/>
+          
+          <text x="372" y="578" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="372" y="602" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="552" y="570" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="606" y="594" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="704" y="430" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="724" y="466" font-size="18" class="bold" fill="#111827">Table 11</text>
+          <rect x="924" y="448" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="968" y="464" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="724" y="500" font-size="13" class="regular" fill="#4B5563">Capacity: 4 Pax · Server: -</text>
+          <text x="724" y="522" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="724" y1="545" x2="1012" y2="545" stroke="#F3F4F6"/>
+          
+          <text x="724" y="578" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="724" y="602" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="904" y="570" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="958" y="594" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+          <rect x="1056" y="430" width="328" height="195" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <text x="1076" y="466" font-size="18" class="bold" fill="#111827">Table 12</text>
+          <rect x="1276" y="448" width="88" height="24" rx="12" fill="#F9FAFB"/>
+          <text x="1320" y="464" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">Available</text>
+          
+          <text x="1076" y="500" font-size="13" class="regular" fill="#4B5563">Capacity: 6 Pax · Server: -</text>
+          <text x="1076" y="522" font-size="12" class="medium" fill="#9CA3AF">Active Seated Time: Empty</text>
+          
+          <line x1="1076" y1="545" x2="1364" y2="545" stroke="#F3F4F6"/>
+          
+          <text x="1076" y="578" font-size="12" class="regular" fill="#6B7280">Current Running Bill</text>
+          <text x="1076" y="602" font-size="18" class="bold" fill="#111827">-</text>
+          
+          <rect x="1256" y="570" width="108" height="38" rx="10" fill="#111827"/>
+          <text x="1310" y="594" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">View Tab →</text>
+        
+    </g>
+  </g>
+
+</svg>

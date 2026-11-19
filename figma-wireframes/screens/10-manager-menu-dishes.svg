@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Manager Operations</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Store &amp; Shift Admin · Alex Rivera</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="bold" fill="#111827">Menu &amp; Catalog</text>
+      <line x1="380" y1="44" x2="478" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="522" y="35" font-size="12" class="medium" fill="#6B7280">Staff &amp; PINs</text>
+      
+    
+      <text x="648" y="35" font-size="12" class="medium" fill="#6B7280">Approvals Queue</text>
+      
+    
+      <text x="798" y="35" font-size="12" class="medium" fill="#6B7280">Live Operations</text>
+      
+    
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <!-- Manager Sub-Navigation & Canvas -->
+    <g transform="translate(24, 75)">
+      <!-- Subtabs -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="140" height="32" rx="16" fill="#1F2937"/>
+        <text x="70" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">Dishes &amp; Catalog</text>
+
+        <rect x="150" y="0" width="150" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="225" y="20" font-size="11" class="semi" fill="#374151" text-anchor="middle">Add-ons &amp; Modifiers</text>
+      </g>
+
+      <!-- Action Bar -->
+      <g transform="translate(0, 48)">
+        <rect x="0" y="0" width="380" height="36" rx="18" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="35" y="22" font-size="12" class="regular" fill="#9CA3AF">Search menu products...</text>
+
+        <!-- Category Dropdown -->
+        <rect x="400" y="0" width="180" height="36" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="415" y="22" font-size="11" class="semi" fill="#374151">Category: All (8)</text>
+
+        <!-- Station Dropdown -->
+        <rect x="590" y="0" width="160" height="36" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="605" y="22" font-size="11" class="semi" fill="#374151">Station: All Stations</text>
+
+        <!-- Add Dish Button -->
+        <rect x="1240" y="0" width="150" height="36" rx="10" fill="#1F2937"/>
+        <text x="1315" y="22" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add New Dish</text>
+      </g>
+
+      <!-- Products Data Table -->
+      <g transform="translate(0, 105)">
+        <rect width="1390" height="680" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <rect width="1390" height="42" rx="16" fill="#F9FAFB"/>
+        <text x="24" y="26" font-size="11" class="bold" fill="#4B5563">DISH / PRODUCT</text>
+        <text x="360" y="26" font-size="11" class="bold" fill="#4B5563">CATEGORY</text>
+        <text x="560" y="26" font-size="11" class="bold" fill="#4B5563">KITCHEN STATION</text>
+        <text x="760" y="26" font-size="11" class="bold" fill="#4B5563">BASE PRICE</text>
+        <text x="940" y="26" font-size="11" class="bold" fill="#4B5563">STOCK STATUS (86)</text>
+        <text x="1240" y="26" font-size="11" class="bold" fill="#4B5563" text-anchor="end">ACTIONS</text>
+
+        
+              <g transform="translate(0, 42)">
+                <rect width="1390" height="58" fill="#FFFFFF"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Qashtuta Nutella Pistachio</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Egyptian Desserts</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Cold</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹320.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 100)">
+                <rect width="1390" height="58" fill="#FAFAFA"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Qashtuta Lotus Biscoff</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Egyptian Desserts</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Cold</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹320.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 158)">
+                <rect width="1390" height="58" fill="#FFFFFF"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Umm Ali Royal Claypot</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Egyptian Baked</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Grill / Oven</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹220.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 216)">
+                <rect width="1390" height="58" fill="#FAFAFA"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Koushiri Rice Pudding</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Puddings</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Cold</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹180.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 274)">
+                <rect width="1390" height="58" fill="#FFFFFF"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Saankorita Mango Cream</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Cream Sweets</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Cold</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹260.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#EF4444"/>
+                  <circle cx="11" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#B91C1C">86 Sold Out</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 332)">
+                <rect width="1390" height="58" fill="#FAFAFA"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Egyptian Karkadeh Tea</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Beverages</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Cold</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹140.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 390)">
+                <rect width="1390" height="58" fill="#FFFFFF"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Turkish Cardamom Coffee</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Beverages</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Beverage</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹160.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 448)">
+                <rect width="1390" height="58" fill="#FAFAFA"/>
+                <line x1="0" y1="58" x2="1390" y2="58" stroke="#E5E7EB"/>
+                
+                
+    <g transform="translate(24, 10)">
+      <rect width="38" height="38" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="38" y2="38" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="38" x2="38" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="-6" y="9" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="19" y="23" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">IMG</text>
+    </g>
+  
+                <text x="72" y="33" font-size="13" class="bold" fill="#111827">Sobia Coconut Milk Shake</text>
+                
+                <text x="360" y="33" font-size="12" class="regular" fill="#4B5563">Beverages</text>
+
+                <rect x="560" y="18" width="90" height="22" rx="6" fill="#F3F4F6"/>
+                <text x="605" y="33" font-size="10" class="bold" fill="#4B5563" text-anchor="middle">Cold</text>
+
+                <text x="760" y="33" font-size="13" class="bold" fill="#111827">₹150.00</text>
+
+                <!-- Stock Switch -->
+                <g transform="translate(940, 18)">
+                  <rect width="44" height="22" rx="11" fill="#10B981"/>
+                  <circle cx="33" cy="11" r="8" fill="#FFFFFF"/>
+                  <text x="54" y="15" font-size="11" class="semi" fill="#047857">Available</text>
+                </g>
+
+                <!-- Actions -->
+                <g transform="translate(1240, 18)">
+                  <rect x="-80" y="0" width="40" height="24" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+                  <text x="-60" y="16" font-size="10" class="bold" fill="#374151" text-anchor="middle">Edit</text>
+                  
+                  <rect x="-30" y="0" width="30" height="24" rx="6" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="-15" y="16" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕</text>
+                </g>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

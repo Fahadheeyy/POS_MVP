@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <rect x="0" y="0" width="1440" height="900" fill="#FFFFFF"/>
+    <g transform="translate(60, 40)">
+      <text x="0" y="24" font-size="22" class="bold" fill="#111827">Shift Opening &amp; Closing Cash Reconciliation Flow</text>
+      <text x="0" y="48" font-size="13" class="regular" fill="#6B7280">Audit control from morning register float to nightly physical note counting and variance calculation</text>
+
+      <g transform="translate(0, 100)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="400" height="190" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+                <rect width="400" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">1. Morning Float Entry</text>
+
+                <g transform="translate(20, 60)">
+                  <text x="0" y="20" font-size="13" class="bold mono" fill="#111827">Opening Cash = ₹5,000.00</text>
+                  <text x="0" y="45" font-size="12" class="regular" fill="#4B5563">Cashier counts starting drawer float</text>
+                </g>
+              </g>
+            
+              <g transform="translate(440, 0)">
+                <rect width="400" height="190" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+                <rect width="400" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">2. Daily Cash Sales</text>
+
+                <g transform="translate(20, 60)">
+                  <text x="0" y="20" font-size="13" class="bold mono" fill="#111827">+ ₹10,220.00 (5 Orders)</text>
+                  <text x="0" y="45" font-size="12" class="regular" fill="#4B5563">System tracks all cash tender checkout lines</text>
+                </g>
+              </g>
+            
+              <g transform="translate(880, 0)">
+                <rect width="400" height="190" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+                <rect width="400" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">3. Petty Cash Movement</text>
+
+                <g transform="translate(20, 60)">
+                  <text x="0" y="20" font-size="13" class="bold mono" fill="#111827">+ Paid-In / - Paid-Out</text>
+                  <text x="0" y="45" font-size="12" class="regular" fill="#4B5563">Manager authorizes mid-day cash changes</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 240)">
+                <rect width="400" height="190" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+                <rect width="400" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">4. Physical Note Count</text>
+
+                <g transform="translate(20, 60)">
+                  <text x="0" y="20" font-size="13" class="bold mono" fill="#111827">₹2000, ₹500, ₹200, ₹100, ₹50</text>
+                  <text x="0" y="45" font-size="12" class="regular" fill="#4B5563">Cashier records denomination counts</text>
+                </g>
+              </g>
+            
+              <g transform="translate(440, 240)">
+                <rect width="400" height="190" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+                <rect width="400" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">5. Variance Calculation</text>
+
+                <g transform="translate(20, 60)">
+                  <text x="0" y="20" font-size="13" class="bold mono" fill="#111827">Counted (₹15,220) - Expected (₹15,220)</text>
+                  <text x="0" y="45" font-size="12" class="regular" fill="#4B5563">Computes Over (+) or Short (-)</text>
+                </g>
+              </g>
+            
+              <g transform="translate(880, 240)">
+                <rect width="400" height="190" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+                <rect width="400" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">6. Shift Close & Z-Report</text>
+
+                <g transform="translate(20, 60)">
+                  <text x="0" y="20" font-size="13" class="bold mono" fill="#111827">Shift locked & summary printed</text>
+                  <text x="0" y="45" font-size="12" class="regular" fill="#4B5563">End-of-day register audit saved to memory</text>
+                </g>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

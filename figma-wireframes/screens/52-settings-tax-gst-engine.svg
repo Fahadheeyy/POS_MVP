@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Store Configuration Settings</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Tax &amp; GST Engine Configuration</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">Dashboard</text>
+      
+    
+      <text x="482" y="35" font-size="12" class="medium" fill="#6B7280">Owner Reports</text>
+      
+    
+      <text x="616" y="35" font-size="12" class="bold" fill="#111827">Settings</text>
+      <line x1="616" y1="44" x2="672" y2="44" stroke="#111827" stroke-width="2"/>
+    
+    
+      <rect x="710" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="724" cy="31" r="4" fill="#10B981"/>
+      <text x="736" y="35" font-size="11" class="semi" fill="#111827">Today&apos;s Sales: ₹42,580</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(32, 80)">
+      <!-- Left Rail (280w), Right Config Panel (1060w) -->
+      <rect x="0" y="0" width="270" height="740" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <g transform="translate(20, 24)">
+        <text x="0" y="20" font-size="14" class="bold" fill="#111827">System Configuration</text>
+        
+            <rect x="0" y="40" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="64" font-size="12" class="medium" fill="#4B5563">Store Profile &amp; Identity</text>
+          
+            <rect x="0" y="88" width="230" height="38" rx="10" fill="#111827"/>
+            <text x="16" y="112" font-size="12" class="bold" fill="#FFFFFF">Tax &amp; GST Engine Configu</text>
+          
+            <rect x="0" y="136" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="160" font-size="12" class="medium" fill="#4B5563">80mm Thermal Receipt Des</text>
+          
+            <rect x="0" y="184" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="208" font-size="12" class="medium" fill="#4B5563">Receipt Printer &amp; Periph</text>
+          
+            <rect x="0" y="232" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="256" font-size="12" class="medium" fill="#4B5563">Kitchen KDS Station Disp</text>
+          
+            <rect x="0" y="280" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="304" font-size="12" class="medium" fill="#4B5563">Payment Modes &amp; Tender P</text>
+          
+            <rect x="0" y="328" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="352" font-size="12" class="medium" fill="#4B5563">Order Sequence &amp; Token N</text>
+          
+            <rect x="0" y="376" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="400" font-size="12" class="medium" fill="#4B5563">Roles &amp; Security PIN Per</text>
+          
+            <rect x="0" y="424" width="230" height="38" rx="10" fill="transparent"/>
+            <text x="16" y="448" font-size="12" class="medium" fill="#4B5563">Database Backup &amp; System</text>
+          
+      </g>
+
+      <!-- Right Panel -->
+      <g transform="translate(294, 0)">
+        <rect x="0" y="0" width="1082" height="740" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <g transform="translate(40, 36)">
+          <text x="0" y="24" font-size="20" class="bold" fill="#111827">Tax &amp; GST Engine Configuration</text>
+          <text x="0" y="48" font-size="13" class="regular" fill="#6B7280">Inclusive vs Exclusive GST, 5% Restaurant Scheme, HSN Codes</text>
+          <line x1="0" y1="70" x2="1000" y2="70" stroke="#E5E7EB"/>
+
+          <!-- Form Sample Fields -->
+          <g transform="translate(0, 100)">
+            <text x="0" y="16" font-size="13" class="bold" fill="#374151">Configuration Parameters</text>
+            
+            <rect x="0" y="30" width="480" height="46" rx="10" fill="#F9FAFB" stroke="#D1D5DB"/>
+            <text x="18" y="58" font-size="13" class="semi" fill="#111827">Sign Laban Indiranagar</text>
+            
+            <rect x="520" y="30" width="480" height="46" rx="10" fill="#F9FAFB" stroke="#D1D5DB"/>
+            <text x="538" y="58" font-size="13" class="semi" fill="#111827">GSTIN: 29AABCS1429B1Z2</text>
+
+            <rect x="0" y="100" width="1000" height="120" rx="12" fill="#F9FAFB" stroke="#E5E7EB"/>
+            <text x="24" y="32" font-size="13" class="bold" fill="#111827">Feature Toggle & Hardware Rules</text>
+            <text x="24" y="54" font-size="12" class="regular" fill="#6B7280">Enable automatic background synchronization with ESC/POS network thermal printer on Port 9100</text>
+            <rect x="24" y="70" width="48" height="24" rx="12" fill="#10B981"/>
+            <circle cx="58" cy="82" r="9" fill="#FFFFFF"/>
+            <text x="82" y="86" font-size="12" class="bold" fill="#10B981">Active & Enabled</text>
+          </g>
+
+          <!-- Save CTA -->
+          <g transform="translate(0, 580)">
+            <rect x="0" y="0" width="220" height="48" rx="12" fill="#10B981"/>
+            <text x="110" y="29" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Save Changes</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  
+</svg>

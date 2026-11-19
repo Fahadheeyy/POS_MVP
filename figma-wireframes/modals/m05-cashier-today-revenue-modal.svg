@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Backdrop -->
+  <rect width="1440" height="900" fill="#111827" fill-opacity="0.45"/>
+  
+    <g transform="translate(480, 200)">
+      <rect width="480" height="480" rx="24" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="440" cy="35" r="14" fill="#F3F4F6"/>
+      <text x="440" y="39" font-size="12" class="bold" fill="#6B7280" text-anchor="middle">✕</text>
+
+      <g transform="translate(35, 35)">
+        <text x="205" y="20" font-size="18" class="bold" fill="#111827" text-anchor="middle">Today&apos;s Sales &amp; Revenue</text>
+        <text x="205" y="40" font-size="11" class="regular" fill="#6B7280" text-anchor="middle">Cashier: Priya Sharma · Counter 01</text>
+        
+        <text x="205" y="80" font-size="32" class="bold" fill="#111827" text-anchor="middle">₹42,580.00</text>
+        <text x="205" y="105" font-size="12" class="semi" fill="#10B981" text-anchor="middle">18 Completed Orders</text>
+
+        <!-- Breakdown List -->
+        <g transform="translate(0, 130)">
+          <rect width="410" height="50" rx="10" fill="#F9FAFB"/>
+          <text x="16" y="30" font-size="12" class="bold" fill="#111827">UPI Digital QR (11 orders)</text>
+          <text x="394" y="30" font-size="13" class="bold" fill="#111827" text-anchor="end">₹26,400.00</text>
+
+          <g transform="translate(0, 60)">
+            <rect width="410" height="50" rx="10" fill="#F9FAFB"/>
+            <text x="16" y="30" font-size="12" class="bold" fill="#111827">Cash in Register (5 orders)</text>
+            <text x="394" y="30" font-size="13" class="bold" fill="#111827" text-anchor="end">₹10,220.00</text>
+          </g>
+
+          <g transform="translate(0, 120)">
+            <rect width="410" height="50" rx="10" fill="#F9FAFB"/>
+            <text x="16" y="30" font-size="12" class="bold" fill="#111827">Card Payments (2 orders)</text>
+            <text x="394" y="30" font-size="13" class="bold" fill="#111827" text-anchor="end">₹5,960.00</text>
+          </g>
+        </g>
+
+        <!-- Close Button -->
+        <g transform="translate(0, 350)">
+          <rect width="410" height="44" rx="12" fill="#1F2937"/>
+          <text x="205" y="27" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">Done / Return to Counter</text>
+        </g>
+      </g>
+    </g>
+  
+</svg>

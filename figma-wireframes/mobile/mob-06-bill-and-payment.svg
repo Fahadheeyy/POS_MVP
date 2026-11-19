@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="390" height="844" fill="#F3F4F6"/>
+  
+  
+    <!-- Mobile Status Bar -->
+    <rect x="0" y="0" width="390" height="44" fill="#FFFFFF"/>
+    <text x="24" y="30" font-size="12" class="bold" fill="#111827">9:41</text>
+    <circle cx="340" cy="26" r="3" fill="#111827"/>
+    <circle cx="348" cy="26" r="3" fill="#111827"/>
+    <rect x="356" y="21" width="18" height="10" rx="3" fill="none" stroke="#111827" stroke-width="1.5"/>
+    <rect x="358" y="23" width="12" height="6" rx="1.5" fill="#111827"/>
+
+    <!-- Mobile Nav Bar -->
+    <rect x="0" y="44" width="390" height="52" fill="#FFFFFF" stroke="#E5E7EB"/>
+    
+      <g transform="translate(16, 58)">
+        <circle cx="12" cy="12" r="12" fill="#F3F4F6"/>
+        <path d="M14 8L10 12L14 16" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    
+    <text x="52" y="76" font-size="15" class="bold" fill="#111827">Bill Checkout</text>
+    <text x="370" y="76" font-size="11" class="medium" fill="#6B7280" text-anchor="end">Table 05</text>
+  
+  <g transform="translate(20, 110)">
+    <!-- Bill Summary -->
+    <rect x="0" y="0" width="350" height="175" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="20" y="32" font-size="13" class="bold" fill="#111827">Order #045 Summary</text>
+    <text x="20" y="58" font-size="12" class="regular" fill="#6B7280">1× Lotus Biscoff Qashtuta (Customized)</text>
+    <text x="330" y="58" font-size="12" class="semi" fill="#111827" text-anchor="end">₹339.00</text>
+    <text x="20" y="80" font-size="12" class="regular" fill="#6B7280">1× Karak Chai Glass</text>
+    <text x="330" y="80" font-size="12" class="semi" fill="#111827" text-anchor="end">₹60.00</text>
+    <text x="20" y="102" font-size="12" class="regular" fill="#6B7280">GST Tax (5%)</text>
+    <text x="330" y="102" font-size="12" class="semi" fill="#111827" text-anchor="end">₹19.95</text>
+    <line x1="20" y1="120" x2="330" y2="120" stroke="#E5E7EB"/>
+    <text x="20" y="148" font-size="16" class="bold" fill="#111827">Payable Amount</text>
+    <text x="330" y="148" font-size="18" class="bold" fill="#10B981" text-anchor="end">₹419.00</text>
+
+    <!-- Payment Modes -->
+    <rect x="0" y="200" width="350" height="270" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="20" y="32" font-size="13" class="bold" fill="#111827">Select Payment Mode</text>
+
+    <!-- UPI QR (Active) -->
+    <rect x="20" y="48" width="310" height="54" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+    <circle cx="48" cy="75" r="16" fill="#10B981"/>
+    <text x="48" y="80" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">QR</text>
+    <text x="74" y="70" font-size="13" class="bold" fill="#111827">UPI Dynamic QR Code</text>
+    <text x="74" y="86" font-size="10" class="regular" fill="#047857">Instant scan via GPay, PhonePe, Paytm</text>
+    <circle cx="310" cy="75" r="8" fill="#10B981"/>
+    <text x="310" y="79" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">✓</text>
+
+    <!-- Cash -->
+    <rect x="20" y="112" width="310" height="54" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+    <circle cx="48" cy="139" r="16" fill="#6B7280"/>
+    <text x="48" y="144" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">₹</text>
+    <text x="74" y="134" font-size="13" class="bold" fill="#111827">Cash Drawer</text>
+    <text x="74" y="150" font-size="10" class="regular" fill="#6B7280">Quick tender calculator & change</text>
+
+    <!-- Card -->
+    <rect x="20" y="176" width="310" height="54" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+    <circle cx="48" cy="203" r="16" fill="#6B7280"/>
+    <text x="48" y="208" font-size="10" class="bold" fill="#FFFFFF" text-anchor="middle">POS</text>
+    <text x="74" y="198" font-size="13" class="bold" fill="#111827">Card Swipe / Tap (EDC)</text>
+    <text x="74" y="214" font-size="10" class="regular" fill="#6B7280">Pine Labs / Paytm / Mosambee EDC</text>
+
+    <!-- Split tender -->
+    <rect x="20" y="238" width="310" height="20" fill="none"/>
+    <text x="175" y="248" font-size="11" class="semi" fill="#3B82F6" text-anchor="middle">Split Bill / Multi-Tender Payment</text>
+  </g>
+
+  <!-- Confirm Payment CTA -->
+  <g transform="translate(20, 755)">
+    <rect x="0" y="0" width="350" height="50" rx="14" fill="#10B981"/>
+    <text x="175" y="31" font-size="14" class="bold" fill="#FFFFFF" text-anchor="middle">Confirm Payment ₹419.00</text>
+  </g>
+
+</svg>

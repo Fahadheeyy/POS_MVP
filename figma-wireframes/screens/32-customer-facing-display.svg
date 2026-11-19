@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="#0B0F19"/>
+  <!-- Top brand bar -->
+  <rect x="0" y="0" width="1440" height="70" fill="#111827" stroke="#1F2937"/>
+  <g transform="translate(48, 20)">
+    <text x="0" y="24" font-size="20" class="bold" fill="#FFFFFF">SIGN LABAN · INDIRANAGAR</text>
+    <text x="0" y="42" font-size="12" class="medium" fill="#9CA3AF">Customer Facing Screen · Counter 01</text>
+  </g>
+
+  <!-- Split Screen: Left Order Breakdown (800w), Right UPI QR Standee (500w) -->
+  <g transform="translate(48, 100)">
+    <!-- Left Cart -->
+    <rect x="0" y="0" width="780" height="740" rx="20" fill="#111827" stroke="#1F2937"/>
+    <g transform="translate(40, 40)">
+      <text x="0" y="24" font-size="22" class="bold" fill="#FFFFFF">Your Order Summary</text>
+      
+      <!-- Items -->
+      
+        <g transform="translate(0, 70)">
+          <text x="0" y="20" font-size="16" class="bold" fill="#FFFFFF">1× Lotus Biscoff Qashtuta</text>
+          <text x="0" y="40" font-size="13" class="regular" fill="#9CA3AF">Sweetness 50% · Extra Biscoff Crunch</text>
+          <text x="700" y="24" font-size="16" class="bold" fill="#FFFFFF" text-anchor="end">₹339.00</text>
+          <line x1="0" y1="58" x2="700" y2="58" stroke="#1F2937"/>
+        </g>
+      
+        <g transform="translate(0, 150)">
+          <text x="0" y="20" font-size="16" class="bold" fill="#FFFFFF">1× Classic Mango Rice Pudding</text>
+          <text x="0" y="40" font-size="13" class="regular" fill="#9CA3AF">Crushed Pistachio topping</text>
+          <text x="700" y="24" font-size="16" class="bold" fill="#FFFFFF" text-anchor="end">₹180.00</text>
+          <line x1="0" y1="58" x2="700" y2="58" stroke="#1F2937"/>
+        </g>
+      
+        <g transform="translate(0, 230)">
+          <text x="0" y="20" font-size="16" class="bold" fill="#FFFFFF">2× Karak Chai Glass</text>
+          <text x="0" y="40" font-size="13" class="regular" fill="#9CA3AF">Piping hot Cardamom spice</text>
+          <text x="700" y="24" font-size="16" class="bold" fill="#FFFFFF" text-anchor="end">₹120.00</text>
+          <line x1="0" y1="58" x2="700" y2="58" stroke="#1F2937"/>
+        </g>
+      
+
+      <!-- Bottom totals -->
+      <g transform="translate(0, 460)">
+        <text x="0" y="24" font-size="15" class="regular" fill="#9CA3AF">Subtotal</text>
+        <text x="700" y="24" font-size="15" class="bold" fill="#FFFFFF" text-anchor="end">₹639.00</text>
+        <text x="0" y="54" font-size="15" class="regular" fill="#9CA3AF">GST (5% SGST + CGST)</text>
+        <text x="700" y="54" font-size="15" class="bold" fill="#FFFFFF" text-anchor="end">₹31.95</text>
+        <line x1="0" y1="76" x2="700" y2="76" stroke="#374151"/>
+        <text x="0" y="120" font-size="24" class="bold" fill="#FFFFFF">TOTAL AMOUNT DUE</text>
+        <text x="700" y="120" font-size="32" class="bold" fill="#10B981" text-anchor="end">₹671.00</text>
+      </g>
+    </g>
+
+    <!-- Right Dynamic QR Standee -->
+    <g transform="translate(820, 0)">
+      <rect x="0" y="0" width="524" height="740" rx="20" fill="#111827" stroke="#1F2937"/>
+      <g transform="translate(42, 40)">
+        <text x="220" y="24" font-size="20" class="bold" fill="#FFFFFF" text-anchor="middle">Scan to Pay via UPI</text>
+        <text x="220" y="48" font-size="13" class="regular" fill="#9CA3AF" text-anchor="middle">Accepts GPay, PhonePe, Paytm, BHIM</text>
+
+        <!-- Big Dynamic QR -->
+        <rect x="70" y="80" width="300" height="300" rx="16" fill="#FFFFFF"/>
+        <rect x="95" y="105" width="250" height="250" fill="#000000"/>
+        <rect x="115" y="125" width="60" height="60" fill="#FFFFFF"/>
+        <rect x="265" y="125" width="60" height="60" fill="#FFFFFF"/>
+        <rect x="115" y="275" width="60" height="60" fill="#FFFFFF"/>
+
+        <g transform="translate(0, 420)">
+          <rect x="40" y="0" width="360" height="60" rx="14" fill="#059669"/>
+          <text x="220" y="36" font-size="20" class="bold" fill="#FFFFFF" text-anchor="middle">Exact Total: ₹671.00</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

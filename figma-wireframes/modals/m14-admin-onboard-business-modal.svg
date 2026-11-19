@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Backdrop -->
+  <rect width="1440" height="900" fill="#111827" fill-opacity="0.45"/>
+  
+    <g transform="translate(420, 100)">
+      <rect width="600" height="700" rx="24" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <g transform="translate(35, 30)">
+        <text x="0" y="20" font-size="18" class="bold" fill="#111827">Onboard New Business / Outlet</text>
+        <text x="0" y="38" font-size="11" class="regular" fill="#6B7280">Register client franchise unit into pos.bits multi-tenant cloud</text>
+
+        <g transform="translate(0, 55)">
+          <text x="0" y="15" font-size="11" class="bold" fill="#374151">Outlet Name *</text>
+          <rect x="0" y="22" width="250" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="12" y="45" font-size="12" class="semi" fill="#111827">Sign Laban Koramangala</text>
+
+          <text x="270" y="15" font-size="11" class="bold" fill="#374151">Brand Name *</text>
+          <rect x="270" y="22" width="250" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="282" y="45" font-size="12" class="semi" fill="#111827">Sign Laban</text>
+
+          <text x="0" y="80" font-size="11" class="bold" fill="#374151">Category</text>
+          <rect x="0" y="87" width="250" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="12" y="110" font-size="12" class="regular" fill="#4B5563">Egyptian Desserts</text>
+
+          <text x="270" y="80" font-size="11" class="bold" fill="#374151">Brand Tagline</text>
+          <rect x="270" y="87" width="250" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="282" y="110" font-size="12" class="regular" fill="#4B5563">India&apos;s First Egyptian Dessert</text>
+
+          <text x="0" y="145" font-size="11" class="bold" fill="#374151">Complete Address</text>
+          <rect x="0" y="152" width="520" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="12" y="175" font-size="12" class="regular" fill="#4B5563">432 80 Feet Road, 4th Block Koramangala, Bengaluru</text>
+
+          <text x="0" y="210" font-size="11" class="bold" fill="#374151">GSTIN</text>
+          <rect x="0" y="217" width="250" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="12" y="240" font-size="12" class="mono" fill="#111827">29AABCS1429B1Z8</text>
+
+          <text x="270" y="210" font-size="11" class="bold" fill="#374151">Plan Tier</text>
+          <rect x="270" y="217" width="250" height="36" rx="8" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="282" y="240" font-size="12" class="semi" fill="#111827">Growth (Multi-Outlet Franchise)</text>
+
+          <!-- Toggles -->
+          <g transform="translate(0, 275)">
+            <rect width="520" height="60" rx="8" fill="#F9FAFB"/>
+            <text x="16" y="24" font-size="11" class="bold" fill="#111827">Initial Feature Flags</text>
+            <text x="16" y="42" font-size="10" class="regular" fill="#6B7280">☑ KDS Enabled  ·  ☑ GST (5%)  ·  ☑ Add-ons Engine  ·  ☑ Auto-Print</text>
+          </g>
+        </g>
+
+        <g transform="translate(0, 580)">
+          <rect width="520" height="46" rx="12" fill="#1F2937"/>
+          <text x="260" y="28" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Onboard Outlet &amp; Generate Profile →</text>
+        </g>
+      </g>
+    </g>
+  
+</svg>

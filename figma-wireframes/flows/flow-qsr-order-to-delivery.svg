@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <rect x="0" y="0" width="1440" height="900" fill="#FFFFFF"/>
+    <g transform="translate(60, 40)">
+      <text x="0" y="24" font-size="22" class="bold" fill="#111827">QSR Express Order &amp; Fulfillment Flow</text>
+      <text x="0" y="48" font-size="13" class="regular" fill="#6B7280">End-to-end lifecycle from customer product selection to kitchen station bump and receipt delivery</text>
+
+      <!-- Flow Nodes -->
+      <g transform="translate(0, 100)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">1. Select Dish</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Cashier taps item from category grid</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: 05-pos-express-counter</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(330, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">2. Customise Add-ons</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Modal opens if dish has toppings/syrups</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: m01-product-customization</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(660, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">3. Cart Summary</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Item added with modifiers, line total calculated</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: 05-pos-express-counter</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(990, 0)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">4. Tender Select</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">UPI (QR), Cash (Change) or Card selected</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: m02-payment-methods</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(0, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">5. Order Confirmed</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Order token # generated, auto-prints bill</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: m03-order-success</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(330, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">6. KDS Routing</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Ticket routed to Grill / Cold / Fry station</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: 08-kds-board</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(660, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">7. Kitchen Bump</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Chef marks items done and bumps ticket</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: 08-kds-board</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+              <g transform="translate(990, 280)">
+                <rect width="290" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+                <rect width="290" height="40" rx="16" fill="#1F2937"/>
+                <text x="20" y="25" font-size="12" class="bold" fill="#FFFFFF">8. Customer Pickup</text>
+                
+                <text x="20" y="70" font-size="12" class="medium" fill="#111827">Order complete, archived in today orders</text>
+                <text x="20" y="110" font-size="10" class="mono" fill="#6B7280">Screen: 07-today-orders</text>
+                
+                <rect x="20" y="130" width="120" height="24" rx="6" fill="#E5E7EB"/>
+                <text x="80" y="146" font-size="9" class="bold" fill="#374151" text-anchor="middle">VERIFIED LIVE</text>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

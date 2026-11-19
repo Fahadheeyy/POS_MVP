@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    
+    <!-- Global Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    
+    <!-- Brand / Module -->
+    <g transform="translate(24, 15)">
+      <rect x="0" y="0" width="80" height="30" rx="6" fill="#1F2937"/>
+      <text x="12" y="20" font-size="11" class="bold" fill="#FFFFFF">POS.BITS</text>
+      
+      <line x1="92" y1="4" x2="92" y2="26" stroke="#E5E7EB" stroke-width="1"/>
+      
+      <text x="104" y="14" font-size="12" class="bold" fill="#111827">Manager Operations</text>
+      <text x="104" y="27" font-size="10" class="medium" fill="#6B7280">Store &amp; Shift Admin · Alex Rivera</text>
+      
+      <rect x="250" y="4" width="110" height="18" rx="4" fill="#F3F4F6" stroke="#D1D5DB"/>
+      <text x="256" y="17" font-size="9" class="bold" fill="#374151">Sign Laban · Indiranagar</text>
+    </g>
+
+    <!-- Sub-navigation Tabs & Live KPIs -->
+    
+      <text x="380" y="35" font-size="12" class="medium" fill="#6B7280">Menu &amp; Catalog</text>
+      
+    
+      <text x="522" y="35" font-size="12" class="medium" fill="#6B7280">Staff &amp; PINs</text>
+      
+    
+      <text x="648" y="35" font-size="12" class="bold" fill="#111827">Approvals Queue (2)</text>
+      <line x1="648" y1="44" x2="781" y2="44" stroke="#111827" stroke-width="2"/>
+    
+      <text x="830" y="35" font-size="12" class="medium" fill="#6B7280">Live Operations</text>
+      
+    
+    
+      <rect x="980" y="18" width="180" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="994" cy="31" r="4" fill="#10B981"/>
+      <text x="1006" y="35" font-size="11" class="semi" fill="#111827">Today&apos;s Sales: ₹42,580</text>
+    
+
+    <!-- Right Controls -->
+    <!-- Status Dot -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#F9FAFB" stroke="#E5E7EB"/>
+      <circle cx="12" cy="13" r="3.5" fill="#10B981"/>
+      <text x="22" y="17" font-size="10" class="medium" fill="#374151">Online · Printer Ready</text>
+    </g>
+
+    <!-- Global Clock -->
+    <g transform="translate(1225, 17)">
+      <text x="50" y="14" font-size="13" class="bold" fill="#111827" text-anchor="end">11:05 PM</text>
+      <text x="50" y="25" font-size="9" class="medium" fill="#9CA3AF" text-anchor="end">Wednesday, Nov 12</text>
+    </g>
+
+    <!-- Staff Profile Pill -->
+    <g transform="translate(1290, 15)">
+      <rect x="0" y="0" width="130" height="32" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <circle cx="16" cy="16" r="11" fill="#374151"/>
+      <text x="16" y="20" font-size="9" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+      <text x="34" y="15" font-size="11" class="semi" fill="#111827">Priya</text>
+      <text x="34" y="26" font-size="9" class="regular" fill="#6B7280">Cashier</text>
+      <!-- Down arrow -->
+      <path d="M112 14L116 18L120 14" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+  
+    <g transform="translate(24, 80)">
+      <text x="0" y="24" font-size="16" class="bold" fill="#111827">Pending Manager Approvals Queue</text>
+      <text x="0" y="42" font-size="11" class="regular" fill="#6B7280">Authorize cashier requests for refunds, order voids, and discount overrides</text>
+
+      <g transform="translate(0, 60)">
+        <rect width="1390" height="680" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+        <rect width="1390" height="42" rx="16" fill="#F9FAFB"/>
+        <text x="24" y="26" font-size="11" class="bold" fill="#4B5563">REQUEST ID</text>
+        <text x="140" y="26" font-size="11" class="bold" fill="#4B5563">TYPE</text>
+        <text x="280" y="26" font-size="11" class="bold" fill="#4B5563">ORDER #</text>
+        <text x="400" y="26" font-size="11" class="bold" fill="#4B5563">AMOUNT</text>
+        <text x="520" y="26" font-size="11" class="bold" fill="#4B5563">REQUESTED BY</text>
+        <text x="680" y="26" font-size="11" class="bold" fill="#4B5563">REASON / NOTE</text>
+        <text x="1080" y="26" font-size="11" class="bold" fill="#4B5563">TIMESTAMP</text>
+        <text x="1360" y="26" font-size="11" class="bold" fill="#4B5563" text-anchor="end">ACTIONS</text>
+
+        
+              <g transform="translate(0, 42)">
+                <rect width="1390" height="75" fill="#FFFFFF"/>
+                <line x1="0" y1="75" x2="1390" y2="75" stroke="#E5E7EB"/>
+                <text x="24" y="42" font-size="12" class="bold mono" fill="#111827">APP-902</text>
+                
+                <rect x="140" y="24" width="120" height="24" rx="6" fill="#F3F4F6"/>
+                <text x="200" y="40" font-size="10" class="bold" fill="#374151" text-anchor="middle">Refund Approval</text>
+
+                <text x="280" y="42" font-size="12" class="bold" fill="#111827">Token #101</text>
+                <text x="400" y="42" font-size="13" class="bold" fill="#111827">₹320.00</text>
+                <text x="520" y="42" font-size="12" class="semi" fill="#374151">Priya Sharma</text>
+                <text x="680" y="42" font-size="12" class="regular" fill="#4B5563">Customer changed mind prior to food prep</text>
+                <text x="1080" y="42" font-size="11" class="medium" fill="#6B7280">10:15 PM</text>
+
+                <!-- Actions -->
+                <g transform="translate(1220, 22)">
+                  <rect width="65" height="32" rx="8" fill="#10B981"/>
+                  <text x="32" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">✓ Approve</text>
+                  
+                  <rect x="75" y="0" width="65" height="32" rx="8" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="107" y="20" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕ Reject</text>
+                </g>
+              </g>
+            
+              <g transform="translate(0, 117)">
+                <rect width="1390" height="75" fill="#FFFFFF"/>
+                <line x1="0" y1="75" x2="1390" y2="75" stroke="#E5E7EB"/>
+                <text x="24" y="42" font-size="12" class="bold mono" fill="#111827">APP-901</text>
+                
+                <rect x="140" y="24" width="120" height="24" rx="6" fill="#F3F4F6"/>
+                <text x="200" y="40" font-size="10" class="bold" fill="#374151" text-anchor="middle">Discount Override (20%)</text>
+
+                <text x="280" y="42" font-size="12" class="bold" fill="#111827">Token #94</text>
+                <text x="400" y="42" font-size="13" class="bold" fill="#111827">₹140.00</text>
+                <text x="520" y="42" font-size="12" class="semi" fill="#374151">Priya Sharma</text>
+                <text x="680" y="42" font-size="12" class="regular" fill="#4B5563">Corporate franchise partner courtesy discount</text>
+                <text x="1080" y="42" font-size="11" class="medium" fill="#6B7280">09:20 PM</text>
+
+                <!-- Actions -->
+                <g transform="translate(1220, 22)">
+                  <rect width="65" height="32" rx="8" fill="#10B981"/>
+                  <text x="32" y="20" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">✓ Approve</text>
+                  
+                  <rect x="75" y="0" width="65" height="32" rx="8" fill="#FEE2E2" stroke="#FCA5A5"/>
+                  <text x="107" y="20" font-size="11" class="bold" fill="#B91C1C" text-anchor="middle">✕ Reject</text>
+                </g>
+              </g>
+            
+      </g>
+    </g>
+  
+</svg>

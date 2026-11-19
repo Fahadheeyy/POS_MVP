@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Backdrop -->
+  <rect width="1440" height="900" fill="#111827" fill-opacity="0.45"/>
+  
+    <g transform="translate(420, 160)">
+      <rect width="600" height="580" rx="24" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <g transform="translate(35, 30)">
+        <text x="0" y="20" font-size="18" class="bold" fill="#111827">Recipe &amp; Plating Spec: Umm Ali</text>
+        <text x="0" y="38" font-size="11" class="regular" fill="#6B7280">Standard operating procedure for oven/grill station</text>
+
+        <g transform="translate(0, 60)">
+          <rect width="530" height="70" rx="10" fill="#FEF3C7"/>
+          <text x="20" y="28" font-size="12" class="bold" fill="#92400E">Station: Grill / Oven · Target Prep Time: 180 seconds</text>
+          <text x="20" y="48" font-size="11" class="medium" fill="#B45309">Allergens: Contains Dairy (Milk, Clotted Cream), Tree Nuts (Pistachio)</text>
+
+          <g transform="translate(0, 90)">
+            <text x="0" y="20" font-size="13" class="bold" fill="#111827">Assembly &amp; Plating Steps:</text>
+            <text x="0" y="45" font-size="12" class="regular" fill="#374151">1. Take pre-baked Egyptian puff pastry and crush gently into claypot.</text>
+            <text x="0" y="70" font-size="12" class="regular" fill="#374151">2. Pour 180ml hot sweetened vanilla milk until pastry is fully submerged.</text>
+            <text x="0" y="95" font-size="12" class="regular" fill="#374151">3. Dollop 40g fresh Egyptian Qashta clotted cream across top surface.</text>
+            <text x="0" y="120" font-size="12" class="regular" fill="#374151">4. Broil in salamander/oven for 90 seconds until golden blistered top.</text>
+            <text x="0" y="145" font-size="12" class="regular" fill="#374151">5. Garnish with crushed pistachio and serve immediately.</text>
+          </g>
+        </g>
+
+        <g transform="translate(0, 460)">
+          <rect width="530" height="44" rx="12" fill="#1F2937"/>
+          <text x="265" y="27" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">Close Recipe Guide</text>
+        </g>
+      </g>
+    </g>
+  
+</svg>

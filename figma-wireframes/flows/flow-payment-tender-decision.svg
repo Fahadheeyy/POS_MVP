@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <rect x="0" y="0" width="1440" height="900" fill="#FFFFFF"/>
+    <g transform="translate(60, 40)">
+      <text x="0" y="24" font-size="22" class="bold" fill="#111827">Payment Tender &amp; Cash Timing Decision Logic</text>
+      <text x="0" y="48" font-size="13" class="regular" fill="#6B7280">System architecture for Cash Before vs Cash After, UPI Dynamic QR, and Card payment execution</text>
+
+      <g transform="translate(0, 100)">
+        <!-- Start Node -->
+        <rect x="520" y="0" width="240" height="60" rx="12" fill="#1F2937"/>
+        <text x="640" y="35" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Customer Taps Checkout</text>
+
+        <!-- Decision Diamond -->
+        <g transform="translate(560, 90)">
+          <rect width="160" height="80" rx="10" fill="#F3F4F6" stroke="#111827" stroke-width="2"/>
+          <text x="80" y="38" font-size="11" class="bold" fill="#111827" text-anchor="middle">Payment Mode?</text>
+          <text x="80" y="55" font-size="10" class="regular" fill="#6B7280" text-anchor="middle">UPI / Cash / Card</text>
+        </g>
+
+        <!-- Branch 1: UPI -->
+        <g transform="translate(100, 240)">
+          <rect width="320" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="20" y="30" font-size="14" class="bold" fill="#111827">UPI Dynamic QR Flow</text>
+          <text x="20" y="55" font-size="11" class="regular" fill="#4B5563">1. Render customer QR with exact total</text>
+          <text x="20" y="75" font-size="11" class="regular" fill="#4B5563">2. VPA: signlaban@icici broadcast</text>
+          <text x="20" y="95" font-size="11" class="regular" fill="#4B5563">3. Customer scans &amp; pays on phone</text>
+          <text x="20" y="115" font-size="11" class="bold" fill="#10B981">4. Payment success tone chime triggered</text>
+        </g>
+
+        <!-- Branch 2: Cash -->
+        <g transform="translate(500, 240)">
+          <rect width="320" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="20" y="30" font-size="14" class="bold" fill="#111827">Cash Payment Tender Flow</text>
+          <text x="20" y="55" font-size="11" class="regular" fill="#4B5563">If timing = &apos;before&apos;: Inline chips (₹500, ₹1000)</text>
+          <text x="20" y="75" font-size="11" class="regular" fill="#4B5563">If timing = &apos;after&apos;: Modal tender entry</text>
+          <text x="20" y="95" font-size="11" class="regular" fill="#4B5563">Calculate change = tendered - total</text>
+          <text x="20" y="115" font-size="11" class="bold" fill="#10B981">Display change &amp; trigger cash drawer</text>
+        </g>
+
+        <!-- Branch 3: Card -->
+        <g transform="translate(900, 240)">
+          <rect width="320" height="180" rx="16" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="20" y="30" font-size="14" class="bold" fill="#111827">Credit / Debit Card Flow</text>
+          <text x="20" y="55" font-size="11" class="regular" fill="#4B5563">1. EDC machine swipe simulated</text>
+          <text x="20" y="75" font-size="11" class="regular" fill="#4B5563">2. Transaction ID recorded in order</text>
+          <text x="20" y="95" font-size="11" class="regular" fill="#4B5563">3. Card batch logged for reconciliation</text>
+        </g>
+      </g>
+    </g>
+  
+</svg>

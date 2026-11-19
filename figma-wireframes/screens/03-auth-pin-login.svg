@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Top Bar -->
+    <rect x="0" y="0" width="1440" height="50" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(240, 15)">
+      <rect x="0" y="0" width="70" height="22" rx="4" fill="#1F2937"/>
+      <text x="10" y="15" font-size="10" class="bold" fill="#FFFFFF">POS.BITS</text>
+      <text x="85" y="15" font-size="11" class="bold" fill="#111827">POS Cashier · Sign Laban</text>
+    </g>
+    <text x="720" y="30" font-size="11" class="medium" fill="#6B7280" text-anchor="middle">• Online, printer ready</text>
+    <text x="1200" y="30" font-size="11" class="medium" fill="#6B7280" text-anchor="end">6:10 AM | Wednesday, Oct 28</text>
+
+    <!-- Center PIN Box -->
+    <g transform="translate(270, 100)">
+      <text x="0" y="30" font-size="24" class="bold" fill="#111827">Welcome to the POS</text>
+      <text x="0" y="52" font-size="12" class="medium" fill="#6B7280">Select your name, then enter your PIN to start your shift.</text>
+
+      <!-- Split White Box -->
+      <rect x="0" y="70" width="900" height="600" rx="24" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <line x1="450" y1="70" x2="450" y2="670" stroke="#E5E7EB"/>
+
+      <!-- Left Column: Staff Selector -->
+      <g transform="translate(40, 110)">
+        <text x="0" y="0" font-size="15" class="bold" fill="#111827">Who&apos;s signing in?</text>
+        
+        <!-- Search Bar -->
+        <rect x="0" y="15" width="370" height="36" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+        <text x="35" y="38" font-size="12" class="regular" fill="#9CA3AF">Find a team member</text>
+
+        <!-- Staff 1: Selected -->
+        <g transform="translate(0, 65)">
+          <rect width="370" height="60" rx="12" fill="#F3F4F6" stroke="#1F2937" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="16" fill="#1F2937"/>
+          <text x="30" y="34" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">PR</text>
+          <text x="60" y="26" font-size="13" class="bold" fill="#111827">Priya Sharma</text>
+          <text x="60" y="42" font-size="11" class="regular" fill="#6B7280">Head Cashier</text>
+          <circle cx="340" cy="30" r="10" fill="#1F2937"/>
+          <text x="340" y="34" font-size="11" class="bold" fill="#FFFFFF" text-anchor="middle">✓</text>
+        </g>
+
+        <!-- Staff 2 -->
+        <g transform="translate(0, 135)">
+          <rect width="370" height="60" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <circle cx="30" cy="30" r="16" fill="#E5E7EB"/>
+          <text x="30" y="34" font-size="11" class="bold" fill="#374151" text-anchor="middle">JE</text>
+          <text x="60" y="26" font-size="13" class="bold" fill="#111827">Jesselyn Tan</text>
+          <text x="60" y="42" font-size="11" class="regular" fill="#6B7280">Kitchen Lead</text>
+        </g>
+
+        <!-- Staff 3 -->
+        <g transform="translate(0, 205)">
+          <rect width="370" height="60" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <circle cx="30" cy="30" r="16" fill="#E5E7EB"/>
+          <text x="30" y="34" font-size="11" class="bold" fill="#374151" text-anchor="middle">MA</text>
+          <text x="60" y="26" font-size="13" class="bold" fill="#111827">Marcus Chen</text>
+          <text x="60" y="42" font-size="11" class="regular" fill="#6B7280">Kitchen Staff</text>
+        </g>
+
+        <!-- Staff 4 -->
+        <g transform="translate(0, 275)">
+          <rect width="370" height="60" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+          <circle cx="30" cy="30" r="16" fill="#E5E7EB"/>
+          <text x="30" y="34" font-size="11" class="bold" fill="#374151" text-anchor="middle">AL</text>
+          <text x="60" y="26" font-size="13" class="bold" fill="#111827">Alex Rivera</text>
+          <text x="60" y="42" font-size="11" class="regular" fill="#6B7280">Shift &amp; Store Manager</text>
+        </g>
+
+        <line x1="0" y1="480" x2="370" y2="480" stroke="#E5E7EB"/>
+        <text x="0" y="505" font-size="11" class="regular" fill="#9CA3AF">Not listed? Ask a manager.</text>
+        <text x="370" y="505" font-size="11" class="bold" fill="#111827" text-anchor="end">Change role →</text>
+      </g>
+
+      <!-- Right Column: Numeric Keypad -->
+      <g transform="translate(490, 110)">
+        <text x="185" y="10" font-size="18" class="bold" fill="#111827" text-anchor="middle">Enter your PIN</text>
+        <text x="185" y="30" font-size="11" class="regular" fill="#6B7280" text-anchor="middle">Priya Sharma · Head Cashier</text>
+
+        <!-- 4 PIN Dots -->
+        <g transform="translate(130, 50)">
+          <circle cx="10" cy="15" r="7" fill="#1F2937"/>
+          <circle cx="45" cy="15" r="7" fill="#1F2937"/>
+          <circle cx="80" cy="15" r="7" fill="#E5E7EB"/>
+          <circle cx="115" cy="15" r="7" fill="#E5E7EB"/>
+        </g>
+
+        <!-- 3x4 Keypad Grid -->
+        <g transform="translate(50, 95)">
+          <!-- Row 1 -->
+          <rect x="0" y="0" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="37" y="35" font-size="18" class="bold" fill="#111827" text-anchor="middle">1</text>
+          <rect x="95" y="0" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="132" y="35" font-size="18" class="bold" fill="#111827" text-anchor="middle">2</text>
+          <rect x="190" y="0" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="227" y="35" font-size="18" class="bold" fill="#111827" text-anchor="middle">3</text>
+
+          <!-- Row 2 -->
+          <rect x="0" y="65" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="37" y="100" font-size="18" class="bold" fill="#111827" text-anchor="middle">4</text>
+          <rect x="95" y="65" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="132" y="100" font-size="18" class="bold" fill="#111827" text-anchor="middle">5</text>
+          <rect x="190" y="65" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="227" y="100" font-size="18" class="bold" fill="#111827" text-anchor="middle">6</text>
+
+          <!-- Row 3 -->
+          <rect x="0" y="130" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="37" y="165" font-size="18" class="bold" fill="#111827" text-anchor="middle">7</text>
+          <rect x="95" y="130" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="132" y="165" font-size="18" class="bold" fill="#111827" text-anchor="middle">8</text>
+          <rect x="190" y="130" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="227" y="165" font-size="18" class="bold" fill="#111827" text-anchor="middle">9</text>
+
+          <!-- Row 4 -->
+          <rect x="0" y="195" width="75" height="55" rx="12" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="37" y="228" font-size="11" class="bold" fill="#6B7280" text-anchor="middle">CLEAR</text>
+          <rect x="95" y="195" width="75" height="55" rx="12" fill="#F9FAFB" stroke="#D1D5DB"/>
+          <text x="132" y="230" font-size="18" class="bold" fill="#111827" text-anchor="middle">0</text>
+          <rect x="190" y="195" width="75" height="55" rx="12" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="227" y="230" font-size="16" class="bold" fill="#6B7280" text-anchor="middle">⌫</text>
+
+          <!-- Submit Button -->
+          <rect x="0" y="265" width="265" height="48" rx="12" fill="#1F2937"/>
+          <text x="132" y="295" font-size="13" class="bold" fill="#FFFFFF" text-anchor="middle">Sign in</text>
+        </g>
+        <text x="185" y="440" font-size="11" class="semi" fill="#4B5563" text-anchor="middle">Forgot PIN? Ask a manager</text>
+      </g>
+    </g>
+  
+</svg>

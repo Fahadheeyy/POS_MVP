@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="#0F172A"/>
+  <!-- Kiosk layout center portrait 600w inside 1440 canvas -->
+  <g transform="translate(420, 30)">
+    <rect x="0" y="0" width="600" height="840" rx="28" fill="#FFFFFF" stroke="#E2E8F0" filter="drop-shadow(0 25px 50px rgba(0,0,0,0.25))"/>
+    
+    <!-- Top banner -->
+    <rect x="0" y="0" width="600" height="110" rx="28" fill="#111827"/>
+    <text x="300" y="48" font-size="20" class="bold" fill="#FFFFFF" text-anchor="middle">SIGN LABAN KIOSK</text>
+    <text x="300" y="74" font-size="12" class="medium" fill="#9CA3AF" text-anchor="middle">Touch screen to customize & order</text>
+
+    <!-- Kiosk Catalog 2x2 grid -->
+    <g transform="translate(30, 140)">
+      
+          <rect x="0" y="0" width="260" height="220" rx="18" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="15" y="15" width="230" height="110" rx="12" fill="#E2E8F0"/>
+          <text x="130" y="70" font-size="12" class="bold" fill="#94A3B8" text-anchor="middle">IMG: Classic Qashtuta</text>
+          <text x="15" y="150" font-size="14" class="bold" fill="#111827">Classic Qashtuta</text>
+          <text x="15" y="170" font-size="11" class="medium" fill="#64748B">320 kcal</text>
+          <text x="15" y="198" font-size="16" class="bold" fill="#10B981">₹249</text>
+          <rect x="165" y="172" width="80" height="34" rx="10" fill="#111827"/>
+          <text x="205" y="194" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="280" y="0" width="260" height="220" rx="18" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="295" y="15" width="230" height="110" rx="12" fill="#E2E8F0"/>
+          <text x="410" y="70" font-size="12" class="bold" fill="#94A3B8" text-anchor="middle">IMG: Lotus Biscoff</text>
+          <text x="295" y="150" font-size="14" class="bold" fill="#111827">Lotus Biscoff</text>
+          <text x="295" y="170" font-size="11" class="medium" fill="#64748B">410 kcal</text>
+          <text x="295" y="198" font-size="16" class="bold" fill="#10B981">₹299</text>
+          <rect x="445" y="172" width="80" height="34" rx="10" fill="#111827"/>
+          <text x="485" y="194" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="0" y="240" width="260" height="220" rx="18" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="15" y="255" width="230" height="110" rx="12" fill="#E2E8F0"/>
+          <text x="130" y="310" font-size="12" class="bold" fill="#94A3B8" text-anchor="middle">IMG: Mango Rice Pudding</text>
+          <text x="15" y="390" font-size="14" class="bold" fill="#111827">Mango Rice Pudding</text>
+          <text x="15" y="410" font-size="11" class="medium" fill="#64748B">240 kcal</text>
+          <text x="15" y="438" font-size="16" class="bold" fill="#10B981">₹180</text>
+          <rect x="165" y="412" width="80" height="34" rx="10" fill="#111827"/>
+          <text x="205" y="434" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+          <rect x="280" y="240" width="260" height="220" rx="18" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <rect x="295" y="255" width="230" height="110" rx="12" fill="#E2E8F0"/>
+          <text x="410" y="310" font-size="12" class="bold" fill="#94A3B8" text-anchor="middle">IMG: Pistachio Supreme</text>
+          <text x="295" y="390" font-size="14" class="bold" fill="#111827">Pistachio Supreme</text>
+          <text x="295" y="410" font-size="11" class="medium" fill="#64748B">480 kcal</text>
+          <text x="295" y="438" font-size="16" class="bold" fill="#10B981">₹349</text>
+          <rect x="445" y="412" width="80" height="34" rx="10" fill="#111827"/>
+          <text x="485" y="434" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">+ Add</text>
+        
+    </g>
+
+    <!-- Bottom Kiosk Bar -->
+    <g transform="translate(30, 660)">
+      <rect x="0" y="0" width="540" height="140" rx="20" fill="#111827"/>
+      <text x="24" y="44" font-size="14" class="regular" fill="#9CA3AF">My Tray (2 items)</text>
+      <text x="24" y="78" font-size="24" class="bold" fill="#FFFFFF">Total: ₹548.00</text>
+      
+      <rect x="340" y="32" width="176" height="56" rx="14" fill="#10B981"/>
+      <text x="428" y="66" font-size="16" class="bold" fill="#FFFFFF" text-anchor="middle">Pay Now →</text>
+    </g>
+  </g>
+
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+  <rect width="1440" height="900" fill="rgba(17, 24, 39, 0.6)"/>
+  <g transform="translate(480, 220)">
+    <rect x="0" y="0" width="480" height="420" rx="24" fill="#FFFFFF" stroke="#E5E7EB" filter="drop-shadow(0 25px 40px rgba(0,0,0,0.2))"/>
+    <g transform="translate(48, 60)">
+      <!-- 3 bouncing dots -->
+      <g transform="translate(150, 40)">
+        <circle cx="0" cy="0" r="10" fill="#4B5563"/>
+        <circle cx="42" cy="0" r="10" fill="#4B5563"/>
+        <circle cx="84" cy="0" r="10" fill="#4B5563"/>
+      </g>
+
+      <text x="192" y="110" font-size="22" class="bold" fill="#111827" text-anchor="middle">Waiting for Payment</text>
+      <text x="192" y="140" font-size="13" class="regular" fill="#6B7280" text-anchor="middle">Awaiting webhook callback from UPI / Card EDC terminal...</text>
+      
+      <rect x="42" y="170" width="300" height="46" rx="10" fill="#F3F4F6"/>
+      <text x="192" y="198" font-size="15" class="bold" fill="#111827" text-anchor="middle">Amount Due: ₹777.00</text>
+
+      <rect x="0" y="250" width="384" height="48" rx="12" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="192" y="280" font-size="13" class="semi" fill="#4B5563" text-anchor="middle">Cancel Transaction</text>
+    </g>
+  </g>
+
+</svg>

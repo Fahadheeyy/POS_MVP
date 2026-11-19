@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    </style>
+  </defs>
+  <!-- Background Canvas -->
+  <rect width="1440" height="900" fill="#F3F4F6"/>
+  
+    <!-- Header -->
+    <rect x="0" y="0" width="1440" height="60" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <g transform="translate(24, 18)">
+      <text x="0" y="16" font-size="14" class="bold" fill="#111827">DESIGN SYSTEM &amp; UI KIT SHOWCASE</text>
+      <text x="0" y="30" font-size="10" class="regular" fill="#6B7280">Atomic components, buttons, inputs, pills, keypad &amp; layouts</text>
+    </g>
+
+    <g transform="translate(24, 85)">
+      <!-- 1. Color Palette Tokens (Grayscale) -->
+      <text x="0" y="20" font-size="14" class="bold" fill="#111827">1. Neutral Wireframe Palette Tokens</text>
+      <g transform="translate(0, 35)">
+        
+              <g transform="translate(0, 0)">
+                <rect width="155" height="60" rx="10" fill="#111827" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#111827</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Dark / Text</text>
+              </g>
+            
+              <g transform="translate(170, 0)">
+                <rect width="155" height="60" rx="10" fill="#374151" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#374151</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Primary Gray</text>
+              </g>
+            
+              <g transform="translate(340, 0)">
+                <rect width="155" height="60" rx="10" fill="#6B7280" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#6B7280</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Muted Text</text>
+              </g>
+            
+              <g transform="translate(510, 0)">
+                <rect width="155" height="60" rx="10" fill="#D1D5DB" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#D1D5DB</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Border Gray</text>
+              </g>
+            
+              <g transform="translate(680, 0)">
+                <rect width="155" height="60" rx="10" fill="#F3F4F6" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#F3F4F6</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Surface Gray</text>
+              </g>
+            
+              <g transform="translate(850, 0)">
+                <rect width="155" height="60" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#FFFFFF</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Pure White</text>
+              </g>
+            
+              <g transform="translate(1020, 0)">
+                <rect width="155" height="60" rx="10" fill="#10B981" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#10B981</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Accent Success</text>
+              </g>
+            
+              <g transform="translate(1190, 0)">
+                <rect width="155" height="60" rx="10" fill="#EF4444" stroke="#D1D5DB"/>
+                <text x="10" y="80" font-size="11" class="bold" fill="#111827">#EF4444</text>
+                <text x="10" y="95" font-size="10" class="regular" fill="#6B7280">Accent Danger</text>
+              </g>
+            
+      </g>
+
+      <!-- 2. Buttons & Inputs -->
+      <g transform="translate(0, 160)">
+        <text x="0" y="20" font-size="14" class="bold" fill="#111827">2. Buttons &amp; Interactive Inputs</text>
+        <g transform="translate(0, 35)">
+          <!-- Primary Button -->
+          <rect x="0" y="0" width="160" height="42" rx="10" fill="#1F2937"/>
+          <text x="80" y="26" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">Primary Action</text>
+
+          <!-- Secondary Button -->
+          <rect x="180" y="0" width="160" height="42" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="260" y="26" font-size="12" class="semi" fill="#374151" text-anchor="middle">Secondary Action</text>
+
+          <!-- Success Button -->
+          <rect x="360" y="0" width="160" height="42" rx="10" fill="#10B981"/>
+          <text x="440" y="26" font-size="12" class="bold" fill="#FFFFFF" text-anchor="middle">✓ Confirm / Success</text>
+
+          <!-- Danger Button -->
+          <rect x="540" y="0" width="160" height="42" rx="10" fill="#FEE2E2" stroke="#FCA5A5"/>
+          <text x="620" y="26" font-size="12" class="bold" fill="#B91C1C" text-anchor="middle">✕ Void / Cancel</text>
+
+          <!-- Text Input -->
+          <rect x="730" y="0" width="300" height="42" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+          <text x="746" y="26" font-size="12" class="regular" fill="#9CA3AF">Enter text or search...</text>
+        </g>
+      </g>
+
+      <!-- 3. Cards & Keypad Component -->
+      <g transform="translate(0, 300)">
+        <text x="0" y="20" font-size="14" class="bold" fill="#111827">3. Atomic Cards &amp; Keypad</text>
+        <g transform="translate(0, 35)">
+          <!-- Mini Product Card -->
+          <rect width="200" height="240" rx="16" fill="#FFFFFF" stroke="#D1D5DB"/>
+          
+    <g transform="translate(16, 16)">
+      <rect width="168" height="130" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/>
+      <line x1="0" y1="0" x2="168" y2="130" stroke="#E5E7EB" stroke-width="1"/>
+      <line x1="0" y1="130" x2="168" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+      <rect x="59" y="55" width="50" height="20" rx="4" fill="#FFFFFF" stroke="#D1D5DB"/>
+      <text x="84" y="69" font-size="9" class="bold" fill="#9CA3AF" text-anchor="middle">PREVIEW</text>
+    </g>
+  
+          <text x="100" y="175" font-size="12" class="bold" fill="#111827" text-anchor="middle">Qashtuta Pistachio</text>
+          <text x="100" y="195" font-size="12" class="bold" fill="#4B5563" text-anchor="middle">₹320.00</text>
+
+          <!-- Status Badges -->
+          <g transform="translate(240, 20)">
+            <rect x="0" y="0" width="90" height="24" rx="12" fill="#D1FAE5"/>
+            <text x="45" y="16" font-size="10" class="bold" fill="#065F46" text-anchor="middle">Active / Paid</text>
+
+            <rect x="105" y="0" width="100" height="24" rx="12" fill="#FEF3C7"/>
+            <text x="155" y="16" font-size="10" class="bold" fill="#92400E" text-anchor="middle">In Preparation</text>
+
+            <rect x="220" y="0" width="90" height="24" rx="12" fill="#FEE2E2"/>
+            <text x="265" y="16" font-size="10" class="bold" fill="#B91C1C" text-anchor="middle">Cancelled</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  
+</svg>
