@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "@/lib/navigation";
 import { useAppStore } from '../store';
 import { authService } from '@/lib/auth/authService';
 import { DatabaseResetModal } from './DatabaseResetModal';
-import { TikkitLogo } from './TikkitLogo';
 import { Wifi, WifiOff, Printer, ShieldAlert, ShieldCheck, LogOut, ChevronDown, Volume2, VolumeX, Maximize, RefreshCw, LayoutDashboard, AlertTriangle, Sliders, Lock, CheckCircle2, ShoppingCart, ChefHat, BarChart3, Settings } from 'lucide-react';
 
 interface HeaderProps {
@@ -70,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
           onClick={() => navigate('/login')}
           className="flex items-center gap-3 cursor-pointer hover:opacity-90 transition-opacity"
         >
-          <TikkitLogo variant="header" />
+          <img src="/assets/pos-bits-logo.png" alt="pos.bits" className="h-6 w-auto object-contain" />
           <div className="border-l border-gray-200 pl-3">
             <div className="flex items-center gap-2">
               <span suppressHydrationWarning className="font-bold text-gray-900 tracking-tight text-xs uppercase leading-none block">

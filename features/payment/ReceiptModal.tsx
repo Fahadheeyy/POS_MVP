@@ -166,7 +166,7 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
       <div className="mt-3 pt-2.5 border-t border-dashed border-gray-200 text-center text-[9px] text-gray-500 space-y-0.5">
         <div>{settings.receiptFooter || 'Thank you for visiting Sign Laban!'}</div>
         <div className="font-semibold text-slate-400 uppercase tracking-wider">
-          Powered by tikkit · High-Speed QSR Systems
+          Powered by pos.bits · High-Speed QSR Systems
         </div>
       </div>
 

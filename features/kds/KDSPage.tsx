@@ -745,7 +745,7 @@ export const KDSPage: React.FC = () => {
             </div>
           )}
           <div className="pt-2 text-center font-mono text-[10px] text-gray-500 border-t">
-            tikkit High-Speed Kitchen Routing
+            pos.bits High-Speed Kitchen Routing
           </div>
         </div>
       )}

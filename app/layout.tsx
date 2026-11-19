@@ -4,8 +4,8 @@ import { StoreHydrator } from '@/components/StoreHydrator';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'tikkit — Fast Counter POS & QSR Operating System',
-  description: 'tikkit · AI-Powered Multi-Tenant Quick Service Restaurant POS Platform',
+  title: 'POS.BITS — Enterprise QSR POS SaaS Platform',
+  description: 'Production Multi-Tenant Quick Service Restaurant POS Platform for India',
   icons: {
     icon: '/assets/logo.svg',
   },
@@ -22,7 +22,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>

@@ -4,7 +4,6 @@ import { useNavigate } from '@/lib/navigation';
 import { useAppStore } from '../../store';
 import { authService, AuthSessionUser } from '@/lib/auth/authService';
 import { sounds } from '../../utils/audio';
-import { TikkitLogo } from '@/components/TikkitLogo';
 import { Eye, EyeOff, ShieldCheck, Mail, Lock, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 
 export const AuthPage: React.FC = () => {
@@ -102,7 +101,7 @@ export const AuthPage: React.FC = () => {
       {/* Left Column with Soft Blue-Gray Card (Preserving Exact Visual Identity) */}
       <div className="md:w-1/2 p-8 flex flex-col justify-between bg-surface-canvas border-r border-gray-200">
         <div className="flex items-center gap-3">
-          <TikkitLogo variant="header" size="md" />
+          <img src="/assets/pos-bits-logo.png" alt="pos.bits" className="h-8 w-auto object-contain" />
           <div className="border-l border-gray-200 pl-3 flex items-center gap-2">
             <span className="font-extrabold text-gray-900 text-xs">Sign Laban</span>
             <span className="text-gray-400 text-xs">·</span>

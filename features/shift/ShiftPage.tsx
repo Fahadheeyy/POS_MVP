@@ -574,7 +574,7 @@ export const ShiftPage: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 text-center text-xs text-gray-400">
-          Generated automatically by tikkit Counter System for Sign Laban
+          Generated automatically by pos.bits Counter System for Sign Laban
         </div>
       </div>
     </div>

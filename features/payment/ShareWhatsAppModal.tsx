@@ -49,7 +49,7 @@ Thank you for visiting Sign Laban!
 India's First Egyptian Dessert · @signlaban
 Shop 12, 100ft Road, Indiranagar, Bengaluru
 --------------------------------
-Powered by tikkit High-Speed QSR Systems`;
+Powered by pos.bits High-Speed QSR Systems`;
 
   const cleanPhone = phoneNumber.replace(/\D/g, '');
 

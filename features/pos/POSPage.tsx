@@ -23,101 +23,6 @@ import {
   TrendingUp,
 } from 'lucide-react';
 
-// Palette inspired by Image 1: vibrant, saturated/pastel card color themes
-interface CardTheme {
-  bg: string;
-  tagColor: string;
-  pillBorder: string;
-  titleColor: string;
-  priceBg: string;
-  priceText: string;
-  defaultTag: string;
-  defaultPrepTime: string;
-}
-
-const CARD_THEMES: CardTheme[] = [
-  {
-    bg: 'bg-[#F2653E]', // Warm Coral / Tomato (Pasta card)
-    tagColor: 'text-white/95',
-    pillBorder: 'border-white/50 text-white',
-    titleColor: 'text-white',
-    priceBg: 'bg-black/25',
-    priceText: 'text-white',
-    defaultTag: 'La Totita',
-    defaultPrepTime: '2 min',
-  },
-  {
-    bg: 'bg-[#4E101E]', // Deep Berry / Burgundy (Burger card)
-    tagColor: 'text-[#F5A9C8]',
-    pillBorder: 'border-[#F5A9C8]/50 text-[#F5A9C8]',
-    titleColor: 'text-[#E464A4]', // Vibrant hot pink title
-    priceBg: 'bg-white/20',
-    priceText: 'text-white',
-    defaultTag: 'Linda',
-    defaultPrepTime: '22 min',
-  },
-  {
-    bg: 'bg-[#C7F064]', // Bright Lime / Chartreuse (Hot dog card)
-    tagColor: 'text-[#1F4512]',
-    pillBorder: 'border-[#1F4512]/40 text-[#1F4512]',
-    titleColor: 'text-[#1F4512]', // Deep forest green title
-    priceBg: 'bg-black/15',
-    priceText: 'text-[#1F4512]',
-    defaultTag: 'Blanca Nieves',
-    defaultPrepTime: '30 min',
-  },
-  {
-    bg: 'bg-[#F8CA4D]', // Sunny Golden Mustard (Cocktail card)
-    tagColor: 'text-[#1C3B2B]',
-    pillBorder: 'border-[#1C3B2B]/40 text-[#1C3B2B]',
-    titleColor: 'text-[#1C3B2B]', // Dark bottle green title
-    priceBg: 'bg-black/15',
-    priceText: 'text-[#1C3B2B]',
-    defaultTag: 'Alto',
-    defaultPrepTime: '14 min',
-  },
-  {
-    bg: 'bg-[#EBA2DF]', // Soft Lilac / Orchid Pink (Mucho card)
-    tagColor: 'text-[#4F1339]',
-    pillBorder: 'border-[#4F1339]/40 text-[#4F1339]',
-    titleColor: 'text-[#4F1339]', // Dark plum title
-    priceBg: 'bg-black/15',
-    priceText: 'text-[#4F1339]',
-    defaultTag: 'Mucho',
-    defaultPrepTime: '16 min',
-  },
-  {
-    bg: 'bg-[#3B6E6A]', // Ocean Deep Teal (Lunz card)
-    tagColor: 'text-[#D2F3EE]',
-    pillBorder: 'border-[#D2F3EE]/40 text-[#D2F3EE]',
-    titleColor: 'text-white',
-    priceBg: 'bg-black/25',
-    priceText: 'text-white',
-    defaultTag: 'Lunz',
-    defaultPrepTime: '19 min',
-  },
-  {
-    bg: 'bg-[#FF5520]', // Tikkit Electric Orange
-    tagColor: 'text-amber-100',
-    pillBorder: 'border-white/50 text-white',
-    titleColor: 'text-white',
-    priceBg: 'bg-black/25',
-    priceText: 'text-white',
-    defaultTag: 'tikkit Spot',
-    defaultPrepTime: '5 min',
-  },
-  {
-    bg: 'bg-[#4353E8]', // Royal Cobalt Blue
-    tagColor: 'text-blue-100',
-    pillBorder: 'border-white/50 text-white',
-    titleColor: 'text-white',
-    priceBg: 'bg-black/25',
-    priceText: 'text-white',
-    defaultTag: 'Express',
-    defaultPrepTime: '4 min',
-  },
-];
-
 export const POSPage: React.FC = () => {
   const navigate = useNavigate();
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -158,8 +63,6 @@ export const POSPage: React.FC = () => {
     }
   }, [settings.lastUsedPaymentMode]);
 
-  // Next Token sequence calculation
-  const nextTokenNumber = `${settings.orderPrefix || 'Token #'}${settings.nextOrderSequence || 106}`;
   // Today's orders & revenue calculation
   const todayStr = new Date().toISOString().split('T')[0];
   const todayOrders = orders.filter((o) => o.createdAt.startsWith(todayStr) && o.status !== 'cancelled');
@@ -303,7 +206,7 @@ export const POSPage: React.FC = () => {
       : 'All Items';
 
   return (
-    <div className="h-screen max-h-screen bg-[#FAF7F2] flex flex-col select-none overflow-hidden font-sans">
+    <div className="h-screen max-h-screen bg-[#cfd7e1] flex flex-col select-none overflow-hidden font-sans">
       {/* Top Header matching design system: Clean, calm, uncluttered */}
       <Header title="POS Express Counter" subtitle={`Counter 01 · ${settings.activeCashierName || 'Priya Sharma'}`}>
         <div className="flex items-center gap-4 text-xs font-semibold">
@@ -332,39 +235,13 @@ export const POSPage: React.FC = () => {
 
       <OfflineBanner />
 
-      {/* Main Split Layout: Warm Ivory Canvas (Left) + Pure White Order Cart (Right) */}
-      <div className="flex-1 flex overflow-hidden min-h-0 relative">
-        {/* Left Side: Product Catalog Canvas adopting the "My Spots" vibrant style */}
-        <div className="flex-1 p-6 md:p-8 overflow-y-auto space-y-6 h-full bg-[#FAF7F2]">
-          {/* Top Title & Filter Bar matching Image 1 ("My Spots" + "Filter") */}
-          <div className="flex items-center justify-between pb-1">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight font-display">
-                My Spots
-              </h1>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                {currentCategoryTitle} · {filteredProducts.length} items ready to order
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                sounds.playClick();
-                setSelectedCategory('all');
-                setSearchQuery('');
-              }}
-              className="px-5 py-2 rounded-full border-2 border-gray-900 bg-white hover:bg-gray-50 text-gray-900 font-black text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
-              title="Reset or Filter Categories"
-            >
-              <SlidersHorizontal size={13} />
-              <span>Filter</span>
-            </button>
-          </div>
-
-          {/* 1. Search Bar */}
+      {/* Main Split Layout: Cool Slate Canvas (Left) + Pure White Order Cart (Right) */}
+      <div className="flex-1 flex overflow-hidden min-h-0">
+        {/* Left Side: Product Catalog Canvas */}
+        <div className="flex-1 p-6 overflow-y-auto space-y-5 h-full bg-[#cfd7e1]">
+          {/* 1. Search Bar matching "Menu — populated order.png" */}
           <div className="flex items-center gap-3">
-            <div className="bg-white border border-gray-200/80 rounded-full px-5 py-2.5 shadow-xs flex items-center justify-between flex-1 transition-all focus-within:border-gray-900 focus-within:ring-2 focus-within:ring-gray-900/10">
+            <div className="bg-white rounded-full px-5 py-2.5 shadow-sm flex items-center justify-between flex-1">
               <div className="flex items-center gap-3 flex-1">
                 <Search size={16} className="text-slate-400 shrink-0" />
                 <input
@@ -372,7 +249,7 @@ export const POSPage: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search your dish, burgers, desserts..."
+                  placeholder="Search your dish..."
                   className="w-full bg-transparent text-xs font-medium text-gray-800 placeholder-slate-400 focus:outline-none"
                 />
               </div>
@@ -394,10 +271,23 @@ export const POSPage: React.FC = () => {
                 </button>
               )}
             </div>
+
+            {/* Filter Pill Button */}
+            <button
+              onClick={() => {
+                sounds.playClick();
+                setSelectedCategory('all');
+                setSearchQuery('');
+              }}
+              className="w-10 h-10 rounded-full bg-[#556475] hover:bg-slate-700 text-white flex items-center justify-center shadow-sm transition-colors shrink-0"
+              title="Reset Filters"
+            >
+              <SlidersHorizontal size={15} />
+            </button>
           </div>
 
-          {/* 3. Category Row with Sleek Pill Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          {/* 3. Category Row matching "Menu — populated order.png" */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
             {categories.map((cat) => {
               const isCatAll = isAllCategory(cat.id) || cat.slug === 'all';
               const isSelected = isCatAll
@@ -411,10 +301,10 @@ export const POSPage: React.FC = () => {
                     sounds.playClick();
                     setSelectedCategory(isCatAll ? 'all' : cat.id);
                   }}
-                  className={`px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                     isSelected
-                      ? 'bg-[#111113] text-white shadow-sm'
-                      : 'bg-white text-gray-700 hover:text-gray-950 border border-gray-200/80 hover:bg-gray-50'
+                      ? 'bg-[#556475] text-white shadow-sm'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-white/40'
                   }`}
                 >
                   {cat.name}
@@ -429,151 +319,90 @@ export const POSPage: React.FC = () => {
                 sounds.playClick();
                 setSelectedCategory('addons');
               }}
-              className={`px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === 'addons'
-                  ? 'bg-[#111113] text-white shadow-sm'
-                  : 'bg-white text-gray-700 hover:text-gray-950 border border-gray-200/80 hover:bg-gray-50'
+                  ? 'bg-[#556475] text-white shadow-sm'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               Add-ons & Toppings
             </button>
           </div>
 
-          {/* 4. Product Grid Section with Vibrant Card Themes from Image 1 */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 pb-16 md:pb-6">
-              {filteredProducts.map((product, idx) => {
-                const theme = CARD_THEMES[idx % CARD_THEMES.length];
-                const cartQty = cartItems
-                  .filter((item) => item.product.id === product.id)
-                  .reduce((sum, item) => sum + item.quantity, 0);
+          {/* 4. Product Grid Section */}
+          <div className="space-y-3">
+            {/* Category Header: Category Name on left, count on right */}
+            <div className="flex items-center justify-between text-slate-800 px-1">
+              <h3 className="font-bold text-sm">{currentCategoryTitle}</h3>
+              <span className="text-xs font-semibold text-slate-500">
+                {filteredProducts.length}
+              </span>
+            </div>
 
-                // Category tag name and prep time
-                const categoryObj = categories.find((c) => c.id === product.categoryId);
-                const tagLabel = categoryObj?.name.split(' ')[0] || theme.defaultTag;
-                const prepTime =
-                  product.station === 'Grill'
-                    ? '12 min'
-                    : product.station === 'Fry'
-                    ? '8 min'
-                    : theme.defaultPrepTime;
+            {/* Grid of clean white cards */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  onClick={() => handleProductCardClick(product)}
+                  className={`bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between select-none ${
+                    !product.isAvailable ? 'opacity-40 cursor-not-allowed' : ''
+                  }`}
+                >
+                  {/* Image container with rounded corners and soft neutral background */}
+                  <div className="w-full aspect-square rounded-xl bg-slate-100 overflow-hidden mb-3 relative flex items-center justify-center">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = '/assets/placeholder-dessert.svg';
+                      }}
+                    />
 
-                return (
-                  <div
-                    key={product.id}
-                    onClick={() => handleProductCardClick(product)}
-                    className={`${theme.bg} rounded-[28px] p-4 shadow-sm hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between select-none relative group border border-black/5 ${
-                      !product.isAvailable ? 'opacity-40 cursor-not-allowed' : ''
-                    }`}
-                  >
-                    {/* Top Metadata Row: Tag on left + Prep time pill on right */}
-                    <div className="flex items-center justify-between mb-3 px-0.5">
-                      <span className={`text-xs font-black tracking-tight truncate max-w-[60%] ${theme.tagColor}`}>
-                        {tagLabel}
+                    {!product.isAvailable && (
+                      <span className="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">
+                        Sold Out
                       </span>
-                      <span
-                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold border ${theme.pillBorder} backdrop-blur-xs shrink-0`}
-                      >
-                        {prepTime}
-                      </span>
-                    </div>
-
-                    {/* Hero Food Photography Container */}
-                    <div className="w-full aspect-square rounded-2xl bg-black/10 overflow-hidden mb-3.5 relative flex items-center justify-center shadow-inner">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        onError={(e) => {
-                          e.currentTarget.src = '/assets/placeholder-dessert.svg';
-                        }}
-                      />
-
-                      {/* In-cart count badge */}
-                      {cartQty > 0 && (
-                        <span className="absolute top-2 left-2 bg-[#111113] text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5 border border-white/20">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#FFC72C] animate-pulse" />
-                          {cartQty} in order
-                        </span>
-                      )}
-
-                      {!product.isAvailable && (
-                        <span className="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider shadow">
-                          Sold Out
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Bottom Area: Big Chunky Title & Price Tag */}
-                    <div className="pt-0.5">
-                      <h4
-                        className={`font-black text-lg md:text-xl tracking-tight leading-snug line-clamp-1 font-display ${theme.titleColor}`}
-                      >
-                        {product.name}
-                      </h4>
-                      <div className="flex items-center justify-between mt-2 pt-0.5">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-mono font-black ${theme.priceBg} ${theme.priceText}`}
-                        >
-                          {formatINR(product.price)}
-                        </span>
-                        <span className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors shadow-xs">
-                          <Plus size={14} className="stroke-[3]" />
-                        </span>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                );
-              })}
+
+                  {/* Product Title and Price (Centered, matching design) */}
+                  <div className="text-center pt-1">
+                    <h4 className="font-bold text-sm text-gray-900 leading-snug line-clamp-1">
+                      {product.name}
+                    </h4>
+                    <p className="text-xs text-slate-500 font-medium mt-1">
+                      {formatINR(product.price)}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Floating Action Pill on Mobile/Tablet matching Image 1 ("View More") */}
-        {cartItems.length > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              const cartElem = document.getElementById('pos-order-cart');
-              cartElem?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#111113] hover:bg-black text-white px-7 py-3 rounded-full font-black text-xs md:hidden shadow-2xl flex items-center gap-2.5 z-30 transition-transform active:scale-95 border border-white/20 cursor-pointer"
-          >
-            <span>View Order</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF5520]" />
-            <span className="text-[#FFC72C]">
-              {totalCartQuantity} items · {formatINR(total)}
-            </span>
-          </button>
-        )}
-
-        {/* Right Side: Order Cart with Tikkit receipt styling */}
-        <div id="pos-order-cart" className="w-[380px] xl:w-[410px] bg-white border-l border-gray-200/90 flex flex-col h-full select-none shrink-0 shadow-card">
+        {/* Right Side: Order Cart matching "Menu — populated order.png" / "Menu — empty order.png" */}
+        <div className="w-[380px] xl:w-[410px] bg-white border-l border-gray-200 flex flex-col h-full select-none shrink-0 shadow-card">
           {/* Cart Header */}
-          <div className="px-6 py-4.5 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
-            <div className="flex items-center gap-2">
-              <h3 className="font-black text-lg text-gray-900 tracking-tight">Order</h3>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-black bg-[#FFC72C] text-[#111113] border border-[#111113]/30">
-                {nextTokenNumber}
-              </span>
-            </div>
-            <span className="font-extrabold text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-800">
-              {totalCartQuantity} {totalCartQuantity === 1 ? 'item' : 'items'}
+          <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
+            <h3 className="font-bold text-lg text-gray-900">Order</h3>
+            <span className="font-semibold text-lg text-slate-700">
+              {totalCartQuantity}
             </span>
           </div>
 
           {/* Cart Content: Empty State or Populated Lines */}
           {cartItems.length === 0 ? (
-            /* Empty State */
+            /* Empty State matching "Menu — empty order.png" */
             <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-              <div className="w-14 h-14 rounded-full bg-[#111113] text-[#FFC72C] flex items-center justify-center mb-3 shadow-sm border border-black/10">
+              <div className="w-14 h-14 rounded-full bg-[#556475] text-white flex items-center justify-center mb-3 shadow-sm">
                 <ShoppingBag size={22} />
               </div>
-              <p className="text-sm font-bold text-gray-900">Your order is empty</p>
-              <p className="text-xs text-slate-400 mt-1">Tap any spot or dish on the left to add</p>
+              <p className="text-sm font-medium text-slate-500">Your order is empty</p>
             </div>
           ) : (
-            /* Populated State */
+            /* Populated State matching "Menu — populated order.png" */
             <div className="flex-1 overflow-y-auto min-h-0 px-6 py-4 divide-y divide-gray-100">
               {cartItems.map((item) => (
                 <div key={item.cartItemId} className="py-4 first:pt-0 last:pb-0">
@@ -586,7 +415,7 @@ export const POSPage: React.FC = () => {
                         {formatINR(item.unitPrice)}
                       </p>
 
-                      {/* Selected Toppings/Sauces */}
+                      {/* Selected Toppings/Sauces from design */}
                       {item.selectedAddOns.length > 0 && (
                         <p className="text-[11px] text-slate-400 mt-1 leading-snug">
                           Toppings: {item.selectedAddOns.map((a) => a.item.name).join(', ')}
@@ -598,7 +427,7 @@ export const POSPage: React.FC = () => {
                     <img
                       src={item.product.image}
                       alt={item.product.name}
-                      className="w-14 h-14 rounded-xl bg-slate-100 object-cover shrink-0 ml-3 shadow-xs"
+                      className="w-14 h-14 rounded-xl bg-slate-100 object-cover shrink-0 ml-3"
                       onError={(e) => {
                         e.currentTarget.src = '/assets/placeholder-dessert.svg';
                       }}
@@ -610,7 +439,7 @@ export const POSPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => updateCartItemQty(item.cartItemId, -1)}
-                      className="w-6 h-6 rounded-full bg-[#111113] hover:bg-black text-white flex items-center justify-center text-xs transition-colors"
+                      className="w-6 h-6 rounded-full bg-[#556475] hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
                       title="Decrease"
                     >
                       <Minus size={11} />
@@ -621,7 +450,7 @@ export const POSPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => updateCartItemQty(item.cartItemId, 1)}
-                      className="w-6 h-6 rounded-full bg-[#111113] hover:bg-black text-white flex items-center justify-center text-xs transition-colors"
+                      className="w-6 h-6 rounded-full bg-[#556475] hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
                       title="Increase"
                     >
                       <Plus size={11} />
@@ -686,9 +515,9 @@ export const POSPage: React.FC = () => {
                     sounds.playClick();
                     setSelectedPaymentMode('upi');
                   }}
-                  className={`py-2 px-1 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                     selectedPaymentMode === 'upi'
-                      ? 'bg-[#111113] text-[#FFC72C] shadow-xs border border-black'
+                      ? 'bg-[#556475] text-white shadow-xs'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/50'
                   }`}
                 >
@@ -701,9 +530,9 @@ export const POSPage: React.FC = () => {
                     sounds.playClick();
                     setSelectedPaymentMode('cash');
                   }}
-                  className={`py-2 px-1 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                     selectedPaymentMode === 'cash'
-                      ? 'bg-[#111113] text-[#FFC72C] shadow-xs border border-black'
+                      ? 'bg-[#556475] text-white shadow-xs'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/50'
                   }`}
                 >
@@ -716,9 +545,9 @@ export const POSPage: React.FC = () => {
                     sounds.playClick();
                     setSelectedPaymentMode('card');
                   }}
-                  className={`py-2 px-1 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                     selectedPaymentMode === 'card'
-                      ? 'bg-[#111113] text-[#FFC72C] shadow-xs border border-black'
+                      ? 'bg-[#556475] text-white shadow-xs'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/50'
                   }`}
                 >
@@ -781,20 +610,20 @@ export const POSPage: React.FC = () => {
               type="button"
               disabled={cartItems.length === 0}
               onClick={handleDirectCheckout}
-              className={`w-full py-4 rounded-2xl font-black text-sm transition-all flex items-center justify-center gap-2 ${
+              className={`w-full py-3.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 ${
                 cartItems.length > 0
-                  ? 'bg-[#FF5520] hover:bg-[#e84915] text-white shadow-[0_4px_16px_rgba(255,85,32,0.35)] cursor-pointer active:scale-98 tracking-tight'
+                  ? 'bg-[#556475] hover:bg-slate-700 text-white shadow-md cursor-pointer active:scale-98 tracking-wide'
                   : 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
               }`}
             >
               {cartItems.length > 0 ? (
                 <>
-                  <span>Checkout · {selectedPaymentMode.toUpperCase()}</span>
+                  <span>Checkout ({selectedPaymentMode.toUpperCase()})</span>
                   <span>·</span>
-                  <span className="font-mono text-base font-black">{formatINR(total)}</span>
+                  <span className="font-mono">{formatINR(total)}</span>
                 </>
               ) : (
-                'Add items to checkout'
+                'Checkout'
               )}
             </button>
           </div>

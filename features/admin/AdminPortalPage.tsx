@@ -832,7 +832,7 @@ export const AdminPortalPage: React.FC = () => {
                   <h3 className="font-black text-base">Sales Pitch & Demo Mode</h3>
                 </div>
                 <p className="text-xs text-blue-100 max-w-xl">
-                  Pitching tikkit to a prospective QSR franchise or multi-unit operator? 
+                  Pitching pos.bits to a prospective QSR franchise or multi-unit operator? 
                   Switch the active outlet above, or click <strong>Seed Sales Demo</strong> to generate authentic Indian QSR tickets, GST tax receipts, and 30-day owner revenue metrics in 1-click.
                 </p>
               </div>
@@ -1252,7 +1252,7 @@ export const AdminPortalPage: React.FC = () => {
                         <p className="text-[9px]">Guest Wi-Fi: <strong>{targetTenant.features.wifiPassword}</strong></p>
                       )}
                       <p className="text-[9px]">{targetTenant.features.receiptFooter || 'Thank you for your visit!'}</p>
-                      <p className="text-[8px] text-slate-400">Powered by tikkit QSR Core</p>
+                      <p className="text-[8px] text-slate-400">Powered by pos.bits QSR Core</p>
                     </div>
                   </div>
 
@@ -1729,7 +1729,7 @@ export const AdminPortalPage: React.FC = () => {
                           className="w-full pl-9 pr-3 py-2 rounded-xl border border-gray-200 text-xs font-mono font-semibold text-slate-900 focus:outline-none focus:border-blue-600"
                         />
                       </div>
-                      <p className="text-[10px] text-slate-400 mt-1">This is the email address used to log into tikkit.</p>
+                      <p className="text-[10px] text-slate-400 mt-1">This is the email address used to log into POS.BITS.</p>
                     </div>
 
                     <div>

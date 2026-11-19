@@ -4,7 +4,6 @@ import { useNavigate } from '@/lib/navigation';
 import { useAppStore } from '../../store';
 import { PaymentMode } from '../../types';
 import { sounds } from '../../utils/audio';
-import { TikkitLogo } from '@/components/TikkitLogo';
 import {
   Building2,
   MapPin,
@@ -214,7 +213,7 @@ export const SetupWizardPage: React.FC = () => {
         {/* Wizard Header */}
         <div className="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
           <div className="flex items-center gap-3">
-            <TikkitLogo variant="header" size="sm" />
+            <img src="/assets/pos-bits-logo.png" alt="pos.bits" className="h-7 w-auto object-contain" />
             <div className="border-l border-slate-200 pl-3">
               <span className="font-extrabold text-xs text-gray-900 tracking-tight uppercase block">
                 Restaurant Onboarding Wizard

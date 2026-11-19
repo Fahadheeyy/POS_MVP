@@ -226,7 +226,7 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
             )}
           </div>
           <div className="pt-2 text-center text-[9px] text-gray-500 border-t">
-            tikkit High-Speed Counter Operations
+            pos.bits High-Speed Counter Operations
           </div>
         </div>
       </div>
