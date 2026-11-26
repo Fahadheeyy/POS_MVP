@@ -118,14 +118,14 @@ export const AdminPortalPage: React.FC = () => {
   const [formBrandName, setFormBrandName] = useState('');
   const [formSlug, setFormSlug] = useState('');
   const [formTagline, setFormTagline] = useState('');
-  const [formCategory, setFormCategory] = useState('Egyptian Desserts');
+  const [formCategory, setFormCategory] = useState('Specialty Coffee');
   const [formAddress, setFormAddress] = useState('');
   const [formCity, setFormCity] = useState('Bengaluru');
   const [formPincode, setFormPincode] = useState('560034');
   const [formPhone, setFormPhone] = useState('+91 98450 12345');
   const [formEmail, setFormEmail] = useState('contact@outlet.in');
   const [formPlanTier, setFormPlanTier] = useState<'trial' | 'starter' | 'growth' | 'enterprise'>('growth');
-  const [formThemeColor, setFormThemeColor] = useState('#556475');
+  const [formThemeColor, setFormThemeColor] = useState('#FF4F1A');
 
   // Owner Credentials
   const [formOwnerName, setFormOwnerName] = useState('');
@@ -156,10 +156,10 @@ export const AdminPortalPage: React.FC = () => {
   const [formEnabledCash, setFormEnabledCash] = useState(true);
   const [formEnabledUpi, setFormEnabledUpi] = useState(true);
   const [formEnabledCard, setFormEnabledCard] = useState(true);
-  const [formUpiVpaId, setFormUpiVpaId] = useState('signlaban@okhdfcbank');
+  const [formUpiVpaId, setFormUpiVpaId] = useState('');
   const [formReceiptHeader, setFormReceiptHeader] = useState('');
   const [formReceiptFooter, setFormReceiptFooter] = useState('');
-  const [formWifiPassword, setFormWifiPassword] = useState('SignLabanGuest2026');
+  const [formWifiPassword, setFormWifiPassword] = useState('DaybreakGuest');
 
   const triggerToast = (msg: string) => {
     setNotification(msg);
@@ -188,28 +188,28 @@ export const AdminPortalPage: React.FC = () => {
 
   const handleOpenAddModal = () => {
     setModalTab('brand');
-    setFormName('Sign Laban Whitefield');
-    setFormBrandName('Sign Laban');
-    setFormSlug('sign-laban-whitefield');
-    setFormTagline("India's First Egyptian Dessert");
-    setFormCategory('Egyptian Desserts');
+    setFormName('Daybreak Coffee Whitefield');
+    setFormBrandName('Daybreak Coffee');
+    setFormSlug('daybreak-coffee-whitefield');
+    setFormTagline("India's First Specialty Coffee");
+    setFormCategory('Specialty Coffee');
     setFormAddress('VR Bengaluru Mall, Level 3, ITPL Main Rd, Whitefield');
     setFormCity('Bengaluru');
     setFormPincode('560066');
     setFormPhone('+91 98450 77889');
-    setFormEmail('whitefield@signlaban.in');
+    setFormEmail('whitefield@daybreak.test');
     setFormPlanTier('growth');
-    setFormThemeColor('#556475');
+    setFormThemeColor('#FF4F1A');
 
     // Owner credentials
     setFormOwnerName('Arun Kumar');
-    setFormOwnerEmail('owner.whitefield@signlaban.in');
+    setFormOwnerEmail('owner.whitefield@daybreak.test');
     setFormOwnerPassword('whitefield123');
     setFormOwnerPhone('+91 98450 77889');
     setFormOwnerPin('8888');
 
     // Legal & GST
-    setFormLegalEntityName('Sign Laban Hospitality India Pvt Ltd');
+    setFormLegalEntityName('Daybreak Coffee Hospitality India Pvt Ltd');
     setFormStateCode('29');
     setFormStateName('Karnataka');
     setFormGstin('29AABCS1429B1Z2');
@@ -230,9 +230,9 @@ export const AdminPortalPage: React.FC = () => {
     setFormEnabledCash(true);
     setFormEnabledUpi(true);
     setFormEnabledCard(true);
-    setFormUpiVpaId('signlaban.whitefield@okhdfcbank');
-    setFormReceiptHeader('*** SIGN LABAN WHITEFIELD ***\nVR Bengaluru Mall, Level 3');
-    setFormReceiptFooter('Thank you for dining with us! Follow @signlaban');
+    setFormUpiVpaId('');
+    setFormReceiptHeader('*** DAYBREAK COFFEE WHITEFIELD ***\nVR Bengaluru Mall, Level 3');
+    setFormReceiptFooter('Thank you for dining with us! Follow @daybreakcoffee');
     setFormWifiPassword('WhitefieldLaban2026');
 
     setEditingBusiness(null);
@@ -624,7 +624,7 @@ export const AdminPortalPage: React.FC = () => {
                         <div className="flex items-center gap-3">
                           <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-sm shadow-xs"
-                            style={{ backgroundColor: biz.themeColor || '#556475' }}
+                            style={{ backgroundColor: biz.themeColor || '#FF4F1A' }}
                           >
                             {biz.brandName.substring(0, 2).toUpperCase()}
                           </div>
@@ -832,7 +832,7 @@ export const AdminPortalPage: React.FC = () => {
                   <h3 className="font-black text-base">Sales Pitch & Demo Mode</h3>
                 </div>
                 <p className="text-xs text-blue-100 max-w-xl">
-                  Pitching pos.bits to a prospective QSR franchise or multi-unit operator? 
+                  Pitching TIKKIT to a prospective QSR franchise or multi-unit operator? 
                   Switch the active outlet above, or click <strong>Seed Sales Demo</strong> to generate authentic Indian QSR tickets, GST tax receipts, and 30-day owner revenue metrics in 1-click.
                 </p>
               </div>
@@ -1111,7 +1111,7 @@ export const AdminPortalPage: React.FC = () => {
                         type="text"
                         value={targetTenant.features.receiptHeader || ''}
                         onChange={(e) => handleFeatureToggle('receiptHeader', e.target.value)}
-                        placeholder="*** SIGN LABAN ***"
+                        placeholder="*** DAYBREAK COFFEE ***"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-slate-800"
                       />
                     </div>
@@ -1122,7 +1122,7 @@ export const AdminPortalPage: React.FC = () => {
                         type="text"
                         value={targetTenant.features.receiptFooter || ''}
                         onChange={(e) => handleFeatureToggle('receiptFooter', e.target.value)}
-                        placeholder="Thank you for dining with us! Follow @signlaban"
+                        placeholder="Thank you for dining with us! Follow @daybreakcoffee"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs text-slate-900 focus:outline-none focus:border-slate-800"
                       />
                     </div>
@@ -1141,7 +1141,7 @@ export const AdminPortalPage: React.FC = () => {
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">Brand Theme Accent</label>
                       <div className="flex items-center gap-2">
-                        {['#556475', '#0f172a', '#2563eb', '#e11d48', '#d97706', '#059669', '#7c3aed'].map((color) => (
+                        {['#FF4F1A', '#0f172a', '#2563eb', '#e11d48', '#d97706', '#059669', '#7c3aed'].map((color) => (
                           <button
                             key={color}
                             onClick={() => {
@@ -1177,7 +1177,7 @@ export const AdminPortalPage: React.FC = () => {
                   <div className="bg-amber-50/40 border border-amber-200/60 rounded-xl p-4 font-mono text-slate-800 text-[11px] shadow-inner space-y-2 select-text">
                     <div className="text-center space-y-0.5">
                       <p className="font-bold text-sm tracking-wide">{targetTenant.brandName.toUpperCase()}</p>
-                      <p className="text-[10px] text-slate-500">{targetTenant.tagline || "India's First Egyptian Dessert"}</p>
+                      <p className="text-[10px] text-slate-500">{targetTenant.tagline || "India's First Specialty Coffee"}</p>
                       <p className="text-[9px] text-slate-500 line-clamp-1">{targetTenant.address}</p>
                       <p className="text-[9px] text-slate-500">GSTIN: {targetTenant.gstin}</p>
                       {targetTenant.features.receiptHeader && (
@@ -1201,7 +1201,7 @@ export const AdminPortalPage: React.FC = () => {
                     {/* Sample Items */}
                     <div className="space-y-1 text-[10px]">
                       <div className="flex justify-between font-bold">
-                        <span>1x Qashtuta Nutella Pistachio</span>
+                        <span>1x Cappuccino</span>
                         <span>₹320.00</span>
                       </div>
                       {targetTenant.features.addOnsEnabled && (
@@ -1252,7 +1252,7 @@ export const AdminPortalPage: React.FC = () => {
                         <p className="text-[9px]">Guest Wi-Fi: <strong>{targetTenant.features.wifiPassword}</strong></p>
                       )}
                       <p className="text-[9px]">{targetTenant.features.receiptFooter || 'Thank you for your visit!'}</p>
-                      <p className="text-[8px] text-slate-400">Powered by pos.bits QSR Core</p>
+                      <p className="text-[8px] text-slate-400">Powered by TIKKIT QSR Core</p>
                     </div>
                   </div>
 
@@ -1526,7 +1526,7 @@ export const AdminPortalPage: React.FC = () => {
                         required
                         value={formName}
                         onChange={(e) => setFormName(e.target.value)}
-                        placeholder="e.g. Sign Laban Whitefield"
+                        placeholder="e.g. Daybreak Coffee Whitefield"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-semibold text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -1538,7 +1538,7 @@ export const AdminPortalPage: React.FC = () => {
                         required
                         value={formBrandName}
                         onChange={(e) => setFormBrandName(e.target.value)}
-                        placeholder="e.g. Sign Laban"
+                        placeholder="e.g. Daybreak Coffee"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-semibold text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -1549,7 +1549,7 @@ export const AdminPortalPage: React.FC = () => {
                         type="text"
                         value={formSlug}
                         onChange={(e) => setFormSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-'))}
-                        placeholder="sign-laban-whitefield"
+                        placeholder="daybreak-coffee-whitefield"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -1560,7 +1560,7 @@ export const AdminPortalPage: React.FC = () => {
                         type="text"
                         value={formCategory}
                         onChange={(e) => setFormCategory(e.target.value)}
-                        placeholder="e.g. Egyptian Desserts, Specialty Cafe, Bakery"
+                        placeholder="e.g. Specialty Coffee, Specialty Cafe, Bakery"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -1571,7 +1571,7 @@ export const AdminPortalPage: React.FC = () => {
                         type="text"
                         value={formTagline}
                         onChange={(e) => setFormTagline(e.target.value)}
-                        placeholder="India's First Egyptian Dessert"
+                        placeholder="India's First Specialty Coffee"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -1649,7 +1649,7 @@ export const AdminPortalPage: React.FC = () => {
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">Brand Theme Accent Color</label>
                       <div className="flex items-center gap-2 pt-1">
-                        {['#556475', '#0f172a', '#2563eb', '#e11d48', '#d97706', '#059669', '#7c3aed'].map((color) => (
+                        {['#FF4F1A', '#0f172a', '#2563eb', '#e11d48', '#d97706', '#059669', '#7c3aed'].map((color) => (
                           <button
                             type="button"
                             key={color}
@@ -1725,11 +1725,11 @@ export const AdminPortalPage: React.FC = () => {
                           required
                           value={formOwnerEmail}
                           onChange={(e) => setFormOwnerEmail(e.target.value)}
-                          placeholder="owner.whitefield@signlaban.in"
+                          placeholder="owner.whitefield@daybreak.test"
                           className="w-full pl-9 pr-3 py-2 rounded-xl border border-gray-200 text-xs font-mono font-semibold text-slate-900 focus:outline-none focus:border-blue-600"
                         />
                       </div>
-                      <p className="text-[10px] text-slate-400 mt-1">This is the email address used to log into POS.BITS.</p>
+                      <p className="text-[10px] text-slate-400 mt-1">This is the email address used to log into TIKKIT.</p>
                     </div>
 
                     <div>
@@ -1922,7 +1922,7 @@ export const AdminPortalPage: React.FC = () => {
                         type="text"
                         value={formUpiVpaId}
                         onChange={(e) => setFormUpiVpaId(e.target.value)}
-                        placeholder="e.g. signlaban.whitefield@okhdfcbank"
+                        placeholder="e.g. your-business@bank"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-mono font-semibold text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -2020,7 +2020,7 @@ export const AdminPortalPage: React.FC = () => {
                         rows={2}
                         value={formReceiptHeader}
                         onChange={(e) => setFormReceiptHeader(e.target.value)}
-                        placeholder="*** SIGN LABAN ***\nBengaluru, India"
+                        placeholder="*** DAYBREAK COFFEE ***\nBengaluru, India"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>
@@ -2031,7 +2031,7 @@ export const AdminPortalPage: React.FC = () => {
                         rows={2}
                         value={formReceiptFooter}
                         onChange={(e) => setFormReceiptFooter(e.target.value)}
-                        placeholder="Thank you for dining with us! Follow @signlaban"
+                        placeholder="Thank you for dining with us! Follow @daybreakcoffee"
                         className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                       />
                     </div>

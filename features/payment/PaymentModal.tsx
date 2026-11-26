@@ -9,7 +9,10 @@ import { Banknote, QrCode, CreditCard, X, Check, ArrowRight } from 'lucide-react
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (mode: PaymentMode, cashTendered?: number) => void;
+  onConfirm: (mode: PaymentMode, cashTendered?: number, reference?: string) => void;
+  initialMode: PaymentMode;
+  error?: string;
+  pending?: boolean;
   totalAmount: number;
 }
 
@@ -18,10 +21,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   onClose,
   onConfirm,
   totalAmount,
+  initialMode,
+  error,
+  pending,
 }) => {
   const { settings } = useAppStore();
-  const [selectedMode, setSelectedMode] = useState<PaymentMode>('upi');
-  const [cashTendered, setCashTendered] = useState<string>(Math.ceil(totalAmount).toString());
+  const [selectedMode, setSelectedMode] = useState<PaymentMode>(initialMode);
+  const [cashTendered, setCashTendered] = useState<string>('');
+  const [reference, setReference] = useState('');
 
   if (!isOpen) return null;
 
@@ -29,15 +36,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const changeToReturn = Math.max(0, tenderedNum - totalAmount);
 
   const quickCashOptions = [
-    Math.ceil(totalAmount),
+    totalAmount,
     500,
     1000,
     2000,
   ].filter((v, idx, arr) => arr.indexOf(v) === idx && v >= totalAmount);
 
   const handleConfirm = () => {
-    sounds.playSuccess();
-    onConfirm(selectedMode, selectedMode === 'cash' ? tenderedNum : undefined);
+    onConfirm(selectedMode, selectedMode === 'cash' ? tenderedNum : undefined, reference.trim());
   };
 
   return (
@@ -81,7 +87,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 <QrCode size={18} />
               </div>
               <div>
-                <p className="font-bold text-sm text-gray-900">UPI Dynamic QR / VPA</p>
+                <p className="font-bold text-sm text-gray-900">UPI transfer</p>
                 <p className="text-[11px] text-gray-400">GPay · PhonePe · Paytm · BHIM</p>
               </div>
             </div>
@@ -186,11 +192,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
         {selectedMode === 'upi' && (
           <div className="mb-6 p-4 rounded-2xl bg-gray-50 border border-gray-200 text-center">
-            <div className="w-32 h-32 bg-white border border-gray-200 rounded-xl p-2 mx-auto mb-2 flex items-center justify-center shadow-subtle">
-              <QrCode size={96} className="text-gray-800" />
-            </div>
-            <p className="text-xs font-bold text-gray-900">{settings.upiVpaId || 'signlaban@icici'}</p>
-            <p className="text-[11px] text-gray-400">Scan customer QR or enter VPA on phone / UPI app</p>
+            <p className="text-xs font-bold text-gray-900">{settings.upiVpaId || 'UPI address unavailable'}</p>
+            <p className="text-[11px] text-gray-400">Verify receipt in the merchant payment app before recording this payment.</p>
           </div>
         )}
 
@@ -198,15 +201,24 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           <div className="mb-6 p-4 rounded-2xl bg-gray-50 border border-gray-200 text-center text-xs text-gray-600">
             <CreditCard size={28} className="mx-auto text-gray-700 mb-1.5" />
             <p className="font-semibold text-gray-900">Card Payment Confirmation</p>
-            <p className="text-[11px] text-gray-400 mt-0.5">Collect payment on card machine and tap Confirm</p>
+            <p className="text-[11px] text-gray-400 mt-0.5">Verify approval on the card terminal before recording this payment.</p>
           </div>
         )}
 
+        {selectedMode !== 'cash' && (
+          <label className="block mb-4 text-xs font-semibold">
+            {selectedMode === 'upi' ? 'UPI transaction reference' : 'Card terminal reference'}
+            <input value={reference} onChange={(event) => setReference(event.target.value)}
+              className="block w-full mt-1 rounded border border-gray-200 p-2" maxLength={80} />
+          </label>
+        )}
+        {error && <p className="mb-3 text-xs text-red-700" role="alert">{error}</p>}
         {/* Primary Action Button */}
         <button
           type="button"
           onClick={handleConfirm}
-          className="w-full py-3.5 rounded-2xl bg-[#556475] hover:bg-slate-700 text-white font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2"
+          disabled={pending || (selectedMode === 'cash' ? !cashTendered.trim() || tenderedNum < totalAmount : !reference.trim())}
+          className="w-full py-3.5 rounded-2xl bg-brand-orange hover:bg-slate-700 text-white font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2"
         >
           <span>Confirm Payment</span>
           <ArrowRight size={16} />

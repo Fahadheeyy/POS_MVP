@@ -1,4 +1,6 @@
 "use client";
+import { collections } from '@/lib/tax/collections';
+import { businessDate } from '@/utils/businessDate';
 import React from 'react';
 import { useAppStore } from '../../store';
 import { formatINR, formatDate, formatTime } from '../../utils/formatters';
@@ -27,24 +29,17 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
 
   if (!isOpen) return null;
 
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = businessDate();
   const todayOrders = orders.filter(
-    (o) => o.createdAt.startsWith(todayStr) && o.status !== 'cancelled'
+    (o) => businessDate(o.createdAt) === todayStr && (o.status !== 'cancelled' || o.paymentStatus === 'refunded')
   );
 
-  const totalRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
-  const totalCount = todayOrders.length;
-  const aov = totalCount > 0 ? Math.round(totalRevenue / totalCount) : 0;
-
-  const upiOrders = todayOrders.filter((o) => o.paymentMode === 'upi');
-  const upiTotal = upiOrders.reduce((sum, o) => sum + o.total, 0);
-
-  const cashOrders = todayOrders.filter((o) => o.paymentMode === 'cash');
-  const cashTotal = cashOrders.reduce((sum, o) => sum + o.total, 0);
-
-  const cardOrders = todayOrders.filter((o) => o.paymentMode === 'card');
-  const cardTotal = cardOrders.reduce((sum, o) => sum + o.total, 0);
-
+  const daily = collections(orders, todayStr, todayStr);
+  const {net: totalRevenue, count: totalCount, cash: cashTotal, upi: upiTotal, card: cardTotal} = daily;
+  const aov = daily.count ? daily.sales / daily.count : 0;
+  const upiOrders = todayOrders.filter(o => o.paymentMode === 'upi');
+  const cashOrders = todayOrders.filter(o => o.paymentMode === 'cash');
+  const cardOrders = todayOrders.filter(o => o.paymentMode === 'card');
   const totalTax = todayOrders.reduce((sum, o) => sum + o.tax, 0);
 
   const handlePrintSummary = () => {
@@ -64,7 +59,7 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
 
         {/* Modal Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-[#556475] text-white flex items-center justify-center shadow-xs shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-brand-orange text-white flex items-center justify-center shadow-xs shrink-0">
             <TrendingUp size={24} />
           </div>
           <div>
@@ -81,7 +76,7 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
         </div>
 
         {/* Big Gross Revenue Card */}
-        <div className="bg-gradient-to-br from-[#bac7d5] to-[#cbd7e3] p-5 rounded-2xl border border-slate-300/60 shadow-sm mb-5 text-center">
+        <div className="bg-gradient-to-br from-[#FFC72C] to-[#FFF4E0] p-5 rounded-2xl border border-slate-300/60 shadow-sm mb-5 text-center">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-700 block mb-1">
             Total Revenue Collected Today
           </span>
@@ -175,7 +170,7 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-3 px-4 rounded-2xl bg-[#556475] hover:bg-slate-700 text-white text-xs font-bold shadow-card transition-all active:scale-95"
+            className="flex-1 py-3 px-4 rounded-2xl bg-brand-orange hover:bg-slate-700 text-white text-xs font-bold shadow-card transition-all active:scale-95"
           >
             Done
           </button>
@@ -184,7 +179,7 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
         {/* Hidden Printable Daily Summary Slip for Thermal Printer */}
         <div className="hidden printable-receipt">
           <div className="text-center pb-2 border-b">
-            <h1 className="text-sm font-extrabold">{settings.storeName || 'Sign Laban'}</h1>
+            <h1 className="text-sm font-extrabold">{settings.storeName || 'Daybreak Coffee'}</h1>
             <p className="text-xs">DAILY CASHIER REVENUE SUMMARY</p>
             <p className="text-[10px] text-gray-500">
               {formatDate(new Date().toISOString())} · {formatTime(new Date().toISOString())}
@@ -220,13 +215,13 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
             </div>
             {settings.isGstEnabled !== false && (
               <div className="flex justify-between border-t pt-1">
-                <span>GST Tax Collected:</span>
+                <span>GST on sales:</span>
                 <span>{formatINR(totalTax)}</span>
               </div>
             )}
           </div>
           <div className="pt-2 text-center text-[9px] text-gray-500 border-t">
-            pos.bits High-Speed Counter Operations
+            TIKKIT High-Speed Counter Operations
           </div>
         </div>
       </div>

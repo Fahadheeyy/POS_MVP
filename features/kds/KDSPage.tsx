@@ -50,9 +50,11 @@ export const KDSPage: React.FC = () => {
   } = useAppStore();
 
   const [viewMode, setViewMode] = useState<'board' | 'bumped_history'>('board');
-  const [selectedTicket, setSelectedTicket] = useState<KdsTicket | null>(null);
-  const [expandedTicket, setExpandedTicket] = useState<KdsTicket | null>(null);
-  const [actionsTicket, setActionsTicket] = useState<KdsTicket | null>(null);
+  const [selectedTicketId, setSelectedTicket] = useState<string | null>(null);
+  const [expandedTicketId, setExpandedTicket] = useState<string | null>(null);
+  const [actionsTicketId, setActionsTicket] = useState<string | null>(null);
+  const expandedTicket = tickets.find((ticket) => ticket.id === expandedTicketId) ?? null;
+  const actionsTicket = tickets.find((ticket) => ticket.id === actionsTicketId) ?? null;
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
   const [show86Modal, setShow86Modal] = useState<boolean>(false);
   const [selectedRecipeDish, setSelectedRecipeDish] = useState<string | null>(null);
@@ -64,24 +66,19 @@ export const KDSPage: React.FC = () => {
 
   const outOfStockCount = products.filter((p) => !p.isAvailable).length;
 
-  // Active unbumped tickets across kitchen
-  const newTickets = tickets.filter((t) => t.status === 'new');
-  const cookingTickets = tickets.filter((t) => t.status === 'cooking');
-  const readyTickets = tickets.filter((t) => t.status === 'ready');
+  const visibleTickets = tickets.filter((ticket) =>
+    activeKdsStation === 'All stations' || ticket.items.some((item) => item.station === activeKdsStation));
+  const newTickets = visibleTickets.filter((ticket) => ticket.status === 'new');
+  const cookingTickets = visibleTickets.filter((ticket) => ticket.status === 'cooking');
+  const readyTickets = visibleTickets.filter((ticket) => ticket.status === 'ready');
   const activeTickets = [...newTickets, ...cookingTickets, ...readyTickets];
-
-  // Set default selected ticket for keyboard navigation
-  useEffect(() => {
-    if (!selectedTicket && activeTickets.length > 0) {
-      setSelectedTicket(activeTickets[0]);
-    }
-  }, [activeTickets, selectedTicket]);
+  const selectedTicket = activeTickets.find((ticket) => ticket.id === selectedTicketId) ?? activeTickets[0];
 
   // Keyboard navigation: Arrows, Space (advance), R (recall)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't intercept if an input is focused or locked
-      if (isKdsLocked || ['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
+      if (isKdsLocked || viewMode !== 'board' || expandedTicket || actionsTicket || showSettingsModal || show86Modal
+        || (e.target instanceof HTMLElement && e.target.closest('input, textarea, select, button, a, [contenteditable="true"]'))) {
         return;
       }
 
@@ -90,14 +87,14 @@ export const KDSPage: React.FC = () => {
         const currentIndex = activeTickets.findIndex((t) => t.id === selectedTicket?.id);
         const nextIndex = (currentIndex + 1) % activeTickets.length;
         if (activeTickets[nextIndex]) {
-          setSelectedTicket(activeTickets[nextIndex]);
+          setSelectedTicket(activeTickets[nextIndex].id);
         }
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault();
         const currentIndex = activeTickets.findIndex((t) => t.id === selectedTicket?.id);
         const prevIndex = (currentIndex - 1 + activeTickets.length) % activeTickets.length;
         if (activeTickets[prevIndex]) {
-          setSelectedTicket(activeTickets[prevIndex]);
+          setSelectedTicket(activeTickets[prevIndex].id);
         }
       } else if (e.code === 'Space') {
         e.preventDefault();
@@ -114,7 +111,7 @@ export const KDSPage: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedTicket, activeTickets, advanceTicketStatus, recallLastBumpedTicket, isKdsLocked]);
+  }, [selectedTicket, activeTickets, advanceTicketStatus, recallLastBumpedTicket, isKdsLocked, viewMode, expandedTicket, actionsTicket, showSettingsModal, show86Modal]);
 
   const handleAdvance = (ticketId: string) => {
     sounds.playBump();
@@ -132,9 +129,8 @@ export const KDSPage: React.FC = () => {
 
   // Calculate live operational metrics for footer
   const totalOpenTickets = activeTickets.length;
-  const oldestTicket = activeTickets.sort(
-    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  )[0];
+  const oldestTicket = activeTickets.reduce<KdsTicket | undefined>((oldest, ticket) =>
+    !oldest || ticket.createdAt < oldest.createdAt ? ticket : oldest, undefined);
 
   return (
     <div className="h-screen max-h-screen bg-surface-canvas flex flex-col justify-between select-none overflow-hidden">
@@ -170,6 +166,16 @@ export const KDSPage: React.FC = () => {
       </Header>
 
       <OfflineBanner />
+      {viewMode === 'board' && <div className="flex flex-wrap items-center gap-2 px-4 py-2">
+        <label className="flex items-center gap-2 text-xs font-semibold">
+          Station
+          <select aria-label="Station" className="rounded border border-slate-300 bg-white p-1" value={activeKdsStation}
+            onChange={(event) => setActiveKdsStation(event.target.value as Station)}>
+            {stations.map((station) => <option key={station}>{station}</option>)}
+          </select>
+        </label>
+        <button type="button" className="state-action" onClick={() => setShow86Modal(true)}>Stock ({outOfStockCount} sold out)</button>
+      </div>}
 
       {/* Main View Area */}
       {viewMode === 'bumped_history' ? (
@@ -178,7 +184,7 @@ export const KDSPage: React.FC = () => {
           onPrintTicket={handlePrintKOT}
         />
       ) : (
-        <div className="flex-1 p-4 md:p-6 flex gap-4 md:gap-6 overflow-x-auto touch-pan-x h-full">
+        <div className="flex-1 p-4 md:p-6 flex gap-4 md:gap-6 overflow-x-auto h-full">
           {/* Column 1: Incoming Orders */}
           <div
             onDragOver={(e) => {
@@ -198,7 +204,7 @@ export const KDSPage: React.FC = () => {
               setDragOverLane(null);
               setDraggedTicketId(null);
             }}
-            className={`flex-1 min-w-[320px] max-w-md bg-white/95 backdrop-blur-sm border rounded-3xl p-4 flex flex-col transition-all duration-200 ${
+            className={`tikkit-kds-lane tikkit-lane-new flex-1 min-w-[290px] rounded-3xl p-4 flex flex-col transition-all duration-200 ${
               dragOverLane === 'new'
                 ? 'border-amber-400 bg-amber-50/50 ring-4 ring-amber-200/60 scale-[1.01]'
                 : 'border-slate-200 shadow-sm'
@@ -206,12 +212,12 @@ export const KDSPage: React.FC = () => {
           >
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
-                <span className="font-extrabold text-sm text-gray-900 tracking-tight">
-                  1. Incoming Orders
+                <span className="w-2.5 h-2.5 rounded-full bg-brand-orange" />
+                <span className="tikkit-heading text-lg">
+                  Incoming
                 </span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-black">
+              <span className="tikkit-lane-count px-2.5 py-0.5 text-xs font-bold">
                 {newTickets.length}
               </span>
             </div>
@@ -241,14 +247,14 @@ export const KDSPage: React.FC = () => {
                         setDraggedTicketId(ticket.id);
                       }}
                       onDragEnd={() => setDraggedTicketId(null)}
-                      onClick={() => setSelectedTicket(ticket)}
-                      className={`group relative rounded-2xl p-4 transition-all duration-150 cursor-grab active:cursor-grabbing select-none border ${
+                      onClick={() => setSelectedTicket(ticket.id)}
+                      className={`tikkit-kot group p-4 transition-all duration-150 cursor-grab active:cursor-grabbing select-none border ${
                         isRush
-                          ? 'bg-[#FFF9F5] border-red-300 ring-2 ring-red-100 shadow-md'
+                          ? 'bg-primary-50 border-red-300 ring-2 ring-red-100 shadow-md'
                           : isOverdue
-                          ? 'bg-[#FFF8F5] border-rose-300 shadow-sm'
-                          : 'bg-[#FFFDF5] border-amber-200/80 hover:border-amber-300 shadow-sm hover:shadow-md'
-                      } ${draggedTicketId === ticket.id ? 'opacity-40 scale-95' : ''}`}
+                          ? 'bg-primary-50 border-rose-300 shadow-sm'
+                          : 'bg-brand-paper border-amber-200/80 hover:border-amber-300 shadow-sm hover:shadow-md'
+                      } ${draggedTicketId === ticket.id ? 'opacity-40 scale-95' : ''} ${selectedTicket?.id === ticket.id ? 'outline outline-2 outline-offset-2 outline-slate-500' : ''}`}
                     >
                       {/* Ticket Header */}
                       <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-amber-200/50">
@@ -256,9 +262,10 @@ export const KDSPage: React.FC = () => {
                           <GripVertical size={16} className="text-amber-400/70 group-hover:text-amber-600 transition-colors" />
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono font-black text-base text-gray-900 tracking-tight">
-                                #{ticket.orderNumber}
-                              </span>
+                              <button type="button" className="tikkit-heading text-lg text-brand-ink hover:underline"
+                                aria-label={'Open ticket ' + ticket.orderNumber} onClick={() => setExpandedTicket(ticket.id)}>
+                                {ticket.orderNumber}
+                              </button>
                               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-100 text-amber-900">
                                 {ticket.orderType}
                               </span>
@@ -331,8 +338,7 @@ export const KDSPage: React.FC = () => {
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setTicketStatus(ticket.id, 'cooking');
-                            sounds.playBump();
+                            handleAdvance(ticket.id);
                           }}
                           className="w-full h-12 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-bold text-sm shadow-subtle flex items-center justify-center gap-2 transition-transform"
                         >
@@ -366,7 +372,7 @@ export const KDSPage: React.FC = () => {
               setDragOverLane(null);
               setDraggedTicketId(null);
             }}
-            className={`flex-1 min-w-[320px] max-w-md bg-white/95 backdrop-blur-sm border rounded-3xl p-4 flex flex-col transition-all duration-200 ${
+            className={`tikkit-kds-lane tikkit-lane-prep flex-1 min-w-[290px] rounded-3xl p-4 flex flex-col transition-all duration-200 ${
               dragOverLane === 'cooking'
                 ? 'border-sky-400 bg-sky-50/50 ring-4 ring-sky-200/60 scale-[1.01]'
                 : 'border-slate-200 shadow-sm'
@@ -374,12 +380,12 @@ export const KDSPage: React.FC = () => {
           >
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse" />
-                <span className="font-extrabold text-sm text-gray-900 tracking-tight">
-                  2. In Preparation
+                <span className="w-2.5 h-2.5 rounded-full bg-brand-mustard" />
+                <span className="tikkit-heading text-lg">
+                  In preparation
                 </span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 text-xs font-black">
+              <span className="tikkit-lane-count px-2.5 py-0.5 text-xs font-bold">
                 {cookingTickets.length}
               </span>
             </div>
@@ -409,14 +415,14 @@ export const KDSPage: React.FC = () => {
                         setDraggedTicketId(ticket.id);
                       }}
                       onDragEnd={() => setDraggedTicketId(null)}
-                      onClick={() => setSelectedTicket(ticket)}
-                      className={`group relative rounded-2xl p-4 transition-all duration-150 cursor-grab active:cursor-grabbing select-none border ${
+                      onClick={() => setSelectedTicket(ticket.id)}
+                      className={`tikkit-kot group p-4 transition-all duration-150 cursor-grab active:cursor-grabbing select-none border ${
                         isRush
-                          ? 'bg-[#F5FAFF] border-red-300 ring-2 ring-red-100 shadow-md'
+                          ? 'bg-[#FFF4E0] border-red-300 ring-2 ring-red-100 shadow-md'
                           : isOverdue
-                          ? 'bg-[#FFF8F5] border-rose-300 shadow-sm'
-                          : 'bg-[#F8FAFC] border-sky-200/80 hover:border-sky-300 shadow-sm hover:shadow-md'
-                      } ${draggedTicketId === ticket.id ? 'opacity-40 scale-95' : ''}`}
+                          ? 'bg-primary-50 border-rose-300 shadow-sm'
+                          : 'bg-[#FFF4E0] border-sky-200/80 hover:border-sky-300 shadow-sm hover:shadow-md'
+                      } ${draggedTicketId === ticket.id ? 'opacity-40 scale-95' : ''} ${selectedTicket?.id === ticket.id ? 'outline outline-2 outline-offset-2 outline-slate-500' : ''}`}
                     >
                       {/* Ticket Header */}
                       <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-sky-200/50">
@@ -424,9 +430,10 @@ export const KDSPage: React.FC = () => {
                           <GripVertical size={16} className="text-sky-400/70 group-hover:text-sky-600 transition-colors" />
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono font-black text-base text-gray-900 tracking-tight">
-                                #{ticket.orderNumber}
-                              </span>
+                              <button type="button" className="tikkit-heading text-lg text-brand-ink hover:underline"
+                                aria-label={'Open ticket ' + ticket.orderNumber} onClick={() => setExpandedTicket(ticket.id)}>
+                                {ticket.orderNumber}
+                              </button>
                               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-sky-100 text-sky-900">
                                 {ticket.orderType}
                               </span>
@@ -511,8 +518,7 @@ export const KDSPage: React.FC = () => {
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setTicketStatus(ticket.id, 'ready');
-                            sounds.playBump();
+                            handleAdvance(ticket.id);
                           }}
                           className="flex-1 h-12 rounded-xl bg-sky-600 hover:bg-sky-700 active:scale-[0.98] text-white font-bold text-sm shadow-subtle flex items-center justify-center gap-2 transition-transform"
                         >
@@ -546,7 +552,7 @@ export const KDSPage: React.FC = () => {
               setDragOverLane(null);
               setDraggedTicketId(null);
             }}
-            className={`flex-1 min-w-[320px] max-w-md bg-white/95 backdrop-blur-sm border rounded-3xl p-4 flex flex-col transition-all duration-200 ${
+            className={`tikkit-kds-lane tikkit-lane-ready flex-1 min-w-[290px] rounded-3xl p-4 flex flex-col transition-all duration-200 ${
               dragOverLane === 'ready'
                 ? 'border-emerald-400 bg-emerald-50/50 ring-4 ring-emerald-200/60 scale-[1.01]'
                 : 'border-slate-200 shadow-sm'
@@ -554,12 +560,12 @@ export const KDSPage: React.FC = () => {
           >
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-extrabold text-sm text-gray-900 tracking-tight">
-                  3. Ready for Pickup
+                <span className="w-2.5 h-2.5 rounded-full bg-brand-ink" />
+                <span className="tikkit-heading text-lg">
+                  Ready for pickup
                 </span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">
+              <span className="tikkit-lane-count px-2.5 py-0.5 text-xs font-bold">
                 {readyTickets.length}
               </span>
             </div>
@@ -584,12 +590,12 @@ export const KDSPage: React.FC = () => {
                         setDraggedTicketId(ticket.id);
                       }}
                       onDragEnd={() => setDraggedTicketId(null)}
-                      onClick={() => setSelectedTicket(ticket)}
-                      className={`group relative rounded-2xl p-4 transition-all duration-150 cursor-grab active:cursor-grabbing select-none border ${
+                      onClick={() => setSelectedTicket(ticket.id)}
+                      className={`tikkit-kot group p-4 transition-all duration-150 cursor-grab active:cursor-grabbing select-none border ${
                         isRush
-                          ? 'bg-[#F6FEF9] border-red-300 ring-2 ring-red-100 shadow-md'
-                          : 'bg-[#F6FEF9] border-emerald-200/80 hover:border-emerald-300 shadow-sm hover:shadow-md'
-                      } ${draggedTicketId === ticket.id ? 'opacity-40 scale-95' : ''}`}
+                          ? 'bg-brand-paper border-red-300 ring-2 ring-red-100 shadow-md'
+                          : 'bg-brand-paper border-emerald-200/80 hover:border-emerald-300 shadow-sm hover:shadow-md'
+                      } ${draggedTicketId === ticket.id ? 'opacity-40 scale-95' : ''} ${selectedTicket?.id === ticket.id ? 'outline outline-2 outline-offset-2 outline-slate-500' : ''}`}
                     >
                       {/* Ticket Header */}
                       <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-emerald-200/50">
@@ -597,9 +603,10 @@ export const KDSPage: React.FC = () => {
                           <GripVertical size={16} className="text-emerald-400/70 group-hover:text-emerald-600 transition-colors" />
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono font-black text-base text-gray-900 tracking-tight">
-                                #{ticket.orderNumber}
-                              </span>
+                              <button type="button" className="tikkit-heading text-lg text-brand-ink hover:underline"
+                                aria-label={'Open ticket ' + ticket.orderNumber} onClick={() => setExpandedTicket(ticket.id)}>
+                                {ticket.orderNumber}
+                              </button>
                               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-100 text-emerald-900">
                                 {ticket.orderType}
                               </span>
@@ -664,7 +671,7 @@ export const KDSPage: React.FC = () => {
                           }}
                           className="flex-1 h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold text-sm shadow-subtle flex items-center justify-center gap-2 transition-transform"
                         >
-                          <span>Bump Order</span>
+                          <span>Collected</span>
                           <Check size={16} strokeWidth={2.5} />
                         </button>
                       </div>
@@ -684,7 +691,7 @@ export const KDSPage: React.FC = () => {
         onClose={() => setExpandedTicket(null)}
         onAdvance={handleAdvance}
         onPrint={() => expandedTicket && handlePrintKOT(expandedTicket)}
-        onOpenActions={(t) => setActionsTicket(t)}
+        onOpenActions={(t) => { setExpandedTicket(null); setActionsTicket(t.id); }}
       />
 
       {/* Ticket Actions Popover */}
@@ -692,7 +699,7 @@ export const KDSPage: React.FC = () => {
         ticket={actionsTicket}
         isOpen={!!actionsTicket}
         onClose={() => setActionsTicket(null)}
-        onViewDetails={(t) => setExpandedTicket(t)}
+        onViewDetails={(t) => { setActionsTicket(null); setExpandedTicket(t.id); }}
         onPrintKOT={handlePrintKOT}
       />
 
@@ -723,7 +730,7 @@ export const KDSPage: React.FC = () => {
       {printingKotTicket && (
         <div className="hidden printable-receipt">
           <div className="text-center font-mono pb-2 border-b">
-            <h1 className="text-sm font-extrabold tracking-wider">SIGN LABAN</h1>
+            <h1 className="text-sm font-extrabold tracking-wider">{settings.storeName || 'Kitchen'}</h1>
             <h2 className="text-base font-bold">KITCHEN ORDER TICKET (KOT)</h2>
             <p className="text-xs">Express Counter Service</p>
             <p className="text-xs">Ticket: {printingKotTicket.orderNumber}</p>
@@ -745,7 +752,7 @@ export const KDSPage: React.FC = () => {
             </div>
           )}
           <div className="pt-2 text-center font-mono text-[10px] text-gray-500 border-t">
-            pos.bits High-Speed Kitchen Routing
+            TIKKIT High-Speed Kitchen Routing
           </div>
         </div>
       )}

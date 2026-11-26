@@ -1,26 +1,25 @@
 "use client";
 import React, { useState } from 'react';
-import { useNavigate } from '@/lib/navigation';
+import { adminDestination, useNavigate } from '@/lib/navigation';
 import { useAppStore } from '../../store';
 import { authService, AuthSessionUser } from '@/lib/auth/authService';
 import { sounds } from '../../utils/audio';
-import { Eye, EyeOff, ShieldCheck, Mail, Lock, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, CheckCircle2, AlertCircle } from 'lucide-react';
 
-export const AuthPage: React.FC = () => {
+export const AuthPage: React.FC<{ initialError?: string | null; passwordUpdated?: boolean }> = ({ initialError, passwordUpdated }) => {
   const navigate = useNavigate();
-  const { setCurrentUser, setCurrentRole, switchActiveBusiness, currentUser, businesses } = useAppStore();
+  const { setCurrentUser } = useAppStore();
 
-  const [email, setEmail] = useState('alex@signlaban.in');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(initialError ?? null);
 
   // Forgot Password Modal State
   const [showForgotModal, setShowForgotModal] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
-  const [resetStatus, setResetStatus] = useState<string | null>(null);
+  const [resetStatus, setResetStatus] = useState<{ success: boolean; message: string } | null>(null);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,35 +39,8 @@ export const AuthPage: React.FC = () => {
       sounds.playSuccess();
       const user = res.user;
       setCurrentUser(user);
-      setCurrentRole(user.role);
 
-      // If user is tied to a specific outlet, switch the active store business
-      if (user.outletId) {
-        switchActiveBusiness(user.outletId);
-      }
-
-      if (typeof document !== 'undefined') {
-        document.cookie = `pos_session=${encodeURIComponent(
-          JSON.stringify({
-            id: user.id,
-            email: user.email,
-            role: user.role,
-            outletId: user.outletId,
-          })
-        )}; path=/; max-age=86400; SameSite=Lax`;
-      }
-
-      // Route based on user's authorized role & permissions
-      let targetRoute = '/pos';
-      if (user.role === 'admin') {
-        targetRoute = '/admin';
-      } else if (user.role === 'owner') {
-        targetRoute = '/owner';
-      } else if (user.role === 'manager') {
-        targetRoute = '/manager';
-      } else if (user.role === 'kitchen') {
-        targetRoute = '/kds';
-      }
+      const targetRoute = user.role === 'admin' ? adminDestination(user.id) : '/';
 
       if (typeof window !== 'undefined') {
         window.location.href = targetRoute;
@@ -83,137 +55,60 @@ export const AuthPage: React.FC = () => {
     }
   };
 
-  const handleQuickFill = (demoEmail: string, demoPassword = 'password123') => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setErrorMessage(null);
-  };
-
   const handleSendResetEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!resetEmail) return;
     const res = await authService.sendPasswordReset(resetEmail);
-    setResetStatus(res.message);
+    setResetStatus(res);
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col md:flex-row select-none">
-      {/* Left Column with Soft Blue-Gray Card (Preserving Exact Visual Identity) */}
-      <div className="md:w-1/2 p-8 flex flex-col justify-between bg-surface-canvas border-r border-gray-200">
-        <div className="flex items-center gap-3">
-          <img src="/assets/pos-bits-logo.png" alt="pos.bits" className="h-8 w-auto object-contain" />
-          <div className="border-l border-gray-200 pl-3 flex items-center gap-2">
-            <span className="font-extrabold text-gray-900 text-xs">Sign Laban</span>
-            <span className="text-gray-400 text-xs">·</span>
-            <span className="text-slate-600 text-xs font-semibold">India's First Egyptian Dessert</span>
-          </div>
-        </div>
-
-        <div className="my-auto max-w-md mx-auto w-full py-6">
-          {/* Authentic Brand Hero Card */}
-          <div className="w-full h-88 rounded-3xl bg-gradient-to-br from-[#bac7d5] to-[#cbd7e3] border border-gray-300/40 p-8 flex flex-col justify-between relative overflow-hidden shadow-subtle">
-            {/* Top brand badge */}
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="px-3 py-1 rounded-full bg-[#556475] text-white text-[10px] font-bold tracking-wider uppercase shadow-xs">
-                SIGN LABAN
-              </span>
-              <span className="text-[11px] font-medium text-slate-700 bg-white/70 px-2.5 py-0.5 rounded-full backdrop-blur-xs">
-                Indiranagar, Bengaluru
-              </span>
-            </div>
-
-            {/* Product Graphic Center */}
-            <div className="my-auto relative flex items-center justify-center py-4">
-              <div className="absolute w-48 h-48 rounded-full bg-white/40 blur-lg" />
-              <img
-                src="/assets/products/sign_laban/SAANKORITA.png"
-                alt="Saankorita Egyptian Dessert"
-                className="h-44 w-auto object-contain relative z-10 drop-shadow-xl hover:scale-105 transition-transform"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
-              />
-            </div>
-
-            {/* Bottom Tagline Glass Panel */}
-            <div className="bg-white/75 backdrop-blur-md -mx-8 -mb-8 p-6 rounded-b-3xl border-t border-white/60 relative z-10">
-              <h2 className="text-xl font-extrabold text-gray-900 mb-1">
-                India's First Egyptian Dessert
-              </h2>
-              <p className="text-xs text-slate-600 mb-3">
-                Authentic Qashtuta, Umm Ali, Koushiri & Saankorita sweets powered by high-speed counter operations.
-              </p>
-              <div className="w-16 h-1 bg-[#556475] rounded-full" />
+    <main className="tikkit-login">
+      <div className="tikkit-login-brand coffee-signin">
+        <img className="coffee-signin-photo" src="/assets/coffee/interior.webp" alt="" />
+        <div className="tikkit-wordmark text-3xl" aria-label="Tikkit">TIKKIT</div>
+        <div className="tikkit-login-art" aria-hidden="true">
+          <div className="tikkit-sticker-frame">
+            <div className="tikkit-sticker">
+              <div className="tikkit-label text-sm">Kitchen order</div>
+              <strong>TIK<br />KIT</strong>
+              <div className="border-t-2 border-dashed border-brand-ink pt-3 tikkit-label text-xs">Counter · Kitchen</div>
             </div>
           </div>
         </div>
-
-        <div className="text-xs text-gray-500 font-medium flex items-center justify-between">
-          <span>Enterprise Multi-Tenant SaaS · Bengaluru KA</span>
-          <span className="flex items-center gap-1 text-slate-600 font-semibold">
-            <ShieldCheck size={14} className="text-emerald-600" />
-            Supabase SSR Auth Protected
-          </span>
-        </div>
+        <p className="font-medium text-sm">Restaurant point of sale</p>
       </div>
 
-      {/* Right Column: Secure Email & Password Login */}
-      <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center max-w-md mx-auto w-full">
-        {/* Active Session Notification */}
-        {currentUser && (
-          <div className="mb-6 p-3 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-center justify-between shadow-xs">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-              <span className="truncate">
-                Active session: <strong>{currentUser.name}</strong> ({currentUser.role})
-              </span>
-            </div>
-            <button
-              onClick={() => {
-                let target = '/pos';
-                if (currentUser.role === 'admin') target = '/admin';
-                else if (currentUser.role === 'owner') target = '/owner';
-                else if (currentUser.role === 'manager') target = '/manager';
-                else if (currentUser.role === 'kitchen') target = '/kds';
-                navigate(target);
-              }}
-              className="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors shrink-0"
-            >
-              Continue →
-            </button>
-          </div>
-        )}
-
-        <div className="mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold mb-3">
-            <Sparkles size={13} className="text-brand-500" />
-            Enterprise Staff Authentication
-          </div>
-          <h1 className="text-3xl font-extrabold text-gray-900">Welcome back</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Sign in with your registered restaurant employee or franchise owner account.
-          </p>
+      <section className="tikkit-login-panel tikkit-card" aria-labelledby="login-title">
+        <div className="mb-7">
+          <h1 id="login-title" className="tikkit-heading text-4xl md:text-5xl">Welcome back</h1>
+          <p className="text-sm text-brand-muted mt-3">Sign in with your restaurant staff account.</p>
         </div>
 
         {errorMessage && (
-          <div className="mb-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium flex items-start gap-2 animate-shake">
+          <div role="alert" className="mb-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium flex items-start gap-2 animate-shake">
             <AlertCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
             <span>{errorMessage}</span>
           </div>
         )}
 
+        {passwordUpdated && !errorMessage && <p role="status" className="mb-3 rounded-xl bg-green-50 p-3 text-sm text-green-800">
+          Password updated. Sign in with your new password.
+        </p>}
+
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+            <label htmlFor="sign-in-email" className="block text-xs font-semibold text-gray-700 mb-1.5">
               Work Email Address
             </label>
             <div className="relative">
               <input
+                id="sign-in-email" name="email" autoComplete="username"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 pl-10 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:border-gray-500 text-gray-800 transition-colors"
-                placeholder="name@signlaban.in"
+                placeholder="name@daybreak.test"
                 required
               />
               <Mail size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
@@ -221,11 +116,12 @@ export const AuthPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+            <label htmlFor="sign-in-password" className="block text-xs font-semibold text-gray-700 mb-1.5">
               Password
             </label>
             <div className="relative">
               <input
+                id="sign-in-password" name="password" autoComplete="current-password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -236,6 +132,7 @@ export const AuthPage: React.FC = () => {
               <Lock size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
               <button
                 type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3.5 top-3.5 text-gray-400 hover:text-gray-600"
               >
@@ -245,15 +142,6 @@ export const AuthPage: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-between text-xs pt-1">
-            <label className="flex items-center gap-2 cursor-pointer text-gray-600">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-gray-300 text-gray-900 focus:ring-0"
-              />
-              <span>Keep me signed in</span>
-            </label>
             <button
               type="button"
               onClick={() => {
@@ -270,7 +158,7 @@ export const AuthPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 rounded-2xl bg-white hover:bg-gray-50 active:bg-gray-100 text-gray-900 font-bold text-sm border border-gray-300 shadow-subtle transition-all mt-4 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="tikkit-button tikkit-button-primary w-full mt-4"
           >
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
@@ -280,86 +168,11 @@ export const AuthPage: React.FC = () => {
           </button>
         </form>
 
-        {/* Quick Testing Accounts Section */}
-        <div className="mt-6 pt-5 border-t border-gray-100">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2.5">
-            Quick Sign-In (Verified Roles)
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            {[
-              { role: 'Cashier', email: 'priya@signlaban.in', name: 'Priya (Counter)' },
-              { role: 'Kitchen', email: 'jesselyn@signlaban.in', name: 'Jesselyn (KDS)' },
-              { role: 'Manager', email: 'alex@signlaban.in', name: 'Alex (Store)' },
-              { role: 'Owner', email: 'vikram@signlaban.in', name: 'Vikram (Owner)' },
-              { role: 'Admin', email: 'admin@posbits.io', name: 'Dev Ops (Admin)' },
-            ].map((acc) => (
-              <button
-                key={acc.email}
-                type="button"
-                onClick={() => handleQuickFill(acc.email)}
-                className={`text-[11px] px-2.5 py-1 rounded-lg border transition-colors ${
-                  email === acc.email
-                    ? 'bg-slate-800 text-white border-slate-800 font-semibold'
-                    : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
-                }`}
-              >
-                {acc.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Onboarded Outlets Quick Login List */}
-          {businesses && businesses.length > 0 && (
-            <div className="mt-4 pt-3 border-t border-gray-100">
-              <div className="flex items-center justify-between text-[11px] font-bold text-gray-500 mb-2">
-                <span className="uppercase tracking-wider">All Outlets & Owners ({businesses.length})</span>
-                <button
-                  type="button"
-                  onClick={() => navigate('/admin')}
-                  className="text-blue-600 hover:underline font-semibold"
-                >
-                  Admin Portal →
-                </button>
-              </div>
-              <div className="grid grid-cols-1 gap-1.5 max-h-32 overflow-y-auto pr-1">
-                {businesses.map((biz) => (
-                  <button
-                    key={biz.id}
-                    type="button"
-                    onClick={() =>
-                      handleQuickFill(biz.ownerEmail || 'owner@outlet.in', biz.ownerPassword || 'password123')
-                    }
-                    className={`w-full p-2 rounded-xl border text-left flex items-center justify-between transition-all ${
-                      email === biz.ownerEmail
-                        ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs'
-                        : 'bg-white border-gray-200 hover:border-gray-300 text-gray-700'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full shrink-0"
-                        style={{ backgroundColor: biz.themeColor || '#556475' }}
-                      />
-                      <div className="truncate">
-                        <p className="text-xs font-bold truncate leading-tight">{biz.name}</p>
-                        <p className="text-[10px] text-gray-400 font-mono truncate">
-                          {biz.ownerEmail || 'No email set'}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-semibold text-slate-500 px-2 py-0.5 rounded bg-gray-100 shrink-0">
-                      {biz.ownerName?.split(' ')[0] || 'Owner'}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-          <p className="text-[10px] text-gray-400 mt-2">
-            Clicking fills credentials to execute through real authentication & effective permission checks.
-          </p>
-        </div>
-      </div>
+        {process.env.NODE_ENV === 'development' && (
+          <button type="button" onClick={() => { setEmail('admin@posbits.io'); setPassword('password123'); }}
+            className="mt-4 text-xs font-semibold underline">Fill development demo login</button>
+        )}
+      </section>
 
       {/* Forgot Password Modal */}
       {showForgotModal && (
@@ -370,18 +183,19 @@ export const AuthPage: React.FC = () => {
               Enter your work email address to receive password reset instructions.
             </p>
 
-            {resetStatus ? (
+            {resetStatus?.success ? (
               <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 mb-4 flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                <span>{resetStatus}</span>
+                <span>{resetStatus.message}</span>
               </div>
             ) : (
               <form onSubmit={handleSendResetEmail} className="space-y-3">
+                {resetStatus && <p role="alert" className="text-xs text-red-700">{resetStatus.message}</p>}
                 <input
                   type="email"
                   value={resetEmail}
                   onChange={(e) => setResetEmail(e.target.value)}
-                  placeholder="name@signlaban.in"
+                  placeholder="name@daybreak.test"
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-gray-500"
                   required
                 />
@@ -403,6 +217,6 @@ export const AuthPage: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 };

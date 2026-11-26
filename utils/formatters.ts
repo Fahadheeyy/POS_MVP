@@ -21,7 +21,7 @@ export function formatINR(amount: number): string {
 export function formatTime(isoString: string): string {
   try {
     const d = new Date(isoString);
-    return d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+    return d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' });
   } catch (e) {
     return '';
   }
@@ -30,7 +30,7 @@ export function formatTime(isoString: string): string {
 export function formatDate(isoString: string): string {
   try {
     const d = new Date(isoString);
-    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' });
   } catch (e) {
     return '';
   }

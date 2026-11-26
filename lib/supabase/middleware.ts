@@ -40,22 +40,18 @@ export async function updateSession(request: NextRequest) {
     // Supabase cloud unreachable or credentials missing
   }
 
-  // Check if authenticated via Supabase user or active verified session cookie
-  const sessionCookie = request.cookies.get('pos_session')?.value;
-  const isAuthenticated = !!user || !!sessionCookie;
-
-  // Public routes that don't require authentication
-  const isAuthRoute =
-    request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/setup') ||
-    request.nextUrl.pathname.startsWith('/ui-kit') ||
-    request.nextUrl.pathname.startsWith('/api/auth');
+  const pathname = request.nextUrl.pathname;
+  const isDemoRoute = process.env.NODE_ENV === 'development' && pathname === '/demo/admin';
+  const publicRoutes = ['/join', '/pickup', '/', '/login', '/auth/callback', '/auth/reset', '/ui-kit', '/access-denied'];
+  const isAuthRoute = isDemoRoute || publicRoutes.includes(pathname);
 
   // If user is not signed in and trying to access a protected route
-  if (!isAuthenticated && !isAuthRoute && request.nextUrl.pathname !== '/') {
+  if (!user && !isAuthRoute) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
-    return NextResponse.redirect(url);
+    const redirect = NextResponse.redirect(url);
+    for (const cookie of supabaseResponse.cookies.getAll()) redirect.cookies.set(cookie);
+    return redirect;
   }
 
   return supabaseResponse;

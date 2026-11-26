@@ -23,3 +23,7 @@ export function useLocation() {
     key: 'default',
   };
 }
+
+export function adminDestination(userId: string): string {
+  return process.env.NODE_ENV === 'development' && userId === 'usr_admin' ? '/demo/admin' : '/admin';
+}

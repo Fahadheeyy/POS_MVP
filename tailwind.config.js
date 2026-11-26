@@ -9,45 +9,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Gray tokens from design system (image 3022)
+        brand: {
+          orange: '#FF4F1A', mustard: '#FFC72C', ink: '#161412',
+          paper: '#FFF4E0', oat: '#F3EEE6', muted: '#5E554C', rule: '#D9CFC0',
+          50: '#FFF4E0', 500: '#FF4F1A', 700: '#9D2E12',
+        },
         gray: {
-          50: '#f0f0f2',
-          100: '#d0d2d8',
-          200: '#b9bcc5',
-          300: '#989daa',
-          400: '#858a99',
-          500: '#666d80',
-          600: '#5d6374',
-          700: '#484d5b',
-          800: '#383c46',
-          900: '#2b2e36',
+          50: '#F3EEE6', 100: '#EAE2D6', 200: '#D9CFC0', 300: '#BCAD9B', 400: '#776B60',
+          500: '#65594E', 600: '#5E554C', 700: '#473F37', 800: '#302923', 900: '#161412',
         },
-        // Primary Coral / Red tokens (image 3022)
+        slate: {
+          50: '#F3EEE6', 100: '#EAE2D6', 200: '#D9CFC0', 300: '#BCAD9B', 400: '#776B60',
+          500: '#65594E', 600: '#5E554C', 700: '#473F37', 800: '#302923', 900: '#161412', 950: '#161412',
+        },
         primary: {
-          50: '#ffedee',
-          100: '#ffc6c9',
-          200: '#ffaaaf',
-          300: '#ff848a',
-          400: '#ff6c73',
-          500: '#ff4750',
-          600: '#e84149',
-          700: '#b53239',
-          800: '#8c272c',
-          900: '#6b1e22',
-          DEFAULT: '#ff4750',
+          50: '#FFF0E5', 100: '#FFDDCC', 200: '#FFB398', 300: '#FF9169',
+          400: '#FF784E', 500: '#FF4F1A', 600: '#D63A0C', 700: '#9D2E12',
+          800: '#76240E', 900: '#581B0C', DEFAULT: '#FF4F1A',
         },
-        // Accent Yellow tokens (image 3022)
         accent: {
-          50: '#fff9e6',
-          100: '#ffeeb0',
-          200: '#ffe38a',
-          300: '#ffd655',
-          400: '#ffce34',
-          500: '#ffc201',
-          600: '#e8b101',
-          700: '#b58a01',
-          800: '#8c6b01',
-          900: '#6b5100',
+          50: '#FFF7DA', 100: '#FFEDAE', 200: '#FFDF74', 300: '#FFD24D',
+          400: '#FFC72C', 500: '#FFC72C', 600: '#CE9D15', 700: '#775302',
+          800: '#614301', 900: '#493302', DEFAULT: '#FFC72C',
         },
         // Secondary Red tokens (image 3022)
         secondaryRed: {
@@ -88,29 +71,22 @@ export default {
           800: '#236c5e',
           900: '#1b5247',
         },
-        // Cool slate background surface neutrals (KDS and POS)
         surface: {
-          canvas: '#f8fafc',
-          card: '#ffffff',
-          subtle: '#f1f5f9',
-          muted: '#e2e8f0',
-          dark: '#1e293b',
-          darker: '#0f172a',
+          canvas: '#F3EEE6', card: '#FFF4E0', subtle: '#FFF9EE',
+          muted: '#EAE2D6', dark: '#302923', darker: '#161412',
         },
       },
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Space Mono', 'ui-monospace', 'monospace'],
+        display: ['Bowlby One', 'Arial Black', 'sans-serif'],
       },
-      borderRadius: {
-        'lg': '8px',
-        'xl': '12px',
-        '2xl': '16px',
-        '3xl': '24px',
-      },
+      borderRadius: { lg: '8px', xl: '10px', '2xl': '12px', '3xl': '14px' },
       boxShadow: {
-        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
-        'modal': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        xs: '1px 1px 0 #161412',
+        subtle: '2px 2px 0 #161412',
+        card: '4px 4px 0 #161412',
+        modal: '6px 6px 0 #161412',
       },
     },
   },

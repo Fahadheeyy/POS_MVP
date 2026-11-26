@@ -1,6 +1,6 @@
 /**
  * Granular Role-Based Access Control (RBAC) & Feature Entitlements
- * POS.BITS Enterprise Restaurant SaaS
+ * TIKKIT Enterprise Restaurant SaaS
  */
 
 export const PERMISSION_CODES = {

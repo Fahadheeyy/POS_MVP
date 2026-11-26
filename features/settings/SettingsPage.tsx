@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from "@/lib/navigation";
 import { useAppStore } from '../../store';
 import { Header } from '../../components/Header';
@@ -12,7 +12,7 @@ import {
   Printer,
   Sliders,
   CreditCard,
-  Hash,
+
   Shield,
   Database,
   ArrowLeft,
@@ -22,11 +22,14 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 
+import { PickupDisplaySettings } from './PickupDisplaySettings';
+
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
-  const { settings, updateSettings, resetDemoData } = useAppStore();
+  const { settings, updateSettings, resetDemoData, connectedOutlet } = useAppStore();
 
   const [formData, setFormData] = useState(settings);
+  const savedForm = useRef(settings);
   const [activeTab, setActiveTab] = useState<
     'profile' | 'tax' | 'receipt' | 'printers' | 'kds' | 'payments' | 'numbering' | 'permissions' | 'data'
   >('profile');
@@ -34,10 +37,13 @@ export const SettingsPage: React.FC = () => {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    const updated = Object.fromEntries(Object.entries(formData).filter(([key, value]) =>
+      JSON.stringify(value) !== JSON.stringify(savedForm.current[key as keyof typeof settings])));
+    if (await updateSettings(updated) === false) return;
+    savedForm.current = formData;
     sounds.playSuccess();
-    updateSettings(formData);
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 2000);
   };
@@ -59,11 +65,11 @@ export const SettingsPage: React.FC = () => {
     { id: 'tax', label: 'Taxes (GST)', icon: Sliders },
     { id: 'receipt', label: 'Receipt Designer', icon: Receipt },
     { id: 'printers', label: 'Receipt Printer', icon: Printer },
-    { id: 'kds', label: 'KDS Kitchen Settings', icon: Sliders },
+    ...(connectedOutlet ? [{ id: 'kds', label: 'Pickup display', icon: Sliders }] : []),
     { id: 'payments', label: 'Payment Modes', icon: CreditCard },
-    { id: 'numbering', label: 'Order Numbering', icon: Hash },
-    { id: 'permissions', label: 'Roles & Permissions', icon: Shield },
-    { id: 'data', label: 'Database & Reset', icon: Database },
+
+    ...(!connectedOutlet ? [{ id: 'permissions', label: 'Roles & Permissions', icon: Shield }] : []),
+    ...(!connectedOutlet ? [{ id: 'data', label: 'Database & Reset', icon: Database }] : []),
   ];
 
   return (
@@ -103,7 +109,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* Right Settings Content */}
         <div className="flex-1 bg-white border border-gray-200 rounded-3xl p-8 shadow-card flex flex-col justify-between">
-          <form onSubmit={handleSave} className="space-y-6">
+          {activeTab === 'kds' && connectedOutlet ? <PickupDisplaySettings key={connectedOutlet.outletId} outlet={connectedOutlet.outletId}/> : <form onSubmit={handleSave} className="space-y-6">
             {/* 1. Business Profile */}
             {activeTab === 'profile' && (
               <div className="space-y-4">
@@ -304,7 +310,7 @@ export const SettingsPage: React.FC = () => {
                   </span>
                   <div className="w-64 bg-white border border-gray-300 rounded-2xl p-4 shadow-card text-[11px] space-y-2 font-mono">
                     <div className="text-center pb-2 border-b">
-                      <img src={formData.logoUrl || '/assets/logo.png'} alt={formData.storeName || 'Sign Laban'} className="h-6 w-auto mx-auto mb-1 object-contain" />
+                      <img src={formData.logoUrl || '/assets/logo.png'} alt={formData.storeName || 'Daybreak Coffee'} className="h-6 w-auto mx-auto mb-1 object-contain" />
                       <p className="text-[9px] text-gray-500">{formData.address}</p>
                       {formData.showGstinOnReceipt && (
                         <p className="text-[9px] text-gray-500">GSTIN: {formData.gstin}</p>
@@ -314,7 +320,7 @@ export const SettingsPage: React.FC = () => {
 
                     <div className="space-y-1 py-1">
                       <div className="flex justify-between">
-                        <span>1x Qashtuta Pistachio</span>
+                        <span>1x Cappuccino</span>
                         <span>₹320.00</span>
                       </div>
                       <div className="flex justify-between">
@@ -439,7 +445,7 @@ export const SettingsPage: React.FC = () => {
                       className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold"
                     />
                     <p className="text-[11px] text-gray-400 mt-1">
-                      Rendered on dynamic QR codes in POS checkout and customer receipts.
+                      Outlet UPI address. Cashiers record UPI using the payment selector on the counter.
                     </p>
                   </div>
                 </div>
@@ -552,7 +558,7 @@ export const SettingsPage: React.FC = () => {
                 </button>
               </div>
             </div>
-          </form>
+          </form>}
         </div>
       </div>
 

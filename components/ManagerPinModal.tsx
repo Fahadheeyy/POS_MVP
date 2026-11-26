@@ -1,110 +1,78 @@
-"use client";
-import React, { useState } from 'react';
-import { useAppStore } from '../store';
-import { Keypad } from './Keypad';
-import { sounds } from '../utils/audio';
-import { api } from '../services/api';
-import { ShieldCheck, X } from 'lucide-react';
+'use client';
 
-interface ManagerPinModalProps {
-  isOpen: boolean;
+import { useState, type FormEvent } from 'react';
+import { approveRefund } from '@/app/operations/supervisor';
+import { refreshOutletWorkspace, useAppStore } from '@/store';
+
+interface SupervisorApprovalProps {
+  orderId: string;
   onClose: () => void;
-  onSuccess: () => void;
   actionTitle: string;
   actionDescription: string;
+  cancelTicket?: boolean;
+  externalPayment?: boolean;
 }
 
-export const ManagerPinModal: React.FC<ManagerPinModalProps> = ({
-  isOpen,
-  onClose,
-  onSuccess,
-  actionTitle,
-  actionDescription,
-}) => {
-  const { users } = useAppStore();
-  const [pin, setPin] = useState('');
-  const [error, setError] = useState<string | null>(null);
+export function ManagerPinModal({
+  orderId, onClose, actionTitle, actionDescription, cancelTicket = false, externalPayment = false,
+}: SupervisorApprovalProps) {
+  const outletId = useAppStore((state) => state.connectedOutlet?.outletId);
+  const [error, setError] = useState('');
+  const [pending, setPending] = useState(false);
 
-  if (!isOpen) return null;
-
-  const handleDigit = (digit: string) => {
-    if (pin.length < 4) {
-      setPin((prev) => prev + digit);
-      setError(null);
-    }
-  };
-
-  const handleClear = () => {
-    setPin('');
-    setError(null);
-  };
-
-  const handleBackspace = () => {
-    setPin((prev) => prev.slice(0, -1));
-    setError(null);
-  };
-
-  const handleVerify = async () => {
-    // Check with real bcrypt manager verification backend
-    const res = await api.verifyManagerPin(pin, actionTitle);
-    if (res.success) {
-      sounds.playSuccess();
-      setPin('');
-      setError(null);
-      onSuccess();
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const fields = new FormData(form);
+    setPending(true);
+    setError('');
+    try {
+      const result = await approveRefund({
+        orderId, cancelTicket,
+        email: String(fields.get('email') ?? ''),
+        password: String(fields.get('password') ?? ''),
+        reason: String(fields.get('reason') ?? ''),
+        reference: String(fields.get('reference') ?? ''),
+      });
+      if (result.error) { setError(result.error); return; }
       onClose();
-      return;
+      if (outletId) void refreshOutletWorkspace(outletId).catch(() => undefined);
+    } catch {
+      setError('Could not confirm that the refund was saved. Check the order before retrying.');
+    } finally {
+      setPending(false);
+      const password = form.elements.namedItem('password');
+      if (password instanceof HTMLInputElement) password.value = '';
     }
-
-    // Local fallback
-    const manager = users.find(
-      (u) => (u.role === 'manager' || u.role === 'owner') && u.pin === pin && u.active
-    );
-
-    if (manager) {
-      sounds.playSuccess();
-      setPin('');
-      setError(null);
-      onSuccess();
-      onClose();
-    } else {
-      sounds.playError();
-      setError('Incorrect Manager PIN. Demo PIN is 9999');
-    }
-  };
+  }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white border border-gray-200 rounded-2xl w-full max-w-sm p-6 shadow-modal relative">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
-        >
-          <X size={18} />
-        </button>
-
-        <div className="text-center mb-4">
-          <div className="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center mx-auto mb-2 border border-primary-100">
-            <ShieldCheck size={20} />
-          </div>
-          <h3 className="font-bold text-gray-900 text-lg leading-tight">{actionTitle}</h3>
-          <p className="text-xs text-gray-500 mt-1 max-w-xs mx-auto">{actionDescription}</p>
-          <div className="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-gray-100 text-[11px] font-medium text-gray-600">
-            Manager PIN: <span className="font-bold text-gray-900">9999</span> (Alex Rivera)
-          </div>
+    <div className="fixed inset-0 z-50 grid place-items-center bg-gray-900/40 p-4">
+      <form role="dialog" aria-modal="true" aria-labelledby="supervisor-approval" onSubmit={submit}
+        className="grid w-full max-w-md gap-3 rounded-2xl bg-white p-6 shadow-xl">
+        <h2 id="supervisor-approval" className="text-lg font-bold">{actionTitle}</h2>
+        <p className="text-sm text-gray-600">{actionDescription}</p>
+        <label className="grid gap-1 text-sm">Supervisor email
+          <input className="rounded border p-2" name="email" type="email" autoComplete="off" required />
+        </label>
+        <label className="grid gap-1 text-sm">Supervisor password
+          <input className="rounded border p-2" name="password" type="password" autoComplete="off" required />
+        </label>
+        <label className="grid gap-1 text-sm">Refund reason
+          <input className="rounded border p-2" name="reason" maxLength={500} required />
+        </label>
+        <label className="grid gap-1 text-sm">Payment refund reference {externalPayment ? '' : '(card or UPI only)'}
+          <input className="rounded border p-2" name="reference" maxLength={80} required={externalPayment} />
+        </label>
+        <p className="text-xs text-gray-600">Return cash or complete the reversal on the payment terminal before recording the refund.</p>
+        {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+        <div className="flex justify-end gap-3">
+          <button type="button" onClick={onClose} disabled={pending}>Cancel</button>
+          <button disabled={pending} className="rounded bg-slate-900 px-4 py-2 text-white disabled:opacity-50">
+            {pending ? 'Recording…' : 'Approve and record refund'}
+          </button>
         </div>
-
-        <Keypad
-          pin={pin}
-          onDigit={handleDigit}
-          onClear={handleClear}
-          onBackspace={handleBackspace}
-          onSubmit={handleVerify}
-          error={error}
-          submitLabel="Authorize Action"
-        />
-      </div>
+      </form>
     </div>
   );
-};
-
+}

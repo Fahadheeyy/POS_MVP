@@ -30,7 +30,7 @@ export const TicketActionsMenu: React.FC<TicketActionsMenuProps> = ({
   onViewDetails,
   onPrintKOT,
 }) => {
-  const { markTicketRush, cancelOrder, addTicketPrepNote } = useAppStore();
+  const { markTicketRush, addTicketPrepNote } = useAppStore();
   const [showManagerPinModal, setShowManagerPinModal] = useState(false);
   const [showNotePrompt, setShowNotePrompt] = useState(false);
   const [prepNoteText, setPrepNoteText] = useState(ticket?.prepNote || '');
@@ -50,11 +50,7 @@ export const TicketActionsMenu: React.FC<TicketActionsMenuProps> = ({
     onClose();
   };
 
-  const handleAuthorizedCancel = () => {
-    sounds.playSuccess();
-    cancelOrder(ticket.orderId, 'Cancelled from KDS kitchen display by manager authorization');
-    onClose();
-  };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/30 backdrop-blur-xs p-4 select-none animate-fadeIn">
@@ -176,13 +172,13 @@ export const TicketActionsMenu: React.FC<TicketActionsMenuProps> = ({
         )}
       </div>
 
-      <ManagerPinModal
-        isOpen={showManagerPinModal}
-        onClose={() => setShowManagerPinModal(false)}
-        onSuccess={handleAuthorizedCancel}
-        actionTitle="Authorize Ticket Cancellation"
-        actionDescription={`Enter Manager PIN to void ticket ${ticket.orderNumber} from the kitchen.`}
-      />
+      {showManagerPinModal && (
+        <ManagerPinModal orderId={ticket.orderId} cancelTicket
+          onClose={() => setShowManagerPinModal(false)}
+          actionTitle="Cancel and refund order"
+          actionDescription={`A supervisor must approve the refund for ${ticket.orderNumber}.`}
+        />
+      )}
     </div>
   );
 };

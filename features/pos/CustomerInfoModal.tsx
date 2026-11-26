@@ -11,9 +11,9 @@ interface CustomerInfoModalProps {
 export const CustomerInfoModal: React.FC<CustomerInfoModalProps> = ({ isOpen, onClose }) => {
   const { tableNumber, customerName, guestCount, orderType, setCustomerInfo, setOrderType } = useAppStore();
 
-  const [table, setTable] = useState(tableNumber || 'T-16');
-  const [name, setName] = useState(customerName || 'Jesselyn');
-  const [guests, setGuests] = useState(guestCount || 2);
+  const [table, setTable] = useState(tableNumber);
+  const [name, setName] = useState(customerName === 'Guest' ? '' : customerName);
+  const [guests, setGuests] = useState(guestCount || 1);
   const [type, setType] = useState(orderType || 'dine-in');
 
   if (!isOpen) return null;
@@ -22,7 +22,7 @@ export const CustomerInfoModal: React.FC<CustomerInfoModalProps> = ({ isOpen, on
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    setCustomerInfo(name, guests, table);
+    setCustomerInfo(name.trim() || 'Guest', guests, type === 'takeaway' ? '' : table.trim());
     setOrderType(type);
     onClose();
   };

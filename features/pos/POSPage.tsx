@@ -1,4 +1,7 @@
 "use client";
+import { pendingCheckoutKey, readPendingCheckout, type CheckoutRequest } from '@/services/orderService';
+import { collections } from '@/lib/tax/collections';
+import { businessDate } from '@/utils/businessDate';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "@/lib/navigation";
 import { useAppStore } from '../../store';
@@ -6,7 +9,7 @@ import { Product, PaymentMode } from '../../types';
 import { Header } from '../../components/Header';
 import { OfflineBanner } from '../../components/OfflineBanner';
 import { ProductCustomizationModal } from './ProductCustomizationModal';
-import { PaymentModal } from '../payment/PaymentModal';
+import { calculateCheckoutTotals } from '@/lib/tax/checkoutTotals';
 import { OrderSuccessfulModal } from '../payment/OrderSuccessfulModal';
 import { CashierRevenueModal } from './CashierRevenueModal';
 import { formatINR } from '../../utils/formatters';
@@ -39,35 +42,70 @@ export const POSPage: React.FC = () => {
     updateCartItemQty,
     checkout,
     lastCreatedOrder,
+    currentUser,
+    connectedOutlet,
+    businesses,
+    activeBusinessId,
+    orderType,
+    tableNumber,
+    setOrderType,
+    setTableNumber,
   } = useAppStore();
 
+  const [panel, setPanel] = useState<'menu' | 'order'>('menu');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [customizingProduct, setCustomizingProduct] = useState<Product | null>(null);
 
   // Modals matching user's design flows
-  const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
   const [showOrderSuccessModal, setShowOrderSuccessModal] = useState<boolean>(false);
   const [showRevenueModal, setShowRevenueModal] = useState<boolean>(false);
+  const tableInputRef = useRef<HTMLInputElement>(null);
+  const isDineIn = orderType === 'dine-in' || orderType === 'dine_in';
+  const [checkoutError, setCheckoutError] = useState('');
+  const [checkingOut, setCheckingOut] = useState(false);
 
-  // Payment Mode selection under cart with persistence for next order
-  const [selectedPaymentMode, setSelectedPaymentMode] = useState<PaymentMode>(
-    settings.lastUsedPaymentMode || settings.defaultPaymentMode || 'upi'
+  const [preferredPayment, setSelectedPaymentMode] = useState<PaymentMode>(
+    settings.lastUsedPaymentMode || settings.defaultPaymentMode || 'cash'
   );
+  const allowedPayments = (['cash', 'upi', 'card'] as const).filter((mode) => !settings.enabledPayments || settings.enabledPayments[mode] === true);
+  const selectedPaymentMode = allowedPayments.includes(preferredPayment)
+    ? preferredPayment : allowedPayments[0];
   const [cashTendered, setCashTendered] = useState<number>(0);
 
-  // Automatically keep in sync with last used mode
+  const pendingKey = connectedOutlet && pendingCheckoutKey(connectedOutlet.outletId, connectedOutlet.id);
+  const [pending, setPending] = useState<CheckoutRequest | null>(null);
+  const [pendingError, setPendingError] = useState('');
   useEffect(() => {
-    if (settings.lastUsedPaymentMode) {
-      setSelectedPaymentMode(settings.lastUsedPaymentMode);
+    const sync = () => {
+      try {
+        setPending(pendingKey ? readPendingCheckout(localStorage, pendingKey) : null);
+        setPendingError('');
+      } catch (error) {
+        setPending(null);
+        setPendingError(error instanceof Error ? error.message : 'Browser storage could not be read.');
+      }
+    };
+    sync();
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
+  }, [pendingKey, checkingOut]);
+
+  const clearUnreadableCheckout = () => {
+    if (!pendingKey) return;
+    try {
+      localStorage.removeItem(pendingKey);
+      setPendingError('');
+    } catch {
+      setPendingError('Browser storage could not be cleared. Review Today’s Orders and check browser storage access.');
     }
-  }, [settings.lastUsedPaymentMode]);
+  };
 
   // Today's orders & revenue calculation
-  const todayStr = new Date().toISOString().split('T')[0];
-  const todayOrders = orders.filter((o) => o.createdAt.startsWith(todayStr) && o.status !== 'cancelled');
-  const todayOrderCount = todayOrders.length;
-  const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
+  const todayStr = businessDate();
+  const daily = collections(orders, todayStr, todayStr);
+  const todayOrderCount = daily.count;
+  const todayRevenue = daily.net;
 
   // Helper to determine if a category is "all items"
   const isAllCategory = (catId: string) => catId === 'all' || catId === 'cat_all';
@@ -79,7 +117,7 @@ export const POSPage: React.FC = () => {
       name: it.name,
       categoryId: 'addons',
       price: it.price,
-      image: it.image || '/assets/products/sign_laban/Pistachio.png',
+      image: it.image || '/assets/coffee/cappuccino.webp',
       description: `Category: ${g.name}`,
       station: 'Cold' as const,
       isAvailable: it.isAvailable !== false,
@@ -105,15 +143,12 @@ export const POSPage: React.FC = () => {
   });
 
   // Calculate cart totals
-  const subtotal = cartItems.reduce((sum, item) => sum + item.lineTotal, 0);
-  const discount = Math.round((subtotal * cartDiscountPercent) / 100);
-  const taxable = Math.max(0, subtotal - discount);
+  const {
+    grossSubtotal: subtotal, discountTotal: discount, taxTotal: tax, grandTotal: total,
+  } = calculateCheckoutTotals(cartItems, cartDiscountPercent, settings,
+    settings.stateCode ?? connectedOutlet?.stateCode ?? businesses.find((business) => business.id === activeBusinessId)?.stateCode);
   const isGstEnabled = settings.isGstEnabled !== false;
   const gstRate = isGstEnabled ? (settings.gstRate ?? 5) : 0;
-  const cgst = isGstEnabled ? Number(((taxable * (gstRate / 2)) / 100).toFixed(2)) : 0;
-  const sgst = isGstEnabled ? Number(((taxable * (gstRate / 2)) / 100).toFixed(2)) : 0;
-  const tax = Number((cgst + sgst).toFixed(2));
-  const total = Number((taxable + tax).toFixed(2));
 
   const totalCartQuantity = cartItems.reduce((sum, i) => sum + i.quantity, 0);
 
@@ -132,37 +167,34 @@ export const POSPage: React.FC = () => {
     }
   };
 
-  // Direct 1-Tap Checkout from under-cart selector
-  const handleDirectCheckout = () => {
-    if (cartItems.length === 0) return;
-
-    if (selectedPaymentMode === 'cash' && settings.cashTiming === 'after') {
-      // Cash timing 'after': open modal for tender entry
-      setShowPaymentModal(true);
-      return;
+  const handleConfirmPayment = async (mode: PaymentMode, tenderAmt?: number, resume = false) => {
+    if (checkingOut) return;
+    setCheckoutError('');
+    setCheckingOut(true);
+    try {
+      await checkout(mode, tenderAmt, undefined, resume);
+      setSelectedPaymentMode(mode);
+      setShowOrderSuccessModal(true);
+      setCashTendered(0);
+      setPanel('menu');
+      sounds.playSuccess();
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : 'Checkout failed. Please try again.');
+      sounds.playError();
+    } finally {
+      setCheckingOut(false);
     }
-
-    // Direct checkout for UPI, Card, or Cash (before)
-    const effectiveCash =
-      selectedPaymentMode === 'cash'
-        ? cashTendered > 0
-          ? cashTendered
-          : Math.ceil(total)
-        : undefined;
-
-    sounds.playSuccess();
-    checkout(selectedPaymentMode, effectiveCash);
-    setShowOrderSuccessModal(true);
-    setCashTendered(0);
   };
 
-  // Payment Confirmation from PaymentModal
-  const handleConfirmPayment = (mode: PaymentMode, tenderAmt?: number) => {
-    setSelectedPaymentMode(mode);
-    checkout(mode, tenderAmt);
-    setShowPaymentModal(false);
-    setShowOrderSuccessModal(true);
-    setCashTendered(0);
+  const handleDirectCheckout = () => {
+    if (cartItems.length === 0 || checkingOut || pending || pendingError || !selectedPaymentMode) return;
+    setCheckoutError('');
+    if (isDineIn && !tableNumber.trim()) {
+      setCheckoutError('Enter a table number for dine-in.');
+      tableInputRef.current?.focus();
+      return;
+    }
+    void handleConfirmPayment(selectedPaymentMode, selectedPaymentMode === 'cash' ? cashTendered : undefined);
   };
 
   // Keyboard Shortcuts for velocity
@@ -179,11 +211,10 @@ export const POSPage: React.FC = () => {
         e.preventDefault();
         searchInputRef.current?.focus();
       } else if (e.key === 'Escape') {
-        if (showPaymentModal) setShowPaymentModal(false);
-        else if (showOrderSuccessModal) setShowOrderSuccessModal(false);
+        if (showOrderSuccessModal) setShowOrderSuccessModal(false);
         else if (customizingProduct) setCustomizingProduct(null);
-      } else if (e.key === 'Enter') {
-        if (!showPaymentModal && !showOrderSuccessModal && cartItems.length > 0) {
+      } else if (e.key === 'Enter' && !(e.target instanceof HTMLElement && e.target.closest('button, a, select'))) {
+        if (!pending && !showRevenueModal && !showOrderSuccessModal && !customizingProduct && cartItems.length > 0) {
           e.preventDefault();
           handleDirectCheckout();
         }
@@ -192,7 +223,7 @@ export const POSPage: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [cartItems, showPaymentModal, showOrderSuccessModal, customizingProduct]);
+  }, [cartItems, showOrderSuccessModal, customizingProduct, checkingOut, selectedPaymentMode, cashTendered, orderType, tableNumber, pending, pendingError, showRevenueModal]);
 
   // Selected category title
   const currentCategoryObj = categories.find((c) => c.id === selectedCategory);
@@ -206,9 +237,9 @@ export const POSPage: React.FC = () => {
       : 'All Items';
 
   return (
-    <div className="h-screen max-h-screen bg-[#cfd7e1] flex flex-col select-none overflow-hidden font-sans">
+    <div className="tikkit-pos h-screen max-h-screen bg-brand-oat flex flex-col select-none overflow-hidden font-sans">
       {/* Top Header matching design system: Clean, calm, uncluttered */}
-      <Header title="POS Express Counter" subtitle={`Counter 01 · ${settings.activeCashierName || 'Priya Sharma'}`}>
+      <Header title="POS Express Counter" subtitle={`Counter 01 · ${currentUser?.name || settings.activeCashierName || 'Counter staff'}`}>
         <div className="flex items-center gap-4 text-xs font-semibold">
           <button
             onClick={() => navigate('/pos')}
@@ -236,12 +267,27 @@ export const POSPage: React.FC = () => {
       <OfflineBanner />
 
       {/* Main Split Layout: Cool Slate Canvas (Left) + Pure White Order Cart (Right) */}
-      <div className="flex-1 flex overflow-hidden min-h-0">
+      {pending && !checkingOut && <section className="screen-state" role="alert">
+        <h2>Finish previous checkout</h2>
+        <p>{pending.paymentMode.toUpperCase()} · {formatINR(pending.expectedTotal)}. Resume to retrieve the receipt or finish saving this sale.</p>
+        <button className="state-action" onClick={() => void handleConfirmPayment(pending.paymentMode, pending.cashTendered, true)}>Resume checkout</button>
+        {checkoutError && <p>{checkoutError}</p>}
+      </section>}
+      {pendingError && <section className="screen-state" role="alert">
+        <p>{pendingError}</p>
+        <button type="button" className="state-action" onClick={clearUnreadableCheckout}>Clear unreadable checkout</button>
+      </section>}
+      <nav className="counter-panels" aria-label="Counter view">
+        <button aria-pressed={panel === 'menu'} onClick={() => setPanel('menu')}>Menu</button>
+        <button aria-pressed={panel === 'order'} onClick={() => setPanel('order')}>Order ({totalCartQuantity}) · {formatINR(total)}</button>
+      </nav>
+      <div inert={checkingOut || !!pending} data-panel={panel} className="tikkit-pos-layout flex-1 flex overflow-hidden min-h-0 lg:px-7 lg:pb-6 lg:pt-5 gap-5">
         {/* Left Side: Product Catalog Canvas */}
-        <div className="flex-1 p-6 overflow-y-auto space-y-5 h-full bg-[#cfd7e1]">
+        <div className="flex-1 min-w-0 px-4 lg:px-0 overflow-y-auto space-y-5 h-full tikkit-pos-catalog">
+          <h1 className="sr-only">Counter menu</h1>
           {/* 1. Search Bar matching "Menu — populated order.png" */}
           <div className="flex items-center gap-3">
-            <div className="bg-white rounded-full px-5 py-2.5 shadow-sm flex items-center justify-between flex-1">
+            <div className="counter-search px-4 py-3 flex items-center justify-between flex-1">
               <div className="flex items-center gap-3 flex-1">
                 <Search size={16} className="text-slate-400 shrink-0" />
                 <input
@@ -249,27 +295,12 @@ export const POSPage: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search your dish..."
+                  aria-label="Search menu" placeholder="Search menu…"
                   className="w-full bg-transparent text-xs font-medium text-gray-800 placeholder-slate-400 focus:outline-none"
                 />
               </div>
 
-              {searchQuery ? (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="text-xs font-semibold text-slate-400 hover:text-slate-700 px-2"
-                >
-                  Clear
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="text-xs font-bold text-slate-600 hover:text-slate-900 px-3 py-1 rounded-full"
-                >
-                  Search
-                </button>
-              )}
+              {searchQuery && <button type="button" onClick={() => setSearchQuery('')} className="px-2 text-sm font-bold">Clear</button>}
             </div>
 
             {/* Filter Pill Button */}
@@ -279,7 +310,7 @@ export const POSPage: React.FC = () => {
                 setSelectedCategory('all');
                 setSearchQuery('');
               }}
-              className="w-10 h-10 rounded-full bg-[#556475] hover:bg-slate-700 text-white flex items-center justify-center shadow-sm transition-colors shrink-0"
+              className="w-10 h-10 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center shadow-sm transition-colors shrink-0"
               title="Reset Filters"
             >
               <SlidersHorizontal size={15} />
@@ -287,7 +318,10 @@ export const POSPage: React.FC = () => {
           </div>
 
           {/* 3. Category Row matching "Menu — populated order.png" */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="counter-categories" aria-label="Menu categories">
+            {!categories.some((category) => isAllCategory(category.id)) && (
+              <button type="button" aria-pressed={isAllCategory(selectedCategory)} onClick={() => setSelectedCategory('all')}>All items</button>
+            )}
             {categories.map((cat) => {
               const isCatAll = isAllCategory(cat.id) || cat.slug === 'all';
               const isSelected = isCatAll
@@ -297,13 +331,14 @@ export const POSPage: React.FC = () => {
               return (
                 <button
                   key={cat.id}
+                  aria-pressed={isSelected}
                   onClick={() => {
                     sounds.playClick();
                     setSelectedCategory(isCatAll ? 'all' : cat.id);
                   }}
                   className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                     isSelected
-                      ? 'bg-[#556475] text-white shadow-sm'
+                      ? 'bg-brand-orange text-white shadow-sm'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/40'
                   }`}
                 >
@@ -312,51 +347,44 @@ export const POSPage: React.FC = () => {
               );
             })}
 
-            {/* Dedicated Add-ons space on POS */}
-            <button
-              type="button"
-              onClick={() => {
-                sounds.playClick();
-                setSelectedCategory('addons');
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedCategory === 'addons'
-                  ? 'bg-[#556475] text-white shadow-sm'
-                  : 'text-slate-700 hover:text-slate-900 hover:bg-white/40'
-              }`}
-            >
-              Add-ons & Toppings
-            </button>
+            {addOnProducts.length > 0 && (
+              <button type="button" aria-pressed={selectedCategory === 'addons'} onClick={() => setSelectedCategory('addons')}>Add-ons</button>
+            )}
           </div>
 
           {/* 4. Product Grid Section */}
           <div className="space-y-3">
             {/* Category Header: Category Name on left, count on right */}
             <div className="flex items-center justify-between text-slate-800 px-1">
-              <h3 className="font-bold text-sm">{currentCategoryTitle}</h3>
+              <h3 className="tikkit-heading text-lg">{currentCategoryTitle}</h3>
               <span className="text-xs font-semibold text-slate-500">
                 {filteredProducts.length}
               </span>
             </div>
 
-            {/* Grid of clean white cards */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {!filteredProducts.length && <div className="screen-state" role="status">
+              <h3>{baseList.length ? 'No matching items' : 'Menu is empty'}</h3>
+              {baseList.length ? <button className="state-action" onClick={() => {setSearchQuery(''); setSelectedCategory('all');}}>Show all items</button>
+                : <p>Add a menu item from menu management to start selling.</p>}
+            </div>}
+            <div className="counter-grid grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
               {filteredProducts.map((product) => (
-                <div
+                <button type="button"
                   key={product.id}
+                  disabled={!product.isAvailable || checkingOut || !!pending || !!pendingError}
                   onClick={() => handleProductCardClick(product)}
-                  className={`bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between select-none ${
+                  className={`tikkit-dish rounded-xl text-left transition-transform cursor-pointer flex flex-col justify-between select-none ${
                     !product.isAvailable ? 'opacity-40 cursor-not-allowed' : ''
                   }`}
                 >
                   {/* Image container with rounded corners and soft neutral background */}
-                  <div className="w-full aspect-square rounded-xl bg-slate-100 overflow-hidden mb-3 relative flex items-center justify-center">
+                  <div className={`w-full aspect-[4/3] overflow-hidden relative flex items-center justify-center ${product.image.startsWith('/assets/coffee/') ? 'bg-white' : 'bg-slate-100'}`}>
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      className={`w-full h-full transition-transform duration-300 hover:scale-105 ${product.image.startsWith('/assets/coffee/') ? 'object-contain' : 'object-cover'}`}
                       onError={(e) => {
-                        e.currentTarget.src = '/assets/placeholder-dessert.svg';
+                        e.currentTarget.src = '/assets/coffee/cappuccino.webp';
                       }}
                     />
 
@@ -368,38 +396,60 @@ export const POSPage: React.FC = () => {
                   </div>
 
                   {/* Product Title and Price (Centered, matching design) */}
-                  <div className="text-center pt-1">
-                    <h4 className="font-bold text-sm text-gray-900 leading-snug line-clamp-1">
+                  <div className="w-full px-3.5 py-3.5">
+                    <h4 className="font-bold text-sm text-gray-900 leading-snug">
                       {product.name}
                     </h4>
-                    <p className="text-xs text-slate-500 font-medium mt-1">
+                    <p className="font-mono text-sm font-bold mt-2">
                       {formatINR(product.price)}
                     </p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
         </div>
 
         {/* Right Side: Order Cart matching "Menu — populated order.png" / "Menu — empty order.png" */}
-        <div className="w-[380px] xl:w-[410px] bg-white border-l border-gray-200 flex flex-col h-full select-none shrink-0 shadow-card">
+        <div className="tikkit-pos-cart w-[340px] xl:w-[390px] flex flex-col h-full select-none shrink-0">
           {/* Cart Header */}
-          <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
-            <h3 className="font-bold text-lg text-gray-900">Order</h3>
+          <div className="px-6 py-4 border-b-2 border-dashed border-brand-rule flex items-center justify-between shrink-0">
+            <h3 className="tikkit-heading text-2xl">Order</h3>
             <span className="font-semibold text-lg text-slate-700">
               {totalCartQuantity}
             </span>
+          </div>
+
+          <div className="px-5 py-3 border-b border-dashed border-brand-rule">
+            <div className="counter-categories w-full" role="group" aria-label="Order type">
+              <button type="button" aria-pressed={!isDineIn} className="flex-1"
+                onClick={() => { setOrderType('takeaway'); setCheckoutError(''); }}>
+                Takeaway
+              </button>
+              <button type="button" aria-pressed={isDineIn} className="flex-1"
+                onClick={() => { setOrderType('dine-in'); setCheckoutError(''); }}>
+                Dine-in
+              </button>
+            </div>
+            {isDineIn && (
+              <label className="mt-2 flex items-center gap-3 text-xs font-semibold">
+                Table number
+                <input ref={tableInputRef} value={tableNumber} maxLength={40} placeholder="e.g. T-16"
+                  className="min-w-0 w-24 rounded-lg border px-2 py-1.5 text-sm"
+                  onChange={(event) => { setTableNumber(event.target.value); setCheckoutError(''); }}
+                />
+              </label>
+            )}
           </div>
 
           {/* Cart Content: Empty State or Populated Lines */}
           {cartItems.length === 0 ? (
             /* Empty State matching "Menu — empty order.png" */
             <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-              <div className="w-14 h-14 rounded-full bg-[#556475] text-white flex items-center justify-center mb-3 shadow-sm">
+              <div className="w-14 h-14 rounded-full bg-brand-orange text-white flex items-center justify-center mb-3 shadow-sm">
                 <ShoppingBag size={22} />
               </div>
-              <p className="text-sm font-medium text-slate-500">Your order is empty</p>
+              <p className="text-sm font-medium text-slate-500">Tap a menu item to start this order.</p>
             </div>
           ) : (
             /* Populated State matching "Menu — populated order.png" */
@@ -429,7 +479,7 @@ export const POSPage: React.FC = () => {
                       alt={item.product.name}
                       className="w-14 h-14 rounded-xl bg-slate-100 object-cover shrink-0 ml-3"
                       onError={(e) => {
-                        e.currentTarget.src = '/assets/placeholder-dessert.svg';
+                        e.currentTarget.src = '/assets/coffee/cappuccino.webp';
                       }}
                     />
                   </div>
@@ -438,8 +488,9 @@ export const POSPage: React.FC = () => {
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       type="button"
+                      disabled={checkingOut || !!pending || !!pendingError}
                       onClick={() => updateCartItemQty(item.cartItemId, -1)}
-                      className="w-6 h-6 rounded-full bg-[#556475] hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
+                      className="w-6 h-6 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
                       title="Decrease"
                     >
                       <Minus size={11} />
@@ -449,8 +500,9 @@ export const POSPage: React.FC = () => {
                     </span>
                     <button
                       type="button"
+                      disabled={item.quantity >= 1000 || checkingOut || !!pending || !!pendingError}
                       onClick={() => updateCartItemQty(item.cartItemId, 1)}
-                      className="w-6 h-6 rounded-full bg-[#556475] hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
+                      className="w-6 h-6 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
                       title="Increase"
                     >
                       <Plus size={11} />
@@ -504,20 +556,22 @@ export const POSPage: React.FC = () => {
               <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
                 <span>Payment Mode</span>
                 <span className="text-[10px] text-slate-400 capitalize">
-                  {selectedPaymentMode === 'upi' ? 'UPI / QR' : selectedPaymentMode} (auto-saved)
+                  {selectedPaymentMode === 'upi' ? 'UPI / QR' : selectedPaymentMode || 'No payment method enabled'}
                 </span>
               </div>
 
               <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200">
                 <button
                   type="button"
+                  disabled={!allowedPayments.includes('upi') || checkingOut || !!pending}
+                  aria-pressed={selectedPaymentMode === 'upi'}
                   onClick={() => {
                     sounds.playClick();
                     setSelectedPaymentMode('upi');
                   }}
-                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all disabled:opacity-40 ${
                     selectedPaymentMode === 'upi'
-                      ? 'bg-[#556475] text-white shadow-xs'
+                      ? 'bg-brand-orange text-white shadow-xs'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/50'
                   }`}
                 >
@@ -526,13 +580,15 @@ export const POSPage: React.FC = () => {
                 </button>
                 <button
                   type="button"
+                  disabled={!allowedPayments.includes('cash') || checkingOut || !!pending}
+                  aria-pressed={selectedPaymentMode === 'cash'}
                   onClick={() => {
                     sounds.playClick();
                     setSelectedPaymentMode('cash');
                   }}
-                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all disabled:opacity-40 ${
                     selectedPaymentMode === 'cash'
-                      ? 'bg-[#556475] text-white shadow-xs'
+                      ? 'bg-brand-orange text-white shadow-xs'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/50'
                   }`}
                 >
@@ -541,13 +597,15 @@ export const POSPage: React.FC = () => {
                 </button>
                 <button
                   type="button"
+                  disabled={!allowedPayments.includes('card') || checkingOut || !!pending}
+                  aria-pressed={selectedPaymentMode === 'card'}
                   onClick={() => {
                     sounds.playClick();
                     setSelectedPaymentMode('card');
                   }}
-                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  className={`py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all disabled:opacity-40 ${
                     selectedPaymentMode === 'card'
-                      ? 'bg-[#556475] text-white shadow-xs'
+                      ? 'bg-brand-orange text-white shadow-xs'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-white/50'
                   }`}
                 >
@@ -556,8 +614,7 @@ export const POSPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* If Cash and cashTiming === 'before', display inline quick tender chips & change calculator */}
-              {selectedPaymentMode === 'cash' && settings.cashTiming === 'before' && cartItems.length > 0 && (
+              {selectedPaymentMode === 'cash' && cartItems.length > 0 && (
                 <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 animate-fadeIn">
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-slate-600 font-semibold">Tender Notes:</span>
@@ -565,16 +622,18 @@ export const POSPage: React.FC = () => {
                       <span className="text-slate-400 font-bold">₹</span>
                       <input
                         type="number"
+                        aria-label="Cash tendered"
+                        min="0" step="0.01"
                         value={cashTendered || ''}
                         onChange={(e) => setCashTendered(Number(e.target.value))}
-                        placeholder={String(Math.ceil(total))}
+                        placeholder={total.toFixed(2)}
                         className="w-20 px-2 py-0.5 rounded border border-slate-200 text-xs font-mono font-bold text-slate-900 text-right bg-white focus:outline-none focus:border-slate-400"
                       />
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
-                    {[Math.ceil(total), 500, 1000, 2000]
-                      .filter((v, idx, arr) => v >= Math.ceil(total) && arr.indexOf(v) === idx)
+                    {[total, 500, 1000, 2000]
+                      .filter((v, idx, arr) => v >= total && arr.indexOf(v) === idx)
                       .map((amt) => (
                         <button
                           key={amt}
@@ -585,19 +644,19 @@ export const POSPage: React.FC = () => {
                           }}
                           className={`flex-1 py-1 rounded text-[10px] font-mono font-bold border transition-colors ${
                             cashTendered === amt
-                              ? 'bg-[#556475] text-white border-[#556475]'
+                              ? 'bg-brand-orange text-white border-[#FF4F1A]'
                               : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
                           }`}
                         >
-                          {amt === Math.ceil(total) ? 'Exact' : `₹${amt}`}
+                          {amt === total ? 'Exact' : `₹${amt}`}
                         </button>
                       ))}
                   </div>
-                  {(cashTendered > 0 ? cashTendered : Math.ceil(total)) >= total && (
+                  {cashTendered >= total && (
                     <div className="flex items-center justify-between text-[11px] pt-1 border-t border-slate-200 text-slate-700 font-medium">
                       <span>Change Return:</span>
                       <span className="font-extrabold font-mono text-emerald-700">
-                        {formatINR((cashTendered > 0 ? cashTendered : Math.ceil(total)) - total)}
+                        {formatINR(cashTendered - total)}
                       </span>
                     </div>
                   )}
@@ -605,20 +664,22 @@ export const POSPage: React.FC = () => {
               )}
             </div>
 
+            {checkoutError && <p role="alert" className="text-xs text-red-700">{checkoutError}</p>}
+
             {/* Checkout Action Button */}
             <button
               type="button"
-              disabled={cartItems.length === 0}
+              disabled={cartItems.length === 0 || checkingOut || !!pending || !!pendingError || !selectedPaymentMode}
               onClick={handleDirectCheckout}
               className={`w-full py-3.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 ${
                 cartItems.length > 0
-                  ? 'bg-[#556475] hover:bg-slate-700 text-white shadow-md cursor-pointer active:scale-98 tracking-wide'
+                  ? 'bg-brand-orange hover:bg-slate-700 text-white shadow-md cursor-pointer active:scale-98 tracking-wide'
                   : 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
               }`}
             >
               {cartItems.length > 0 ? (
                 <>
-                  <span>Checkout ({selectedPaymentMode.toUpperCase()})</span>
+                  <span>{checkingOut ? 'Saving order…' : (selectedPaymentMode ? 'Checkout (' + selectedPaymentMode.toUpperCase() + ')' : 'No payment method enabled')}</span>
                   <span>·</span>
                   <span className="font-mono">{formatINR(total)}</span>
                 </>
@@ -631,19 +692,15 @@ export const POSPage: React.FC = () => {
       </div>
 
       {/* Product Customization Modal matching "Menu — Beast Style details.png" */}
-      <ProductCustomizationModal
+      {customizingProduct && <ProductCustomizationModal
+        key={customizingProduct.id}
         product={customizingProduct}
-        isOpen={!!customizingProduct}
+        isOpen
         onClose={() => setCustomizingProduct(null)}
-      />
+      />}
 
       {/* Payments Method Modal matching "Payment — methods.png" */}
-      <PaymentModal
-        isOpen={showPaymentModal}
-        onClose={() => setShowPaymentModal(false)}
-        onConfirm={handleConfirmPayment}
-        totalAmount={total}
-      />
+
 
       {/* Order Successful Callout matching "Order — successful.png" */}
       <OrderSuccessfulModal

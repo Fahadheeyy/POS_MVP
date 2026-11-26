@@ -1,9 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
+import React, { useEffect } from 'react';
 import { Order } from '../../types';
 import { useAppStore } from '../../store';
 import { formatINR } from '../../utils/formatters';
-import { ReceiptModal, ReceiptSlip } from './ReceiptModal';
+import { ReceiptSlip } from './ReceiptModal';
 import { Check, Printer, Plus, X } from 'lucide-react';
 
 interface OrderSuccessfulModalProps {
@@ -18,27 +19,18 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
   onClose,
 }) => {
   const { settings } = useAppStore();
-  const [showReceipt, setShowReceipt] = useState(false);
-  const [hasAutoPrinted, setHasAutoPrinted] = useState(false);
 
   // Auto-print bill on checkout
   useEffect(() => {
-    if (isOpen && order && !hasAutoPrinted && settings.autoPrintReceipt !== false) {
-      setHasAutoPrinted(true);
+    if (isOpen && order && settings.autoPrintReceipt !== false) {
       const timer = setTimeout(() => {
         window.print();
       }, 400);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, order, hasAutoPrinted, settings.autoPrintReceipt]);
+  }, [isOpen, order, settings.autoPrintReceipt]);
 
-  // Reset auto-printed flag when modal closes
-  useEffect(() => {
-    if (!isOpen) {
-      setHasAutoPrinted(false);
-    }
-  }, [isOpen]);
-
+  const dialog = useDialogFocus(isOpen && !!order, onClose);
   if (!isOpen || !order) return null;
 
   const handleReprint = () => {
@@ -46,10 +38,10 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
+    <div ref={dialog} role="dialog" aria-modal="true" aria-label="Order saved" tabIndex={-1} className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
       <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-4xl overflow-hidden shadow-modal grid grid-cols-1 md:grid-cols-2 relative">
         <button
-          onClick={onClose}
+          aria-label="Close dialog" onClick={onClose}
           className="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
         >
           <X size={18} />
@@ -131,7 +123,7 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
         <div className="p-8 bg-[#cad3de] flex flex-col items-center justify-center text-center">
           {/* Circular checkmark with subtle confetti aesthetic */}
           <div className="relative mb-4">
-            <div className="w-20 h-20 rounded-full bg-[#556475] text-white flex items-center justify-center shadow-sm mx-auto">
+            <div className="w-20 h-20 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-sm mx-auto">
               <Check size={40} strokeWidth={2.5} />
             </div>
             {/* Minimal confetti dots from design */}
@@ -151,7 +143,7 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
           {/* Auto-print confirmation notice */}
           <div className="mb-6 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-slate-300 text-[11px] font-semibold text-slate-800 shadow-xs">
             <Printer size={13} className="text-emerald-600 animate-pulse" />
-            <span>Bill automatically sent to receipt printer</span>
+            <span>{settings.autoPrintReceipt !== false ? "Automatic printing enabled" : "Use Reprint Bill to print a receipt"}</span>
           </div>
 
           <div className="w-full max-w-xs space-y-2.5">
@@ -167,7 +159,7 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="w-full py-3.5 px-4 rounded-xl bg-[#556475] hover:bg-slate-700 text-white text-xs font-bold shadow-sm flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3.5 px-4 rounded-xl bg-brand-orange hover:bg-slate-700 text-white text-xs font-bold shadow-sm flex items-center justify-center gap-2 transition-all"
             >
               <Plus size={15} />
               Start New Order
@@ -176,16 +168,9 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
         </div>
       </div>
 
-      {/* Off-screen Thermal Slip for Print Dialog Execution */}
-      <div style={{ position: 'fixed', left: '-9999px', top: '-9999px' }}>
+      <div className="hidden print:block">
         <ReceiptSlip order={order} settings={settings} />
       </div>
-
-      <ReceiptModal
-        order={order}
-        isOpen={showReceipt}
-        onClose={() => setShowReceipt(false)}
-      />
     </div>
   );
 };

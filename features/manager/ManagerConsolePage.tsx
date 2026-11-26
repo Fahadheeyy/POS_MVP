@@ -1,4 +1,7 @@
 "use client";
+import { DEFAULT_PRODUCT_IMAGE, ProductEditor } from './ProductEditor';
+import { StaffInvitation } from '@/components/StaffInvitation';
+import { supabase } from '@/lib/supabase/client';
 import React, { useState } from 'react';
 import { useAppStore } from '../../store';
 import { Product, User, Role, Station, ApprovalRequest } from '../../types';
@@ -35,8 +38,6 @@ export const ManagerConsolePage: React.FC = () => {
     approvals,
     settings,
     currentShift,
-    updateProduct,
-    addProduct,
     toggleProductAvailability,
     addAddOnItemToGroup,
     updateAddOnItem,
@@ -50,8 +51,10 @@ export const ManagerConsolePage: React.FC = () => {
     toggleStaffStatus,
     resolveApproval,
     currentUser,
+    connectedOutlet,
   } = useAppStore();
 
+  const [staffError,setStaffError] = useState('');
   const [activeTab, setActiveTab] = useState<'menu' | 'staff' | 'approvals' | 'operations'>('menu');
 
   // Menu Management State
@@ -63,21 +66,14 @@ export const ManagerConsolePage: React.FC = () => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showAddAddOnModal, setShowAddAddOnModal] = useState(false);
   const [showAddGroupModal, setShowAddGroupModal] = useState(false);
-  const [selectedAddOnGroupTarget, setSelectedAddOnGroupTarget] = useState<string>('grp_sauces');
+  const [selectedAddOnGroupTarget, setSelectedAddOnGroupTarget] = useState<string>(addOnGroups[0]?.id ?? '');
   const [newAddOnName, setNewAddOnName] = useState('');
   const [newAddOnPrice, setNewAddOnPrice] = useState('50');
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupMin, setNewGroupMin] = useState('0');
   const [newGroupMax, setNewGroupMax] = useState('3');
-
-  // New product form
-  const [newProdName, setNewProdName] = useState('');
-  const [newProdPrice, setNewProdPrice] = useState('249');
-  const [newProdCategory, setNewProdCategory] = useState('cat_qashtuta');
-  const [newProdStation, setNewProdStation] = useState<'Grill' | 'Fry' | 'Cold' | 'Expo'>('Cold');
-  const [newProdDesc, setNewProdDesc] = useState('');
-  const [newProdImage, setNewProdImage] = useState('/assets/products/sign_laban/Qashtuta_Classic.png');
-  const [newProdAddOnGroups, setNewProdAddOnGroups] = useState<string[]>(['grp_sauces']);
+  const [savingAddOn, setSavingAddOn] = useState(false);
+  const [addOnError, setAddOnError] = useState('');
 
   // Staff Management State
   const [staffSearch, setStaffSearch] = useState('');
@@ -100,24 +96,6 @@ export const ManagerConsolePage: React.FC = () => {
     return matchesSearch && matchesCat;
   });
 
-  const handleCreateProduct = (e: React.FormEvent) => {
-    e.preventDefault();
-    sounds.playSuccess();
-    addProduct({
-      name: newProdName,
-      price: parseFloat(newProdPrice) || 199,
-      categoryId: newProdCategory,
-      station: newProdStation,
-      description: newProdDesc,
-      image: newProdImage,
-      isAvailable: true,
-      addOnGroupIds: newProdAddOnGroups,
-    });
-    setShowAddProductModal(false);
-    setNewProdName('');
-    setNewProdAddOnGroups(['grp_sauces']);
-  };
-
   const handleCreateStaff = (e: React.FormEvent) => {
     e.preventDefault();
     sounds.playSuccess();
@@ -135,31 +113,55 @@ export const ManagerConsolePage: React.FC = () => {
     setNewStaffName('');
   };
 
-  const handleCreateAddOnItem = (e: React.FormEvent) => {
+  const handleCreateAddOnItem = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newAddOnName.trim()) return;
-    addAddOnItemToGroup(selectedAddOnGroupTarget, {
+    if (savingAddOn) return;
+    setAddOnError('');
+    if (!newAddOnName.trim() || !addOnGroups.some((group) => group.id === selectedAddOnGroupTarget)) {
+      setAddOnError('Choose an add-on category and enter an item name.');
+      return;
+    }
+    setSavingAddOn(true);
+    const saved = await addAddOnItemToGroup(selectedAddOnGroupTarget, {
       name: newAddOnName.trim(),
-      price: parseFloat(newAddOnPrice) || 40,
-      image: '/assets/products/sign_laban/Pistachio.png',
+      price: Number(newAddOnPrice),
+      image: DEFAULT_PRODUCT_IMAGE,
       isDefault: false,
       isAvailable: true,
     });
+    setSavingAddOn(false);
+    if (saved === false) {
+      setAddOnError(useAppStore.getState().operationalError || 'Could not save the add-on.');
+      return;
+    }
     sounds.playSuccess();
     setNewAddOnName('');
     setNewAddOnPrice('50');
     setShowAddAddOnModal(false);
   };
 
-  const handleCreateAddOnGroup = (e: React.FormEvent) => {
+  const handleCreateAddOnGroup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newGroupName.trim()) return;
-    addAddOnGroup({
+    if (savingAddOn) return;
+    setAddOnError('');
+    const min = Number(newGroupMin);
+    const max = Number(newGroupMax);
+    if (!newGroupName.trim() || !Number.isInteger(min) || !Number.isInteger(max) || min < 0 || max < Math.max(1, min) || max > 30) {
+      setAddOnError('Enter a category name and set a maximum at least as high as the minimum.');
+      return;
+    }
+    setSavingAddOn(true);
+    const saved = await addAddOnGroup({
       name: newGroupName.trim(),
-      minSelect: parseInt(newGroupMin, 10) || 0,
-      maxSelect: parseInt(newGroupMax, 10) || 3,
+      minSelect: min,
+      maxSelect: max,
       items: [],
     });
+    setSavingAddOn(false);
+    if (saved === false) {
+      setAddOnError(useAppStore.getState().operationalError || 'Could not save the add-on category.');
+      return;
+    }
     sounds.playSuccess();
     setNewGroupName('');
     setNewGroupMin('0');
@@ -198,9 +200,9 @@ export const ManagerConsolePage: React.FC = () => {
             }`}
           >
             <Users size={13} />
-            <span>Staff & PINs</span>
+            <span>Staff</span>
           </button>
-          <button
+          {!connectedOutlet && <><button
             onClick={() => setActiveTab('approvals')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-full transition-all relative ${
               activeTab === 'approvals' ? 'bg-white text-gray-900 shadow-subtle font-bold' : 'text-gray-500 hover:text-gray-900'
@@ -222,7 +224,7 @@ export const ManagerConsolePage: React.FC = () => {
           >
             <Activity size={13} />
             <span>Live Operations</span>
-          </button>
+          </button></>}
         </div>
       </Header>
 
@@ -310,7 +312,7 @@ export const ManagerConsolePage: React.FC = () => {
                 </div>
 
                 {/* Products Table */}
-                <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-card">
+                <div className="bg-white border border-gray-200 rounded-3xl overflow-x-auto shadow-card">
                   <table className="w-full text-left text-xs">
                     <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                       <tr>
@@ -328,7 +330,9 @@ export const ManagerConsolePage: React.FC = () => {
                           <td className="px-6 py-3.5">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded-xl bg-gray-50 p-1 border border-gray-200/80 shrink-0 flex items-center justify-center">
-                                <img src={prod.image} alt={prod.name} className="w-full h-full object-contain" />
+                                <img key={prod.image} src={prod.image || DEFAULT_PRODUCT_IMAGE} alt={prod.name} className="w-full h-full object-contain" onError={(event) => {
+                                  if (event.currentTarget.getAttribute('src') !== DEFAULT_PRODUCT_IMAGE) event.currentTarget.src = DEFAULT_PRODUCT_IMAGE;
+                                }} />
                               </div>
                               <div>
                                 <p className="font-bold text-gray-900">{prod.name}</p>
@@ -365,6 +369,7 @@ export const ManagerConsolePage: React.FC = () => {
                           </td>
                           <td className="px-6 py-3.5 text-right">
                             <button
+                              aria-label={'Edit ' + prod.name}
                               onClick={() => setEditingProduct(prod)}
                               className="p-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 text-gray-600"
                             >
@@ -398,7 +403,7 @@ export const ManagerConsolePage: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => setShowAddGroupModal(true)}
+                      onClick={() => { setAddOnError(''); setShowAddGroupModal(true); }}
                       className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-bold shadow-subtle transition-colors"
                     >
                       <Layers size={14} />
@@ -407,7 +412,8 @@ export const ManagerConsolePage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        setSelectedAddOnGroupTarget(addOnGroups[0]?.id || 'grp_sauces');
+                        setAddOnError('');
+                        setSelectedAddOnGroupTarget(addOnGroups[0]?.id ?? '');
                         setShowAddAddOnModal(true);
                       }}
                       className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
@@ -457,6 +463,7 @@ export const ManagerConsolePage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => {
+                              setAddOnError('');
                               setSelectedAddOnGroupTarget(group.id);
                               setShowAddAddOnModal(true);
                             }}
@@ -481,11 +488,11 @@ export const ManagerConsolePage: React.FC = () => {
                               <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
                                 <div className="w-10 h-10 rounded-xl bg-gray-50 p-1 border border-gray-200 shrink-0 flex items-center justify-center overflow-hidden">
                                   <img
-                                    src={item.image || '/assets/products/sign_laban/Pistachio.png'}
+                                    src={item.image || '/assets/coffee/cappuccino.webp'}
                                     alt={item.name}
                                     className="w-full h-full object-contain"
                                     onError={(e) => {
-                                      e.currentTarget.src = '/assets/placeholder-dessert.svg';
+                                      e.currentTarget.src = '/assets/coffee/cappuccino.webp';
                                     }}
                                   />
                                 </div>
@@ -544,6 +551,8 @@ export const ManagerConsolePage: React.FC = () => {
         {/* TAB 2: STAFF & PIN RESET */}
         {activeTab === 'staff' && (
           <div className="space-y-6">
+            {connectedOutlet && <StaffInvitation outlet={connectedOutlet.outletId}/>}
+            {staffError && <p role="alert">{staffError}</p>}
             <div className="flex items-center justify-between">
               <div className="relative w-72">
                 <Search size={14} className="absolute left-3 top-2.5 text-gray-400" />
@@ -556,22 +565,23 @@ export const ManagerConsolePage: React.FC = () => {
                 />
               </div>
 
-              <button
+
+              {!connectedOutlet && <button
                 onClick={() => setShowAddStaffModal(true)}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
               >
                 <Plus size={14} />
                 <span>Add Team Member</span>
-              </button>
+              </button>}
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-card">
+            <div className="bg-white border border-gray-200 rounded-3xl overflow-x-auto shadow-card">
               <table className="w-full text-left text-xs">
                 <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="px-6 py-3.5">Staff Member</th>
                     <th className="px-6 py-3.5">Role</th>
-                    <th className="px-6 py-3.5">4-Digit PIN</th>
+                    {!connectedOutlet && <th className="px-6 py-3.5">PIN</th>}
                     <th className="px-6 py-3.5">Contact</th>
                     <th className="px-6 py-3.5 text-center">Status</th>
                     <th className="px-6 py-3.5 text-right">Actions</th>
@@ -598,16 +608,20 @@ export const ManagerConsolePage: React.FC = () => {
                             {user.role}
                           </span>
                         </td>
-                        <td className="px-6 py-3.5 font-mono font-bold text-gray-900">
-                          •••• ({user.pin})
-                        </td>
+                        {!connectedOutlet && <td className="px-6 py-3.5 font-mono font-bold text-gray-900">••••</td>}
                         <td className="px-6 py-3.5 text-gray-500">
                           {user.email || user.phone || '—'}
                         </td>
                         <td className="px-6 py-3.5 text-center">
                           <button
                             type="button"
-                            onClick={() => toggleStaffStatus(user.id)}
+                            disabled={!!connectedOutlet && (!user.active || !['cashier','kitchen'].includes(user.role))}
+                            onClick={async () => {
+                              if (!connectedOutlet) return toggleStaffStatus(user.id);
+                              if (!window.confirm('Disable ' + user.name + ' at this outlet?')) return;
+                              const {error} = await supabase.rpc('disable_outlet_staff',{p_outlet:connectedOutlet.outletId,p_staff:user.id});
+                              setStaffError(error ? 'Could not disable this staff assignment.' : '');
+                            }}
                             className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                               user.active
                                 ? 'bg-secondaryGreen-50 text-secondaryGreen-700 border border-secondaryGreen-200'
@@ -618,7 +632,7 @@ export const ManagerConsolePage: React.FC = () => {
                           </button>
                         </td>
                         <td className="px-6 py-3.5 text-right">
-                          <button
+                          {!connectedOutlet && <button
                             onClick={() => {
                               setPinResetStaff(user);
                               setNewPinValue('');
@@ -627,7 +641,7 @@ export const ManagerConsolePage: React.FC = () => {
                           >
                             <Lock size={12} />
                             Reset PIN
-                          </button>
+                          </button>}
                         </td>
                       </tr>
                     ))}
@@ -647,7 +661,7 @@ export const ManagerConsolePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-card">
+            <div className="bg-white border border-gray-200 rounded-3xl overflow-x-auto shadow-card">
               <table className="w-full text-left text-xs">
                 <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
@@ -794,250 +808,18 @@ export const ManagerConsolePage: React.FC = () => {
         )}
       </div>
 
-      {/* Add Product Modal */}
-      {showAddProductModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm p-4 select-none">
-          <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-lg p-6 shadow-modal max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-gray-900 text-base mb-4">Add Menu Item</h3>
-            <form onSubmit={handleCreateProduct} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Item Name</label>
-                <input
-                  type="text"
-                  value={newProdName}
-                  onChange={(e) => setNewProdName(e.target.value)}
-                  placeholder="e.g. Qashtuta Kinder Bueno"
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-gray-700 mb-1">Price (₹)</label>
-                  <input
-                    type="number"
-                    value={newProdPrice}
-                    onChange={(e) => setNewProdPrice(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none font-bold"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-gray-700 mb-1">Category</label>
-                  <select
-                    value={newProdCategory}
-                    onChange={(e) => setNewProdCategory(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white"
-                  >
-                    {categories.filter((c) => c.slug !== 'all').map((c) => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Kitchen Station</label>
-                <select
-                  value={newProdStation}
-                  onChange={(e) => setNewProdStation(e.target.value as any)}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white"
-                >
-                  <option value="Cold">Cold Station (Desserts)</option>
-                  <option value="Expo">Expo Pass</option>
-                  <option value="Grill">Grill Station</option>
-                  <option value="Fry">Fry Station</option>
-                </select>
-              </div>
-
-              {/* Add-On Category Assignment */}
-              <div className="pt-1 border-t border-gray-100">
-                <label className="block font-bold text-gray-800 mb-1">
-                  Applicable Add-on Categories
-                </label>
-                <p className="text-[11px] text-gray-400 mb-2">
-                  When adding this dish on the counter, cashier will only see add-ons from these selected categories:
-                </p>
-                <div className="space-y-2 max-h-36 overflow-y-auto p-2.5 bg-gray-50 border border-gray-200 rounded-2xl">
-                  {addOnGroups.map((grp) => {
-                    const isChecked = newProdAddOnGroups.includes(grp.id);
-                    return (
-                      <label
-                        key={grp.id}
-                        className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white cursor-pointer transition-colors bg-white/60 border border-transparent hover:border-gray-200"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setNewProdAddOnGroups([...newProdAddOnGroups, grp.id]);
-                            } else {
-                              setNewProdAddOnGroups(newProdAddOnGroups.filter((id) => id !== grp.id));
-                            }
-                          }}
-                          className="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-0"
-                        />
-                        <div className="flex-1">
-                          <span className="font-bold text-gray-900">{grp.name}</span>
-                          <span className="text-[10px] text-gray-400 ml-2">
-                            ({grp.items.length} toppings/sauces)
-                          </span>
-                        </div>
-                      </label>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Description</label>
-                <textarea
-                  value={newProdDesc}
-                  onChange={(e) => setNewProdDesc(e.target.value)}
-                  placeholder="Ingredients and flavour profile"
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                  rows={2}
-                />
-              </div>
-
-              <div className="flex gap-2 pt-3">
-                <button
-                  type="button"
-                  onClick={() => setShowAddProductModal(false)}
-                  className="flex-1 py-2 rounded-xl border border-gray-200 font-semibold text-gray-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 py-2 rounded-xl bg-gray-900 text-white font-bold"
-                >
-                  Create Product
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Edit Product Modal */}
-      {editingProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm p-4 select-none">
-          <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-lg p-6 shadow-modal max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-gray-900 text-base mb-4">Edit {editingProduct.name}</h3>
-            <div className="space-y-4 text-xs">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-gray-700 mb-1">Price (₹)</label>
-                  <input
-                    type="number"
-                    value={editingProduct.price}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, price: parseFloat(e.target.value) || 0 })
-                    }
-                    className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-gray-700 mb-1">Kitchen Station</label>
-                  <select
-                    value={editingProduct.station}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, station: e.target.value as any })
-                    }
-                    className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white"
-                  >
-                    <option value="Cold">Cold</option>
-                    <option value="Expo">Expo</option>
-                    <option value="Grill">Grill</option>
-                    <option value="Fry">Fry</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Add-On Category Assignment for Editing */}
-              <div className="pt-2 border-t border-gray-100">
-                <label className="block font-bold text-gray-800 mb-1">
-                  Applicable Add-on Categories
-                </label>
-                <p className="text-[11px] text-gray-400 mb-2">
-                  Select which add-on categories are relevant for {editingProduct.name}:
-                </p>
-                <div className="space-y-2 max-h-40 overflow-y-auto p-2.5 bg-gray-50 border border-gray-200 rounded-2xl">
-                  {addOnGroups.map((grp) => {
-                    const isChecked = (editingProduct.addOnGroupIds || []).includes(grp.id);
-                    return (
-                      <label
-                        key={grp.id}
-                        className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white cursor-pointer transition-colors bg-white/60 border border-transparent hover:border-gray-200"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={(e) => {
-                            const current = editingProduct.addOnGroupIds || [];
-                            const updated = e.target.checked
-                              ? [...current, grp.id]
-                              : current.filter((id) => id !== grp.id);
-                            setEditingProduct({
-                              ...editingProduct,
-                              addOnGroupIds: updated,
-                            });
-                          }}
-                          className="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-0"
-                        />
-                        <div className="flex-1">
-                          <span className="font-bold text-gray-900">{grp.name}</span>
-                          <span className="text-[10px] text-gray-400 ml-2">
-                            ({grp.items.length} items)
-                          </span>
-                        </div>
-                      </label>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Discount % Tag</label>
-                <input
-                  type="number"
-                  value={editingProduct.discountPercent || 0}
-                  onChange={(e) =>
-                    setEditingProduct({
-                      ...editingProduct,
-                      discountPercent: parseInt(e.target.value) || 0,
-                    })
-                  }
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold"
-                />
-              </div>
-
-              <div className="flex gap-2 pt-3">
-                <button
-                  type="button"
-                  onClick={() => setEditingProduct(null)}
-                  className="flex-1 py-2 rounded-xl border border-gray-200 font-semibold text-gray-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    sounds.playSuccess();
-                    updateProduct(editingProduct.id, editingProduct);
-                    setEditingProduct(null);
-                  }}
-                  className="flex-1 py-2 rounded-xl bg-gray-900 text-white font-bold"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {(showAddProductModal || editingProduct) && (
+        <ProductEditor
+          key={`${connectedOutlet?.outletId ?? 'demo'}:${editingProduct?.id ?? 'new'}`}
+          product={editingProduct ?? undefined}
+          categories={categories}
+          addOnGroups={addOnGroups}
+          outletId={connectedOutlet?.outletId}
+          onClose={() => {
+            setShowAddProductModal(false);
+            setEditingProduct(null);
+          }}
+        />
       )}
 
       {/* Reset Staff PIN Modal */}
@@ -1165,6 +947,7 @@ export const ManagerConsolePage: React.FC = () => {
               <h3 className="font-bold text-gray-900 text-base">Add New Modifier Item</h3>
               <button
                 type="button"
+                disabled={savingAddOn}
                 onClick={() => setShowAddAddOnModal(false)}
                 className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600"
               >
@@ -1176,10 +959,12 @@ export const ManagerConsolePage: React.FC = () => {
               <div>
                 <label className="block font-semibold text-gray-700 mb-1">Target Category / Group</label>
                 <select
+                  required
                   value={selectedAddOnGroupTarget}
                   onChange={(e) => setSelectedAddOnGroupTarget(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white"
                 >
+                  {!addOnGroups.length && <option value="">Create an add-on category first</option>}
                   {addOnGroups.map((g) => (
                     <option key={g.id} value={g.id}>
                       {g.name}
@@ -1205,6 +990,7 @@ export const ManagerConsolePage: React.FC = () => {
                 <label className="block font-semibold text-gray-700 mb-1">Additional Price (₹)</label>
                 <input
                   type="number"
+                  min="0" max="100000000" step="0.01"
                   value={newAddOnPrice}
                   onChange={(e) => setNewAddOnPrice(e.target.value)}
                   placeholder="50"
@@ -1213,9 +999,11 @@ export const ManagerConsolePage: React.FC = () => {
                 />
               </div>
 
+              {addOnError && <p role="alert" className="font-semibold text-red-700">{addOnError}</p>}
               <div className="flex gap-2 pt-3">
                 <button
                   type="button"
+                  disabled={savingAddOn}
                   onClick={() => setShowAddAddOnModal(false)}
                   className="flex-1 py-2.5 rounded-xl border border-gray-200 font-semibold text-gray-700"
                 >
@@ -1223,9 +1011,10 @@ export const ManagerConsolePage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold"
+                  disabled={savingAddOn}
+                  className="flex-1 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold disabled:opacity-50"
                 >
-                  Save Add-on Item
+                  {savingAddOn ? 'Saving…' : 'Save Add-on Item'}
                 </button>
               </div>
             </form>
@@ -1241,6 +1030,7 @@ export const ManagerConsolePage: React.FC = () => {
               <h3 className="font-bold text-gray-900 text-base">New Add-on Category</h3>
               <button
                 type="button"
+                disabled={savingAddOn}
                 onClick={() => setShowAddGroupModal(false)}
                 className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600"
               >
@@ -1267,7 +1057,7 @@ export const ManagerConsolePage: React.FC = () => {
                   <label className="block font-semibold text-gray-700 mb-1">Min Selection</label>
                   <input
                     type="number"
-                    min="0"
+                    min="0" max="30" required
                     value={newGroupMin}
                     onChange={(e) => setNewGroupMin(e.target.value)}
                     className="w-full px-3 py-2 rounded-xl border border-gray-200"
@@ -1278,7 +1068,7 @@ export const ManagerConsolePage: React.FC = () => {
                   <label className="block font-semibold text-gray-700 mb-1">Max Selection</label>
                   <input
                     type="number"
-                    min="1"
+                    min={Math.max(1, Number(newGroupMin))} max="30" required
                     value={newGroupMax}
                     onChange={(e) => setNewGroupMax(e.target.value)}
                     className="w-full px-3 py-2 rounded-xl border border-gray-200"
@@ -1287,9 +1077,11 @@ export const ManagerConsolePage: React.FC = () => {
                 </div>
               </div>
 
+              {addOnError && <p role="alert" className="font-semibold text-red-700">{addOnError}</p>}
               <div className="flex gap-2 pt-3">
                 <button
                   type="button"
+                  disabled={savingAddOn}
                   onClick={() => setShowAddGroupModal(false)}
                   className="flex-1 py-2.5 rounded-xl border border-gray-200 font-semibold text-gray-700"
                 >
@@ -1297,9 +1089,10 @@ export const ManagerConsolePage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold"
+                  disabled={savingAddOn}
+                  className="flex-1 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold disabled:opacity-50"
                 >
-                  Create Category
+                  {savingAddOn ? 'Saving…' : 'Create Category'}
                 </button>
               </div>
             </form>

@@ -29,10 +29,10 @@ export const ShareWhatsAppModal: React.FC<ShareWhatsAppModalProps> = ({
 
   const taxLine =
     order.tax > 0
-      ? `*Tax (GST 5%):* ${formatINR(order.tax)}\n`
+      ? `*Tax (GST):* ${formatINR(order.tax)}\n`
       : `*Tax:* Non-GST Bill\n`;
 
-  const receiptMessage = `*SIGN LABAN · EGYPTIAN DESSERTS*
+  const receiptMessage = `${order.receiptSettings?.storeName || 'Receipt'}
 --------------------------------
 *Order Token:* ${order.orderNumber}
 *Date:* ${formatDate(order.createdAt)} at ${formatTime(order.createdAt)}
@@ -45,11 +45,9 @@ ${itemsText}
 ${order.discount > 0 ? `*Discount:* -${formatINR(order.discount)}\n` : ''}${taxLine}*Grand Total:* ${formatINR(order.total)}
 *Payment Mode:* ${order.paymentMode.toUpperCase()}
 
-Thank you for visiting Sign Laban!
-India's First Egyptian Dessert · @signlaban
-Shop 12, 100ft Road, Indiranagar, Bengaluru
+${order.receiptSettings?.receiptFooter || 'Thank you for visiting.'}
 --------------------------------
-Powered by pos.bits High-Speed QSR Systems`;
+Powered by TIKKIT High-Speed QSR Systems`;
 
   const cleanPhone = phoneNumber.replace(/\D/g, '');
 

@@ -29,14 +29,14 @@ export const ShiftPage: React.FC = () => {
   } = useAppStore();
 
   const [denominations, setDenominations] = useState<{ [k: number]: number }>({
-    2000: currentShift.denominationCounts[2000] || 0,
-    500: currentShift.denominationCounts[500] || 8,
-    200: currentShift.denominationCounts[200] || 5,
-    100: currentShift.denominationCounts[100] || 10,
-    50: currentShift.denominationCounts[50] || 10,
-    20: currentShift.denominationCounts[20] || 15,
-    10: currentShift.denominationCounts[10] || 20,
-    1: currentShift.denominationCounts[1] || 50,
+    2000: currentShift.denominationCounts[2000] ?? 0,
+    500: currentShift.denominationCounts[500] ?? 0,
+    200: currentShift.denominationCounts[200] ?? 0,
+    100: currentShift.denominationCounts[100] ?? 0,
+    50: currentShift.denominationCounts[50] ?? 0,
+    20: currentShift.denominationCounts[20] ?? 0,
+    10: currentShift.denominationCounts[10] ?? 0,
+    1: currentShift.denominationCounts[1] ?? 0,
   });
 
   // Cash movement form state
@@ -46,9 +46,9 @@ export const ShiftPage: React.FC = () => {
   const [showMovementModal, setShowMovementModal] = useState(false);
   const [showCloseShiftModal, setShowCloseShiftModal] = useState(false);
   const [showOpenShiftModal, setShowOpenShiftModal] = useState(false);
-  const [newOpeningCash, setNewOpeningCash] = useState('5000');
+  const [newOpeningCash, setNewOpeningCash] = useState('0');
 
-  const denomKeys = [2000, 500, 200, 100, 50, 20, 10, 1];
+  const denomKeys = [2000, 500, 200, 100, 50, 20, 10, 5, 2, 1];
 
   const handleDenomChange = (denom: number, countStr: string) => {
     const count = parseInt(countStr) || 0;
@@ -71,29 +71,31 @@ export const ShiftPage: React.FC = () => {
     .reduce((sum, m) => sum + m.amount, 0);
 
   const expectedCash =
-    currentShift.openingCash + currentShift.cashSales + cashInTotal - cashOutTotal;
+    currentShift.openingCash + currentShift.cashSales - (currentShift.cashRefunds ?? 0) + cashInTotal - cashOutTotal;
   const variance = countedTotal - expectedCash;
 
-  const handleAddMovement = (e: React.FormEvent) => {
+  const handleAddMovement = async (e: React.FormEvent) => {
     e.preventDefault();
     const amt = parseFloat(movementAmount);
-    if (!amt || !movementReason) return;
+    if (!Number.isFinite(amt) || amt <= 0 || !movementReason.trim()) return;
+    if (await addCashMovement(movementType, amt, movementReason) === false) return;
     sounds.playSuccess();
-    addCashMovement(movementType, amt, movementReason);
     setMovementAmount('');
     setMovementReason('');
     setShowMovementModal(false);
   };
 
-  const handleConfirmCloseShift = () => {
+  const handleConfirmCloseShift = async () => {
+    if (await closeShift(countedTotal) === false) return;
     sounds.playSuccess();
-    closeShift(countedTotal);
     setShowCloseShiftModal(false);
   };
 
-  const handleConfirmOpenShift = () => {
+  const handleConfirmOpenShift = async () => {
+    const openingCash = newOpeningCash.trim() === "" ? 0 : Number(newOpeningCash);
+    if (!Number.isFinite(openingCash) || openingCash < 0) return;
+    if (await openNewShift(openingCash) === false) return;
     sounds.playSuccess();
-    openNewShift(parseFloat(newOpeningCash) || 5000);
     setShowOpenShiftModal(false);
   };
 
@@ -574,7 +576,7 @@ export const ShiftPage: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 text-center text-xs text-gray-400">
-          Generated automatically by pos.bits Counter System for Sign Laban
+          Generated automatically by TIKKIT Counter System for Daybreak Coffee
         </div>
       </div>
     </div>

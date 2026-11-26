@@ -45,10 +45,10 @@ export const EstimateReceiptModal: React.FC<EstimateReceiptModalProps> = ({ isOp
           <div className="text-center pb-3 border-b border-gray-100">
             <img
               src={settings.logoUrl || '/assets/logo.png'}
-              alt={settings.storeName || 'Sign Laban'}
+              alt={settings.storeName || 'Daybreak Coffee'}
               className="h-7 w-auto mx-auto mb-1.5 object-contain"
             />
-            <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">{settings.brandTagline || "India's First Egyptian Dessert"}</p>
+            <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">{settings.brandTagline || "India's First Specialty Coffee"}</p>
             <p className="text-[10px] text-gray-500 mt-0.5">{settings.address}</p>
             <div className="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-bold tracking-wider uppercase">
               Pre-Bill Estimate

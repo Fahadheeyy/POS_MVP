@@ -1,7 +1,8 @@
+import { businessDate } from '@/utils/businessDate';
 /**
  * Indian GST & Statutory Compliance Tax Engine
  * Fully compliant with CBIC GST Rule 46, IGST Section 12(4), and Section 34.
- * POS.BITS Enterprise Restaurant SaaS
+ * TIKKIT Enterprise Restaurant SaaS
  */
 
 export interface LineItemTaxInput {
@@ -298,13 +299,12 @@ export function formatRule46InvoiceNumber(
  * In India, FY runs from April 1 to March 31.
  */
 export function getIndianFinancialYear(date: Date = new Date()): { full: string; short: string } {
-  const month = date.getMonth(); // 0 = Jan, 3 = April
-  const year = date.getFullYear();
+  const [year, month] = businessDate(date).split('-').map(Number);
 
   let startYear = year;
   let endYear = year + 1;
 
-  if (month < 3) {
+  if (month < 4) {
     // Jan, Feb, Mar belong to previous FY
     startYear = year - 1;
     endYear = year;

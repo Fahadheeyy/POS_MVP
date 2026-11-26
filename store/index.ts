@@ -27,7 +27,11 @@ import {
   AuditLogEvent,
 } from '@/types';
 import menuJson from '../public/assets/menu.json';
-import { calculateGst } from '@/lib/tax/gstEngine';
+import { formatRule46InvoiceNumber, getIndianFinancialYear } from '@/lib/tax/gstEngine';
+import { calculateCheckoutTotals } from '@/lib/tax/checkoutTotals';
+import { businessDate } from '@/utils/businessDate';
+import { orderService, pendingCheckoutKey, readPendingCheckout, RequestRejected } from '@/services/orderService';
+import type { OutletAccess } from '@/lib/auth/operationalAccess';
 import { authService } from '@/lib/auth/authService';
 import {
   INITIAL_USERS,
@@ -58,12 +62,14 @@ const safeStorage = {
     }
     return null;
   },
-  setItem: (key: string, value: string): void => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      try {
+  setItem: (key: string, value: string): boolean => {
+    try {
+      if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, value);
-      } catch {}
-    }
+        return true;
+      }
+    } catch {}
+    return false;
   },
   removeItem: (key: string): void => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -78,6 +84,8 @@ interface StoreState {
   // Current session
   currentUser: User | null;
   currentRole: Role;
+  connectedOutlet: OutletAccess | null;
+  operationalError: string;
   
   // Data
   users: User[];
@@ -142,7 +150,7 @@ interface StoreState {
   triggerNoSaleDrawerOpen: (reason: string) => void;
 
   // Actions - Orders & Checkout
-  checkout: (paymentMode: PaymentMode, cashTendered?: number) => Order;
+  checkout: (paymentMode: PaymentMode, cashTendered?: number, paymentReference?: string, resume?: boolean) => Order | Promise<Order>;
   cancelOrder: (orderId: string, reason: string) => void;
   refundOrder: (orderId: string, reason: string) => void;
 
@@ -161,18 +169,17 @@ interface StoreState {
   quickToggle86Item: (productId: string) => void;
 
   // Actions - Shifts
-  addCashMovement: (type: 'in' | 'out', amount: number, reason: string) => void;
+  addCashMovement: (type: 'in' | 'out', amount: number, reason: string) => void | Promise<boolean>;
   updateShiftDenominations: (counts: { [denom: number]: number }) => void;
-  closeShift: (countedCash: number) => void;
-  openNewShift: (openingCash: number) => void;
-  signOffShift: (shiftId: string, managerPin: string, notes: string) => boolean;
+  closeShift: (countedCash: number) => void | Promise<boolean>;
+  openNewShift: (openingCash: number) => void | Promise<boolean>;
 
   // Actions - Management
-  updateProduct: (id: string, updates: Partial<Product>) => void;
-  addProduct: (product: Omit<Product, 'id'>) => void;
+  updateProduct: (id: string, updates: Partial<Product>) => boolean | Promise<boolean>;
+  addProduct: (product: Omit<Product, 'id'>) => boolean | Promise<boolean>;
   updateAddOnGroups: (groups: AddOnGroup[]) => void;
-  addAddOnGroup: (group: Omit<AddOnGroup, 'id'>) => void;
-  addAddOnItemToGroup: (groupId: string, item: Omit<AddOnItem, 'id'>) => void;
+  addAddOnGroup: (group: Omit<AddOnGroup, 'id'>) => void | Promise<boolean>;
+  addAddOnItemToGroup: (groupId: string, item: Omit<AddOnItem, 'id'>) => void | Promise<boolean>;
   updateAddOnItem: (groupId: string, item: AddOnItem) => void;
   deleteAddOnItem: (groupId: string, itemId: string) => void;
   toggleAddOnItemStock: (groupId: string, itemId: string) => void;
@@ -200,7 +207,7 @@ interface StoreState {
   seedSalesDemoData: (businessId: string) => void;
 
   // Actions - Settings & System
-  updateSettings: (partial: Partial<SystemSettings>) => void;
+  updateSettings: (partial: Partial<SystemSettings>) => void | Promise<boolean>;
   toggleOfflineSimulated: () => void;
   togglePrinterSimulated: () => void;
   resetDemoData: () => void;
@@ -244,6 +251,7 @@ if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
 }
 
 function persistState(state: Partial<StoreState>) {
+  if (useAppStore.getState().connectedOutlet) return;
   const currentSaved = safeStorage.getItem(STORAGE_KEY);
   let parsed: any = {};
   if (currentSaved) {
@@ -252,9 +260,9 @@ function persistState(state: Partial<StoreState>) {
   
   const updated = {
     ...parsed,
-    users: state.users ?? parsed.users,
+    users: (state.users ?? parsed.users)?.map((user: User) => ({ ...user, pin: '' })),
     settings: state.settings ?? parsed.settings,
-    businesses: state.businesses ?? parsed.businesses,
+    businesses: (state.businesses ?? parsed.businesses)?.map((business: BusinessTenant) => ({ ...business, ownerPassword: undefined, ownerPin: undefined })),
     activeBusinessId: state.activeBusinessId ?? parsed.activeBusinessId,
     categories: state.categories ?? parsed.categories,
     products: state.products ?? parsed.products,
@@ -273,14 +281,18 @@ function persistState(state: Partial<StoreState>) {
     auditLog: state.auditLog ?? parsed.auditLog,
   };
 
-  safeStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  if (!safeStorage.setItem(STORAGE_KEY, JSON.stringify(updated))) return false;
 
   if (broadcastChannel) {
     broadcastChannel.postMessage({ type: 'SYNC_UPDATE' });
   }
+  return true;
 }
 
 const initial = getDefaultInitialData();
+
+type DemoOutletRecords = Pick<StoreState, 'orders' | 'tickets' | 'currentShift' | 'shiftHistory' | 'heldOrders' | 'settings'>;
+const demoOutletRecords = new Map<string, DemoOutletRecords>();
 
 // Register all business owners into authService dynamic directory
 if (initial.businesses) {
@@ -307,6 +319,8 @@ if (initial.businesses) {
 export const useAppStore = create<StoreState>((set, get) => ({
   currentUser: initial.users.find((u: User) => u.role === 'cashier') || initial.users[0],
   currentRole: 'cashier',
+  connectedOutlet: null,
+  operationalError: '',
 
   users: initial.users,
   settings: initial.settings,
@@ -330,10 +344,10 @@ export const useAppStore = create<StoreState>((set, get) => ({
   auditLog: initial.auditLog || [],
 
   cartItems: [],
-  orderType: 'dine-in',
-  tableNumber: 'T-16',
-  customerName: 'Jesselyn',
-  guestCount: 2,
+  orderType: 'takeaway',
+  tableNumber: '',
+  customerName: 'Guest',
+  guestCount: 1,
   cartDiscountPercent: 0,
   lastCreatedOrder: null,
 
@@ -389,7 +403,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   logout: () => {
-    set({ currentUser: null });
+    set({ currentUser: null, connectedOutlet: null, orders: [], tickets: [], cartItems: [] });
   },
 
   // Cart actions
@@ -409,9 +423,10 @@ export const useAppStore = create<StoreState>((set, get) => ({
     let updatedCart = [...get().cartItems];
     if (existingIndex > -1) {
       const existing = updatedCart[existingIndex];
-      const newQty = existing.quantity + quantity;
+      const newQty = Math.min(1000, existing.quantity + quantity);
       updatedCart[existingIndex] = {
         ...existing,
+        product, selectedAddOns, unitPrice,
         quantity: newQty,
         lineTotal: unitPrice * newQty,
       };
@@ -434,7 +449,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
     const updatedCart = get()
       .cartItems.map((item) => {
         if (item.cartItemId === cartItemId) {
-          const newQty = item.quantity + delta;
+          const newQty = Math.min(1000, item.quantity + delta);
           if (newQty <= 0) return null;
           return {
             ...item,
@@ -542,33 +557,51 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   // Checkout action
-  checkout: (paymentMode, cashTendered) => {
+  checkout: (paymentMode, cashTendered, paymentReference, resume = false) => {
     const state = get();
     const { cartItems, orderType, tableNumber, customerName, guestCount, cartDiscountPercent, settings } = state;
     
-    // Centralized GST Rule 46 calculation
-    const lineInputs = cartItems.map((ci) => ({
-      productId: ci.product.id,
-      name: ci.product.name,
-      unitPrice: ci.unitPrice,
-      quantity: ci.quantity,
-      hsnSacCode: ci.product.hsnCode || '996331',
-      isTaxInclusive: false,
-    }));
-
-    const rawSubtotal = cartItems.reduce((sum, item) => sum + item.lineTotal, 0);
-    const orderDiscountTotal = Math.round((rawSubtotal * cartDiscountPercent) / 100);
-
-    const taxResult = calculateGst({
-      items: lineInputs,
-      outletStateCode: '29',
-      placeOfSupplyStateCode: '29',
-      customerName: customerName || 'Guest',
-      standardGstRate: settings.isGstEnabled !== false ? (settings.gstRate ?? 5) : 0,
-      orderDiscountTotal,
-      roundingStrategy: 'round_half_up',
-    });
-
+    const outlet = state.connectedOutlet;
+    const storageKey = outlet && pendingCheckoutKey(outlet.outletId, outlet.id);
+    const pending = storageKey ? readPendingCheckout(window.localStorage, storageKey) : null;
+    if (resume && !pending) throw new Error('Checkout already resolved. Review today’s orders.');
+    if (pending && !resume) throw new Error('Resume the unfinished checkout first.');
+    if (!pending && cartItems.length === 0) throw new Error('Add an item before checkout.');
+    const taxResult = calculateCheckoutTotals(cartItems, cartDiscountPercent, settings,
+      settings.stateCode ?? outlet?.stateCode ?? state.businesses.find((business) => business.id === state.activeBusinessId)?.stateCode);
+    if (!pending && paymentMode === 'cash' && (!Number.isFinite(cashTendered) || cashTendered! < taxResult.grandTotal)) {
+      throw new Error('Cash tendered must cover the full amount.');
+    }
+    if (outlet && storageKey) {
+      const request = pending ?? {
+        id: crypto.randomUUID(), items: cartItems, orderType, tableNumber,
+        customerName, guestCount, discountPercent: cartDiscountPercent, paymentMode,
+        cashTendered, paymentReference, expectedTotal: taxResult.grandTotal,
+      };
+      window.localStorage.setItem(storageKey, JSON.stringify(request));
+      const clearPending = () => {
+        try {
+          if (readPendingCheckout(window.localStorage, storageKey)?.id === request.id) window.localStorage.removeItem(storageKey);
+        } catch {
+          // The original checkout result is still valid if browser storage changed during the request.
+        }
+      };
+      return orderService.checkout(outlet.outletId, request).then((order) => {
+        clearPending();
+        if (get().connectedOutlet?.outletId !== outlet.outletId || get().currentUser?.id !== outlet.id) return order;
+        set({
+          lastCreatedOrder: order, cartItems: [], cartDiscountPercent: 0,
+          customerName: 'Guest', guestCount: 1, tableNumber: '', orderType: 'takeaway',
+        });
+        void updateRemoteWorkspace(outlet.outletId);
+        return order;
+      }, error => {
+        if (error instanceof RequestRejected) clearPending();
+        throw error;
+      });
+    }
+    const now = new Date();
+    const financialYear = getIndianFinancialYear(now).full.slice(2);
     const subtotal = taxResult.grossSubtotal;
     const discount = taxResult.discountTotal;
     const cgst = taxResult.cgstTotal;
@@ -577,6 +610,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
     const total = taxResult.grandTotal;
 
     const nextSeq = settings.nextOrderSequence || 106;
+    const invoiceSequence = settings.nextInvoiceSequence ?? 1;
     const prefix = settings.orderPrefix || 'Token #';
     const orderNumber = `${prefix}${nextSeq}`;
 
@@ -586,9 +620,13 @@ export const useAppStore = create<StoreState>((set, get) => ({
     }
 
     const newOrder: Order = {
-      id: `ord_${Date.now()}`,
+      id: crypto.randomUUID(),
       orderNumber,
-      invoiceNumber: `SLI/26/${Date.now().toString().slice(-4)}`,
+      invoiceNumber: formatRule46InvoiceNumber("DINV/", invoiceSequence, financialYear),
+      receiptSettings: { ...settings },
+      posStateCode: state.businesses.find((business) => business.id === state.activeBusinessId)?.stateCode || settings.gstin?.slice(0, 2),
+      gstRate: settings.isGstEnabled === false ? 0 : settings.gstRate,
+      roundingAdjustment: taxResult.roundingAdjustment,
       type: orderType || 'takeaway',
       customerName: customerName || 'Guest',
       guestCount: guestCount || 1,
@@ -605,7 +643,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
       paymentStatus: 'paid',
       cashTendered: paymentMode === 'cash' ? cashTendered : undefined,
       cashChange: paymentMode === 'cash' ? cashChange : undefined,
-      upiRef: paymentMode === 'upi' ? `UPI${Date.now().toString().slice(-6)}` : undefined,
+      paymentReference: paymentReference?.trim(),
+      upiRef: paymentMode === 'upi' ? paymentReference?.trim() : undefined,
       cashierId: state.currentUser?.id || 'usr_priya',
       cashierName: state.currentUser?.name || 'Priya Sharma',
       status: 'preparing',
@@ -619,19 +658,19 @@ export const useAppStore = create<StoreState>((set, get) => ({
       name: ci.product.name,
       quantity: ci.quantity,
       station: ci.product.station,
-      modifiers: ci.selectedAddOns.map((a) => `+ ${a.item.name}`),
+      modifiers: [...ci.selectedAddOns.map((a) => `+ ${a.item.name}`), ...(ci.specialInstructions ? [ci.specialInstructions] : [])],
       isReady: false,
     }));
 
     const newTicket: KdsTicket = {
-      id: `tkt_${Date.now()}`,
+      id: crypto.randomUUID(),
       orderId: newOrder.id,
       orderNumber: newOrder.orderNumber,
       orderType: newOrder.type,
       customerName: newOrder.customerName,
       guestCount: newOrder.guestCount,
       tableNumber: newOrder.tableNumber,
-      channel: 'Counter Express',
+      channel: newOrder.tableNumber ? 'Table Service' : 'Counter Express',
       targetMinutes: settings.kdsTargetMinutes || 12,
       createdAt: newOrder.createdAt,
       status: 'new',
@@ -639,41 +678,31 @@ export const useAppStore = create<StoreState>((set, get) => ({
       items: ticketItems,
     };
 
-    // Update Shift Totals
-    const currentShift = state.currentShift;
-    const updatedShift: Shift = {
-      ...currentShift,
-      totalOrders: currentShift.totalOrders + 1,
-      cashSales: currentShift.cashSales + (paymentMode === 'cash' ? total : 0),
-      cardSales: currentShift.cardSales + (paymentMode === 'card' ? total : 0),
-      upiSales: currentShift.upiSales + (paymentMode === 'upi' ? total : 0),
-      grossSales: currentShift.grossSales + total,
-      totalDiscount: currentShift.totalDiscount + discount,
-      totalTax: currentShift.totalTax + tax,
-    };
-
     const updatedOrders = [newOrder, ...state.orders];
     const updatedTickets = [newTicket, ...state.tickets];
     const updatedSettings = {
       ...settings,
       nextOrderSequence: nextSeq + 1,
+      nextInvoiceSequence: invoiceSequence + 1,
       lastUsedPaymentMode: paymentMode,
     };
 
     set({
       orders: updatedOrders,
       tickets: updatedTickets,
-      currentShift: updatedShift,
       settings: updatedSettings,
       cartItems: [],
       cartDiscountPercent: 0,
       lastCreatedOrder: newOrder,
+      customerName: 'Guest',
+      guestCount: 1,
+      tableNumber: '',
+      orderType: 'takeaway',
     });
 
     persistState({
       orders: updatedOrders,
       tickets: updatedTickets,
-      currentShift: updatedShift,
       settings: updatedSettings,
     });
 
@@ -681,6 +710,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   cancelOrder: (orderId, reason) => {
+    if (get().connectedOutlet) throw new Error('Use a supervisor account to cancel a paid order.');
     const updatedOrders = get().orders.map((o) => {
       if (o.id === orderId) {
         return {
@@ -700,32 +730,24 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   refundOrder: (orderId, reason) => {
-    const cnSeq = Date.now().toString().slice(-4);
-    const updatedOrders = get().orders.map((o) => {
-      if (o.id === orderId) {
-        return {
-          ...o,
-          status: 'cancelled' as OrderStatus,
-          paymentStatus: 'refunded' as const,
-          creditNoteNumber: `CN-SLI/26/${cnSeq}`,
-          cancelReason: reason,
-        };
-      }
-      return o;
-    });
-
-    const targetOrder = get().orders.find((o) => o.id === orderId);
-    let updatedShift = get().currentShift;
-    if (targetOrder) {
-      updatedShift = {
-        ...updatedShift,
-        refunds: updatedShift.refunds + targetOrder.total,
-        grossSales: Math.max(0, updatedShift.grossSales - targetOrder.total),
-      };
-    }
-
-    set({ orders: updatedOrders, currentShift: updatedShift });
-    persistState({ orders: updatedOrders, currentShift: updatedShift });
+    const state = get();
+    if (state.connectedOutlet) throw new Error('Use a supervisor account to record a refund.');
+    const order = state.orders.find((candidate) => candidate.id === orderId);
+    if (!order || order.paymentStatus !== 'paid' || order.status === 'cancelled') return;
+    const seq = (state.settings.nextCreditNoteSequence ?? 1);
+    const year = getIndianFinancialYear().full.slice(2);
+    const orders = state.orders.map((candidate): Order => candidate.id === orderId ? {
+      ...candidate,
+      status: 'cancelled',
+      paymentStatus: 'refunded',
+      creditNoteNumber: formatRule46InvoiceNumber('DCN/', seq, year),
+      cancelReason: reason,
+      refundedAt: new Date().toISOString(),
+    } : candidate);
+    const tickets = state.tickets.filter((ticket) => ticket.orderId !== orderId);
+    const settings = { ...state.settings, nextCreditNoteSequence: seq + 1 };
+    set({ orders, tickets, settings });
+    persistState({ orders, tickets, settings });
   },
 
   // KDS actions
@@ -734,6 +756,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   setIsKdsLocked: (locked) => set({ isKdsLocked: locked }),
 
   advanceTicketStatus: (ticketId) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.ticket(outlet.outletId, ticketId, 'advance', get().tickets.find((ticket) => ticket.id === ticketId)?.status));
     const now = new Date().toISOString();
     const updatedTickets = get().tickets.map((t) => {
       if (t.id === ticketId) {
@@ -758,7 +782,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
     let updatedOrders = get().orders;
     if (targetTicket) {
       updatedOrders = updatedOrders.map((o) => {
-        if (o.id === targetTicket.orderId) {
+        if (o.id === targetTicket.orderId && o.status !== 'cancelled') {
           return {
             ...o,
             status: targetTicket.status === 'bumped' ? 'completed' : targetTicket.status === 'ready' ? 'ready' : 'preparing',
@@ -774,6 +798,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   setTicketStatus: (ticketId, status) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.ticket(outlet.outletId, ticketId, 'status', status));
     const now = new Date().toISOString();
     const updatedTickets = get().tickets.map((t) => {
       if (t.id === ticketId) {
@@ -788,12 +814,25 @@ export const useAppStore = create<StoreState>((set, get) => ({
       return t;
     });
 
-    set({ tickets: updatedTickets });
-    persistState({ tickets: updatedTickets });
+    const ticket = updatedTickets.find((candidate) => candidate.id === ticketId);
+    if (!ticket) return;
+    const orders = get().orders.map((order): Order => order.id !== ticket.orderId || order.status === 'cancelled' ? order : {
+      ...order,
+      status: ticket.status === 'bumped' ? 'completed' : ticket.status === 'ready' ? 'ready' : 'preparing',
+      completedAt: ticket.status === 'bumped' ? ticket.bumpedAt : undefined,
+    });
+    set({ tickets: updatedTickets, orders });
+    persistState({ tickets: updatedTickets, orders });
   },
 
   toggleTicketItemReady: (ticketId, itemId) => {
-    const updatedTickets = get().tickets.map((t) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) {
+      const item = get().tickets.find((ticket) => ticket.id === ticketId)?.items.find((item) => item.id === itemId);
+      if (!item) return;
+      return runRemoteUpdate(outlet.outletId, () => orderService.setTicketItemReady(outlet.outletId, ticketId, itemId, !item.isReady));
+    }
+    const updatedTickets = get().tickets.map((t): KdsTicket => {
       if (t.id === ticketId) {
         const updatedItems = t.items.map((item) =>
           item.id === itemId ? { ...item, isReady: !item.isReady } : item
@@ -802,18 +841,27 @@ export const useAppStore = create<StoreState>((set, get) => ({
         return {
           ...t,
           items: updatedItems,
-          status: allItemsReady ? ('ready' as KdsTicketStatus) : t.status,
-          readyAt: allItemsReady ? new Date().toISOString() : t.readyAt,
+          status: allItemsReady ? 'ready' : t.status === 'ready' ? 'cooking' : t.status,
+          readyAt: allItemsReady ? new Date().toISOString() : undefined,
         };
       }
       return t;
     });
 
-    set({ tickets: updatedTickets });
-    persistState({ tickets: updatedTickets });
+    const ticket = updatedTickets.find((candidate) => candidate.id === ticketId);
+    if (!ticket) return;
+    const orders = get().orders.map((order): Order => order.id !== ticket.orderId || order.status === 'cancelled' ? order : {
+      ...order,
+      status: ticket.status === 'bumped' ? 'completed' : ticket.status === 'ready' ? 'ready' : 'preparing',
+      completedAt: ticket.status === 'bumped' ? ticket.bumpedAt : undefined,
+    });
+    set({ tickets: updatedTickets, orders });
+    persistState({ tickets: updatedTickets, orders });
   },
 
   markTicketRush: (ticketId, isRush) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.ticket(outlet.outletId, ticketId, 'rush', String(isRush)));
     const updatedTickets = get().tickets.map((t) =>
       t.id === ticketId ? { ...t, isRush } : t
     );
@@ -829,24 +877,30 @@ export const useAppStore = create<StoreState>((set, get) => ({
     if (bumpedTickets.length === 0) return null;
     const lastBumped = bumpedTickets[0];
 
-    const updatedTickets = get().tickets.map((t) =>
-      t.id === lastBumped.id ? { ...t, status: 'ready' as KdsTicketStatus, bumpedAt: undefined } : t
-    );
-
-    set({ tickets: updatedTickets });
-    persistState({ tickets: updatedTickets });
+    get().recallTicketById(lastBumped.id);
     return lastBumped;
   },
 
   recallTicketById: (ticketId) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.ticket(outlet.outletId, ticketId, 'recall'));
     const updatedTickets = get().tickets.map((t) =>
       t.id === ticketId ? { ...t, status: 'ready' as KdsTicketStatus, bumpedAt: undefined } : t
     );
-    set({ tickets: updatedTickets });
-    persistState({ tickets: updatedTickets });
+    const ticket = updatedTickets.find((candidate) => candidate.id === ticketId);
+    if (!ticket) return;
+    const orders = get().orders.map((order): Order => order.id !== ticket.orderId || order.status === 'cancelled' ? order : {
+      ...order,
+      status: ticket.status === 'bumped' ? 'completed' : ticket.status === 'ready' ? 'ready' : 'preparing',
+      completedAt: ticket.status === 'bumped' ? ticket.bumpedAt : undefined,
+    });
+    set({ tickets: updatedTickets, orders });
+    persistState({ tickets: updatedTickets, orders });
   },
 
   addTicketPrepNote: (ticketId, note) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.ticket(outlet.outletId, ticketId, 'note', note));
     const updatedTickets = get().tickets.map((t) =>
       t.id === ticketId ? { ...t, prepNote: note } : t
     );
@@ -856,6 +910,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
 
   // Shifts
   addCashMovement: (type, amount, reason) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.shift(outlet.outletId, type, amount, reason));
     const movement = {
       id: `mov_${Date.now()}`,
       type,
@@ -888,7 +944,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
       .filter((m) => m.type === 'out')
       .reduce((sum, m) => sum + m.amount, 0);
 
-    const expectedCash = currentShift.openingCash + currentShift.cashSales + cashInTotal - cashOutTotal;
+    const expectedCash = currentShift.openingCash + currentShift.cashSales - (currentShift.cashRefunds ?? 0) + cashInTotal - cashOutTotal;
     const variance = countedTotal - expectedCash;
 
     const updatedShift: Shift = {
@@ -904,6 +960,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   closeShift: (countedCash) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.shift(outlet.outletId, 'close', countedCash, undefined, get().currentShift.denominationCounts));
     const now = new Date().toISOString();
     const currentShift = get().currentShift;
 
@@ -914,7 +972,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
       .filter((m) => m.type === 'out')
       .reduce((sum, m) => sum + m.amount, 0);
 
-    const expectedCash = currentShift.openingCash + currentShift.cashSales + cashInTotal - cashOutTotal;
+    const expectedCash = currentShift.openingCash + currentShift.cashSales - (currentShift.cashRefunds ?? 0) + cashInTotal - cashOutTotal;
     const variance = countedCash - expectedCash;
 
     const closedShift: Shift = {
@@ -932,11 +990,13 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   openNewShift: (openingCash) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.shift(outlet.outletId, 'open', openingCash));
     const now = new Date();
     const newShift: Shift = {
       id: `shf_${Date.now()}`,
       shiftNumber: get().shiftHistory.length + 1,
-      date: now.toISOString().split('T')[0],
+      date: businessDate(now),
       cashierId: get().currentUser?.id || 'usr_priya',
       cashierName: get().currentUser?.name || 'Priya Sharma',
       startTime: now.toISOString(),
@@ -960,19 +1020,27 @@ export const useAppStore = create<StoreState>((set, get) => ({
 
   // Management actions
   updateProduct: (id, updates) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'product', { ...updates, id }));
     const updatedProducts = get().products.map((p) =>
       p.id === id ? { ...p, ...updates } : p
     );
-    set({ products: updatedProducts });
-    persistState({ products: updatedProducts });
+    const saved = persistState({ products: updatedProducts });
+    const operationalError = saved ? '' : 'Could not save the product in this browser. Check available storage or choose a smaller image.';
+    set({ ...(saved && { products: updatedProducts }), operationalError });
+    return saved;
   },
 
   addProduct: (newProd) => {
-    const id = `prod_${Date.now()}`;
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'product', newProd));
+    const id = `prod_${crypto.randomUUID()}`;
     const product: Product = { ...newProd, id };
     const updatedProducts = [...get().products, product];
-    set({ products: updatedProducts });
-    persistState({ products: updatedProducts });
+    const saved = persistState({ products: updatedProducts });
+    const operationalError = saved ? '' : 'Could not save the product in this browser. Check available storage or choose a smaller image.';
+    set({ ...(saved && { products: updatedProducts }), operationalError });
+    return saved;
   },
 
   updateAddOnGroups: (groups) => {
@@ -981,6 +1049,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   addAddOnGroup: (group) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'group', group));
     const newGroup: AddOnGroup = {
       ...group,
       id: `grp_${Date.now()}`,
@@ -991,6 +1061,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   addAddOnItemToGroup: (groupId, item) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'modifier', { ...item, groupId }));
     const newItem: AddOnItem = {
       ...item,
       id: `top_${Date.now()}`,
@@ -1007,6 +1079,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   updateAddOnItem: (groupId, item) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'modifier', { ...item, groupId }));
     const updated = get().addOnGroups.map((g) => {
       if (g.id === groupId) {
         return {
@@ -1021,6 +1095,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   deleteAddOnItem: (groupId, itemId) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'remove_modifier', { groupId, id: itemId }));
     const updated = get().addOnGroups.map((g) => {
       if (g.id === groupId) {
         return {
@@ -1035,6 +1111,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   toggleAddOnItemStock: (groupId, itemId) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'modifier', { groupId, id: itemId, isAvailable: get().addOnGroups.find((group) => group.id === groupId)?.items.find((item) => item.id === itemId)?.isAvailable === false }));
     const updated = get().addOnGroups.map((g) => {
       if (g.id === groupId) {
         return {
@@ -1053,6 +1131,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   toggleProductAvailability: (id) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.catalog(outlet.outletId, 'availability', { id, isAvailable: !get().products.find((product) => product.id === id)?.isAvailable }));
     const updatedProducts = get().products.map((p) =>
       p.id === id ? { ...p, isAvailable: !p.isAvailable } : p
     );
@@ -1239,11 +1319,28 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   switchActiveBusiness: (id) => {
+    if (get().connectedOutlet) return;
     const targetBiz = get().businesses.find((b) => b.id === id);
     if (!targetBiz) return;
 
-    set({ activeBusinessId: id });
-    persistState({ activeBusinessId: id });
+    const current = get();
+    if (current.activeBusinessId !== id) {
+      demoOutletRecords.set(current.activeBusinessId, {
+        orders: current.orders, tickets: current.tickets, settings: current.settings,
+        currentShift: current.currentShift, shiftHistory: current.shiftHistory, heldOrders: current.heldOrders,
+      });
+      safeStorage.setItem('tikkit_demo_outlets', JSON.stringify(Object.fromEntries(demoOutletRecords)));
+      const target = demoOutletRecords.get(id) ?? {
+        orders: [], tickets: [], shiftHistory: [], heldOrders: [], settings: INITIAL_SETTINGS,
+        currentShift: {
+          ...initial.currentShift, id: crypto.randomUUID(), status: 'closed' as const,
+          openingCash: 0, movements: [], denominationCounts: {}, totalOrders: 0, cashSales: 0,
+          cardSales: 0, upiSales: 0, grossSales: 0, totalDiscount: 0, totalTax: 0, refunds: 0,
+        },
+      };
+      set({ ...target, activeBusinessId: id, lastCreatedOrder: null, cartItems: [] });
+      persistState({ ...target, activeBusinessId: id });
+    }
 
     const newSettings: Partial<SystemSettings> = {
       storeName: targetBiz.name,
@@ -1266,12 +1363,12 @@ export const useAppStore = create<StoreState>((set, get) => ({
     get().updateSettings(newSettings);
 
     // If current logged in user is an owner or cashier, switch currentUser to this business's staff
-    const current = get().currentUser;
-    if (current && current.role !== 'admin') {
+    const staff = get().currentUser;
+    if (staff && staff.role !== 'admin') {
       const matchStaff = get().users.find(
         (u) =>
-          (u.email === targetBiz.ownerEmail && current.role === 'owner') ||
-          (u.id === `usr_${current.role}_${id}`)
+          (u.email === targetBiz.ownerEmail && staff.role === 'owner') ||
+          (u.id === `usr_${staff.role}_${id}`)
       );
       if (matchStaff) {
         set({ currentUser: matchStaff });
@@ -1315,18 +1412,6 @@ export const useAppStore = create<StoreState>((set, get) => ({
       const updatedUsers = [...get().users, ownerUser];
       set({ users: updatedUsers });
       persistState({ users: updatedUsers });
-    }
-
-    // Set auth cookie for SSR middleware
-    if (typeof document !== 'undefined') {
-      document.cookie = `pos_session=${encodeURIComponent(
-        JSON.stringify({
-          id: ownerUser.id,
-          email: ownerUser.email,
-          role: 'owner',
-          outletId: businessId,
-        })
-      )}; path=/; max-age=86400; SameSite=Lax`;
     }
 
     // Register account in authService so subsequent logins succeed
@@ -1427,18 +1512,13 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   quickToggle86Item: (productId) => {
+    if (get().connectedOutlet) return get().toggleProductAvailability(productId);
     get().toggleProductAvailability(productId);
     const prod = get().products.find((p) => p.id === productId);
     get().logAuditEvent(
       'stock_86',
       `Stock status changed: ${prod?.name || productId} is now ${prod?.isAvailable ? 'Out of Stock' : 'In Stock'}`
     );
-  },
-
-  signOffShift: (shiftId, managerPin, notes) => {
-    if (managerPin !== '9999') return false;
-    get().logAuditEvent('shift_audit', `Manager Shift Sign-Off & Audit by Alex Rivera: ${notes}`);
-    return true;
   },
 
   addPettyCashExpense: (expense) => {
@@ -1487,6 +1567,8 @@ export const useAppStore = create<StoreState>((set, get) => ({
 
   // Settings & System
   updateSettings: (partial) => {
+    const outlet = get().connectedOutlet;
+    if (outlet) return runRemoteUpdate(outlet.outletId, () => orderService.settings(outlet.outletId, partial));
     const updated = { ...get().settings, ...partial };
     set({ settings: updated });
     persistState({ settings: updated });
@@ -1511,6 +1593,7 @@ export const useAppStore = create<StoreState>((set, get) => ({
   },
 
   resetDemoData: () => {
+    if (get().connectedOutlet) return;
     safeStorage.removeItem(STORAGE_KEY);
     const fresh = getDefaultInitialData();
     set({
@@ -1547,35 +1630,25 @@ export function rehydrateStoreFromStorage() {
   if (!saved) return;
   try {
     const parsed = JSON.parse(saved);
-    if (parsed.businesses && Array.isArray(parsed.businesses)) {
-      parsed.businesses = parsed.businesses.map((b: any) => {
-        const seedMatch = INITIAL_BUSINESSES.find((sb) => sb.id === b.id);
-        return {
-          ...seedMatch,
-          ...b,
-          ownerName: b.ownerName || seedMatch?.ownerName || `${b.brandName || b.name} Owner`,
-          ownerEmail: b.ownerEmail || seedMatch?.ownerEmail || `owner.${b.slug || b.id}@signlaban.in`,
-          ownerPassword: b.ownerPassword || seedMatch?.ownerPassword || 'password123',
-          ownerPin: b.ownerPin || seedMatch?.ownerPin || '8888',
-        };
-      });
-
-      // Register all stored business owners into dynamic auth directory
-      parsed.businesses.forEach((biz: BusinessTenant) => {
-        if (biz.ownerEmail) {
-          authService.registerAccount({
-            email: biz.ownerEmail,
-            password: biz.ownerPassword || 'password123',
-            role: 'owner',
-            name: biz.ownerName || `${biz.brandName} Owner`,
-            title: `${biz.brandName} Franchise Owner`,
-            pin: biz.ownerPin || '8888',
-            phone: biz.ownerPhone,
-            outletId: biz.id,
-          });
-        }
-      });
+    safeStorage.removeItem('pos_dynamic_accounts_v2');
+    const storedOutlets = safeStorage.getItem('tikkit_demo_outlets');
+    if (storedOutlets) {
+      for (const [id, records] of Object.entries(JSON.parse(storedOutlets) as Record<string, DemoOutletRecords>)) {
+        demoOutletRecords.set(id, records);
+      }
     }
+    if (Array.isArray(parsed.businesses)) {
+      parsed.businesses = parsed.businesses.map((business: BusinessTenant) => ({
+        ...INITIAL_BUSINESSES.find((seed) => seed.id === business.id),
+        ...business,
+        ownerPassword: undefined,
+        ownerPin: undefined,
+      }));
+    }
+    if (Array.isArray(parsed.users)) {
+      parsed.users = parsed.users.map((user: User) => ({ ...user, pin: '' }));
+    }
+    safeStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
 
     useAppStore.setState({
       ...(parsed.users && { users: parsed.users }),
@@ -1606,35 +1679,84 @@ export function rehydrateStoreFromStorage() {
 // Listen to multi-tab sync messages
 if (broadcastChannel) {
   broadcastChannel.onmessage = (event) => {
-    if (event.data?.type === 'SYNC_UPDATE') {
-      const saved = safeStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          useAppStore.setState({
-            users: parsed.users,
-            settings: parsed.settings,
-            categories: parsed.categories,
-            products: parsed.products,
-            addOnGroups: parsed.addOnGroups,
-            orders: parsed.orders,
-            tickets: parsed.tickets,
-            currentShift: parsed.currentShift,
-            shiftHistory: parsed.shiftHistory,
-            approvals: parsed.approvals,
-            heldOrders: parsed.heldOrders,
-            loyaltyCustomers: parsed.loyaltyCustomers,
-            pettyCashExpenses: parsed.pettyCashExpenses,
-            wasteLog: parsed.wasteLog,
-            staffAttendance: parsed.staffAttendance,
-            kitchenAlert: parsed.kitchenAlert,
-            auditLog: parsed.auditLog,
-          });
-        } catch (e) {
-          console.error('Error synchronizing store across tabs:', e);
-        }
-      }
+    if (!useAppStore.getState().connectedOutlet && event.data?.type === 'SYNC_UPDATE') {
+      rehydrateStoreFromStorage();
     }
   };
 }
 
+
+let latestWorkspaceRequest = 0;
+
+export function activateOutletWorkspace(access: OutletAccess) {
+  const state = useAppStore.getState();
+  if (state.connectedOutlet?.outletId === access.outletId && state.currentUser?.id === access.id) return;
+  latestWorkspaceRequest += 1;
+  useAppStore.setState({
+    connectedOutlet: access, activeBusinessId: access.outletId, currentUser: access, currentRole: access.role,
+    operationalError: '', users: [access], businesses: [], orders: [], tickets: [], products: [],
+    categories: [], addOnGroups: [], approvals: [], shiftHistory: [], auditLog: [], heldOrders: [],
+    loyaltyCustomers: [], pettyCashExpenses: [], wasteLog: [], staffAttendance: [], kitchenAlert: null,
+    settings: emptyOutletSettings(), currentShift: emptyOutletShift(access), cartItems: [],
+    lastCreatedOrder: null, cartDiscountPercent: 0, customerName: 'Guest', guestCount: 1, tableNumber: '', orderType: 'takeaway',
+  });
+}
+
+function emptyOutletSettings(): SystemSettings {
+  return {
+    ...INITIAL_SETTINGS, storeName: '', brandTagline: '', address: '', phone: '', email: '', gstin: '', fssai: '',
+    receiptHeader: '', receiptFooter: '', logoUrl: '', wifiPassword: '', showWifiOnReceipt: false,
+    upiVpaId: '', upiId: undefined, isGstEnabled: false, autoPrintReceipt: false,
+    isSimulatedOffline: false, isSimulatedPrinterDown: false, lastUsedPaymentMode: undefined,
+    defaultPaymentMode: 'cash', nextOrderSequence: 1, activeCashierName: '', promoDiscountActive: false,
+  };
+}
+
+function emptyOutletShift(access: OutletAccess): Shift {
+  return {
+    id: '', shiftNumber: 0, date: businessDate(), cashierId: access.id, cashierName: access.name,
+    startTime: '', status: 'closed', openingCash: 0, movements: [], denominationCounts: {},
+    totalOrders: 0, cashSales: 0, cardSales: 0, upiSales: 0, grossSales: 0, totalDiscount: 0,
+    totalTax: 0, refunds: 0, cashRefunds: 0,
+  };
+}
+
+export async function refreshOutletWorkspace(outletId: string) {
+  const request = ++latestWorkspaceRequest;
+  const workspace = await orderService.workspace(outletId);
+  const state = useAppStore.getState();
+  if (request !== latestWorkspaceRequest || state.connectedOutlet?.outletId !== outletId) return;
+  const [latest, ...history] = workspace.shifts;
+  const shift = latest?.id === state.currentShift.id
+    ? { ...latest, denominationCounts: latest.status === 'open' ? state.currentShift.denominationCounts : latest.denominationCounts }
+    : latest ?? emptyOutletShift(state.connectedOutlet);
+  useAppStore.setState({
+    settings: { ...emptyOutletSettings(), ...workspace.settings },
+    categories: workspace.categories,
+    products: workspace.products.filter((product) => workspace.categories.some((category) => category.id === product.categoryId)),
+    addOnGroups: workspace.addOnGroups,
+    orders: workspace.orders, tickets: workspace.tickets, currentShift: shift,
+    users: workspace.users.length ? workspace.users : [state.connectedOutlet],
+    shiftHistory: latest?.status === 'closed' ? workspace.shifts : history,
+  });
+}
+
+async function updateRemoteWorkspace(outletId: string) {
+  try {
+    await refreshOutletWorkspace(outletId);
+  } catch (error) {
+    useAppStore.setState({ operationalError: error instanceof Error ? error.message : 'Could not refresh the outlet.' });
+  }
+}
+
+async function runRemoteUpdate(outletId: string, action: () => Promise<void>): Promise<boolean> {
+  useAppStore.setState({ operationalError: '' });
+  try {
+    await action();
+    await updateRemoteWorkspace(outletId);
+    return true;
+  } catch (error) {
+    useAppStore.setState({ operationalError: error instanceof Error ? error.message : 'Could not save the change.' });
+    return false;
+  }
+}

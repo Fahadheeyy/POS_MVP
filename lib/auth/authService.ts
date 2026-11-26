@@ -4,7 +4,7 @@
  */
 
 import { supabase } from '@/lib/supabase/client';
-import { resolveEffectivePermissions, PermissionCode } from '@/lib/rbac/permissions';
+import { resolveEffectivePermissions } from '@/lib/rbac/permissions';
 import { User, Role } from '@/types';
 
 export interface AuthSessionUser extends User {
@@ -29,7 +29,6 @@ export interface RegisteredAccount {
 export class AuthService {
   private static instance: AuthService;
   private supabase = supabase;
-  private dynamicAccountsKey = 'pos_dynamic_accounts_v2';
   private inMemoryAccounts: RegisteredAccount[] = [];
 
   private constructor() {}
@@ -63,31 +62,12 @@ export class AuthService {
     updated.push(newRecord);
     this.inMemoryAccounts = updated;
 
-    if (typeof window !== 'undefined' && window.localStorage) {
-      try {
-        window.localStorage.setItem(this.dynamicAccountsKey, JSON.stringify(updated));
-      } catch (e) {
-        console.warn('Failed to persist dynamic account in localStorage', e);
-      }
-    }
   }
 
   /**
    * Retrieve all dynamically registered accounts (survives page refreshes)
    */
   public getRegisteredAccounts(): RegisteredAccount[] {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      try {
-        const raw = window.localStorage.getItem(this.dynamicAccountsKey);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          this.inMemoryAccounts = parsed;
-          return parsed;
-        }
-      } catch {
-        // ignore
-      }
-    }
     return this.inMemoryAccounts;
   }
 
@@ -106,83 +86,69 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<{ success: boolean; user?: AuthSessionUser; error?: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    if (process.env.NODE_ENV === 'development' && normalizedEmail === 'admin@posbits.io'
+        && password === 'password123') {
+      return this.signInDemoAccount(normalizedEmail, password);
+    }
+
     try {
       // 1. Attempt Supabase Auth login
       const { data, error } = await this.supabase.auth.signInWithPassword({
-        email,
+        email: normalizedEmail,
         password,
       });
 
       if (error) {
         // Fallback for seed mock accounts if Supabase backend user is not yet created in auth.users
-        return this.fallbackLocalLogin(email, password);
+        return { success: false, error: 'Unable to sign in with those credentials.' };
       }
 
       if (!data.user) {
         return { success: false, error: 'User not found in authentication record' };
       }
 
-      // 2. Fetch associated staff profile & outlet membership from database
-      const { data: profile } = await this.supabase
-        .from('profiles')
-        .select(`
-          id, email, name, phone, avatar_initials, title, is_active,
-          outlet_memberships (
-            outlet_id,
-            roles (code, name),
-            user_permission_overrides (
-              granted,
-              permissions (code)
-            )
-          )
-        `)
-        .eq('auth_user_id', data.user.id)
-        .single();
-
-      if (!profile || !profile.is_active) {
-        return { success: false, error: 'Account is inactive or pending onboarding approval' };
+      const { data: isPlatformAdmin } = await this.supabase.rpc('is_platform_super_admin');
+      if (isPlatformAdmin === true) {
+        const adminEmail = data.user.email || email;
+        return {
+          success: true,
+          user: {
+            id: data.user.id,
+            email: adminEmail,
+            name: adminEmail,
+            phone: '',
+            role: 'admin',
+            pin: '',
+            avatarInitials: 'AD',
+            title: 'Platform Super Admin',
+            active: true,
+            effectivePermissions: Array.from(resolveEffectivePermissions('admin')),
+          },
+        };
       }
 
-      const membership = (profile.outlet_memberships as any)?.[0];
-      const roleCode = membership?.roles?.code || 'cashier';
-      const overrides = (membership?.user_permission_overrides || []).map((o: any) => ({
-        permissionCode: o.permissions?.code,
-        granted: o.granted,
-      }));
-
-      const permissions = Array.from(resolveEffectivePermissions(roleCode, overrides));
-
-      const authUser: AuthSessionUser = {
-        id: profile.id,
-        email: profile.email,
-        name: profile.name,
-        phone: profile.phone || '',
-        role: roleCode as Role,
-        pin: '',
-        avatarInitials: profile.avatar_initials || 'SL',
-        title: profile.title || 'Staff Member',
-        active: profile.is_active,
-        outletId: membership?.outlet_id,
-        effectivePermissions: permissions,
-      };
-
-      if (typeof document !== 'undefined') {
-        document.cookie = `pos_session=${encodeURIComponent(JSON.stringify({ id: authUser.id, email: authUser.email, role: authUser.role }))}; path=/; max-age=86400; SameSite=Lax`;
+      const { data: profile, error: profileError } = await this.supabase.rpc('get_pos_session');
+      if (profileError || !profile) {
+        await this.supabase.auth.signOut();
+        return { success: false, error: 'Your account has no active outlet assignment.' };
       }
-
-      return { success: true, user: authUser };
+      return { success: true, user: profile as AuthSessionUser };
     } catch (err: any) {
-      return this.fallbackLocalLogin(email, password);
+      return { success: false, error: 'Sign-in is unavailable. Please try again.' };
     }
   }
 
   /**
    * Graceful fallback for seed & dynamically created outlet accounts
    */
-  private fallbackLocalLogin(
+  public signInDemoAccount(
     email: string,
     password: string
   ): { success: boolean; user?: AuthSessionUser; error?: string } {
+    if (process.env.NODE_ENV === 'production' || !password) {
+      return { success: false, error: 'Demo authentication unavailable.' };
+    }
     const normalizedEmail = email.toLowerCase().trim();
 
     // 1. Check dynamically registered outlet accounts (newly added outlets, custom owners)
@@ -192,14 +158,7 @@ export class AuthService {
     );
 
     if (dynamicMatch) {
-      // Validate password if configured on the account
-      if (
-        dynamicMatch.password &&
-        password &&
-        password !== dynamicMatch.password &&
-        password !== 'password123' &&
-        password !== dynamicMatch.pin
-      ) {
+      if (!dynamicMatch.password || password !== dynamicMatch.password) {
         return {
           success: false,
           error: 'Incorrect password for this account. Please verify and try again.',
@@ -257,16 +216,7 @@ export class AuthService {
       'marcus@signlaban.in': { name: 'Marcus Chen', role: 'kitchen', title: 'Kitchen Cook', initials: 'MA', pin: '2222', outletId: 'biz_sign_laban_indiranagar' },
     };
 
-    let account = seedAccounts[normalizedEmail];
-    
-    // Fuzzy matching if user typed prefix e.g. "alex", "priya", "admin", "manager", "cashier", "kitchen", "owner"
-    if (!account) {
-      if (normalizedEmail.includes('admin') || normalizedEmail.includes('dev')) account = seedAccounts['admin@posbits.io'];
-      else if (normalizedEmail.includes('manager') || normalizedEmail.includes('alex')) account = seedAccounts['alex@signlaban.in'];
-      else if (normalizedEmail.includes('owner') || normalizedEmail.includes('vikram')) account = seedAccounts['vikram@signlaban.in'];
-      else if (normalizedEmail.includes('cashier') || normalizedEmail.includes('priya')) account = seedAccounts['priya@signlaban.in'];
-      else if (normalizedEmail.includes('kitchen') || normalizedEmail.includes('cook') || normalizedEmail.includes('jesselyn')) account = seedAccounts['jesselyn@signlaban.in'];
-    }
+    const account = seedAccounts[normalizedEmail];
 
     if (!account) {
       return {
@@ -277,7 +227,7 @@ export class AuthService {
     }
 
     // Check seed password if provided
-    if (password && password !== 'password123' && password !== account.pin) {
+    if (password !== 'password123') {
       return {
         success: false,
         error: 'Incorrect password for this seed account. (Demo password: password123)',
@@ -333,7 +283,7 @@ export class AuthService {
   public async sendPasswordReset(email: string): Promise<{ success: boolean; message: string }> {
     try {
       const { error } = await this.supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/login?mode=reset`,
+        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
       });
 
       if (error) {
@@ -346,34 +296,12 @@ export class AuthService {
       };
     } catch (err: any) {
       return {
-        success: true,
-        message: 'Password reset link sent (simulated). Please check your email inbox.',
+        success: false,
+        message: 'Password reset is unavailable. Please try again.',
       };
     }
   }
 
-  /**
-   * Step-up Supervisor / Manager Approval Verification
-   * Used strictly for authorizing discounts, refunds, and cancellations at the POS terminal.
-   * Never used as standalone login!
-   */
-  public verifySupervisorPin(
-    pin: string,
-    allowedRoles: Role[] = ['manager', 'owner', 'admin']
-  ): { verified: boolean; supervisorName?: string; error?: string } {
-    const supervisorPins: { pin: string; name: string; role: Role }[] = [
-      { pin: '9999', name: 'Alex Rivera (Manager)', role: 'manager' },
-      { pin: '8888', name: 'Vikram Sethi (Owner)', role: 'owner' },
-      { pin: '0000', name: 'Platform Admin', role: 'admin' },
-    ];
-
-    const match = supervisorPins.find((s) => s.pin === pin && allowedRoles.includes(s.role));
-    if (match) {
-      return { verified: true, supervisorName: match.name };
-    }
-
-    return { verified: false, error: 'Invalid supervisor PIN or unauthorized role for this action.' };
-  }
 }
 
 export const authService = AuthService.getInstance();

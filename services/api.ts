@@ -30,18 +30,6 @@ export const api = {
     };
   },
 
-  // 2. Step-up Supervisor / Manager PIN Approval (Modal Overrides)
-  verifyManagerPin: async (
-    pin: string,
-    _actionTitle?: string
-  ): Promise<{ success: boolean; supervisor?: any; error?: string }> => {
-    const res = authService.verifySupervisorPin(pin);
-    if (res.verified) {
-      return { success: true, supervisor: { name: res.supervisorName } };
-    }
-    return { success: false, error: res.error };
-  },
-
   // 3. Logout
   logout: async () => {
     await authService.signOut();

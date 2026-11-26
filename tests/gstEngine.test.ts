@@ -1,3 +1,5 @@
+import { collections } from '../lib/tax/collections';
+import type { Order } from '../types';
 /**
  * Automated Tests for Indian GST Engine
  * Validates Rule 46 Tax Invoices, Place of Supply, and Rounding rules.
@@ -95,10 +97,17 @@ export function runGstEngineTests() {
   assert(invoiceNum === 'INV-SLI/26/0042', `Invoice number is ${invoiceNum}`);
   assert(invoiceNum.length <= 16, `Length must be <= 16 chars (actual: ${invoiceNum.length})`);
 
+  const refunded = {total: 123.45, createdAt: '2026-11-25T19:00:00Z', refundedAt: '2026-11-26T19:15:00Z',
+    status: 'cancelled', paymentStatus:'refunded', paymentMode:'upi'} as Order;
+  const saleDay = collections([refunded], '2026-11-26','2026-11-26');
+  const refundDay = collections([refunded], '2026-11-27','2026-11-27');
+  assert(saleDay.count === 1 && saleDay.upi === 123.45, 'Early IST sale remains on its original day');
+  assert(refundDay.count === 0 && refundDay.upi === -123.45 && refundDay.refunds === 123.45, 'Next-day refund reduces that day’s collections');
+
   // Summary
   console.log(`\nResults: ${passed} passed, ${failed} failed.`);
   return { passed, failed };
 }
 
 // Execute tests directly
-runGstEngineTests();
+if (runGstEngineTests().failed > 0) process.exitCode = 1;

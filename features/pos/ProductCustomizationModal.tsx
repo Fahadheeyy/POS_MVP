@@ -1,4 +1,5 @@
 "use client";
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 import React, { useState } from 'react';
 import { Product, AddOnItem, SelectedAddOn } from '../../types';
 import { useAppStore } from '../../store';
@@ -21,6 +22,7 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
   const [quantity, setQuantity] = useState(1);
   const [selectedAddOns, setSelectedAddOns] = useState<SelectedAddOn[]>([]);
 
+  const dialog = useDialogFocus(isOpen && !!product, onClose);
   if (!isOpen || !product) return null;
 
   // Find relevant add-on groups for this product
@@ -28,7 +30,16 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
     product.addOnGroupIds?.includes(g.id)
   );
 
+  const availableSelections = selectedAddOns.flatMap((selection) => {
+    const group = relevantGroups.find((group) => group.id === selection.groupId);
+    const item = group?.items.find((item) => item.id === selection.item.id && item.isAvailable !== false);
+    return item ? [{ ...selection, item }] : [];
+  });
+  const meetsMinimums = relevantGroups.every((group) =>
+    availableSelections.filter((addOn) => addOn.groupId === group.id).length >= group.minSelect);
+
   const toggleAddOn = (group: typeof relevantGroups[0], item: AddOnItem) => {
+    if (item.isAvailable === false) return;
     const isAlreadySelected = selectedAddOns.some(
       (a) => a.groupId === group.id && a.item.id === item.id
     );
@@ -39,7 +50,7 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
       );
     } else {
       // Check group maxSelect limit
-      const currentInGroup = selectedAddOns.filter((a) => a.groupId === group.id);
+      const currentInGroup = availableSelections.filter((a) => a.groupId === group.id);
       if (currentInGroup.length >= group.maxSelect) {
         // Replace oldest in group if single-select
         if (group.maxSelect === 1) {
@@ -58,22 +69,23 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
     }
   };
 
-  const addOnTotal = selectedAddOns.reduce((sum, a) => sum + a.item.price, 0);
+  const addOnTotal = availableSelections.reduce((sum, a) => sum + a.item.price, 0);
   const unitPrice = product.price + addOnTotal;
   const totalPrice = unitPrice * quantity;
 
   const handleAddToCart = () => {
+    if (!meetsMinimums) return;
     sounds.playSuccess();
-    addToCart(product, quantity, selectedAddOns);
+    addToCart(product, quantity, availableSelections);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
+    <div ref={dialog} role="dialog" aria-modal="true" aria-label="Customize item" tabIndex={-1} className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
       <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-3xl overflow-hidden shadow-modal flex flex-col md:flex-row relative">
         {/* Close Button */}
         <button
-          onClick={onClose}
+          aria-label="Close dialog" onClick={onClose}
           className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/80 border border-gray-200 text-gray-400 hover:text-gray-700 flex items-center justify-center transition-colors"
         >
           <X size={18} />
@@ -87,7 +99,7 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
               alt={product.name}
               className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
               onError={(e) => {
-                e.currentTarget.src = '/assets/placeholder-dessert.svg';
+                e.currentTarget.src = '/assets/coffee/cappuccino.webp';
               }}
             />
           </div>
@@ -121,7 +133,7 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
                       {group.name}
                     </span>
                     <span className="text-[11px] text-gray-400">
-                      {group.maxSelect > 1 ? `Up to ${group.maxSelect}` : 'Select 1'}
+                      {group.minSelect > 0 ? `Required: ${group.minSelect}–${group.maxSelect}` : `Optional: up to ${group.maxSelect}`}
                     </span>
                   </div>
 
@@ -131,27 +143,30 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
                         (a) => a.groupId === group.id && a.item.id === item.id
                       );
                       return (
-                        <div
+                        <button
+                          type="button"
                           key={item.id}
+                          disabled={item.isAvailable === false}
+                          aria-pressed={isChecked && item.isAvailable !== false}
                           onClick={() => toggleAddOn(group, item)}
-                          className={`p-2 rounded-xl border text-center cursor-pointer transition-all flex flex-col items-center justify-center relative ${
+                          className={`p-2 rounded-xl border text-center cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all flex flex-col items-center justify-center relative ${
                             isChecked
                               ? 'border-gray-900 bg-gray-50/70'
                               : 'border-gray-200 hover:border-gray-300 bg-white'
                           }`}
                         >
-                          {isChecked && (
+                          {isChecked && item.isAvailable !== false && (
                             <div className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-gray-900 text-white flex items-center justify-center text-[10px]">
                               <Check size={10} strokeWidth={3} />
                             </div>
                           )}
                           <div className="w-8 h-8 rounded-full bg-gray-100 p-1 mb-1.5 flex items-center justify-center">
                             <img
-                              src={item.image || '/assets/placeholder-dessert.svg'}
+                              src={item.image || '/assets/coffee/cappuccino.webp'}
                               alt={item.name}
                               className="w-full h-full object-contain"
                               onError={(e) => {
-                                e.currentTarget.src = '/assets/placeholder-dessert.svg';
+                                e.currentTarget.src = '/assets/coffee/cappuccino.webp';
                               }}
                             />
                           </div>
@@ -159,9 +174,9 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
                             {item.name}
                           </span>
                           <span className="text-[10px] text-gray-500 mt-0.5">
-                            {item.price === 0 ? 'Free' : `+${formatINR(item.price)}`}
+                            {item.isAvailable === false ? 'Sold out' : item.price === 0 ? 'Free' : `+${formatINR(item.price)}`}
                           </span>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
@@ -185,7 +200,8 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
               </span>
               <button
                 type="button"
-                onClick={() => setQuantity((q) => q + 1)}
+                onClick={() => setQuantity((q) => Math.min(1000, q + 1))}
+                disabled={quantity >= 1000}
                 className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors"
               >
                 <Plus size={14} />
@@ -195,6 +211,7 @@ export const ProductCustomizationModal: React.FC<ProductCustomizationModalProps>
             <button
               type="button"
               onClick={handleAddToCart}
+              disabled={!meetsMinimums}
               className="flex-1 py-3 px-4 rounded-2xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs shadow-subtle flex items-center justify-between transition-colors"
             >
               <span>Add to Cart</span>

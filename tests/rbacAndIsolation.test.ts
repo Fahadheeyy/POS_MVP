@@ -83,4 +83,4 @@ export function runRbacTests() {
   return { passed, failed };
 }
 
-runRbacTests();
+if (runRbacTests().failed > 0) process.exitCode = 1;

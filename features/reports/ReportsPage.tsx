@@ -1,4 +1,6 @@
 "use client";
+import { monthlyTaxReport } from '@/lib/tax/monthlyReport';
+import { businessDate, businessDateDaysAgo } from '@/utils/businessDate';
 import React, { useState } from 'react';
 import { useNavigate } from "@/lib/navigation";
 import { useAppStore } from '../../store';
@@ -41,25 +43,24 @@ type ReportType =
 
 export const ReportsPage: React.FC = () => {
   const navigate = useNavigate();
-  const { orders, tickets, products, categories, settings } = useAppStore();
+  const { orders, tickets, categories, settings } = useAppStore();
 
   const [activeReport, setActiveReport] = useState<ReportType>('sales_summary');
   const [dateRange, setDateRange] = useState<'today' | '7days' | '30days'>('30days');
+  const [filingMonth, setFilingMonth] = useState(() => businessDate().slice(0, 7));
+  const taxEntries = monthlyTaxReport(orders, filingMonth);
 
-  // Filter orders by date range
   const now = new Date();
-  const todayStr = now.toISOString().split('T')[0];
-
-  const filteredOrders = orders.filter((order) => {
-    if (dateRange === 'today') return order.createdAt.startsWith(todayStr);
-    const diffDays = (now.getTime() - new Date(order.createdAt).getTime()) / (1000 * 3600 * 24);
-    if (dateRange === '7days') return diffDays <= 7;
-    if (dateRange === '30days') return diffDays <= 30;
-    return true;
-  });
-
-  const validOrders = filteredOrders.filter((o) => o.status !== 'cancelled');
-  const cancelledOrders = filteredOrders.filter((o) => o.status === 'cancelled');
+  const through = businessDate(now);
+  const from = businessDateDaysAgo(dateRange === '7days' ? 6 : dateRange === '30days' ? 29 : 0, now);
+  const isSelectedDay = (timestamp: string) => {
+    const day = businessDate(timestamp);
+    return activeReport === 'gstr1_ca_package' ? day.startsWith(filingMonth + '-') : day >= from && day <= through;
+  };
+  const validOrders = orders.filter((order) =>
+    isSelectedDay(order.createdAt) && (order.paymentStatus === 'refunded' || (order.paymentStatus === 'paid' && order.status !== 'cancelled')));
+  const refundedOrders = orders.filter((order) =>
+    order.paymentStatus === 'refunded' && order.refundedAt && isSelectedDay(order.refundedAt));
 
   // 1. Sales Summary Data
   const grossSales = validOrders.reduce((s, o) => s + o.total, 0);
@@ -68,34 +69,35 @@ export const ReportsPage: React.FC = () => {
   const totalTax = validOrders.reduce((s, o) => s + o.tax, 0);
   const totalCgst = validOrders.reduce((s, o) => s + o.cgst, 0);
   const totalSgst = validOrders.reduce((s, o) => s + o.sgst, 0);
-  const totalRefunds = cancelledOrders.reduce((s, o) => s + o.total, 0);
+  const totalRefunds = refundedOrders.reduce((s, o) => s + o.total, 0);
 
   // 2. Item-wise Sales
-  const itemMap: { [name: string]: { qty: number; sales: number; cat: string } } = {};
+  const itemMap: { [key: string]: { name: string; qty: number; sales: number; cat: string } } = {};
   validOrders.forEach((o) => {
     o.items.forEach((item) => {
-      const pName = item.product.name;
-      if (!itemMap[pName]) {
+      const key = item.product.id + ':' + item.product.categoryId;
+      if (!itemMap[key]) {
         const catObj = categories.find((c) => c.id === item.product.categoryId);
-        itemMap[pName] = { qty: 0, sales: 0, cat: catObj?.name || 'Egyptian Desserts' };
+        itemMap[key] = { name: item.product.name, qty: 0, sales: 0, cat: catObj?.name || (item.product.id?.startsWith('addon_') ? 'Add-ons' : 'Uncategorized') };
       }
-      itemMap[pName].qty += item.quantity;
-      itemMap[pName].sales += item.lineTotal;
+      itemMap[key].qty += item.quantity;
+      itemMap[key].sales += item.lineTotal;
     });
   });
-  const itemRows = Object.entries(itemMap).map(([name, val]) => ({ name, ...val }));
+  const itemRows = Object.entries(itemMap).map(([key, value]) => ({ key, ...value }));
 
   // 3. Category-wise Sales
-  const catMap: { [cat: string]: { qty: number; sales: number } } = {};
+  const catMap: Record<string, { qty: number; sales: number }> = Object.create(null);
   itemRows.forEach((it) => {
     if (!catMap[it.cat]) catMap[it.cat] = { qty: 0, sales: 0 };
     catMap[it.cat].qty += it.qty;
     catMap[it.cat].sales += it.sales;
   });
+  const categoryTotal = itemRows.reduce((sum, row) => sum + row.sales, 0);
   const catRows = Object.entries(catMap).map(([cat, val]) => ({
     cat,
     ...val,
-    pct: grossSales > 0 ? Math.round((val.sales / grossSales) * 100) : 0,
+    pct: categoryTotal > 0 ? Math.round((val.sales / categoryTotal) * 100) : 0,
   }));
 
   // 4. Payment Mode Data
@@ -110,56 +112,64 @@ export const ReportsPage: React.FC = () => {
       payMap[o.paymentMode].sales += o.total;
     }
   });
+  for (const order of refundedOrders) payMap[order.paymentMode].sales -= order.total;
   const payRows = Object.entries(payMap).map(([mode, val]) => ({
     mode: mode.toUpperCase(),
     ...val,
-    pct: grossSales > 0 ? Math.round((val.sales / grossSales) * 100) : 0,
+    pct: grossSales > totalRefunds ? Math.round(val.sales / (grossSales-totalRefunds) * 100) : 0,
   }));
 
   // 5. Hourly Distribution
-  const hourMap: { [h: string]: { orders: number; sales: number } } = {
-    '11 AM': { orders: 0, sales: 0 },
-    '12 PM': { orders: 0, sales: 0 },
-    '1 PM': { orders: 0, sales: 0 },
-    '2 PM': { orders: 0, sales: 0 },
-    '3 PM': { orders: 0, sales: 0 },
-    '4 PM': { orders: 0, sales: 0 },
-    '5 PM': { orders: 0, sales: 0 },
-    '6 PM': { orders: 0, sales: 0 },
-    '7 PM': { orders: 0, sales: 0 },
-    '8 PM': { orders: 0, sales: 0 },
-    '9 PM': { orders: 0, sales: 0 },
-    '10 PM': { orders: 0, sales: 0 },
-  };
-  validOrders.forEach((o) => {
-    const hr = new Date(o.createdAt).getHours();
-    let l = '12 PM';
-    if (hr < 12) l = `${hr} AM`;
-    else if (hr === 12) l = '12 PM';
-    else l = `${hr - 12} PM`;
-
-    if (hourMap[l]) {
-      hourMap[l].orders += 1;
-      hourMap[l].sales += o.total;
-    }
-  });
+  const hourMap: Record<string,{orders:number; sales:number}> = {};
+  for (let hour=0; hour<24; hour++) {
+    hourMap[(hour % 12 || 12) + (hour < 12 ? ' AM' : ' PM')] = {orders:0,sales:0};
+  }
+  const clock = new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:true,timeZone:'Asia/Kolkata'});
+  for (const order of validOrders) {
+    const entry = hourMap[clock.format(new Date(order.createdAt))];
+    entry.orders++;
+    entry.sales += order.total;
+  }
   const hourRows = Object.entries(hourMap).map(([hour, val]) => ({ hour, ...val }));
 
   // 6. Staff / Cashier Performance
-  const staffMap: { [name: string]: { count: number; sales: number } } = {};
+  const staffMap: Record<string, { count: number; sales: number }> = Object.create(null);
   validOrders.forEach((o) => {
-    const cName = o.cashierName || 'Priya Sharma';
+    const cName = o.cashierName || 'Unknown cashier';
     if (!staffMap[cName]) staffMap[cName] = { count: 0, sales: 0 };
     staffMap[cName].count += 1;
     staffMap[cName].sales += o.total;
   });
   const staffRows = Object.entries(staffMap).map(([name, val]) => ({ name, ...val }));
 
-  // 7. Kitchen Performance Data
-  const kitchenTickets = tickets;
-  const avgPrepMins = 8.7;
-  const onTimePct = 91.2;
-  const lateTicketsCount = 3;
+  const breakdowns = {
+    hourly: {
+      headings: ['Hour (IST)', 'Orders', 'Gross sales (INR)'],
+      rows: hourRows.map(({ hour, orders, sales }) => [hour, String(orders), sales.toFixed(2)]),
+    },
+    staff_cashier: {
+      headings: ['Cashier', 'Orders', 'Gross sales (INR)'],
+      rows: staffRows.map(({ name, count, sales }) => [name, String(count), sales.toFixed(2)]),
+    },
+    discount_refund: {
+      headings: ['Order', 'Date (IST)', 'Type', 'Amount (INR)'],
+      rows: [
+        ...validOrders.filter((order) => order.discount > 0).map((order) =>
+          [order.orderNumber, businessDate(order.createdAt), 'Discount', order.discount.toFixed(2)]),
+        ...refundedOrders.map((order) =>
+          [order.orderNumber, businessDate(order.refundedAt!), 'Refund', order.total.toFixed(2)]),
+      ],
+    },
+    kitchen_performance: {
+      headings: ['Ticket', 'Date (IST)', 'Time to ready (min)', 'Target (min)', 'Result'],
+      rows: tickets.filter((ticket) => ticket.readyAt && isSelectedDay(ticket.createdAt)).map((ticket) => {
+        const minutes = (Date.parse(ticket.readyAt!) - Date.parse(ticket.createdAt)) / 60_000;
+        return [ticket.orderNumber, businessDate(ticket.createdAt), minutes.toFixed(1), String(ticket.targetMinutes),
+          minutes <= ticket.targetMinutes ? 'On time' : 'Late'];
+      }),
+    },
+  };
+  const breakdown = activeReport in breakdowns ? breakdowns[activeReport as keyof typeof breakdowns] : null;
 
   // Working CSV Export Function
   const exportCSV = () => {
@@ -172,10 +182,11 @@ export const ReportsPage: React.FC = () => {
         ['Gross Sales', grossSales.toFixed(2)],
         ['Total Orders', validOrders.length.toString()],
         ['Discounts Total', totalDiscount.toFixed(2)],
-        ['CGST (2.5%)', totalCgst.toFixed(2)],
-        ['SGST (2.5%)', totalSgst.toFixed(2)],
+        ['CGST', totalCgst.toFixed(2)],
+        ['SGST', totalSgst.toFixed(2)],
         ['Total Tax', totalTax.toFixed(2)],
         ['Refunds Total', totalRefunds.toFixed(2)],
+        ['Net collections', (grossSales - totalRefunds).toFixed(2)],
       ];
     } else if (activeReport === 'item_sales') {
       rows = [
@@ -194,7 +205,7 @@ export const ReportsPage: React.FC = () => {
       ];
     } else if (activeReport === 'gst_tax') {
       rows = [
-        ['Order #', 'Date', 'Taxable Subtotal', 'CGST (2.5%)', 'SGST (2.5%)', 'Total Tax'],
+        ['Order #', 'Date', 'Taxable Subtotal', 'CGST', 'SGST', 'Total Tax'],
         ...validOrders.map((o) => [
           o.orderNumber,
           formatDate(o.createdAt),
@@ -205,21 +216,16 @@ export const ReportsPage: React.FC = () => {
         ]),
       ];
     } else if (activeReport === 'gstr1_ca_package') {
+      filename = `GST-working-papers_${filingMonth}.csv`;
       rows = [
-        ['GSTR-1 Section', 'SAC / HSN', 'Description', 'Rate', 'POS State', 'Gross Invoices', 'Taxable Turnover', 'CGST (2.5%)', 'SGST (2.5%)', 'Total Tax'],
-        [
-          'Table 7 - B2C (Small)',
-          '9963',
-          'Restaurant Service without Input Tax Credit',
-          '5%',
-          '29-Karnataka',
-          grossSales.toFixed(2),
-          (totalSubtotal - totalDiscount).toFixed(2),
-          totalCgst.toFixed(2),
-          totalSgst.toFixed(2),
-          totalTax.toFixed(2),
-        ],
+        ['GSTIN', 'Document type', 'Document number', 'Original invoice', 'Date (IST)', 'State code',
+          'GST rate', 'Taxable value', 'CGST', 'SGST', 'Total'],
+        ...taxEntries.map((entry) => [entry.gstin, entry.documentType, entry.documentNumber, entry.invoiceNumber,
+          entry.date, entry.stateCode, String(entry.gstRate), entry.taxableValue.toFixed(2),
+          entry.cgst.toFixed(2), entry.sgst.toFixed(2), entry.total.toFixed(2)]),
       ];
+    } else if (breakdown) {
+      rows = [breakdown.headings, ...breakdown.rows];
     } else {
       rows = [
         ['Order Number', 'Date', 'Type', 'Customer', 'Mode', 'Amount'],
@@ -234,64 +240,26 @@ export const ReportsPage: React.FC = () => {
       ];
     }
 
-    const csvContent =
-      'data:text/csv;charset=utf-8,\uFEFF' +
-      rows.map((e) => e.map((val) => `"${val.replace(/"/g, '""')}"`).join(',')).join('\n');
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const csvCell = (value: string) => {
+      const escaped = /^[=+@\t\r]|^-(?![0-9]+(?:[.][0-9]+)?$)/.test(value) ? `'${value}` : value;
+      return `"${escaped.replace(/"/g, '""')}"`;
+    };
+    downloadFile(filename, '\uFEFF' + rows.map((row) => row.map(csvCell).join(',')).join('\n'), 'text/csv;charset=utf-8');
   };
 
-  const downloadGstr1Json = () => {
-    const gstr1Payload = {
-      gstin: settings.gstin || '29AABCU9603R1ZM',
-      fp: `${now.getMonth() + 1 > 9 ? now.getMonth() + 1 : `0${now.getMonth() + 1}`}${now.getFullYear()}`,
-      gt: grossSales,
-      cur_gt: grossSales,
-      b2cs: [
-        {
-          sply_ty: 'INTRA',
-          pos: '29',
-          typ: 'OE',
-          rt: 5.0,
-          txval: Number((totalSubtotal - totalDiscount).toFixed(2)),
-          iamt: 0.0,
-          camt: Number(totalCgst.toFixed(2)),
-          samt: Number(totalSgst.toFixed(2)),
-          csamt: 0.0,
-        },
-      ],
-      hsn: {
-        data: [
-          {
-            num: 1,
-            hsn_sc: '9963',
-            desc: 'Restaurant and food service catering',
-            uqc: 'OTH',
-            qty: validOrders.length,
-            val: Number(grossSales.toFixed(2)),
-            txval: Number((totalSubtotal - totalDiscount).toFixed(2)),
-            iamt: 0.0,
-            camt: Number(totalCgst.toFixed(2)),
-            samt: Number(totalSgst.toFixed(2)),
-            csamt: 0.0,
-          },
-        ],
-      },
-    };
+  function downloadFile(name: string, contents: string, type: string) {
+    const url = URL.createObjectURL(new Blob([contents], { type }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = name;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 
-    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(gstr1Payload, null, 2));
-    const dlAnchor = document.createElement('a');
-    dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', `GSTR1_${settings.gstin}_${dateRange}.json`);
-    document.body.appendChild(dlAnchor);
-    dlAnchor.click();
-    document.body.removeChild(dlAnchor);
+  const downloadGstr1Json = () => {
+    downloadFile(`GST-working-papers_${filingMonth}.json`,
+      JSON.stringify({ month: filingMonth, timeZone: 'Asia/Kolkata', documents: taxEntries }, null, 2),
+      'application/json');
   };
 
   const reportNames: { id: ReportType; title: string }[] = [
@@ -304,11 +272,12 @@ export const ReportsPage: React.FC = () => {
     { id: 'discount_refund', title: '7. Discount & Refund Report' },
     { id: 'gst_tax', title: '8. GST (CGST/SGST) Report' },
     { id: 'kitchen_performance', title: '9. Kitchen Performance' },
-    { id: 'gstr1_ca_package', title: '10. GSTR-1 Indian CA Tax Package (B2C HSN 9963)' },
+    { id: 'gstr1_ca_package', title: '10. GST monthly working papers' },
   ];
 
   return (
-    <div className="min-h-screen bg-surface-canvas flex flex-col select-none">
+    <div className="min-h-screen bg-surface-canvas flex flex-col select-none printable-report">
+      <div className="no-print">
       <Header title="Reports & Financials" subtitle="Audit, Tax & Operational Reports">
         <button
           onClick={() => navigate('/owner')}
@@ -318,10 +287,15 @@ export const ReportsPage: React.FC = () => {
           <span>Back to Dashboard</span>
         </button>
       </Header>
+      </div>
 
       <div className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+        <div className="hidden print:block">
+          <h1>{settings.storeName} · {reportNames.find((report) => report.id === activeReport)?.title}</h1>
+          <p>{activeReport === 'gstr1_ca_package' ? filingMonth : from + ' to ' + through} (IST)</p>
+        </div>
         {/* Top Control Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="no-print flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <select
               value={activeReport}
@@ -333,6 +307,13 @@ export const ReportsPage: React.FC = () => {
               ))}
             </select>
 
+            {activeReport === 'gstr1_ca_package' ? (
+              <label className="text-xs font-semibold">
+                Filing month <input type="month" value={filingMonth} max={businessDate().slice(0, 7)}
+                  onChange={(event) => { if (event.target.value) setFilingMonth(event.target.value); }}
+                  className="rounded border border-gray-200 bg-white p-2" />
+              </label>
+            ) : (
             <div className="flex bg-gray-100 rounded-full p-0.5 text-xs font-semibold">
               <button
                 onClick={() => setDateRange('today')}
@@ -353,6 +334,7 @@ export const ReportsPage: React.FC = () => {
                 Last 30 Days
               </button>
             </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -362,7 +344,7 @@ export const ReportsPage: React.FC = () => {
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shadow-subtle transition-colors"
               >
                 <Download size={14} />
-                <span>Download GSTR-1 JSON</span>
+                <span>Download working papers JSON</span>
               </button>
             )}
             <button
@@ -382,30 +364,31 @@ export const ReportsPage: React.FC = () => {
           </div>
         </div>
 
+        {!validOrders.length && !refundedOrders.length && <p className="screen-state" role="status">No sales or refunds in this period.</p>}
         {/* Quiet Summary Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-subtle">
+          <div className="tikkit-card p-4">
             <span className="text-[11px] font-semibold text-gray-400 block mb-1">Gross Revenue</span>
-            <span className="text-2xl font-black text-gray-900">{formatINR(grossSales)}</span>
+            <span className="tikkit-heading text-2xl">{formatINR(grossSales)}</span>
           </div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-subtle">
+          <div className="tikkit-card p-4">
             <span className="text-[11px] font-semibold text-gray-400 block mb-1">Total Orders</span>
-            <span className="text-2xl font-black text-gray-900">{validOrders.length}</span>
+            <span className="tikkit-heading text-2xl">{validOrders.length}</span>
           </div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-subtle">
-            <span className="text-[11px] font-semibold text-gray-400 block mb-1">Total GST (5%)</span>
-            <span className="text-2xl font-black text-gray-900">{formatINR(totalTax)}</span>
+          <div className="tikkit-card p-4">
+            <span className="text-[11px] font-semibold text-gray-400 block mb-1">GST on sales</span>
+            <span className="tikkit-heading text-2xl">{formatINR(totalTax)}</span>
           </div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-subtle">
-            <span className="text-[11px] font-semibold text-gray-400 block mb-1">Discounts & Refunds</span>
+          <div className="tikkit-card p-4">
+            <span className="text-[11px] font-semibold text-gray-400 block mb-1">Net collections</span>
             <span className="text-2xl font-black text-secondaryRed-600">
-              {formatINR(totalDiscount + totalRefunds)}
+              {formatINR(grossSales - totalRefunds)}
             </span>
           </div>
         </div>
 
-        {/* Quiet Chart */}
-        <div className="bg-white border border-gray-200 rounded-3xl p-6 shadow-card">
+        {['sales_summary', 'hourly', 'category_sales', 'payment_mode'].includes(activeReport) && (
+        <div className="no-print bg-white border border-gray-200 rounded-3xl p-6 shadow-card">
           <h3 className="font-bold text-gray-900 text-base mb-4">
             {reportNames.find((r) => r.id === activeReport)?.title} Trend
           </h3>
@@ -413,32 +396,33 @@ export const ReportsPage: React.FC = () => {
             <ResponsiveContainer width="100%" height="100%">
               {activeReport === 'category_sales' ? (
                 <BarChart data={catRows}>
-                  <XAxis dataKey="cat" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                  <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                  <XAxis dataKey="cat" stroke="#776B60" fontSize={11} tickLine={false} />
+                  <YAxis stroke="#776B60" fontSize={11} tickLine={false} />
                   <Tooltip formatter={(v: any) => formatINR(Number(v))} />
-                  <Bar dataKey="sales" fill="#1e293b" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="sales" fill="#FF4F1A" radius={[6, 6, 0, 0]} />
                 </BarChart>
               ) : activeReport === 'payment_mode' ? (
                 <BarChart data={payRows}>
-                  <XAxis dataKey="mode" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                  <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                  <XAxis dataKey="mode" stroke="#776B60" fontSize={11} tickLine={false} />
+                  <YAxis stroke="#776B60" fontSize={11} tickLine={false} />
                   <Tooltip formatter={(v: any) => formatINR(Number(v))} />
-                  <Bar dataKey="sales" fill="#1e293b" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="sales" fill="#FFC72C" radius={[6, 6, 0, 0]} />
                 </BarChart>
               ) : (
                 <BarChart data={hourRows}>
-                  <XAxis dataKey="hour" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                  <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                  <XAxis dataKey="hour" stroke="#776B60" fontSize={11} tickLine={false} />
+                  <YAxis stroke="#776B60" fontSize={11} tickLine={false} />
                   <Tooltip formatter={(v: any) => formatINR(Number(v))} />
-                  <Bar dataKey="sales" fill="#1e293b" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="sales" fill="#161412" radius={[6, 6, 0, 0]} />
                 </BarChart>
               )}
             </ResponsiveContainer>
           </div>
         </div>
+        )}
 
         {/* Quiet Table */}
-        <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-card">
+        <div className="bg-white border border-gray-200 rounded-3xl overflow-x-auto shadow-card">
           {activeReport === 'item_sales' && (
             <table className="w-full text-left text-xs">
               <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase text-[10px]">
@@ -451,7 +435,7 @@ export const ReportsPage: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-gray-100 font-medium text-gray-800">
                 {itemRows.map((it) => (
-                  <tr key={it.name} className="hover:bg-gray-50/70">
+                  <tr key={it.key} className="hover:bg-gray-50/70">
                     <td className="px-6 py-3.5 font-bold text-gray-900">{it.name}</td>
                     <td className="px-6 py-3.5 text-gray-500">{it.cat}</td>
                     <td className="px-6 py-3.5 text-right">{it.qty}</td>
@@ -521,8 +505,8 @@ export const ReportsPage: React.FC = () => {
                   <th className="px-6 py-3.5">Order</th>
                   <th className="px-6 py-3.5">Date</th>
                   <th className="px-6 py-3.5 text-right">Taxable Subtotal</th>
-                  <th className="px-6 py-3.5 text-right">CGST (2.5%)</th>
-                  <th className="px-6 py-3.5 text-right">SGST (2.5%)</th>
+                  <th className="px-6 py-3.5 text-right">CGST</th>
+                  <th className="px-6 py-3.5 text-right">SGST</th>
                   <th className="px-6 py-3.5 text-right">Total GST</th>
                 </tr>
               </thead>
@@ -543,11 +527,21 @@ export const ReportsPage: React.FC = () => {
             </table>
           )}
 
-          {(activeReport === 'sales_summary' ||
-            activeReport === 'hourly' ||
-            activeReport === 'staff_cashier' ||
-            activeReport === 'discount_refund' ||
-            activeReport === 'kitchen_performance') && (
+          {breakdown && (
+            <table className="w-full text-left text-xs">
+              <thead className="bg-gray-50 text-gray-700">
+                <tr>{breakdown.headings.map((heading) => <th key={heading} className="p-3">{heading}</th>)}</tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {breakdown.rows.map((row, index) => (
+                  <tr key={index}>{row.map((value, column) => <td key={column} className="p-3">{value}</td>)}</tr>
+                ))}
+                {!breakdown.rows.length && <tr><td colSpan={breakdown.headings.length} className="p-3">No records for this period.</td></tr>}
+              </tbody>
+            </table>
+          )}
+
+          {activeReport === 'sales_summary' && (
             <table className="w-full text-left text-xs">
               <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase text-[10px]">
                 <tr>
@@ -580,94 +574,37 @@ export const ReportsPage: React.FC = () => {
             </table>
           )}
 
-          {/* 10. GSTR-1 CA Tax Package View */}
           {activeReport === 'gstr1_ca_package' && (
-            <div className="p-6 space-y-6">
-              {/* Compliance Header Card */}
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-sm text-gray-900">
-                      GSTR-1 Monthly Return Filing Package
-                    </span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-secondaryGreen-100 text-secondaryGreen-800 border border-secondaryGreen-200">
-                      HSN 9963 Verified
-                    </span>
-                  </div>
-                  <p suppressHydrationWarning className="text-xs text-gray-500 mt-1">
-                    GSTIN: <span className="font-mono font-bold text-gray-800">{settings.gstin}</span> · Legal Entity: <span className="font-semibold text-gray-800">{settings.storeName}</span>
-                  </p>
+            <div className="p-6 space-y-4">
+              <h2 className="text-sm font-bold">Invoices and credit notes for {filingMonth}</h2>
+              <p className="text-xs text-gray-600">Use these figures to prepare your filing with your accountant.</p>
+              {taxEntries.length === 0 ? (
+                <p className="text-sm text-gray-600">No GST invoices or credit notes were recorded this month.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-gray-50">
+                      <tr>{['Document', 'Date', 'GSTIN', 'State', 'Rate', 'Taxable value', 'CGST', 'SGST', 'Total'].map((field) =>
+                        <th key={field} scope="col" className="p-2">{field}</th>)}</tr>
+                    </thead>
+                    <tbody>
+                      {taxEntries.map((entry) => (
+                        <tr key={entry.documentNumber} className="border-t border-gray-100">
+                          <td className="p-2">{entry.documentNumber}</td>
+                          <td className="p-2">{entry.date}</td>
+                          <td className="p-2">{entry.gstin}</td>
+                          <td className="p-2">{entry.stateCode}</td>
+                          <td className="p-2">{entry.gstRate}%</td>
+                          <td className="p-2">{formatINR(entry.taxableValue)}</td>
+                          <td className="p-2">{formatINR(entry.cgst)}</td>
+                          <td className="p-2">{formatINR(entry.sgst)}</td>
+                          <td className="p-2">{formatINR(entry.total)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <div className="text-right">
-                  <span className="text-[10px] font-bold text-gray-400 uppercase">GST Rate Structure</span>
-                  <p className="text-xs font-black text-gray-900 mt-0.5">
-                    CGST 2.5% + SGST 2.5% (Total 5.0% Composite QSR)
-                  </p>
-                </div>
-              </div>
-
-              {/* Table 7 B2C Small Breakdown */}
-              <div className="border border-gray-200 rounded-2xl overflow-hidden">
-                <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 font-bold text-xs text-gray-700 flex items-center justify-between">
-                  <span>Table 7: Taxable Supplies to Unregistered Individuals (B2C Small Invoices)</span>
-                  <span className="font-mono text-gray-500 text-[11px]">{validOrders.length} Invoices Aggregated</span>
-                </div>
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-white border-b border-gray-100 text-gray-400 uppercase text-[10px] font-bold">
-                    <tr>
-                      <th className="py-3 px-4">Supply Type</th>
-                      <th className="py-3 px-4">POS State Code</th>
-                      <th className="py-3 px-4">SAC / HSN</th>
-                      <th className="py-3 px-4">Applicable Rate</th>
-                      <th className="py-3 px-4 text-right">Taxable Turnover (₹)</th>
-                      <th className="py-3 px-4 text-right">Central CGST (₹)</th>
-                      <th className="py-3 px-4 text-right">State SGST (₹)</th>
-                      <th className="py-3 px-4 text-right">Total Tax (₹)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 font-medium">
-                    <tr>
-                      <td className="py-3.5 px-4 font-bold text-gray-900">Intra-State Supplies</td>
-                      <td className="py-3.5 px-4 font-mono">29-Karnataka (KA)</td>
-                      <td className="py-3.5 px-4 font-mono font-bold">9963</td>
-                      <td className="py-3.5 px-4 font-bold">5.0%</td>
-                      <td className="py-3.5 px-4 text-right font-bold text-gray-900">
-                        {formatINR(totalSubtotal - totalDiscount)}
-                      </td>
-                      <td className="py-3.5 px-4 text-right font-bold text-gray-900">
-                        {formatINR(totalCgst)}
-                      </td>
-                      <td className="py-3.5 px-4 text-right font-bold text-gray-900">
-                        {formatINR(totalSgst)}
-                      </td>
-                      <td className="py-3.5 px-4 text-right font-black text-secondaryGreen-700">
-                        {formatINR(totalTax)}
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tfoot className="bg-gray-50 font-black text-xs border-t border-gray-200">
-                    <tr>
-                      <td colSpan={4} className="py-3 px-4 text-gray-900">TOTAL RETURN AGGREGATE</td>
-                      <td className="py-3 px-4 text-right text-gray-900">
-                        {formatINR(totalSubtotal - totalDiscount)}
-                      </td>
-                      <td className="py-3 px-4 text-right text-gray-900">{formatINR(totalCgst)}</td>
-                      <td className="py-3 px-4 text-right text-gray-900">{formatINR(totalSgst)}</td>
-                      <td className="py-3 px-4 text-right text-secondaryGreen-700">
-                        {formatINR(totalTax)}
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              {/* Instructions Callout */}
-              <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-2.5">
-                <span className="font-bold shrink-0">💡 CA Note:</span>
-                <p>
-                  As a standalone quick service restaurant without ITC claims under GST Notification 46/2017-CT(R), tax is computed at 5% flat. Click <strong>"Download GSTR-1 JSON"</strong> to import directly into the GST Offline Tool or send the CSV to your Chartered Accountant.
-                </p>
-              </div>
+              )}
             </div>
           )}
         </div>

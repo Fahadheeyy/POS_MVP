@@ -160,7 +160,14 @@ export interface Order {
   cashierName: string;
   status: OrderStatus;
   invoiceNumber?: string;
+  receiptSettings?: SystemSettings;
+  paymentReference?: string;
+  shiftId?: string;
+  posStateCode?: string;
+  gstRate?: number;
+  roundingAdjustment?: number;
   creditNoteNumber?: string;
+  refundedAt?: string;
   createdAt: string; // ISO string
   completedAt?: string;
   cancelReason?: string;
@@ -233,6 +240,7 @@ export interface Shift {
   totalDiscount: number;
   totalTax: number;
   refunds: number;
+  cashRefunds?: number;
 }
 
 export interface ApprovalRequest {
@@ -282,12 +290,16 @@ export interface SystemSettings {
   upiId?: string;
   orderPrefix: string;
   nextOrderSequence: number;
+  nextCreditNoteSequence?: number;
+  nextInvoiceSequence?: number;
   isSimulatedOffline: boolean;
   isSimulatedPrinterDown: boolean;
   promoDiscountActive: boolean;
   promoDiscountPercent: number;
   promoBannerText: string;
   isGstEnabled?: boolean;
+  roundingStrategy?: 'round_half_up' | 'none';
+  stateCode?: string;
   autoPrintReceipt?: boolean;
   // Setup & Payment Flow Preferences
   isSetupCompleted?: boolean;

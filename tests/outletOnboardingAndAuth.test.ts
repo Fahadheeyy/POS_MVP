@@ -1,6 +1,6 @@
 /**
- * Automated Tests: Outlet Onboarding, Dynamic Owner Credentials & Multi-Tenant Authentication
- * Run via: npx tsx tests/outletOnboardingAndAuth.test.ts
+ * Automated Tests: Outlet Onboarding, Dynamic Owner Credentials & Development Demo Accounts
+ * Run via: node --import tsx tests/outletOnboardingAndAuth.test.ts
  */
 
 import { authService } from '../lib/auth/authService';
@@ -42,7 +42,7 @@ async function runTests() {
   assert(registered?.pin === '7788', 'Owner PIN must match 7788');
 
   // Test 2: Authentication with correct credentials
-  const loginSuccess = await authService.signInWithEmail(
+  const loginSuccess = await authService.signInDemoAccount(
     'owner.whitefield@signlaban.in',
     'whitefieldSecret123'
   );
@@ -60,7 +60,7 @@ async function runTests() {
   );
 
   // Test 3: Authentication with wrong password must fail
-  const loginFailPass = await authService.signInWithEmail(
+  const loginFailPass = await authService.signInDemoAccount(
     'owner.whitefield@signlaban.in',
     'wrongPassword'
   );
@@ -71,7 +71,7 @@ async function runTests() {
   );
 
   // Test 4: Authentication with unknown email must fail
-  const loginFailEmail = await authService.signInWithEmail(
+  const loginFailEmail = await authService.signInDemoAccount(
     'nonexistent.user@unknown.com',
     'anypassword'
   );
@@ -144,7 +144,7 @@ async function runTests() {
   assert(ownerUser?.pin === '4321', 'Auto-created user must have PIN 4321');
 
   // Test 7: Verify Owner can immediately log in via authService
-  const ownerLogin = await authService.signInWithEmail(
+  const ownerLogin = await authService.signInDemoAccount(
     'deepak.owner@signlaban.in',
     'deepakPassword99'
   );

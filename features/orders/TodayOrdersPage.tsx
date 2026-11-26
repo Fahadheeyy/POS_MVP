@@ -1,4 +1,5 @@
 "use client";
+import { businessDate } from '@/utils/businessDate';
 import React, { useState } from 'react';
 import { useNavigate } from "@/lib/navigation";
 import { useAppStore } from '../../store';
@@ -24,19 +25,19 @@ import {
 
 export const TodayOrdersPage: React.FC = () => {
   const navigate = useNavigate();
-  const { orders, refundOrder } = useAppStore();
+  const { orders } = useAppStore();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [selectedOrderId, setSelectedOrder] = useState<string | null>(null);
+  const selectedOrder = orders.find((order) => order.id === selectedOrderId) ?? null;
   const [receiptOrder, setReceiptOrder] = useState<Order | null>(null);
   const [orderToRefund, setOrderToRefund] = useState<Order | null>(null);
-  const [refundReason, setRefundReason] = useState('');
 
   // Filter today's orders
-  const todayStr = new Date().toISOString().split('T')[0];
-  const todayOrders = orders.filter((o) => o.createdAt.startsWith(todayStr));
+  const todayStr = businessDate();
+  const todayOrders = orders.filter((o) => businessDate(o.createdAt) === todayStr);
 
   const filteredOrders = todayOrders.filter((order) => {
     const matchesSearch =
@@ -52,27 +53,6 @@ export const TodayOrdersPage: React.FC = () => {
 
     return matchesSearch && matchesStatus && matchesPayment;
   });
-
-  const handleStartRefund = (order: Order) => {
-    setOrderToRefund(order);
-    setRefundReason('Customer requested refund / service issue');
-  };
-
-  const handleAuthorizedRefund = () => {
-    if (orderToRefund) {
-      sounds.playSuccess();
-      refundOrder(orderToRefund.id, refundReason);
-      if (selectedOrder?.id === orderToRefund.id) {
-        setSelectedOrder({
-          ...selectedOrder,
-          status: 'cancelled',
-          paymentStatus: 'refunded',
-          cancelReason: refundReason,
-        });
-      }
-      setOrderToRefund(null);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-surface-canvas flex flex-col select-none">
@@ -160,7 +140,8 @@ export const TodayOrdersPage: React.FC = () => {
                 {filteredOrders.length === 0 ? (
                   <tr>
                     <td colSpan={9} className="px-6 py-12 text-center text-gray-400">
-                      No orders match the selected filters.
+                      <strong>{todayOrders.length ? 'No matching orders' : 'No orders yet today'}</strong>
+                      {todayOrders.length ? <div><button className="state-action" onClick={() => {setSearchQuery(''); setStatusFilter('all'); setPaymentFilter('all');}}>Clear filters</button></div> : <p>Completed checkouts appear here.</p>}
                     </td>
                   </tr>
                 ) : (
@@ -171,7 +152,7 @@ export const TodayOrdersPage: React.FC = () => {
                     return (
                       <tr
                         key={order.id}
-                        onClick={() => setSelectedOrder(order)}
+                        onClick={() => setSelectedOrder(order.id)}
                         className="hover:bg-gray-50/80 cursor-pointer transition-colors"
                       >
                         <td className="px-6 py-3.5 font-bold text-gray-900">
@@ -368,14 +349,14 @@ export const TodayOrdersPage: React.FC = () => {
                 <span>Reprint Bill</span>
               </button>
 
-              {selectedOrder.status !== 'cancelled' && (
+              {selectedOrder.status !== 'cancelled' && selectedOrder.paymentStatus === 'paid' && (
                 <button
                   type="button"
-                  onClick={() => handleStartRefund(selectedOrder)}
+                  onClick={() => setOrderToRefund(selectedOrder)}
                   className="w-full py-3 px-4 rounded-xl bg-secondaryRed-50 hover:bg-secondaryRed-100 text-secondaryRed-700 border border-secondaryRed-200 text-xs font-bold transition-colors flex items-center justify-center gap-2"
                 >
                   <Ban size={15} />
-                  <span>Refund / Cancel Order (Manager PIN Required)</span>
+                  <span>Record refund</span>
                 </button>
               )}
             </div>
@@ -390,14 +371,13 @@ export const TodayOrdersPage: React.FC = () => {
         onClose={() => setReceiptOrder(null)}
       />
 
-      {/* Manager PIN Modal for Refunds */}
-      <ManagerPinModal
-        isOpen={!!orderToRefund}
-        onClose={() => setOrderToRefund(null)}
-        onSuccess={handleAuthorizedRefund}
-        actionTitle="Authorize Refund"
-        actionDescription={`Manager approval needed to refund ${orderToRefund?.orderNumber} (${orderToRefund ? formatINR(orderToRefund.total) : ''})`}
-      />
+      {orderToRefund && (
+        <ManagerPinModal orderId={orderToRefund.id} onClose={() => setOrderToRefund(null)}
+          externalPayment={orderToRefund.total > 0 && orderToRefund.paymentMode !== 'cash'}
+          actionTitle="Authorize refund"
+          actionDescription={`Refund ${orderToRefund.orderNumber} (${formatINR(orderToRefund.total)})`}
+        />
+      )}
     </div>
   );
 };

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TIKKIT UI kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --orange: #FF4F1A;
+    --mustard: #FFC72C;
+    --ink: #161412;
+    --paper: #FFF4E0;
+    --oat: #F3EEE6;
+    --muted: #5E554C;
+    --rule: #D9CFC0;
+    --display: 'Bowlby One', 'Arial Black', sans-serif;
+    --mono: 'Space Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+    --b: 2.5px solid var(--ink);
+    --sh: 4px 4px 0 var(--ink);
+    --r: 10px;
+    --zig: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--oat); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.45; }
+  a { color: var(--ink); text-decoration-color: var(--orange); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 56px 32px 96px; }
+  .d { font-family: var(--display); font-weight: 400; line-height: 1; letter-spacing: 0.5px; }
+  .mono { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .muted { color: var(--muted); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* Brand marks */
+  .sticker { width: 210px; transform: rotate(-8deg); filter: drop-shadow(3px 0 0 var(--ink)) drop-shadow(-3px 0 0 var(--ink)) drop-shadow(0 3px 0 var(--ink)) drop-shadow(0 -3px 0 var(--ink)) drop-shadow(8px 8px 0 var(--ink)); }
+  .sticker-in { background: var(--mustard); -webkit-mask: var(--zig); mask: var(--zig); padding: 16px 18px 30px; display: flex; flex-direction: column; gap: 10px; }
+  .sticker .row { display: flex; justify-content: space-between; font-size: 10px; }
+  .tk { font-family: var(--display); font-size: 64px; line-height: 0.98; color: var(--paper); -webkit-text-stroke: 8px var(--ink); paint-order: stroke fill; text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink), 3px 3px 0 var(--ink), 4px 4px 0 var(--ink), 5px 5px 0 var(--ink), 6px 6px 0 var(--ink); }
+  .dash { border-top: 2.5px dashed var(--ink); }
+
+  .appicon { width: 112px; height: 112px; border-radius: 26px; background: var(--orange); border: 3.5px solid var(--ink); display: grid; place-items: center; }
+  .mini { width: 62px; transform: rotate(-8deg); filter: drop-shadow(2px 0 0 var(--ink)) drop-shadow(-2px 0 0 var(--ink)) drop-shadow(0 2px 0 var(--ink)) drop-shadow(0 -2px 0 var(--ink)) drop-shadow(3px 3px 0 var(--ink)); }
+  .mini-in { background: var(--mustard); -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 8px 100%; mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 8px 100%; padding: 9px 0 13px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .mini-in span { font-family: var(--display); font-size: 26px; line-height: 1; color: var(--orange); -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink), 3px 3px 0 var(--ink); }
+  .mini-in i { width: 38px; border-top: 2px dashed var(--ink); }
+
+  .wordmark { font-family: var(--display); color: var(--mustard); line-height: 1; letter-spacing: 1px; text-shadow: 1px 1px 0 var(--orange), 2px 2px 0 var(--orange), 3px 3px 0 var(--orange), 4px 4px 0 var(--orange), 5px 5px 0 var(--orange); }
+
+  /* Header */
+  .top { display: flex; align-items: center; gap: 56px; flex-wrap: wrap; padding: 8px 0 48px; border-bottom: var(--b); }
+  .top h1 { margin: 0 0 12px; font-size: 72px; }
+  .top p { margin: 0; max-width: 440px; color: var(--muted); }
+
+  /* Sections */
+  section { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 40px; padding: 48px 0; border-bottom: 1.5px dashed var(--rule); }
+  section > header h2 { margin: 6px 0 10px; font-size: 30px; }
+  section > header p { margin: 0; font-size: 14px; color: var(--muted); }
+  .stack { display: flex; flex-direction: column; gap: 24px; }
+  .row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .hint { font-size: 13px; color: var(--muted); margin: 0; }
+
+  /* Logo tiles */
+  .logos { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; }
+  .tile { height: 240px; border: var(--b); border-radius: 14px; display: grid; place-items: center; overflow: hidden; }
+
+  /* Colour */
+  .swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .sw { border: var(--b); border-radius: 12px; overflow: hidden; background: var(--paper); }
+  .sw > div { height: 110px; border-bottom: var(--b); }
+  .sw p { margin: 0; padding: 10px 12px 12px; font-size: 13px; line-height: 1.5; }
+  .sw b { display: block; font-size: 14px; }
+
+  /* Type */
+  .type-row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 14px 0; border-top: 1.5px dashed var(--rule); }
+  .type-row:first-child { border-top: 0; padding-top: 0; }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 20px; border: var(--b); border-radius: var(--r); box-shadow: var(--sh); font: 700 15px/1 var(--sans); color: var(--ink); cursor: pointer; transition: transform .08s, box-shadow .08s; }
+  .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+  .btn svg { width: 18px; height: 18px; }
+  .btn-primary { background: var(--orange); }
+  .btn-secondary { background: var(--mustard); }
+  .btn-dark { background: var(--ink); color: var(--paper); }
+  .btn-outline { background: var(--paper); }
+  .btn:disabled { background: var(--oat); color: var(--muted); border-color: var(--rule); box-shadow: none; cursor: not-allowed; transform: none; }
+  .btn-icon { width: 48px; padding: 0; }
+  .btn-block { width: 100%; }
+
+  /* Inputs */
+  .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field > label, legend, .lbl { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 0; }
+  .input { position: relative; display: flex; align-items: center; }
+  .input input { width: 100%; height: 48px; padding: 0 14px; border: var(--b); border-radius: var(--r); background: var(--paper); color: var(--ink); font: 400 16px var(--sans); }
+  .input input::placeholder { color: var(--muted); }
+  .input input:focus { outline: none; box-shadow: 4px 4px 0 var(--orange); }
+  .input svg { position: absolute; left: 14px; width: 18px; height: 18px; pointer-events: none; }
+  .input.lead input { padding-left: 42px; }
+
+  fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .seg { display: inline-flex; border: var(--b); border-radius: var(--r); overflow: hidden; background: var(--paper); }
+  .seg label { position: relative; }
+  .seg input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .seg span { display: inline-flex; align-items: center; height: 43px; padding: 0 16px; font-size: 14px; font-weight: 700; }
+  .seg label + label span { border-left: var(--b); }
+  .seg input:checked + span { background: var(--ink); color: var(--paper); }
+  .seg input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: -5px; }
+
+  .stepper { display: inline-flex; align-items: center; border: var(--b); border-radius: var(--r); background: var(--paper); overflow: hidden; }
+  .stepper button { width: 46px; height: 43px; border: 0; background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .stepper button:hover { background: var(--mustard); }
+  .stepper svg { width: 16px; height: 16px; }
+  .stepper output { min-width: 40px; text-align: center; font-family: var(--mono); font-weight: 700; }
+
+  .switch { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; font-size: 15px; font-weight: 500; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .track { position: relative; width: 54px; height: 30px; border: var(--b); border-radius: 999px; background: var(--paper); flex: none; }
+  .track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 19px; height: 19px; border-radius: 50%; background: var(--ink); transition: transform .15s; }
+  .switch input:checked + .track { background: var(--orange); }
+  .switch input:checked + .track::after { transform: translateX(24px); background: var(--paper); box-shadow: 0 0 0 2px var(--ink); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+  /* Status */
+  .badge { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 2px solid var(--ink); border-radius: 6px; font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+  .s-new { background: var(--orange); }
+  .s-prep { background: var(--mustard); }
+  .s-ready { background: var(--ink); color: var(--paper); }
+  .s-done { background: transparent; border-style: dashed; }
+  .status-list { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 14px 20px; align-items: center; font-size: 15px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: start; }
+  .card { background: var(--paper); border: var(--b); border-radius: 14px; box-shadow: var(--sh); }
+  .kot-wrap { filter: drop-shadow(2.5px 0 0 var(--ink)) drop-shadow(-2.5px 0 0 var(--ink)) drop-shadow(0 2.5px 0 var(--ink)) drop-shadow(0 -2.5px 0 var(--ink)) drop-shadow(4px 4px 0 var(--ink)); }
+  .kot { background: var(--paper); -webkit-mask: var(--zig); mask: var(--zig); padding: 18px 18px 34px; display: flex; flex-direction: column; gap: 12px; }
+  .kot-head { display: flex; justify-content: space-between; }
+  .kot h3 { margin: 0; font-size: 34px; }
+  .kot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .kot li { display: grid; grid-template-columns: 34px minmax(0, 1fr); font-size: 15px; font-weight: 500; }
+  .kot li b { font-family: var(--mono); }
+  .kot li small { grid-column: 2; font-size: 13px; color: var(--muted); font-weight: 400; }
+  .kot-foot { display: flex; justify-content: space-between; align-items: center; }
+  .timer { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-weight: 700; font-size: 14px; }
+  .timer svg { width: 16px; height: 16px; }
+
+  .dish { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .dish h3 { margin: 0; font-size: 17px; }
+  .dish p { margin: 0; font-size: 14px; color: var(--muted); }
+  .dish-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+  .price { font-family: var(--mono); font-weight: 700; font-size: 18px; }
+
+  .cart { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .cart h3 { margin: 0; font-size: 24px; }
+  .line { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
+  .line span:last-child { font-family: var(--mono); font-weight: 700; }
+  .line.sub { font-size: 14px; color: var(--muted); }
+  .line.total { font-size: 18px; font-weight: 700; }
+
+  .stat { padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+  .stat .v { font-family: var(--display); font-size: 40px; line-height: 1.05; }
+
+  /* Nav */
+  .appbar { background: var(--ink); color: var(--paper); border: var(--b); border-radius: 14px; box-shadow: var(--sh); padding: 12px 14px 12px 20px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .appbar nav { display: flex; gap: 6px; flex: 1; overflow-x: auto; }
+  .appbar nav a { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 8px; color: var(--paper); text-decoration: none; font-weight: 500; font-size: 15px; white-space: nowrap; }
+  .appbar nav a svg { width: 18px; height: 18px; }
+  .appbar nav a:hover { background: #2a2724; }
+  .appbar nav a[aria-current="page"] { background: var(--mustard); color: var(--ink); font-weight: 700; }
+  .appbar .btn { box-shadow: 3px 3px 0 var(--paper); border-color: var(--paper); }
+
+  .foot { padding-top: 40px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+
+  @media (max-width: 960px) {
+    section { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 36px 20px 64px; }
+    .top { gap: 40px; }
+    .top h1 { font-size: 52px; }
+    .logos, .fields, .cards { grid-template-columns: 1fr; }
+    .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .type-row { grid-template-columns: 1fr; gap: 6px; }
+    .appbar nav { order: 3; flex-basis: 100%; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-orders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9 8h6M9 12h6" stroke-linecap="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></symbol>
+    <symbol id="i-kitchen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 14a4 4 0 1 1 2-7.5 4 4 0 0 1 6 0A4 4 0 1 1 17 14v6H7z"/><path d="M7 17h10"/></symbol>
+    <symbol id="i-reports" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20h16"/><path d="M7 16v-5M12 16V6M17 16v-8"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="sticker" role="img" aria-label="TIKKIT logo">
+      <div class="sticker-in">
+        <div class="row mono"><span>KOT #001</span><span>12:04</span></div>
+        <div class="tk" aria-hidden="true">TIK<br>KIT</div>
+        <div class="dash"></div>
+        <div class="row mono"><span>QSR · POS</span><span>AI powered</span></div>
+      </div>
+    </div>
+    <div>
+      <span class="mono">QSR ops made easy</span>
+      <h1 class="d">UI kit</h1>
+      <p>The building blocks for the TIKKIT restaurant app, taken from the KOT Sticker logo: thick ink outlines, hard shadows, torn-ticket edges. Dish names, prices and numbers are sample data.</p>
+    </div>
+  </div>
+
+  <!-- 01 Logo -->
+  <section aria-labelledby="h-logo">
+    <header><span class="mono">01</span><h2 class="d" id="h-logo">Logo</h2><p>The sticker leads on brand moments. Inside the app, use the icon and the wordmark.</p></header>
+    <div class="stack">
+      <div class="logos">
+        <div class="tile" style="background: var(--orange)">
+          <div class="sticker" style="width: 150px" role="img" aria-label="TIKKIT sticker logo">
+            <div class="sticker-in" style="padding: 12px 14px 24px; gap: 8px">
+              <div class="row mono" style="font-size: 8px"><span>KOT #001</span><span>12:04</span></div>
+              <div class="tk" aria-hidden="true" style="font-size: 46px; -webkit-text-stroke-width: 6px">TIK<br>KIT</div>
+              <div class="dash" style="border-top-width: 2px"></div>
+              <div class="row mono" style="font-size: 8px"><span>QSR · POS</span><span>AI powered</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tile" style="background: var(--mustard)">
+          <div class="appicon" role="img" aria-label="TIKKIT app icon"><div class="mini"><div class="mini-in"><span aria-hidden="true">TK</span><i></i></div></div></div>
+        </div>
+        <div class="tile" style="background: var(--paper)">
+          <div style="transform: rotate(-6deg); display: flex; flex-direction: column; gap: 10px">
+            <div class="wordmark" style="font-size: 44px">TIKKIT</div>
+            <div class="mono" style="font-size: 10px; letter-spacing: 3px">QSR ops made easy</div>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Sticker · App icon · Wordmark. Tilt −8° only on brand moments; keep everything inside the app straight.</p>
+    </div>
+  </section>
+
+  <!-- 02 Colour -->
+  <section aria-labelledby="h-colour">
+    <header><span class="mono">02</span><h2 class="d" id="h-colour">Colour</h2><p>Orange for action, mustard for attention, ink for everything that must be read.</p></header>
+    <div class="stack">
+      <div class="swatches">
+        <div class="sw"><div style="background: var(--orange)"></div><p><b>Tikkit Orange</b><span class="mono" style="font-size: 11px">#FF4F1A</span><br>Primary action, new</p></div>
+        <div class="sw"><div style="background: var(--mustard)"></div><p><b>Mustard</b><span class="mono" style="font-size: 11px">#FFC72C</span><br>Highlight, preparing</p></div>
+        <div class="sw"><div style="background: var(--ink)"></div><p><b>Ink</b><span class="mono" style="font-size: 11px">#161412</span><br>Text, outlines, shadows</p></div>
+        <div class="sw"><div style="background: var(--paper)"></div><p><b>Paper</b><span class="mono" style="font-size: 11px">#FFF4E0</span><br>Cards, tickets</p></div>
+        <div class="sw"><div style="background: var(--oat)"></div><p><b>Oat</b><span class="mono" style="font-size: 11px">#F3EEE6</span><br>Page background</p></div>
+      </div>
+      <p class="hint">Text is always ink, or paper on ink. Paper text on orange only at 24 px and up.</p>
+    </div>
+  </section>
+
+  <!-- 03 Type -->
+  <section aria-labelledby="h-type">
+    <header><span class="mono">03</span><h2 class="d" id="h-type">Type</h2><p>Bowlby One shouts. Space Mono prints the ticket. Inter does the reading.</p></header>
+    <div>
+      <div class="type-row"><span class="mono muted">Display · Bowlby 56</span><div class="d" style="font-size: 56px">Order up!</div></div>
+      <div class="type-row"><span class="mono muted">Heading · Bowlby 30</span><div class="d" style="font-size: 30px">Token 27</div></div>
+      <div class="type-row"><span class="mono muted">Ticket · Space Mono 14</span><div class="mono" style="font-size: 14px">KOT #1042 · 12:04 · Takeaway</div></div>
+      <div class="type-row"><span class="mono muted">Title · Inter 18 Bold</span><div style="font-size: 18px; font-weight: 700">Classic burger, no onion</div></div>
+      <div class="type-row"><span class="mono muted">Body · Inter 16</span><div>Lunch rush starts at 12:30. Keep fries and burgers ahead of the queue.</div></div>
+    </div>
+  </section>
+
+  <!-- 04 Buttons -->
+  <section aria-labelledby="h-buttons">
+    <header><span class="mono">04</span><h2 class="d" id="h-buttons">Buttons</h2><p>48 px tall, ink outline, hard shadow. The button presses into its shadow.</p></header>
+    <div class="stack">
+      <div class="row">
+        <button class="btn btn-primary" type="button">Send to kitchen</button>
+        <button class="btn btn-secondary" type="button">Hold order</button>
+        <button class="btn btn-dark" type="button">Charge ₹573</button>
+        <button class="btn btn-outline" type="button">Cancel</button>
+        <button class="btn btn-primary" type="button" disabled>Charge ₹0</button>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" type="button"><svg aria-hidden="true"><use href="#i-plus"/></svg>New order</button>
+        <button class="btn btn-outline" type="button"><svg aria-hidden="true"><use href="#i-check"/></svg>Mark ready</button>
+        <button class="btn btn-secondary btn-icon" type="button" aria-label="Add item"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+      </div>
+      <p class="hint">Primary · Secondary · Dark · Outline · Disabled. One primary per screen.</p>
+    </div>
+  </section>
+
+  <!-- 05 Inputs -->
+  <section aria-labelledby="h-inputs">
+    <header><span class="mono">05</span><h2 class="d" id="h-inputs">Inputs</h2><p>Paper fill, ink outline. Focus throws an orange shadow.</p></header>
+    <div class="stack">
+      <div class="fields">
+        <div class="field">
+          <label for="f-name">Customer name</label>
+          <div class="input"><input id="f-name" type="text" placeholder="e.g. Rahul"></div>
+        </div>
+        <div class="field">
+          <label for="f-search">Search menu</label>
+          <div class="input lead"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="f-search" type="search" placeholder="Burger, fries, coffee…"></div>
+        </div>
+      </div>
+      <div class="row" style="gap: 32px; align-items: flex-end">
+        <fieldset>
+          <legend>Order type</legend>
+          <div class="seg">
+            <label><input type="radio" name="otype"><span>Dine-in</span></label>
+            <label><input type="radio" name="otype" checked><span>Takeaway</span></label>
+            <label><input type="radio" name="otype"><span>Delivery</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <span class="lbl" id="qty-l">Qty</span>
+          <div class="stepper" role="group" aria-labelledby="qty-l">
+            <button type="button" aria-label="Decrease"><svg aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <output>2</output>
+            <button type="button" aria-label="Increase"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" checked><span class="track"></span>Accepting online orders</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Status -->
+  <section aria-labelledby="h-status">
+    <header><span class="mono">06</span><h2 class="d" id="h-status">Status</h2><p>Every status carries its word, never colour alone.</p></header>
+    <div class="status-list">
+      <span class="badge s-new">New</span><span>Order placed. Kitchen hasn't started.</span>
+      <span class="badge s-prep">Preparing</span><span>On the line, timer running.</span>
+      <span class="badge s-ready">Ready</span><span>At the counter. Call the token.</span>
+      <span class="badge s-done">Picked up</span><span>Done. Leaves the queue.</span>
+    </div>
+  </section>
+
+  <!-- 07 Cards -->
+  <section aria-labelledby="h-cards">
+    <header><span class="mono">07</span><h2 class="d" id="h-cards">Cards</h2><p>The KOT keeps the torn edge from the logo. Everything else is a plain outlined card.</p></header>
+    <div class="cards">
+
+      <div class="kot-wrap">
+        <article class="kot" aria-label="Kitchen order ticket">
+          <div class="kot-head mono"><span>KOT #1042</span><span>12:04</span></div>
+          <div>
+            <h3 class="d">Token 27</h3>
+            <span class="muted" style="font-size: 14px">Takeaway · Rahul</span>
+          </div>
+          <div class="dash"></div>
+          <ul>
+            <li><b>2×</b><span>Classic burger</span><small>No onion</small></li>
+            <li><b>1×</b><span>Peri peri fries</span><small>Large</small></li>
+            <li><b>1×</b><span>Cold coffee</span></li>
+          </ul>
+          <div class="dash"></div>
+          <div class="kot-foot">
+            <span class="badge s-prep">Preparing</span>
+            <span class="timer"><svg aria-hidden="true"><use href="#i-clock"/></svg>04:12</span>
+          </div>
+          <button class="btn btn-primary btn-block" type="button">Mark ready</button>
+        </article>
+      </div>
+
+      <div class="stack" style="gap: 24px">
+        <article class="card dish">
+          <span class="mono muted">Burgers</span>
+          <h3>Classic burger</h3>
+          <p>Grilled patty, cheese, lettuce, house sauce.</p>
+          <div class="dish-foot">
+            <span class="price">₹149</span>
+            <button class="btn btn-secondary btn-icon" type="button" aria-label="Add Classic burger"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+          </div>
+        </article>
+        <div class="card stat">
+          <span class="mono muted">Orders today</span>
+          <span class="v num">186</span>
+          <span style="font-size: 14px">Avg prep 6m 40s</span>
+        </div>
+      </div>
+
+      <article class="card cart" aria-label="Current order">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <h3 class="d">Order</h3>
+          <span class="badge s-new">New</span>
+        </div>
+        <div class="line"><span>2× Classic burger</span><span>₹298</span></div>
+        <div class="line"><span>1× Peri peri fries</span><span>₹119</span></div>
+        <div class="line"><span>1× Cold coffee</span><span>₹129</span></div>
+        <div class="dash"></div>
+        <div class="line sub"><span>Subtotal</span><span>₹546.00</span></div>
+        <div class="line sub"><span>GST 5%</span><span>₹27.30</span></div>
+        <div class="line total"><span>Total</span><span>₹573.30</span></div>
+        <button class="btn btn-primary btn-block" type="button">Charge ₹573.30</button>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 08 Navigation -->
+  <section aria-labelledby="h-nav" style="border-bottom: 0">
+    <header><span class="mono">08</span><h2 class="d" id="h-nav">Navigation</h2><p>Ink app bar, wordmark left, mustard for where you are.</p></header>
+    <div class="appbar">
+      <div class="wordmark" style="font-size: 26px; text-shadow: 1px 1px 0 var(--orange), 2px 2px 0 var(--orange), 3px 3px 0 var(--orange)">TIKKIT</div>
+      <nav aria-label="Sample app">
+        <a href="#" aria-current="page"><svg aria-hidden="true"><use href="#i-orders"/></svg>Orders</a>
+        <a href="#"><svg aria-hidden="true"><use href="#i-menu"/></svg>Menu</a>
+        <a href="#"><svg aria-hidden="true"><use href="#i-kitchen"/></svg>Kitchen</a>
+        <a href="#"><svg aria-hidden="true"><use href="#i-reports"/></svg>Reports</a>
+      </nav>
+      <button class="btn btn-primary" type="button"><svg aria-hidden="true"><use href="#i-plus"/></svg>New order</button>
+    </div>
+  </section>
+
+  <div class="foot mono muted">
+    <span>TIKKIT UI kit · v1.0 · Nov 2026</span>
+    <span>Bowlby One · Space Mono · Inter</span>
+  </div>
+
+</div>
+</body>
+</html>

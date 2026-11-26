@@ -1,4 +1,5 @@
 "use client";
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 import React, { useState } from 'react';
 import { Order } from '../../types';
 import { useAppStore } from '../../store';
@@ -11,15 +12,16 @@ interface ReceiptModalProps {
   onClose: () => void;
 }
 
-export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, settings }) => {
+export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, settings: currentSettings }) => {
+  const settings = order.receiptSettings ?? currentSettings;
   return (
     <div className="bg-white border border-gray-200 rounded-b-2xl w-full p-6 pt-8 shadow-modal text-gray-900 font-sans relative printable-receipt">
       {/* Header */}
       <div className="text-center pb-3 border-b border-gray-100">
         <div className="flex items-center justify-center gap-1.5 mb-1.5">
           <img
-            src={settings.logoUrl || '/assets/sign-laban-logo.png'}
-            alt={settings.storeName || 'Sign Laban'}
+            src={settings.logoUrl || '/assets/tikkit-logo.png'}
+            alt={settings.storeName || 'Outlet'}
             className="h-9 w-auto mx-auto object-contain"
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
@@ -27,10 +29,10 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
           />
         </div>
         <p className="text-[11px] font-black uppercase tracking-wider text-gray-900">
-          {settings.storeName || 'Sign Laban'}
+          {settings.storeName || 'Outlet'}
         </p>
-        <p className="text-[10px] font-extrabold uppercase tracking-wider text-[#556475]">
-          {settings.brandTagline || "India's First Egyptian Dessert"}
+        <p className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+          {settings.brandTagline}
         </p>
         <p className="text-[10px] text-gray-500 mt-0.5">{settings.address}</p>
         {settings.isGstEnabled !== false && settings.showGstinOnReceipt && settings.gstin && (
@@ -59,7 +61,7 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
         <div className="flex justify-between items-center">
           <span className="text-gray-500">Invoice No (Rule 46)</span>
           <span className="font-bold text-[11px] text-gray-800 font-mono">
-            {order.invoiceNumber || `SLI/26/${order.id.slice(-4)}`}
+            {order.invoiceNumber || 'Unavailable'}
           </span>
         </div>
         {order.creditNoteNumber && (
@@ -133,6 +135,11 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
             <span>Non-GST Bill (₹0.00)</span>
           </div>
         )}
+        {!!order.roundingAdjustment && (
+          <div className="flex justify-between">
+            <span>Rounding</span><span>{formatINR(order.roundingAdjustment)}</span>
+          </div>
+        )}
       </div>
 
       {/* Total & Payment Method */}
@@ -148,7 +155,7 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
         </span>
       </div>
 
-      {order.paymentMode === 'cash' && order.cashTendered && (
+      {order.paymentMode === 'cash' && order.cashTendered != null && (
         <div className="text-[11px] text-gray-500 flex justify-between pt-1">
           <span>Tendered / Change</span>
           <span>
@@ -164,9 +171,9 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
       )}
 
       <div className="mt-3 pt-2.5 border-t border-dashed border-gray-200 text-center text-[9px] text-gray-500 space-y-0.5">
-        <div>{settings.receiptFooter || 'Thank you for visiting Sign Laban!'}</div>
+        <div>{settings.receiptFooter || 'Thank you for visiting.'}</div>
         <div className="font-semibold text-slate-400 uppercase tracking-wider">
-          Powered by pos.bits · High-Speed QSR Systems
+          Powered by TIKKIT · High-Speed QSR Systems
         </div>
       </div>
 
@@ -183,6 +190,7 @@ export const ReceiptSlip: React.FC<{ order: Order; settings: any }> = ({ order, 
 export const ReceiptModal: React.FC<ReceiptModalProps> = ({ order, isOpen, onClose }) => {
   const { settings } = useAppStore();
 
+  const dialog = useDialogFocus(isOpen && !!order, onClose);
   if (!isOpen || !order) return null;
 
   const handlePrint = () => {
@@ -190,7 +198,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ order, isOpen, onClo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
+    <div ref={dialog} role="dialog" aria-modal="true" aria-label="Receipt" tabIndex={-1} className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
       <div className="relative max-w-sm w-full flex flex-col items-center">
         {/* Physical Thermal Printer Feeder Slot matching Receipt — printed.png */}
         <div className="w-72 h-8 rounded-full bg-slate-400 border border-slate-500 shadow-card flex items-center justify-center z-10 -mb-4">
@@ -213,8 +221,8 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ order, isOpen, onClo
           </button>
           <button
             type="button"
-            onClick={onClose}
-            className="flex-1 py-3 px-4 rounded-2xl bg-[#556475] hover:bg-slate-700 text-white text-xs font-black shadow-card flex items-center justify-center gap-2 transition-all active:scale-95"
+            aria-label="Close dialog" onClick={onClose}
+            className="flex-1 py-3 px-4 rounded-2xl bg-brand-orange hover:bg-slate-700 text-white text-xs font-black shadow-card flex items-center justify-center gap-2 transition-all active:scale-95"
           >
             <Check size={16} />
             <span>Next Customer [Enter]</span>

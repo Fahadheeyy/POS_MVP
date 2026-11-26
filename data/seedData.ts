@@ -21,10 +21,10 @@ import {
 export const INITIAL_BUSINESSES: BusinessTenant[] = [
   {
     id: 'biz_sign_laban_indiranagar',
-    name: 'Sign Laban · Indiranagar',
-    brandName: 'Sign Laban',
+    name: 'Daybreak Coffee · Indiranagar',
+    brandName: 'Daybreak Coffee',
     slug: 'sign-laban-blr',
-    tagline: "India's First Egyptian Dessert Brand",
+    tagline: "India's First Specialty Coffee Brand",
     category: 'Dessert QSR',
     address: '12th Main Rd, Indiranagar, Bengaluru, KA 560038',
     phone: '+91 80 4123 4567',
@@ -44,7 +44,7 @@ export const INITIAL_BUSINESSES: BusinessTenant[] = [
     ownerPassword: 'password123',
     ownerPhone: '+91 98765 43214',
     ownerPin: '8888',
-    legalEntityName: 'Sign Laban Hospitality India Pvt Ltd',
+    legalEntityName: 'Daybreak Coffee Hospitality India Pvt Ltd',
     stateCode: '29',
     stateName: 'Karnataka',
     city: 'Bengaluru',
@@ -64,15 +64,15 @@ export const INITIAL_BUSINESSES: BusinessTenant[] = [
       enabledPayments: { cash: true, upi: true, card: true },
       loyaltyEnabled: true,
       tableManagement: true,
-      receiptHeader: 'Welcome to Sign Laban Indiranagar!',
+      receiptHeader: 'Welcome to Daybreak Coffee Indiranagar!',
       receiptFooter: 'Thank you for visiting! Follow @signlaban',
       wifiPassword: 'SignLabanGuest2026',
     },
   },
   {
     id: 'biz_sign_laban_koramangala',
-    name: 'Sign Laban · Koramangala',
-    brandName: 'Sign Laban',
+    name: 'Daybreak Coffee · Koramangala',
+    brandName: 'Daybreak Coffee',
     slug: 'sign-laban-kora',
     tagline: 'Cloud Kitchen & Express Counter',
     category: 'Express QSR',
@@ -94,7 +94,7 @@ export const INITIAL_BUSINESSES: BusinessTenant[] = [
     ownerPassword: 'password123',
     ownerPhone: '+91 98765 43210',
     ownerPin: '8888',
-    legalEntityName: 'Sign Laban Hospitality India Pvt Ltd',
+    legalEntityName: 'Daybreak Coffee Hospitality India Pvt Ltd',
     stateCode: '29',
     stateName: 'Karnataka',
     city: 'Bengaluru',
@@ -114,7 +114,7 @@ export const INITIAL_BUSINESSES: BusinessTenant[] = [
       enabledPayments: { cash: true, upi: true, card: true },
       loyaltyEnabled: false,
       tableManagement: false,
-      receiptHeader: 'Sign Laban Koramangala Express',
+      receiptHeader: 'Daybreak Coffee Koramangala Express',
       receiptFooter: 'Order direct for catering: hello@signlaban.in',
       wifiPassword: 'SignLabanKora2026',
     },
@@ -291,8 +291,8 @@ export const INITIAL_USERS: User[] = [
 ];
 
 export const INITIAL_SETTINGS: SystemSettings = {
-  storeName: 'Sign Laban · Indiranagar',
-  brandTagline: "India's First Egyptian Dessert",
+  storeName: 'Daybreak Coffee · Indiranagar',
+  brandTagline: "India's First Specialty Coffee",
   logoUrl: '/assets/sign-laban-logo.png',
   address: 'Shop 12, 100ft Road, HAL 2nd Stage, Indiranagar, Bengaluru, KA 560038',
   phone: '+91 80 4958 2211',
@@ -301,8 +301,8 @@ export const INITIAL_SETTINGS: SystemSettings = {
   fssai: '11224333000542',
   gstRate: 5, // 5% GST for standalone restaurants without ITC
   isTaxInclusive: false,
-  receiptHeader: "SIGN LABAN\nIndia's First Egyptian Dessert\nBengaluru, KA · Ph: +91 80 4958 2211",
-  receiptFooter: "Thank you for visiting Sign Laban!\nFollow us @signlaban on Instagram\nFor franchise & catering: hello@signlaban.in",
+  receiptHeader: "DAYBREAK COFFEE\nIndia's First Specialty Coffee\nBengaluru, KA · Ph: +91 80 4958 2211",
+  receiptFooter: "Thank you for visiting Daybreak Coffee!\nFollow us @signlaban on Instagram\nFor franchise & catering: hello@signlaban.in",
   showGstinOnReceipt: true,
   showWifiOnReceipt: true,
   wifiPassword: 'SignLabanGuest2026',
@@ -325,7 +325,7 @@ export const INITIAL_SETTINGS: SystemSettings = {
   isSimulatedPrinterDown: false,
   promoDiscountActive: true,
   promoDiscountPercent: 15,
-  promoBannerText: "SIGN LABAN SPECIAL: 15% OFF ON VIRAL DESSERT COMBOS & BOWLS",
+  promoBannerText: "DAYBREAK COFFEE SPECIAL: 15% OFF ON VIRAL DESSERT COMBOS & BOWLS",
   // Initial Setup Defaults
   isGstEnabled: true,
   autoPrintReceipt: true,
@@ -439,7 +439,7 @@ export function generateHistoricalOrders(menuProducts: Product[]): Order[] {
   return orders;
 }
 
-// Today's initial orders for Sign Laban
+// Today's initial orders for Daybreak Coffee
 export function generateTodayOrders(menuProducts: Product[]): { orders: Order[]; tickets: KdsTicket[]; shift: Shift; approvals: ApprovalRequest[] } {
   const getProd = (id: string) => menuProducts.find(p => p.id === id) || menuProducts[0];
   const baseTime = new Date();
@@ -1036,7 +1036,7 @@ export const RECIPE_SPECS: RecipeSpec[] = [
       'Pipe 60g whipped authentic Egyptian fresh Qashta cream across the surface in smooth waves.',
       'Generously drizzle 25g warm Belgian pistachio cream in chevron pattern.',
       'Sprinkle 10g finely roasted Iranian green pistachios across the top.',
-      'Place in branded Sign Laban dessert box with golden spoon and seal.',
+      'Place in branded Daybreak Coffee dessert box with golden spoon and seal.',
     ],
   },
   {

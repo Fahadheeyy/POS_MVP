@@ -25,40 +25,40 @@ import {
 
 export const SetupWizardPage: React.FC = () => {
   const navigate = useNavigate();
-  const { settings, updateSettings, setCurrentUser, users, businesses, updateBusiness } = useAppStore();
+  const { settings, updateSettings, businesses, activeBusinessId, updateBusiness } = useAppStore();
 
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // STEP 1: Brand & Business Details
-  const [brandName, setBrandName] = useState(settings.storeName || 'Sign Laban');
-  const [legalName, setLegalName] = useState('Sign Laban Foods India Pvt Ltd');
-  const [tagline, setTagline] = useState(settings.brandTagline || "India's First Egyptian Dessert");
+  const [brandName, setBrandName] = useState(settings.storeName || '');
+  const [legalName, setLegalName] = useState('Daybreak Coffee Foods India Pvt Ltd');
+  const [tagline, setTagline] = useState(settings.brandTagline || "India's First Specialty Coffee");
   const [category, setCategory] = useState('Dessert QSR');
-  const [slug, setSlug] = useState('sign-laban-blr');
+  const [slug, setSlug] = useState('daybreak-coffee-blr');
 
   // STEP 2: Outlet Location & Contact
-  const [outletName, setOutletName] = useState('Sign Laban · Indiranagar Flagship');
+  const [outletName, setOutletName] = useState(settings.storeName || '');
   const [address, setAddress] = useState(settings.address || '12th Main Rd, HAL 2nd Stage, Indiranagar');
   const [city, setCity] = useState('Bengaluru');
-  const [stateCode, setStateCode] = useState('29'); // Karnataka
+  const [stateCode, setStateCode] = useState(settings.stateCode ?? '29');
   const [pincode, setPincode] = useState('560038');
   const [phone, setPhone] = useState(settings.phone || '+91 80 4958 2211');
-  const [email, setEmail] = useState(settings.email || 'indiranagar@signlaban.in');
+  const [email, setEmail] = useState(settings.email || 'indiranagar@daybreak.test');
 
   // STEP 3: Indian GST Configuration
   const [isGstEnabled, setIsGstEnabled] = useState<boolean>(
     settings.isGstEnabled !== undefined ? settings.isGstEnabled : true
   );
-  const [gstin, setGstin] = useState(settings.gstin || '29AABCS1429B1Z8');
-  const [gstRate, setGstRate] = useState<number>(settings.gstRate || 5);
+  const [gstin, setGstin] = useState(settings.gstin || '');
+  const [gstRate, setGstRate] = useState<number>(settings.gstRate ?? 5);
   const [isCompositionScheme, setIsCompositionScheme] = useState<boolean>(false);
 
   // STEP 4: FSSAI & Receipts
-  const [fssai, setFssai] = useState(settings.fssai || '11223334000123');
-  const [receiptHeader, setReceiptHeader] = useState(settings.receiptHeader || 'SIGN LABAN · Egyptian Desserts\nIndiranagar, Bengaluru');
-  const [receiptFooter, setReceiptFooter] = useState(settings.receiptFooter || 'Thank you for dining with Sign Laban! Follow @signlaban');
-  const [wifiPassword, setWifiPassword] = useState(settings.wifiPassword || 'SignLabanGuest2026');
+  const [fssai, setFssai] = useState(settings.fssai || '');
+  const [receiptHeader, setReceiptHeader] = useState(settings.receiptHeader || 'DAYBREAK COFFEE · Specialty Coffee\nIndiranagar, Bengaluru');
+  const [receiptFooter, setReceiptFooter] = useState(settings.receiptFooter || 'Thank you for dining with Daybreak Coffee! Follow @daybreakcoffee');
+  const [wifiPassword, setWifiPassword] = useState(settings.wifiPassword || '');
 
   // STEP 5: Counter Operations & Billing Rules
   const [defaultPaymentMode, setDefaultPaymentMode] = useState<PaymentMode>(
@@ -67,13 +67,12 @@ export const SetupWizardPage: React.FC = () => {
   const [cashTiming, setCashTiming] = useState<'before' | 'after'>(
     settings.cashTiming || 'before'
   );
-  const [upiId, setUpiId] = useState(settings.upiId || 'signlaban@okhdfcbank');
+  const [upiId, setUpiId] = useState(settings.upiVpaId || settings.upiId || '');
   const [printerModel, setPrinterModel] = useState(settings.printerModel || 'EPSON TM-T88VII Thermal Printer');
   const [autoPrintReceipt, setAutoPrintReceipt] = useState(settings.autoPrintReceipt !== false);
   const [roundingStrategy, setRoundingStrategy] = useState<'round_half_up' | 'none'>('round_half_up');
 
   // STEP 6: Menu & Team Seeding
-  const [seedDefaultMenu, setSeedDefaultMenu] = useState(true);
   const [cashierName, setCashierName] = useState(settings.activeCashierName || 'Priya Sharma');
 
   // Validation per step
@@ -137,47 +136,58 @@ export const SetupWizardPage: React.FC = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleCompleteOnboarding = () => {
+  const handleCompleteOnboarding = async () => {
     if (!validateCurrentStep()) return;
-    sounds.playSuccess();
+    const business = businesses.find((candidate) => candidate.id === activeBusinessId);
+    const outletAddress = [address, city, pincode].filter(Boolean).join(', ');
 
-    // Persist all configurations into store and active business
-    updateSettings({
-      storeName: brandName,
+    // Persist configurations for the selected outlet
+    const saved = await updateSettings({
+      storeName: outletName,
+      stateCode,
+      roundingStrategy,
       brandTagline: tagline,
-      address: `${address}, ${city}, KA ${pincode}`,
+      address: outletAddress,
       phone,
       email,
       activeCashierName: cashierName,
       defaultPaymentMode,
       cashTiming,
       lastUsedPaymentMode: defaultPaymentMode,
-      upiId,
+      upiVpaId: upiId.trim(),
       printerModel,
       autoPrintReceipt,
       receiptHeader,
       receiptFooter,
       wifiPassword,
-      isGstEnabled,
+      isGstEnabled: isGstEnabled && !isCompositionScheme,
+      showGstinOnReceipt: isGstEnabled && !isCompositionScheme,
       gstin: isGstEnabled ? gstin.toUpperCase() : '',
       fssai,
       gstRate: isGstEnabled ? gstRate : 0,
       isSetupCompleted: true,
     });
 
-    if (businesses.length > 0) {
-      updateBusiness(businesses[0].id, {
+    if (saved === false) {
+      setErrorMessage('The outlet details could not be saved. Check the error above.');
+      return;
+    }
+    sounds.playSuccess();
+    if (business) {
+      updateBusiness(business.id, {
         name: outletName,
         brandName,
         tagline,
-        address: `${address}, ${city}, KA ${pincode}`,
+        address: outletAddress,
         phone,
         email,
         gstin: isGstEnabled ? gstin.toUpperCase() : '',
         fssai,
+        stateCode,
+        upiVpaId: upiId.trim(),
         status: 'active',
         features: {
-          ...businesses[0].features,
+          ...business.features,
           gstEnabled: isGstEnabled,
           gstRate: isGstEnabled ? gstRate : 0,
           cashTiming,
@@ -187,12 +197,6 @@ export const SetupWizardPage: React.FC = () => {
           wifiPassword,
         },
       });
-    }
-
-    // Set default cashier user
-    const cashierUser = users.find((u) => u.name.toLowerCase().includes('priya')) || users[0];
-    if (cashierUser) {
-      setCurrentUser(cashierUser);
     }
 
     navigate('/pos');
@@ -213,7 +217,7 @@ export const SetupWizardPage: React.FC = () => {
         {/* Wizard Header */}
         <div className="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
           <div className="flex items-center gap-3">
-            <img src="/assets/pos-bits-logo.png" alt="pos.bits" className="h-7 w-auto object-contain" />
+            <img src="/assets/tikkit-logo.png" alt="TIKKIT" className="h-8 w-auto object-contain" />
             <div className="border-l border-slate-200 pl-3">
               <span className="font-extrabold text-xs text-gray-900 tracking-tight uppercase block">
                 Restaurant Onboarding Wizard
@@ -224,7 +228,7 @@ export const SetupWizardPage: React.FC = () => {
 
           <span className="px-3 py-1 rounded-full text-[10px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200 flex items-center gap-1.5">
             <Sparkles size={12} className="text-blue-600" />
-            Sign Laban QSR
+            Daybreak Coffee QSR
           </span>
         </div>
 
@@ -274,7 +278,7 @@ export const SetupWizardPage: React.FC = () => {
                 type="text"
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
-                placeholder="Sign Laban"
+                placeholder="Daybreak Coffee"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-slate-800 text-slate-900"
               />
             </div>
@@ -285,7 +289,7 @@ export const SetupWizardPage: React.FC = () => {
                   type="text"
                   value={legalName}
                   onChange={(e) => setLegalName(e.target.value)}
-                  placeholder="Sign Laban Foods India Pvt Ltd"
+                  placeholder="Daybreak Coffee Foods India Pvt Ltd"
                   className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-slate-800 text-slate-900"
                 />
               </div>
@@ -309,7 +313,7 @@ export const SetupWizardPage: React.FC = () => {
                 type="text"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
-                placeholder="India's First Egyptian Dessert"
+                placeholder="India's First Specialty Coffee"
                 className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-slate-800 text-slate-900"
               />
             </div>
@@ -326,7 +330,7 @@ export const SetupWizardPage: React.FC = () => {
                 type="text"
                 value={outletName}
                 onChange={(e) => setOutletName(e.target.value)}
-                placeholder="Sign Laban · Indiranagar Flagship"
+                placeholder="Daybreak Coffee · Indiranagar Flagship"
                 className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-slate-800 text-slate-900"
               />
             </div>
@@ -393,7 +397,7 @@ export const SetupWizardPage: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="indiranagar@signlaban.in"
+                  placeholder="indiranagar@daybreak.test"
                   className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-slate-800 text-slate-900"
                 />
               </div>
@@ -595,9 +599,9 @@ export const SetupWizardPage: React.FC = () => {
             <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3">
               <CheckCircle2 size={18} className="text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-bold text-emerald-900">Preload Sign Laban Flagship Catalog</p>
+                <p className="text-xs font-bold text-emerald-900">Demo menu</p>
                 <p className="text-[11px] text-emerald-700 mt-0.5">
-                  61 authentic Egyptian dessert items, modifiers, combos, and image assets will be provisioned.
+                  The local Daybreak Coffee demo includes nine photographed drinks and bakery items.
                 </p>
               </div>
             </div>
@@ -651,7 +655,7 @@ export const SetupWizardPage: React.FC = () => {
             <button
               type="button"
               onClick={handleCompleteOnboarding}
-              className="py-3 px-6 rounded-2xl bg-[#556475] hover:bg-slate-700 active:scale-98 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+              className="py-3 px-6 rounded-2xl bg-brand-orange hover:bg-slate-700 active:scale-98 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
             >
               <Check size={15} />
               <span>Complete Onboarding & Launch Counter</span>

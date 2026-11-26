@@ -1,14 +1,15 @@
 {
   "name": "pos_mvp",
   "version": "2.0.0",
-  "description": "POS.BITS — Production Multi-Tenant QSR POS SaaS for India",
+  "description": "TIKKIT — Production Multi-Tenant QSR POS SaaS for India",
   "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint",
-    "test": "npx tsx tests/gstEngine.test.ts && npx tsx tests/rbacAndIsolation.test.ts && npx tsx tests/outletOnboardingAndAuth.test.ts"
+    "lint": "eslint .",
+    "test": "node --import tsx tests/gstEngine.test.ts && node --import tsx tests/rbacAndIsolation.test.ts && node --import tsx tests/outletOnboardingAndAuth.test.ts && node tests/posOperations.test.mjs",
+    "seed:demo": "node scripts/seed-demo-users.mjs"
   },
   "keywords": [
     "pos",
@@ -18,7 +19,7 @@
     "india-gst",
     "nextjs"
   ],
-  "author": "POS.BITS Team",
+  "author": "TIKKIT Team",
   "license": "ISC",
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -36,13 +37,17 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.6.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^25.3.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.24",
+    "eslint": "^9.39.5",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.9.3"
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1"
   }
 }

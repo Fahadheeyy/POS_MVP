@@ -1,6 +1,7 @@
 "use client";
+import { switchOutlet } from '@/app/operations/outlet';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from "@/lib/navigation";
+import { adminDestination, useNavigate, useLocation } from "@/lib/navigation";
 import { useAppStore } from '../store';
 import { authService } from '@/lib/auth/authService';
 import { DatabaseResetModal } from './DatabaseResetModal';
@@ -18,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
   const {
     currentUser,
     currentRole,
+    connectedOutlet,
     settings,
     logout,
     kdsSoundEnabled,
@@ -39,10 +41,10 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
     const updateTime = () => {
       const now = new Date();
       setCurrentTime(
-        now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+        now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' })
       );
       setCurrentDate(
-        now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
+        now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: 'Asia/Kolkata' })
       );
     };
     updateTime();
@@ -57,23 +59,25 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
     navigate('/login');
   };
 
+  const permitted = (permission: string, demoRoles: string[]) => connectedOutlet
+    ? connectedOutlet.effectivePermissions.includes(permission) : demoRoles.includes(currentRole);
   const isOffline = settings.isSimulatedOffline;
   const isPrinterDown = settings.isSimulatedPrinterDown;
   const isKdsRoute = location.pathname.startsWith('/kds');
 
   return (
-    <header className="bg-white border-b border-gray-100 px-6 py-2.5 flex items-center justify-between sticky top-0 z-40 select-none">
+    <header className="tikkit-appbar px-4 md:px-6 py-3 flex items-center justify-between gap-3 sticky top-0 z-40 select-none">
       {/* Brand & Module Info */}
-      <div className="flex items-center gap-4">
-        <div
+      <div className="flex min-w-0 flex-wrap items-center gap-3">
+        <button type="button"
           onClick={() => navigate('/login')}
           className="flex items-center gap-3 cursor-pointer hover:opacity-90 transition-opacity"
         >
-          <img src="/assets/pos-bits-logo.png" alt="pos.bits" className="h-6 w-auto object-contain" />
+          <span className="tikkit-wordmark text-xl lg:text-2xl">TIKKIT</span>
           <div className="border-l border-gray-200 pl-3">
             <div className="flex items-center gap-2">
-              <span suppressHydrationWarning className="font-bold text-gray-900 tracking-tight text-xs uppercase leading-none block">
-                {title && title !== 'Sign Laban'
+              <span suppressHydrationWarning className="tikkit-module font-bold tracking-tight text-xs uppercase leading-none block">
+                {title && title !== 'Daybreak Coffee'
                   ? title
                   : isKdsRoute
                   ? 'Kitchen Display (KDS)'
@@ -85,22 +89,17 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
               </span>
               <span
                 suppressHydrationWarning
-                className="px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-slate-100 text-slate-800 uppercase tracking-wider border border-slate-200/80"
+                className="tikkit-outlet px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-slate-100 text-slate-800 uppercase tracking-wider border border-slate-200/80"
               >
-                {settings.storeName || 'Sign Laban · Indiranagar'}
+                {settings.storeName || 'Outlet'}
               </span>
-              {!settings.storeName?.includes('·') && (
-                <span suppressHydrationWarning className="text-[10px] text-slate-400 font-medium hidden sm:inline">
-                  · Indiranagar
-                </span>
-              )}
             </div>
-            {subtitle && <p className="text-[11px] text-gray-400 mt-0.5 leading-none">{subtitle}</p>}
+            {subtitle && <p className="tikkit-subtitle text-[11px] mt-0.5 leading-none">{subtitle}</p>}
           </div>
-        </div>
+        </button>
 
         {/* Dynamic Center Controls / Sub-navigation */}
-        {children && <div className="ml-4 pl-4 border-l border-gray-100">{children}</div>}
+        {children && <nav className="tikkit-subnav pl-2" aria-label="Workspace">{children}</nav>}
 
         {/* Real-time Kitchen Rush Delay Alert broadcast */}
         {kitchenAlert && kitchenAlert.active && (
@@ -121,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
       {/* Status, Simulation Controls, Time, Staff Profile */}
       <div className="flex items-center gap-5">
         {/* Connection & Printer Status Dot (Clickable simulator) */}
-        <div className="relative">
+        {!connectedOutlet && <div className="relative">
           <button
             onClick={() => setShowStatusModal(!showStatusModal)}
             title="Click to toggle simulated Offline or Printer status"
@@ -176,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
               </p>
             </div>
           )}
-        </div>
+        </div>}
 
         {/* KDS specific action buttons if on KDS */}
         {isKdsRoute && (
@@ -210,10 +209,10 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
 
         {/* Global Clock */}
         <div className="text-right border-l border-gray-100 pl-4">
-          <div suppressHydrationWarning className="font-bold text-gray-900 text-base tracking-tight leading-none">
+          <div suppressHydrationWarning className="tikkit-clock font-mono font-bold text-base tracking-tight leading-none">
             {currentTime || '06:10 AM'}
           </div>
-          <div suppressHydrationWarning className="text-[11px] text-gray-400 font-medium leading-none mt-0.5">
+          <div suppressHydrationWarning className="tikkit-date text-[11px] font-medium leading-none mt-0.5">
             {currentDate || 'Wednesday, Nov 10'}
           </div>
         </div>
@@ -222,7 +221,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full border border-gray-200 hover:border-gray-300 bg-white transition-all shadow-subtle cursor-pointer"
+            className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full border border-gray-200 hover:border-gray-300 bg-brand-paper transition-all cursor-pointer"
           >
             <div suppressHydrationWarning className="w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] font-bold flex items-center justify-center">
               {currentUser?.avatarInitials || 'ST'}
@@ -249,16 +248,25 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </span>
                 </div>
                 <p className="text-[11px] text-gray-500 mt-0.5">{currentUser?.email}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Outlet: Sign Laban · Indiranagar Flagship</p>
+                <p className="text-[10px] text-slate-400 mt-0.5">{settings.storeName}</p>
               </div>
 
-              {/* Authorized App Navigation Scoped by Role */}
+              {connectedOutlet && connectedOutlet.availableOutlets.length > 1 && (
+                <form action={switchOutlet} className="flex gap-2 border-b border-gray-100 px-3 py-2">
+                  <select name="outlet" aria-label="Outlet" defaultValue={connectedOutlet.outletId} className="min-w-0 flex-1 rounded border p-1 text-xs">
+                    {connectedOutlet.availableOutlets.map((outlet) => <option key={outlet.id} value={outlet.id}>{outlet.name}</option>)}
+                  </select>
+                  <button className="text-xs font-semibold underline">Switch</button>
+                </form>
+              )}
+
+              {/* Navigation for the verified outlet assignment */}
               <div className="py-1">
                 <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-400">
                   Authorized Modules
                 </p>
                 
-                {(currentRole === 'cashier' || currentRole === 'manager' || currentRole === 'owner' || currentRole === 'admin') && (
+                {permitted('pos.access', ['cashier', 'manager', 'owner', 'admin']) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
@@ -273,7 +281,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                {(currentRole === 'kitchen' || currentRole === 'manager' || currentRole === 'owner' || currentRole === 'admin') && (
+                {permitted('kds.access', ['kitchen', 'manager', 'owner', 'admin']) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
@@ -288,7 +296,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                {(currentRole === 'manager' || currentRole === 'owner' || currentRole === 'admin') && (
+                {permitted('staff.manage', ['manager', 'owner', 'admin']) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
@@ -303,7 +311,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                {(currentRole === 'owner' || currentRole === 'admin') && (
+                {permitted('reports.view', ['owner', 'admin']) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
@@ -318,7 +326,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                {(currentRole === 'owner' || currentRole === 'admin' || currentRole === 'manager') && (
+                {permitted('reports.view', ['owner', 'admin', 'manager']) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
@@ -337,7 +345,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
-                      navigate('/admin');
+                      navigate(adminDestination(currentUser?.id ?? ''));
                     }}
                     className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-medium text-left transition-colors ${
                       location.pathname.startsWith('/admin') ? 'bg-blue-50 text-blue-700 font-bold' : 'hover:bg-gray-50 text-gray-700'
@@ -351,7 +359,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
 
               {/* Settings & System Utilities */}
               <div className="border-t border-gray-100 pt-1 mt-1 space-y-0.5">
-                {(currentRole === 'owner' || currentRole === 'admin' || currentRole === 'manager') && (
+                {permitted('settings.manage', ['owner', 'admin', 'manager']) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
@@ -364,7 +372,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                {(currentRole === 'owner' || currentRole === 'admin') && (
+                {(!connectedOutlet && (currentRole === 'owner' || currentRole === 'admin')) && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);

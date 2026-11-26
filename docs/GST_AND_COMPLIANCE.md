@@ -6,7 +6,7 @@
 - Notification No. 11/2017-Central Tax (Rate) dated 28-June-2017 as amended by Notification No. 46/2017-Central Tax (Rate) dated 14-Nov-2017  
 - Central Goods and Services Tax Rules, 2017 (Rule 46: Tax Invoice, Rule 49: Bill of Supply, Rule 53: Credit and Debit Notes)  
 - Section 170 of the CGST Act (Rounding off of tax)  
-- Food Safety and Standards Authority of India (FSSAI) Order No. 12(1)2020/FSSAI/RCD/FSS dated 08-June-2021 (Mandatory display of 14-digit FSSAI license number on cash receipts)
+- [FSSAI direction to restaurants and hotels on the 14-digit licence or registration number on receipts and invoices](https://fssai.gov.in/upload/advisories/2022/09/6320614d91afaOrder_License_Food_13_09_2022.pdf)
 
 ---
 
@@ -15,7 +15,7 @@
 | Category | Eligibility / Threshold | Tax Rate | ITC Eligibility | Required Document Type |
 |---|---|---|---|---|
 | **Standalone Restaurant (Regular)** | Standard QSR, Cafe, Dining (Air-conditioned or Non-AC) | **5.00%** (2.5% CGST + 2.5% SGST/UTGST) | **NO ITC** (Input Tax Credit cannot be claimed) | **Tax Invoice** (Rule 46) |
-| **Restaurant in "Specified Premises"** | Located inside a hotel premises where declared room tariff is ₹7,500+ per unit/night | **18.00%** (9.0% CGST + 9.0% SGST / 18% IGST) | **YES Full ITC** | **Tax Invoice** (Rule 46) |
+| **Restaurant in "Specified Premises"** | Determined for the financial year from qualifying prior-year hotel accommodation supplies above ₹7,500 per unit per day or an eligible declaration. [CBIC Notification 05/2025-Central Tax (Rate)](https://taxinformation.cbic.gov.in/view-pdf/1010273/ENG/Notifications) | **18.00%** (9.0% CGST + 9.0% SGST / 18% IGST) | **YES Full ITC** | **Tax Invoice** (Rule 46) |
 | **Composition Scheme (Sec. 10)** | Annual aggregate turnover ≤ ₹1.5 Crore; non-alcohol, non-inter-state supply | **5.00%** (2.5% CGST + 2.5% SGST) paid by supplier | **NO ITC** (Cannot collect tax from customer) | **Bill of Supply** (Rule 49) |
 | **Unregistered Small Supplier** | Annual aggregate turnover below threshold (₹20 Lakhs / ₹10 Lakhs for Special Category States) | **0.00%** (Cannot charge tax) | **NO ITC** | **Retail Bill / Cash Memo** |
 
@@ -103,3 +103,13 @@ When an order is cancelled or refunded post-billing:
 2. A **Credit Note** is issued referencing the original Invoice Number and Date.
 3. The Credit Note reverses the exact taxable value, CGST, and SGST originally charged.
 4. Credit Notes are tracked in a dedicated serial sequence (`CN/BLR/26-27/000012`).
+
+
+Where CGST Act section 34(2) applies, track the GST reporting deadline separately from the payment refund. The deadline is the earlier of 30 November following the financial year of supply and the date the relevant annual return is filed. Section 36 generally requires covered records to be retained for 72 months from the annual return due date, with an extension where specified proceedings or investigations are pending. [Central Goods and Services Tax Act, sections 34 and 36](https://upload.indiacode.nic.in/showfile?actid=AC_CEN_2_2_00042_201712_1517807328102&filename=a2017-12.pdf&type=actfile)
+
+## 6. Production payment and privacy requirements
+
+- Use a provider-hosted or provider-controlled payment flow and keep customer card credentials out of merchant-accessible storage. Track provider references and refund status, with refunds routed to the original payment method by default. Use the provider's mandate flow for recurring subscription payments. [RBI payment aggregator directions](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12896) · [RBI e-mandate framework](https://www.rbi.org.in/SCRIPTS/BS_ViewMasDirections.aspx?id=13374)
+- Design customer-data controls around the applicable DPDP provisions and their phased commencement. Separate optional customer contact data from financial records subject to legal retention before implementing export or erasure. [MeitY Digital Personal Data Protection Rules, 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)
+
+The platform outlet form checks the format of the FSSAI number. Licence verification, receipt issuance, payment integration, statutory retention, and privacy request handling require separate implementation and staging verification.
