@@ -494,5 +494,43 @@
       // and column/key alignment. Set to "null" to emit raw, unformatted SQL.
       // "format_options": "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}",
     }
+  },
+  "remotes": {
+    "production": {
+      "auth": {
+        "additional_redirect_urls": [
+          "https://tikkit-pos.vercel.app/**",
+          "https://tikkit-pos.vercel.app/auth/callback",
+          "http://localhost:3000/**"
+        ],
+        "email": {
+          "enable_confirmations": true,
+          "max_frequency": "1m0s",
+          "otp_length": 8
+        },
+        "mfa": {
+          "totp": {
+            "enroll_enabled": true,
+            "verify_enabled": true
+          }
+        },
+        "site_url": "https://tikkit-pos.vercel.app",
+        "sms": {
+          "enable_confirmations": true
+        }
+      },
+      "db": {
+        "pooler": {
+          "default_pool_size": 15,
+          "max_client_conn": 200
+        }
+      },
+      "storage": {
+        "vector": {
+          "enabled": false
+        }
+      },
+      "project_id": "ijmmkomdzujuppvawugj"
+    }
   }
 }
