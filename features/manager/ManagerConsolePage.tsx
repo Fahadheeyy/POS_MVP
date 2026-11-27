@@ -1,7 +1,6 @@
 "use client";
 import { DEFAULT_PRODUCT_IMAGE, ProductEditor } from './ProductEditor';
 import { AddTeamMemberModal } from '@/components/AddTeamMemberModal';
-import { StaffInvitation } from '@/components/StaffInvitation';
 import { supabase } from '@/lib/supabase/client';
 import React, { useState } from 'react';
 import { refreshOutletWorkspace, useAppStore } from '../../store';
@@ -530,12 +529,6 @@ export const ManagerConsolePage: React.FC = () => {
         {/* TAB 2: STAFF & PIN RESET */}
         {activeTab === 'staff' && (
           <div className="space-y-6">
-            {connectedOutlet && (
-              <StaffInvitation
-                outlet={connectedOutlet.outletId}
-                canInviteManager={canManageManagers}
-              />
-            )}
             {staffError && <p role="alert" className="text-xs font-semibold text-red-700">{staffError}</p>}
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="relative w-72">
