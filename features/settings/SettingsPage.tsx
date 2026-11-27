@@ -35,17 +35,39 @@ export const SettingsPage: React.FC = () => {
   >('profile');
 
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [feedTested, setFeedTested] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSaving) return;
+    setSaveError('');
+    setSavedSuccess(false);
     const updated = Object.fromEntries(Object.entries(formData).filter(([key, value]) =>
       JSON.stringify(value) !== JSON.stringify(savedForm.current[key as keyof typeof settings])));
-    if (await updateSettings(updated) === false) return;
-    savedForm.current = formData;
-    sounds.playSuccess();
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 2000);
+    if (Object.keys(updated).length === 0) {
+      sounds.playSuccess();
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 2000);
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const result = await updateSettings(updated);
+      if (result === false) {
+        sounds.playError();
+        setSaveError(useAppStore.getState().operationalError || 'Could not save settings. Check your permissions and connection.');
+        return;
+      }
+      savedForm.current = formData;
+      sounds.playSuccess();
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 2500);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleExportDatabase = () => {
@@ -376,19 +398,24 @@ export const SettingsPage: React.FC = () => {
                     </div>
                     <button
                       type="button"
-                      onClick={() => sounds.playSuccess()}
+                      onClick={() => {
+                        sounds.playSuccess();
+                        setFeedTested(true);
+                        setTimeout(() => setFeedTested(false), 2500);
+                      }}
                       className="px-3 py-1.5 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 font-semibold"
                     >
-                      Test Feed
+                      {feedTested ? 'Test Feed Sent' : 'Test Feed'}
                     </button>
                   </div>
 
+                  {!connectedOutlet && (
                   <div className="p-4 rounded-2xl border border-gray-200 space-y-3">
                     <p className="font-bold text-gray-900">Simulate Network / Printer Disconnection</p>
                     <p className="text-gray-400 text-[11px]">
                       Toggle these to test POS offline order queuing and printer disconnect banners.
                     </p>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-3">
                       <button
                         type="button"
                         onClick={() =>
@@ -421,6 +448,7 @@ export const SettingsPage: React.FC = () => {
                       </button>
                     </div>
                   </div>
+                  )}
                 </div>
               </div>
             )}
@@ -541,9 +569,15 @@ export const SettingsPage: React.FC = () => {
               </div>
             )}
 
+            {saveError && (
+              <p role="alert" className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-xl px-3.5 py-2.5">
+                {saveError}
+              </p>
+            )}
+
             {/* Submit Bar */}
-            <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs text-gray-400">All changes persist across browser tabs.</span>
+            <div className="pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3">
+              <span className="text-xs text-gray-500">Changes sync live across your outlet terminal &amp; receipts.</span>
               <div className="flex items-center gap-3">
                 {savedSuccess && (
                   <span className="text-xs font-bold text-secondaryGreen-700 flex items-center gap-1">
@@ -552,9 +586,10 @@ export const SettingsPage: React.FC = () => {
                 )}
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs shadow-subtle transition-colors"
+                  disabled={isSaving}
+                  className="px-6 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs shadow-subtle transition-colors disabled:opacity-50"
                 >
-                  Save Settings
+                  {isSaving ? 'Saving…' : 'Save Settings'}
                 </button>
               </div>
             </div>

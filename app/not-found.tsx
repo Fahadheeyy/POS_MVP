@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { TikkitNotFoundScreen } from '@/components/ScreenStates';
+
 export default function NotFound() {
-  return <main className="screen-state"><h1>Page not found</h1><Link className="state-action" href="/">Return to workspace</Link></main>;
+  return <TikkitNotFoundScreen />;
 }

@@ -47,28 +47,35 @@ export function ManagerPinModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-gray-900/40 p-4">
+    <div className="fixed inset-0 z-50 grid place-items-center bg-gray-900/45 backdrop-blur-xs p-4">
       <form role="dialog" aria-modal="true" aria-labelledby="supervisor-approval" onSubmit={submit}
-        className="grid w-full max-w-md gap-3 rounded-2xl bg-white p-6 shadow-xl">
+        className="tikkit-card grid w-full max-w-md max-h-[92dvh] overflow-y-auto gap-3 rounded-3xl p-5 sm:p-6">
         <h2 id="supervisor-approval" className="text-lg font-bold">{actionTitle}</h2>
-        <p className="text-sm text-gray-600">{actionDescription}</p>
-        <label className="grid gap-1 text-sm">Supervisor email
-          <input className="rounded border p-2" name="email" type="email" autoComplete="off" required />
+        <p className="text-xs sm:text-sm text-brand-muted">{actionDescription}</p>
+        <label className="grid gap-1 text-xs font-semibold">Supervisor email
+          <input className="rounded-xl border p-2.5 text-sm" name="email" type="email" autoComplete="off" required />
         </label>
-        <label className="grid gap-1 text-sm">Supervisor password
-          <input className="rounded border p-2" name="password" type="password" autoComplete="off" required />
+        <label className="grid gap-1 text-xs font-semibold">Supervisor password
+          <input className="rounded-xl border p-2.5 text-sm" name="password" type="password" autoComplete="off" required />
         </label>
-        <label className="grid gap-1 text-sm">Refund reason
-          <input className="rounded border p-2" name="reason" maxLength={500} required />
+        <label className="grid gap-1 text-xs font-semibold">Refund reason
+          <input className="rounded-xl border p-2.5 text-sm" name="reason" maxLength={500} required />
         </label>
-        <label className="grid gap-1 text-sm">Payment refund reference {externalPayment ? '' : '(card or UPI only)'}
-          <input className="rounded border p-2" name="reference" maxLength={80} required={externalPayment} />
+        <label className="grid gap-1 text-xs font-semibold">Payment refund reference {externalPayment ? '' : '(card or UPI only)'}
+          <input className="rounded-xl border p-2.5 text-sm" name="reference" maxLength={80} required={externalPayment} />
         </label>
-        <p className="text-xs text-gray-600">Return cash or complete the reversal on the payment terminal before recording the refund.</p>
-        {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
-        <div className="flex justify-end gap-3">
-          <button type="button" onClick={onClose} disabled={pending}>Cancel</button>
-          <button disabled={pending} className="rounded bg-slate-900 px-4 py-2 text-white disabled:opacity-50">
+        <p className="text-xs text-brand-muted">Return cash or complete the reversal on the payment terminal before recording the refund.</p>
+        {error && <p role="alert" className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-xl p-2.5">{error}</p>}
+        <div className="flex justify-end gap-2.5 pt-1">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={pending}
+            className="px-4 py-2 rounded-xl border border-brand-rule bg-white/80 hover:bg-white text-xs font-semibold text-brand-ink"
+          >
+            Cancel
+          </button>
+          <button disabled={pending} className="rounded-xl bg-brand-ink hover:bg-black px-4 py-2 text-xs font-bold text-brand-paper disabled:opacity-50">
             {pending ? 'Recording…' : 'Approve and record refund'}
           </button>
         </div>

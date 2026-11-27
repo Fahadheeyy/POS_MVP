@@ -55,6 +55,7 @@ export const ManagerConsolePage: React.FC = () => {
   } = useAppStore();
 
   const [staffError,setStaffError] = useState('');
+  const [menuError, setMenuError] = useState('');
   const [activeTab, setActiveTab] = useState<'menu' | 'staff' | 'approvals' | 'operations'>('menu');
 
   // Menu Management State
@@ -234,6 +235,11 @@ export const ManagerConsolePage: React.FC = () => {
         {/* TAB 1: MENU MANAGEMENT */}
         {activeTab === 'menu' && (
           <div className="space-y-5 sm:space-y-6">
+            {menuError && (
+              <p role="alert" className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-xl px-3.5 py-2.5">
+                {menuError}
+              </p>
+            )}
             {/* Menu Sub-Tab Switcher: Dishes vs Add-ons */}
             <div className="flex flex-wrap items-center gap-2 border-b border-gray-200 pb-3">
               <button
@@ -356,9 +362,15 @@ export const ManagerConsolePage: React.FC = () => {
                           <td className="px-6 py-3.5 text-center">
                             <button
                               type="button"
-                              onClick={() => {
-                                sounds.playSuccess();
-                                toggleProductAvailability(prod.id);
+                              onClick={async () => {
+                                setMenuError('');
+                                const ok = await toggleProductAvailability(prod.id);
+                                if (ok === false) {
+                                  sounds.playError();
+                                  setMenuError(useAppStore.getState().operationalError || 'Could not update item availability.');
+                                } else {
+                                  sounds.playSuccess();
+                                }
                               }}
                               className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                                 prod.isAvailable
@@ -511,9 +523,15 @@ export const ManagerConsolePage: React.FC = () => {
                               <div className="flex items-center gap-1.5">
                                 <button
                                   type="button"
-                                  onClick={() => {
-                                    sounds.playSuccess();
-                                    toggleAddOnItemStock(group.id, item.id);
+                                  onClick={async () => {
+                                    setMenuError('');
+                                    const ok = await toggleAddOnItemStock(group.id, item.id);
+                                    if (ok === false) {
+                                      sounds.playError();
+                                      setMenuError(useAppStore.getState().operationalError || 'Could not update modifier availability.');
+                                    } else {
+                                      sounds.playSuccess();
+                                    }
                                   }}
                                   className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all ${
                                     item.isAvailable !== false
@@ -526,9 +544,14 @@ export const ManagerConsolePage: React.FC = () => {
                                 </button>
                                 <button
                                   type="button"
-                                  onClick={() => {
-                                    if (confirm(`Remove "${item.name}" from this category?`)) {
-                                      deleteAddOnItem(group.id, item.id);
+                                  onClick={async () => {
+                                    if (!confirm(`Remove "${item.name}" from this category?`)) return;
+                                    setMenuError('');
+                                    const ok = await deleteAddOnItem(group.id, item.id);
+                                    if (ok === false) {
+                                      sounds.playError();
+                                      setMenuError(useAppStore.getState().operationalError || 'Could not remove modifier item.');
+                                    } else {
                                       sounds.playClick();
                                     }
                                   }}

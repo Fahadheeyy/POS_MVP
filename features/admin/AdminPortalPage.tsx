@@ -1303,7 +1303,11 @@ export const AdminPortalPage: React.FC<AdminWorkspaceProps> = ({
                       <input
                         type="text"
                         defaultValue={targetTenant.features.receiptHeader || ''}
-                        onBlur={(e) => handleFeatureToggle('receiptHeader', e.target.value)}
+                        onBlur={(e) => {
+                          if (e.target.value !== (targetTenant.features.receiptHeader || '')) {
+                            handleFeatureToggle('receiptHeader', e.target.value);
+                          }
+                        }}
                         className="w-full px-3 py-2 rounded-xl border-2 border-[#161412] text-xs font-mono"
                       />
                     </div>
@@ -1312,7 +1316,11 @@ export const AdminPortalPage: React.FC<AdminWorkspaceProps> = ({
                       <input
                         type="text"
                         defaultValue={targetTenant.features.receiptFooter || ''}
-                        onBlur={(e) => handleFeatureToggle('receiptFooter', e.target.value)}
+                        onBlur={(e) => {
+                          if (e.target.value !== (targetTenant.features.receiptFooter || '')) {
+                            handleFeatureToggle('receiptFooter', e.target.value);
+                          }
+                        }}
                         className="w-full px-3 py-2 rounded-xl border-2 border-[#161412] text-xs"
                       />
                     </div>
@@ -1321,7 +1329,11 @@ export const AdminPortalPage: React.FC<AdminWorkspaceProps> = ({
                       <input
                         type="text"
                         defaultValue={targetTenant.features.wifiPassword || ''}
-                        onBlur={(e) => handleFeatureToggle('wifiPassword', e.target.value)}
+                        onBlur={(e) => {
+                          if (e.target.value !== (targetTenant.features.wifiPassword || '')) {
+                            handleFeatureToggle('wifiPassword', e.target.value);
+                          }
+                        }}
                         className="w-full px-3 py-2 rounded-xl border-2 border-[#161412] text-xs"
                       />
                     </div>
@@ -1478,45 +1490,77 @@ export const AdminPortalPage: React.FC<AdminWorkspaceProps> = ({
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-xl border border-[#D9CFC0] bg-[#FAF1E4] flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Wifi size={18} />
-                    <div>
-                      <p className="font-bold text-xs">Network Simulation</p>
-                      <p className="text-[11px] text-[#5E554C]">
-                        {store.settings.isSimulatedOffline ? 'Offline simulated' : 'Connected online'}
-                      </p>
+              {!isSupabase ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className="p-4 rounded-xl border border-[#D9CFC0] bg-[#FAF1E4] flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3">
+                      <Wifi size={18} />
+                      <div>
+                        <p className="font-bold text-xs">Network Simulation</p>
+                        <p className="text-[11px] text-[#5E554C]">
+                          {store.settings.isSimulatedOffline ? 'Offline simulated' : 'Connected online'}
+                        </p>
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={store.toggleOfflineSimulated}
+                      className="px-3 py-1.5 rounded-xl border border-[#161412] bg-[#FFF4E0] text-xs font-bold"
+                    >
+                      {store.settings.isSimulatedOffline ? 'Reconnect' : 'Simulate Offline'}
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={store.toggleOfflineSimulated}
-                    className="px-3 py-1.5 rounded-xl border border-[#161412] bg-[#FFF4E0] text-xs font-bold"
-                  >
-                    {store.settings.isSimulatedOffline ? 'Reconnect' : 'Simulate Offline'}
-                  </button>
-                </div>
 
-                <div className="p-4 rounded-xl border border-[#D9CFC0] bg-[#FAF1E4] flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Printer size={18} />
-                    <div>
-                      <p className="font-bold text-xs">Thermal Printer Simulation</p>
-                      <p className="text-[11px] text-[#5E554C]">
-                        {store.settings.isSimulatedPrinterDown ? 'Printer jammed' : 'Printer ready'}
-                      </p>
+                  <div className="p-4 rounded-xl border border-[#D9CFC0] bg-[#FAF1E4] flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3">
+                      <Printer size={18} />
+                      <div>
+                        <p className="font-bold text-xs">Thermal Printer Simulation</p>
+                        <p className="text-[11px] text-[#5E554C]">
+                          {store.settings.isSimulatedPrinterDown ? 'Printer jammed' : 'Printer ready'}
+                        </p>
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={store.togglePrinterSimulated}
+                      className="px-3 py-1.5 rounded-xl border border-[#161412] bg-[#FFF4E0] text-xs font-bold"
+                    >
+                      {store.settings.isSimulatedPrinterDown ? 'Restore Printer' : 'Simulate Jam'}
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={store.togglePrinterSimulated}
-                    className="px-3 py-1.5 rounded-xl border border-[#161412] bg-[#FFF4E0] text-xs font-bold"
-                  >
-                    {store.settings.isSimulatedPrinterDown ? 'Restore Printer' : 'Simulate Jam'}
-                  </button>
                 </div>
-              </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className="p-4 rounded-xl border border-[#D9CFC0] bg-[#FAF1E4] flex items-center justify-between gap-2">
+                    <div>
+                      <p className="font-bold text-xs">Live Outlet Orders &amp; Refunds</p>
+                      <p className="text-[11px] text-[#5E554C]">Inspect today&apos;s Cloud-persisted transactions</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/orders')}
+                      className="px-3 py-1.5 rounded-xl border border-[#161412] bg-[#FFF4E0] text-xs font-bold shrink-0"
+                    >
+                      Open Orders
+                    </button>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-[#D9CFC0] bg-[#FAF1E4] flex items-center justify-between gap-2">
+                    <div>
+                      <p className="font-bold text-xs">Store Tax &amp; Receipt Preferences</p>
+                      <p className="text-[11px] text-[#5E554C]">Manage GST rate, UPI VPA, and printer settings</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/settings')}
+                      className="px-3 py-1.5 rounded-xl border border-[#161412] bg-[#FFF4E0] text-xs font-bold shrink-0"
+                    >
+                      Open Settings
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="pt-4 border-t border-[#E6DBC8] flex items-center gap-3 flex-wrap">
                 <Volume2 size={15} />

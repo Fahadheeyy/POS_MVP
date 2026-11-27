@@ -48,7 +48,7 @@ export const CashierRevenueModal: React.FC<CashierRevenueModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none font-sans">
-      <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-lg p-6 shadow-modal relative">
+      <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-lg max-h-[92dvh] overflow-y-auto p-5 sm:p-6 shadow-modal relative">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors"

@@ -65,13 +65,25 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
   const isPrinterDown = settings.isSimulatedPrinterDown;
   const isKdsRoute = location.pathname.startsWith('/kds');
 
+  const homeRoute = (() => {
+    if (currentRole === 'admin' || currentUser?.title === 'Platform Super Admin') {
+      return adminDestination(currentUser?.id ?? '');
+    }
+    if (permitted('reports.view', ['owner', 'admin'])) return '/owner';
+    if (permitted('staff.manage', ['manager', 'owner', 'admin'])) return '/manager';
+    if (permitted('pos.access', ['cashier', 'manager', 'owner', 'admin'])) return '/pos';
+    if (permitted('kds.access', ['kitchen', 'manager', 'owner', 'admin'])) return '/kds';
+    if (permitted('orders.view', ['cashier', 'manager', 'owner', 'admin'])) return '/orders';
+    return '/login';
+  })();
+
   return (
     <header className="tikkit-appbar px-4 md:px-6 py-3 flex items-center justify-between gap-3 sticky top-0 z-40 select-none">
       {/* Brand & Module Info */}
       <div className="flex min-w-0 flex-wrap items-center gap-3">
         <button type="button"
-          onClick={() => navigate('/login')}
-          className="flex items-center gap-3 cursor-pointer hover:opacity-90 transition-opacity"
+          onClick={() => navigate(homeRoute)}
+          className="flex items-center gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0"
         >
           <span className="tikkit-wordmark text-xl lg:text-2xl">TIKKIT</span>
           <div className="border-l border-gray-200 pl-3">
@@ -387,16 +399,19 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                <button
-                  onClick={() => {
-                    setShowUserMenu(false);
-                    setShowResetModal(true);
-                  }}
-                  className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-gray-600 hover:bg-gray-50"
-                >
-                  <RefreshCw size={12} />
-                  <span>Reset Demo Data</span>
-                </button>
+                {!connectedOutlet && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      setShowResetModal(true);
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-gray-600 hover:bg-gray-50"
+                  >
+                    <RefreshCw size={12} />
+                    <span>Reset Demo Data</span>
+                  </button>
+                )}
 
                 <button
                   onClick={handleSignOut}

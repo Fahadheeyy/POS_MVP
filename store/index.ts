@@ -181,9 +181,9 @@ interface StoreState {
   addAddOnGroup: (group: Omit<AddOnGroup, 'id'>) => void | Promise<boolean>;
   addAddOnItemToGroup: (groupId: string, item: Omit<AddOnItem, 'id'>) => void | Promise<boolean>;
   updateAddOnItem: (groupId: string, item: AddOnItem) => void;
-  deleteAddOnItem: (groupId: string, itemId: string) => void;
-  toggleAddOnItemStock: (groupId: string, itemId: string) => void;
-  toggleProductAvailability: (id: string) => void;
+  deleteAddOnItem: (groupId: string, itemId: string) => Promise<boolean> | void;
+  toggleAddOnItemStock: (groupId: string, itemId: string) => Promise<boolean> | void;
+  toggleProductAvailability: (id: string) => Promise<boolean> | void;
   updatePromoBanner: (active: boolean, percent: number, text: string) => void;
   addStaff: (user: Omit<User, 'id'>) => void;
   updateStaff: (id: string, updates: Partial<User>) => void;

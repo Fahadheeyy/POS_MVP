@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { activateOutletWorkspace, refreshOutletWorkspace, useAppStore } from '@/store';
 import { OutletAccessDenied, type OutletWorkspace as OutletWorkspaceData } from '@/services/orderService';
+import { TikkitErrorScreen, TikkitLoadingScreen } from '@/components/ScreenStates';
 import type { OutletAccess } from '@/lib/auth/operationalAccess';
 
 function pollIntervalMs(pathname: string): number {
@@ -97,10 +98,14 @@ export function OutletWorkspace({
       {loadedOutlet === access.outletId ? (
         <>
           {(error || actionError) && (
-            <aside role="alert" className="bg-amber-50 px-4 py-2">
-              {error ? 'Updates paused. ' + error : actionError}
+            <aside role="alert" className="bg-amber-100 border-b-2 border-brand-ink text-brand-ink px-4 py-2 text-xs font-semibold flex flex-wrap items-center justify-between gap-2">
+              <span>{error ? 'Live updates paused · ' + error : actionError}</span>
               {error && (
-                <button className="state-action ml-2" onClick={() => setAttempt((n) => n + 1)}>
+                <button
+                  type="button"
+                  className="px-3 py-1 rounded-lg bg-brand-ink text-brand-paper text-xs font-bold"
+                  onClick={() => setAttempt((n) => n + 1)}
+                >
                   Reconnect
                 </button>
               )}
@@ -108,21 +113,19 @@ export function OutletWorkspace({
           )}
           {children}
         </>
+      ) : error ? (
+        <TikkitErrorScreen
+          title="Outlet unavailable"
+          message={error}
+          onRetry={() => setAttempt((n) => n + 1)}
+          homeHref="/login"
+          homeLabel="Go to Sign In"
+        />
       ) : (
-        <main className="screen-state" role={error ? 'alert' : 'status'}>
-          <h1>{error ? 'Outlet unavailable' : 'Opening ' + access.outletName + '…'}</h1>
-          {error && (
-            <>
-              <p>{error}</p>
-              <button className="state-action" onClick={() => setAttempt((n) => n + 1)}>
-                Try again
-              </button>
-              <a href="/login" className="state-action ml-2">
-                Sign in
-              </a>
-            </>
-          )}
-        </main>
+        <TikkitLoadingScreen
+          title={`Opening ${access.outletName}…`}
+          subtitle="Loading menu catalog, orders, and live terminal state"
+        />
       )}
     </>
   );

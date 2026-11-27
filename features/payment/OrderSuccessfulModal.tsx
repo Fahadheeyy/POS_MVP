@@ -39,7 +39,7 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
 
   return (
     <div ref={dialog} role="dialog" aria-modal="true" aria-label="Order saved" tabIndex={-1} className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-fadeIn p-4 select-none">
-      <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-4xl overflow-hidden shadow-modal grid grid-cols-1 md:grid-cols-2 relative">
+      <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-4xl max-h-[92dvh] overflow-y-auto shadow-modal grid grid-cols-1 md:grid-cols-2 relative">
         <button
           aria-label="Close dialog" onClick={onClose}
           className="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
@@ -48,7 +48,7 @@ export const OrderSuccessfulModal: React.FC<OrderSuccessfulModalProps> = ({
         </button>
 
         {/* Left Column: Order Details matching Order — successful.png */}
-        <div className="p-8 border-r border-gray-100 flex flex-col justify-between">
+        <div className="p-5 sm:p-8 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col justify-between">
           <div>
             <h3 className="font-extrabold text-gray-900 text-xl mb-6 text-center">Order Details</h3>
 

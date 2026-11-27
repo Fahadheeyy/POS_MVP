@@ -48,11 +48,7 @@ export const DatabaseResetModal: React.FC<DatabaseResetModalProps> = ({ isOpen, 
       resetDemoData();
       setIsResetting(false);
       handleClose();
-      // Optional browser alert to notify state is refreshed
-      setTimeout(() => {
-        alert('Database has been completely wiped and re-seeded to factory demo state.');
-      }, 100);
-    }, 600);
+    }, 500);
   };
 
   const handleClose = () => {
