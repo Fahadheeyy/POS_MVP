@@ -341,7 +341,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   </button>
                 )}
 
-                {currentRole === 'admin' && (
+                {(currentRole === 'admin' || currentUser?.title === 'Platform Super Admin') && (
                   <button
                     onClick={() => {
                       setShowUserMenu(false);
