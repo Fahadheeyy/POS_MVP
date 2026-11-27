@@ -91,6 +91,30 @@ export const ManagerConsolePage: React.FC = () => {
     return matchesSearch && matchesCat;
   });
 
+  const filteredUsers = users.filter((u) => u.name.toLowerCase().includes(staffSearch.toLowerCase()));
+
+  const isStaffStatusDisabled = (user: User) =>
+    !!connectedOutlet &&
+    (!user.active ||
+      (canManageManagers
+        ? !['manager', 'cashier', 'kitchen'].includes(user.role)
+        : !['cashier', 'kitchen'].includes(user.role)));
+
+  const handleToggleStaffStatus = async (user: User) => {
+    if (!connectedOutlet) return toggleStaffStatus(user.id);
+    if (!window.confirm('Disable ' + user.name + ' at this outlet?')) return;
+    const { error } = await supabase.rpc('disable_outlet_staff', {
+      p_outlet: connectedOutlet.outletId,
+      p_staff: user.id,
+    });
+    if (error) {
+      setStaffError('Could not disable this staff assignment.');
+    } else {
+      setStaffError('');
+      await refreshOutletWorkspace(connectedOutlet.outletId);
+    }
+  };
+
   const handleCreateAddOnItem = async (e: React.FormEvent) => {
     e.preventDefault();
     if (savingAddOn) return;
@@ -206,12 +230,12 @@ export const ManagerConsolePage: React.FC = () => {
         </div>
       </Header>
 
-      <div className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+      <div className="flex-1 p-3.5 sm:p-6 max-w-7xl w-full mx-auto space-y-5 sm:space-y-6">
         {/* TAB 1: MENU MANAGEMENT */}
         {activeTab === 'menu' && (
-          <div className="space-y-6">
+          <div className="space-y-5 sm:space-y-6">
             {/* Menu Sub-Tab Switcher: Dishes vs Add-ons */}
-            <div className="flex items-center gap-2 border-b border-gray-200 pb-3">
+            <div className="flex flex-wrap items-center gap-2 border-b border-gray-200 pb-3">
               <button
                 type="button"
                 onClick={() => setMenuSubTab('dishes')}
@@ -244,10 +268,10 @@ export const ManagerConsolePage: React.FC = () => {
             {menuSubTab === 'dishes' ? (
               <>
                 {/* Menu Header + Search & Add Product */}
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <div className="relative w-64">
-                      <Search size={14} className="absolute left-3 top-2.5 text-gray-400" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 min-w-0">
+                    <div className="relative w-full sm:w-64 shrink-0">
+                      <Search size={14} className="absolute left-3 top-3 sm:top-2.5 text-gray-400" />
                       <input
                         type="text"
                         value={menuSearch}
@@ -257,10 +281,10 @@ export const ManagerConsolePage: React.FC = () => {
                       />
                     </div>
 
-                    <div className="flex gap-1 bg-gray-100 rounded-full p-0.5 text-xs font-semibold">
+                    <div className="flex gap-1 bg-gray-100 rounded-full p-0.5 text-xs font-semibold overflow-x-auto max-w-full no-scrollbar whitespace-nowrap">
                       <button
                         onClick={() => setSelectedCategory('all')}
-                        className={`px-3 py-1 rounded-full capitalize ${
+                        className={`px-3 py-1 rounded-full capitalize shrink-0 ${
                           selectedCategory === 'all' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'
                         }`}
                       >
@@ -270,7 +294,7 @@ export const ManagerConsolePage: React.FC = () => {
                         <button
                           key={c.id}
                           onClick={() => setSelectedCategory(c.id)}
-                          className={`px-3 py-1 rounded-full capitalize ${
+                          className={`px-3 py-1 rounded-full capitalize shrink-0 ${
                             selectedCategory === c.id ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'
                           }`}
                         >
@@ -282,7 +306,7 @@ export const ManagerConsolePage: React.FC = () => {
 
                   <button
                     onClick={() => setShowAddProductModal(true)}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
+                    className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors shrink-0"
                   >
                     <Plus size={14} />
                     <span>Add Product</span>
@@ -530,9 +554,9 @@ export const ManagerConsolePage: React.FC = () => {
         {activeTab === 'staff' && (
           <div className="space-y-6">
             {staffError && <p role="alert" className="text-xs font-semibold text-red-700">{staffError}</p>}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="relative w-72">
-                <Search size={14} className="absolute left-3 top-2.5 text-gray-400" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="relative w-full sm:w-72">
+                <Search size={14} className="absolute left-3 top-3 sm:top-2.5 text-gray-400" />
                 <input
                   type="text"
                   value={staffSearch}
@@ -548,14 +572,52 @@ export const ManagerConsolePage: React.FC = () => {
                   setStaffError('');
                   setShowAddStaffModal(true);
                 }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
+                className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
               >
                 <Plus size={14} />
                 <span>Add Staff</span>
               </button>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-3xl overflow-x-auto shadow-card">
+            <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-card">
+              {/* Mobile Staff Cards (< sm) */}
+              <div className="sm:hidden divide-y divide-gray-100">
+                {filteredUsers.map((user) => (
+                  <div key={user.id} className="p-4 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-9 h-9 rounded-full bg-gray-800 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                          {user.avatarInitials}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="font-bold text-gray-900 text-sm truncate">{user.name}</p>
+                          <p className="text-[11px] text-gray-500 truncate">{user.title}</p>
+                        </div>
+                      </div>
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-700 shrink-0">
+                        {user.role}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-2 text-xs">
+                      <span className="text-gray-500 truncate">{user.email || user.phone || '—'}</span>
+                      <button
+                        type="button"
+                        disabled={isStaffStatusDisabled(user)}
+                        onClick={() => void handleToggleStaffStatus(user)}
+                        className={`px-3 py-1 rounded-full text-xs font-bold shrink-0 ${
+                          user.active
+                            ? 'bg-secondaryGreen-50 text-secondaryGreen-700 border border-secondaryGreen-200'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}
+                      >
+                        {user.active ? 'Active' : 'Deactivated'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="hidden sm:block overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
@@ -568,9 +630,7 @@ export const ManagerConsolePage: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 font-medium text-gray-800">
-                  {users
-                    .filter((u) => u.name.toLowerCase().includes(staffSearch.toLowerCase()))
-                    .map((user) => (
+                  {filteredUsers.map((user) => (
                       <tr key={user.id} className="hover:bg-gray-50/70 transition-colors">
                         <td className="px-6 py-3.5">
                           <div className="flex items-center gap-3">
@@ -595,27 +655,8 @@ export const ManagerConsolePage: React.FC = () => {
                         <td className="px-6 py-3.5 text-center">
                           <button
                             type="button"
-                            disabled={
-                              !!connectedOutlet &&
-                              (!user.active ||
-                                (canManageManagers
-                                  ? !['manager', 'cashier', 'kitchen'].includes(user.role)
-                                  : !['cashier', 'kitchen'].includes(user.role)))
-                            }
-                            onClick={async () => {
-                              if (!connectedOutlet) return toggleStaffStatus(user.id);
-                              if (!window.confirm('Disable ' + user.name + ' at this outlet?')) return;
-                              const { error } = await supabase.rpc('disable_outlet_staff', {
-                                p_outlet: connectedOutlet.outletId,
-                                p_staff: user.id,
-                              });
-                              if (error) {
-                                setStaffError('Could not disable this staff assignment.');
-                              } else {
-                                setStaffError('');
-                                await refreshOutletWorkspace(connectedOutlet.outletId);
-                              }
-                            }}
+                            disabled={isStaffStatusDisabled(user)}
+                            onClick={() => void handleToggleStaffStatus(user)}
                             className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                               user.active
                                 ? 'bg-secondaryGreen-50 text-secondaryGreen-700 border border-secondaryGreen-200'
@@ -641,6 +682,7 @@ export const ManagerConsolePage: React.FC = () => {
                     ))}
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         )}

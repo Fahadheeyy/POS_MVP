@@ -17,11 +17,24 @@
   --shadow: 4px 4px 0 var(--ink);
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 body {
   font-family: var(--sans);
   background: var(--oat);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 :focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
@@ -262,20 +275,24 @@ body {
   .pickup-lanes li { overflow-wrap: anywhere; }
   .pickup-lanes p { margin-top: 1em; }
   @media (max-width: 1150px) {
-    .tikkit-appbar { padding: 4px 10px; gap: 6px; }
+    .tikkit-appbar { padding: 8px 12px; gap: 8px; }
     .tikkit-appbar .tikkit-subtitle, .tikkit-appbar .tikkit-outlet, .tikkit-appbar .tikkit-clock, .tikkit-appbar .tikkit-date { display: none; }
-    .tikkit-appbar > div { gap: 6px; }
+    .tikkit-appbar > div { gap: 8px; }
+  }
+  @media (max-width: 1023px) {
+    .counter-panels { display: flex; padding: 6px 12px; gap: 8px; }
+    .counter-panels button { flex: 1; font-size: .8rem; }
+    .counter-panels [aria-pressed=true] { color: var(--paper); background: var(--ink); }
+    .tikkit-pos-layout[data-panel=menu] .tikkit-pos-cart, .tikkit-pos-layout[data-panel=order] .tikkit-pos-catalog { display: none; }
+    .tikkit-pos-cart { width: 100%; margin: 0 0 16px; }
   }
   @media (max-width: 760px) {
     .tikkit-appbar { flex-wrap: wrap; }
     .tikkit-appbar > div:first-child { display: contents; }
-    .tikkit-appbar .tikkit-subnav { order: 3; width: 100%; padding: 0; overflow-x: auto; }
+    .tikkit-appbar .tikkit-subnav { order: 3; width: 100%; padding: 2px 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .tikkit-appbar .tikkit-subnav::-webkit-scrollbar { display: none; }
     .tikkit-appbar .tikkit-module { display: none; }
-    .counter-panels { display: flex; padding: 4px 10px; gap: 6px; }
-    .counter-panels button { flex: 1; }
-    .counter-panels [aria-pressed=true] { color: var(--paper); background: var(--ink); }
-    .tikkit-pos-layout[data-panel=menu] .tikkit-pos-cart, .tikkit-pos-layout[data-panel=order] .tikkit-pos-catalog { display: none; }
-    .tikkit-pos-cart { width: 100%; }
+    .tikkit-login-panel { width: calc(100% - 24px); padding: 20px; }
   }
   @media (max-height: 640px) {
     .tikkit-pos-cart > .overflow-y-auto { flex: none; overflow: visible; }

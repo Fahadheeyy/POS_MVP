@@ -87,7 +87,7 @@ export const OwnerDashboardPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-brand-oat flex flex-col select-none font-sans">
       <Header title="Owner Dashboard" subtitle="Sales, Mix & Performance">
-        <div className="flex items-center gap-6 text-xs font-semibold">
+        <div className="flex items-center gap-4 sm:gap-6 text-xs font-semibold whitespace-nowrap">
           <button
             onClick={() => navigate('/owner')}
             className="text-gray-900 border-b-2 border-gray-900 pb-0.5"
@@ -115,7 +115,7 @@ export const OwnerDashboardPage: React.FC = () => {
         </div>
       </Header>
 
-      <div className="flex-1 p-6 max-w-6xl w-full mx-auto space-y-5">
+      <div className="flex-1 p-3.5 sm:p-6 max-w-6xl w-full mx-auto space-y-5">
         {!ledger.count && !ledger.refunds && <p className="screen-state" role="status">No sales or refunds in this period.</p>}
         {/* Date Filter & Title Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -391,7 +391,7 @@ export const OwnerDashboardPage: React.FC = () => {
         </div>
 
         {/* Quiet System & Hardware Footer Notice */}
-        <div className="p-3.5 rounded-xl bg-white/60 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+        <div className="p-3.5 rounded-xl bg-white/60 border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <ShieldCheck size={15} className="text-emerald-600 shrink-0" />
             <span className="text-[11px]">

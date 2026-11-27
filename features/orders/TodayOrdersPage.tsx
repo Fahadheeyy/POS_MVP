@@ -73,11 +73,11 @@ export const TodayOrdersPage: React.FC = () => {
         </div>
       </Header>
 
-      <div className="flex-1 p-6 flex flex-col space-y-4 max-w-7xl w-full mx-auto">
+      <div className="flex-1 p-3.5 sm:p-6 flex flex-col space-y-4 max-w-7xl w-full mx-auto">
         {/* Filters and Search Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="relative flex-1 max-w-md">
-            <Search size={15} className="absolute left-3.5 top-2.5 text-gray-400" />
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div className="relative w-full lg:flex-1 lg:max-w-md">
+            <Search size={15} className="absolute left-3.5 top-3 sm:top-2.5 text-gray-400" />
             <input
               type="text"
               value={searchQuery}
@@ -87,14 +87,14 @@ export const TodayOrdersPage: React.FC = () => {
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
             {/* Status Chips */}
-            <div className="flex items-center bg-gray-100 rounded-full p-0.5 text-xs font-semibold">
+            <div className="flex items-center bg-gray-100 rounded-full p-0.5 text-xs font-semibold overflow-x-auto max-w-full no-scrollbar whitespace-nowrap">
               {['all', 'preparing', 'ready', 'completed', 'cancelled'].map((st) => (
                 <button
                   key={st}
                   onClick={() => setStatusFilter(st)}
-                  className={`px-3 py-1 rounded-full capitalize transition-all ${
+                  className={`px-3 py-1 rounded-full capitalize transition-all shrink-0 ${
                     statusFilter === st
                       ? 'bg-white text-gray-900 shadow-subtle font-bold'
                       : 'text-gray-500 hover:text-gray-800'
@@ -109,7 +109,7 @@ export const TodayOrdersPage: React.FC = () => {
             <select
               value={paymentFilter}
               onChange={(e) => setPaymentFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-700 shadow-subtle focus:outline-none"
+              className="w-full sm:w-auto px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-700 shadow-subtle focus:outline-none"
             >
               <option value="all">All Payment Modes</option>
               <option value="upi">UPI</option>
@@ -119,9 +119,88 @@ export const TodayOrdersPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Quiet Table matching Design Rules */}
+        {/* Quiet Table matching Design Rules + Mobile Card List */}
         <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-card flex-1 flex flex-col">
-          <div className="overflow-x-auto flex-1">
+          {/* Mobile Cards (< sm) */}
+          <div className="sm:hidden divide-y divide-gray-100">
+            {filteredOrders.length === 0 ? (
+              <div className="px-4 py-10 text-center text-xs text-gray-400">
+                <strong>{todayOrders.length ? 'No matching orders' : 'No orders yet today'}</strong>
+                {todayOrders.length ? (
+                  <div className="mt-2">
+                    <button
+                      className="state-action"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setStatusFilter('all');
+                        setPaymentFilter('all');
+                      }}
+                    >
+                      Clear filters
+                    </button>
+                  </div>
+                ) : (
+                  <p className="mt-1">Completed checkouts appear here.</p>
+                )}
+              </div>
+            ) : (
+              filteredOrders.map((order) => {
+                const itemCount = order.items.reduce((s, i) => s + i.quantity, 0);
+                const itemNames = order.items.map((i) => `${i.quantity}x ${i.product.name}`).join(', ');
+                return (
+                  <div
+                    key={order.id}
+                    onClick={() => setSelectedOrder(order.id)}
+                    className="p-4 active:bg-amber-50/40 cursor-pointer space-y-2"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-sm text-gray-900">{order.orderNumber}</span>
+                        <span className="text-[11px] font-mono text-gray-500">{formatTime(order.createdAt)}</span>
+                      </div>
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold capitalize ${
+                          order.status === 'completed'
+                            ? 'bg-secondaryGreen-50 text-secondaryGreen-700'
+                            : order.status === 'ready'
+                            ? 'bg-accent-50 text-accent-700'
+                            : order.status === 'preparing'
+                            ? 'bg-blue-50 text-blue-700'
+                            : 'bg-secondaryRed-50 text-secondaryRed-700'
+                        }`}
+                      >
+                        {order.status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600 line-clamp-2">
+                      <span className="font-semibold text-gray-800">{itemCount} items:</span> {itemNames}
+                    </p>
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="uppercase font-bold text-[11px] text-gray-600">
+                        {order.paymentMode} · {order.customerName || 'Takeaway'}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-sm text-gray-900 font-mono">{formatINR(order.total)}</span>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setReceiptOrder(order);
+                          }}
+                          className="p-2 rounded-lg border border-gray-200 bg-white text-gray-700"
+                          title="Reprint Bill"
+                        >
+                          <Printer size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          <div className="hidden sm:block overflow-x-auto flex-1">
             <table className="w-full text-left text-xs">
               <thead className="bg-gray-50/70 border-b border-gray-200 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
                 <tr>

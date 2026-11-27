@@ -84,9 +84,9 @@ export const SettingsPage: React.FC = () => {
         </button>
       </Header>
 
-      <div className="flex-1 p-6 max-w-7xl w-full mx-auto flex flex-col md:flex-row gap-6">
-        {/* Left Navigation Rail */}
-        <div className="w-full md:w-64 bg-white border border-gray-200 rounded-3xl p-3 shadow-subtle h-fit space-y-1 shrink-0">
+      <div className="flex-1 p-3.5 sm:p-6 max-w-7xl w-full mx-auto flex flex-col md:flex-row gap-4 sm:gap-6">
+        {/* Left Navigation Rail (horizontal scrollable pills on mobile) */}
+        <div className="w-full md:w-64 bg-white border border-gray-200 rounded-2xl md:rounded-3xl p-2 md:p-3 shadow-subtle h-fit flex md:flex-col overflow-x-auto md:overflow-visible gap-1.5 md:gap-1 no-scrollbar shrink-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isSelected = activeTab === tab.id;
@@ -94,7 +94,7 @@ export const SettingsPage: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-left transition-all ${
+                className={`w-auto md:w-full shrink-0 whitespace-nowrap flex items-center gap-2 md:gap-3 px-3.5 py-2 md:py-2.5 rounded-xl md:rounded-2xl text-xs font-semibold text-left transition-all ${
                   isSelected
                     ? 'bg-gray-900 text-white shadow-subtle'
                     : 'text-gray-600 hover:bg-gray-50'
@@ -108,7 +108,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         {/* Right Settings Content */}
-        <div className="flex-1 bg-white border border-gray-200 rounded-3xl p-8 shadow-card flex flex-col justify-between">
+        <div className="flex-1 bg-white border border-gray-200 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-card flex flex-col justify-between">
           {activeTab === 'kds' && connectedOutlet ? <PickupDisplaySettings key={connectedOutlet.outletId} outlet={connectedOutlet.outletId}/> : <form onSubmit={handleSave} className="space-y-6">
             {/* 1. Business Profile */}
             {activeTab === 'profile' && (

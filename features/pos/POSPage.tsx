@@ -242,22 +242,22 @@ export const POSPage: React.FC = () => {
     <div className="tikkit-pos h-screen max-h-screen bg-brand-oat flex flex-col select-none overflow-hidden font-sans">
       {/* Top Header matching design system: Clean, calm, uncluttered */}
       <Header title="POS Express Counter" subtitle={`Counter 01 · ${currentUser?.name || settings.activeCashierName || 'Counter staff'}`}>
-        <div className="flex items-center gap-4 text-xs font-semibold">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs font-semibold whitespace-nowrap">
           <button
             onClick={() => navigate('/pos')}
-            className="text-gray-900 border-b-2 border-gray-900 pb-0.5"
+            className="text-gray-900 border-b-2 border-gray-900 pb-0.5 shrink-0"
           >
             POS Counter
           </button>
           <button
             onClick={() => navigate('/orders')}
-            className="text-slate-500 hover:text-gray-900 transition-colors"
+            className="text-slate-500 hover:text-gray-900 transition-colors shrink-0"
           >
             Today's Orders ({todayOrderCount})
           </button>
           <button
             onClick={() => setShowRevenueModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-gray-800 hover:text-gray-950 border border-slate-200/80 shadow-xs font-bold text-xs transition-all hover:shadow-sm active:scale-95 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-gray-800 hover:text-gray-950 border border-slate-200/80 shadow-xs font-bold text-xs transition-all hover:shadow-sm active:scale-95 cursor-pointer shrink-0"
             title="View today's counter revenue and tender collections"
           >
             <TrendingUp size={13} className="text-emerald-600" />
@@ -279,13 +279,13 @@ export const POSPage: React.FC = () => {
         <p>{pendingError}</p>
         <button type="button" className="state-action" onClick={clearUnreadableCheckout}>Clear unreadable checkout</button>
       </section>}
-      <nav className="counter-panels" aria-label="Counter view">
+      <nav className="counter-panels sticky top-[54px] z-30 bg-brand-oat border-b border-brand-rule/60" aria-label="Counter view">
         <button aria-pressed={panel === 'menu'} onClick={() => setPanel('menu')}>Menu</button>
         <button aria-pressed={panel === 'order'} onClick={() => setPanel('order')}>Order ({totalCartQuantity}) · {formatINR(total)}</button>
       </nav>
-      <div inert={checkingOut || !!pending} data-panel={panel} className="tikkit-pos-layout flex-1 flex overflow-hidden min-h-0 lg:px-7 lg:pb-6 lg:pt-5 gap-5">
+      <div inert={checkingOut || !!pending} data-panel={panel} className="tikkit-pos-layout flex-1 flex overflow-hidden min-h-0 px-3 sm:px-4 lg:px-7 pb-6 pt-3 lg:pt-5 gap-4 lg:gap-5">
         {/* Left Side: Product Catalog Canvas */}
-        <div className="flex-1 min-w-0 px-4 lg:px-0 overflow-y-auto space-y-5 h-full tikkit-pos-catalog">
+        <div className={`flex-1 min-w-0 overflow-y-auto space-y-4 lg:space-y-5 h-full tikkit-pos-catalog ${panel === 'menu' && totalCartQuantity > 0 ? 'pb-24 lg:pb-0' : ''}`}>
           <h1 className="sr-only">Counter menu</h1>
           {/* 1. Search Bar matching "Menu — populated order.png" */}
           <div className="flex items-center gap-3">
@@ -469,28 +469,28 @@ export const POSPage: React.FC = () => {
                     />
                   </div>
 
-                  {/* Circular Stepper Buttons matching design: circular minus, qty, circular plus */}
-                  <div className="flex items-center gap-2 mt-2">
+                  {/* Circular Stepper Buttons matching design: touch-friendly targets */}
+                  <div className="flex items-center gap-2.5 mt-2">
                     <button
                       type="button"
                       disabled={checkingOut || !!pending || !!pendingError}
                       onClick={() => updateCartItemQty(item.cartItemId, -1)}
-                      className="w-6 h-6 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
+                      className="w-8 h-8 sm:w-7 sm:h-7 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
                       title="Decrease"
                     >
-                      <Minus size={11} />
+                      <Minus size={12} />
                     </button>
-                    <span className="text-xs font-bold text-gray-900 min-w-4 text-center font-mono">
+                    <span className="text-xs font-bold text-gray-900 min-w-5 text-center font-mono">
                       {item.quantity}
                     </span>
                     <button
                       type="button"
                       disabled={item.quantity >= 1000 || checkingOut || !!pending || !!pendingError}
                       onClick={() => updateCartItemQty(item.cartItemId, 1)}
-                      className="w-6 h-6 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
+                      className="w-8 h-8 sm:w-7 sm:h-7 rounded-full bg-brand-orange hover:bg-slate-700 text-white flex items-center justify-center text-xs transition-colors"
                       title="Increase"
                     >
-                      <Plus size={11} />
+                      <Plus size={12} />
                     </button>
                   </div>
                 </div>
@@ -675,6 +675,28 @@ export const POSPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Floating Order Review Bar (when browsing Menu with items in cart) */}
+      {panel === 'menu' && totalCartQuantity > 0 && !checkingOut && !pending && (
+        <div className="lg:hidden fixed inset-x-3 bottom-3 z-30">
+          <button
+            type="button"
+            onClick={() => {
+              sounds.playClick();
+              setPanel('order');
+            }}
+            className="w-full py-3.5 px-4 rounded-2xl bg-brand-ink text-brand-paper border-2 border-brand-ink shadow-[4px_4px_0px_#FF4F1A] flex items-center justify-between text-xs font-bold active:translate-y-0.5 transition-all"
+          >
+            <span className="flex items-center gap-2">
+              <ShoppingBag size={16} className="text-brand-mustard" />
+              <span>{totalCartQuantity} {totalCartQuantity === 1 ? 'item' : 'items'} in order</span>
+            </span>
+            <span className="font-mono text-sm">
+              {formatINR(total)} · Review &rarr;
+            </span>
+          </button>
+        </div>
+      )}
 
       {/* Product Customization Modal matching "Menu — Beast Style details.png" */}
       {customizingProduct && <ProductCustomizationModal

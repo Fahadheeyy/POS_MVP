@@ -289,18 +289,18 @@ export const ReportsPage: React.FC = () => {
       </Header>
       </div>
 
-      <div className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+      <div className="flex-1 p-3.5 sm:p-6 max-w-7xl w-full mx-auto space-y-5 sm:space-y-6">
         <div className="hidden print:block">
           <h1>{settings.storeName} · {reportNames.find((report) => report.id === activeReport)?.title}</h1>
           <p>{activeReport === 'gstr1_ca_package' ? filingMonth : from + ' to ' + through} (IST)</p>
         </div>
         {/* Top Control Bar */}
-        <div className="no-print flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="no-print flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full lg:w-auto">
             <select
               value={activeReport}
               onChange={(e) => setActiveReport(e.target.value as ReportType)}
-              className="px-4 py-2 rounded-2xl border border-gray-200 bg-white font-bold text-sm text-gray-900 shadow-subtle focus:outline-none"
+              className="w-full sm:w-auto px-4 py-2 rounded-2xl border border-gray-200 bg-white font-bold text-sm text-gray-900 shadow-subtle focus:outline-none"
             >
               {reportNames.map((r) => (
                 <option key={r.id} value={r.id}>{r.title}</option>
@@ -308,28 +308,28 @@ export const ReportsPage: React.FC = () => {
             </select>
 
             {activeReport === 'gstr1_ca_package' ? (
-              <label className="text-xs font-semibold">
+              <label className="text-xs font-semibold flex items-center gap-2">
                 Filing month <input type="month" value={filingMonth} max={businessDate().slice(0, 7)}
                   onChange={(event) => { if (event.target.value) setFilingMonth(event.target.value); }}
                   className="rounded border border-gray-200 bg-white p-2" />
               </label>
             ) : (
-            <div className="flex bg-gray-100 rounded-full p-0.5 text-xs font-semibold">
+            <div className="flex bg-gray-100 rounded-full p-0.5 text-xs font-semibold overflow-x-auto max-w-full no-scrollbar whitespace-nowrap">
               <button
                 onClick={() => setDateRange('today')}
-                className={`px-3 py-1 rounded-full ${dateRange === 'today' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'}`}
+                className={`px-3 py-1 rounded-full shrink-0 ${dateRange === 'today' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'}`}
               >
                 Today
               </button>
               <button
                 onClick={() => setDateRange('7days')}
-                className={`px-3 py-1 rounded-full ${dateRange === '7days' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'}`}
+                className={`px-3 py-1 rounded-full shrink-0 ${dateRange === '7days' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'}`}
               >
                 Last 7 Days
               </button>
               <button
                 onClick={() => setDateRange('30days')}
-                className={`px-3 py-1 rounded-full ${dateRange === '30days' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'}`}
+                className={`px-3 py-1 rounded-full shrink-0 ${dateRange === '30days' ? 'bg-white text-gray-900 shadow-subtle' : 'text-gray-500'}`}
               >
                 Last 30 Days
               </button>
@@ -337,7 +337,7 @@ export const ReportsPage: React.FC = () => {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {activeReport === 'gstr1_ca_package' && (
               <button
                 onClick={downloadGstr1Json}

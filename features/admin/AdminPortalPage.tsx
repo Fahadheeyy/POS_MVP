@@ -749,16 +749,16 @@ export const AdminPortalPage: React.FC<AdminWorkspaceProps> = ({
       <Header title="Developer & Sales Admin" subtitle="Multi-Tenant Platform Control Center" />
 
       {notification && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#161412] text-[#FFF4E0] px-5 py-3 rounded-2xl border-2 border-[#FF4F1A] shadow-[4px_4px_0_0_#161412] flex items-center gap-3">
-          <CheckCircle2 size={18} className="text-[#FFC72C]" />
+        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 bg-[#161412] text-[#FFF4E0] px-4 sm:px-5 py-3 rounded-2xl border-2 border-[#FF4F1A] shadow-[4px_4px_0_0_#161412] flex items-center gap-3">
+          <CheckCircle2 size={18} className="text-[#FFC72C] shrink-0" />
           <span className="text-xs font-semibold">{notification}</span>
         </div>
       )}
 
-      <main className="max-w-7xl w-full mx-auto px-4 md:px-6 py-6 flex-1 flex flex-col gap-5">
+      <main className="max-w-7xl w-full mx-auto px-3.5 sm:px-4 md:px-6 py-4 sm:py-6 flex-1 flex flex-col gap-5">
         {/* Top Tab Navigation + GMV KPIs */}
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto max-w-full no-scrollbar whitespace-nowrap pb-1">
             <button
               type="button"
               onClick={() => setActiveTab('businesses')}
@@ -815,7 +815,7 @@ export const AdminPortalPage: React.FC<AdminWorkspaceProps> = ({
           <div className="space-y-5">
             {/* Search, Filter & Add Owner Bar */}
             <div className="bg-[#FFF4E0] border-2 border-[#161412] rounded-2xl shadow-[4px_4px_0_0_#161412] p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5 w-full sm:w-auto flex-1 max-w-lg">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto flex-1 max-w-lg">
                 <div className="relative flex-1">
                   <Search size={15} className="absolute left-3.5 top-3 text-[#5E554C]" />
                   <input

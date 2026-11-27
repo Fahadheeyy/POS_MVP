@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
       </div>
 
       {/* Status, Simulation Controls, Time, Staff Profile */}
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-2 sm:gap-4 shrink-0">
         {/* Connection & Printer Status Dot (Clickable simulator) */}
         {!connectedOutlet && <div className="relative">
           <button
@@ -182,14 +182,15 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
           <div className="flex items-center gap-1.5">
             <button
               onClick={toggleKdsSound}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-lg border text-xs font-medium transition-colors ${
+              aria-label={kdsSoundEnabled ? 'Sound on' : 'Sound off'}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg border text-xs font-medium transition-colors whitespace-nowrap ${
                 kdsSoundEnabled
                   ? 'border-gray-200 text-gray-700 bg-white hover:bg-gray-50'
                   : 'border-secondaryRed-200 text-secondaryRed-600 bg-secondaryRed-50'
               }`}
             >
-              {kdsSoundEnabled ? <Volume2 size={13} /> : <VolumeX size={13} />}
-              {kdsSoundEnabled ? 'Sound on' : 'Sound off'}
+              {kdsSoundEnabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
+              <span className="hidden sm:inline">{kdsSoundEnabled ? 'Sound on' : 'Sound off'}</span>
             </button>
             <button
               onClick={() => {
@@ -199,10 +200,11 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                   document.exitFullscreen().catch(() => {});
                 }
               }}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-colors"
+              aria-label="Full screen"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-colors whitespace-nowrap"
             >
               <Maximize size={13} />
-              Full screen
+              <span>Full screen</span>
             </button>
           </div>
         )}
@@ -221,12 +223,12 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full border border-gray-200 hover:border-gray-300 bg-brand-paper transition-all cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:pl-2 sm:pr-3 sm:py-1 rounded-full border border-gray-200 hover:border-gray-300 bg-brand-paper transition-all cursor-pointer"
           >
-            <div suppressHydrationWarning className="w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] font-bold flex items-center justify-center">
+            <div suppressHydrationWarning className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-slate-800 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
               {currentUser?.avatarInitials || 'ST'}
             </div>
-            <div className="text-left text-xs">
+            <div className="hidden sm:block text-left text-xs">
               <span suppressHydrationWarning className="font-semibold text-gray-800 block leading-tight">
                 {currentUser?.name || 'Staff User'}
               </span>
@@ -234,12 +236,12 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => 
                 {currentUser?.title || currentRole}
               </span>
             </div>
-            <ChevronDown size={12} className="text-gray-400 ml-0.5" />
+            <ChevronDown size={12} className="text-gray-400 mr-0.5 sm:ml-0.5" />
           </button>
 
           {/* User Account & Authorized Navigation Popover */}
           {showUserMenu && (
-            <div className="absolute right-0 top-10 w-72 bg-white border border-gray-200 rounded-2xl shadow-modal p-2 z-50 animate-scaleIn">
+            <div className="absolute right-0 top-12 sm:top-10 w-72 max-w-[calc(100vw-24px)] bg-white border border-gray-200 rounded-2xl shadow-modal p-2 z-50 animate-scaleIn">
               <div className="px-3 py-2 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-bold text-gray-900">{currentUser?.name}</p>

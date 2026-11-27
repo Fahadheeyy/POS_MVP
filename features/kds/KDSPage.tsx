@@ -50,6 +50,7 @@ export const KDSPage: React.FC = () => {
   } = useAppStore();
 
   const [viewMode, setViewMode] = useState<'board' | 'bumped_history'>('board');
+  const [activeMobileLane, setActiveMobileLane] = useState<'new' | 'cooking' | 'ready'>('new');
   const [selectedTicketId, setSelectedTicket] = useState<string | null>(null);
   const [expandedTicketId, setExpandedTicket] = useState<string | null>(null);
   const [actionsTicketId, setActionsTicket] = useState<string | null>(null);
@@ -133,10 +134,10 @@ export const KDSPage: React.FC = () => {
     !oldest || ticket.createdAt < oldest.createdAt ? ticket : oldest, undefined);
 
   return (
-    <div className="h-screen max-h-screen bg-surface-canvas flex flex-col justify-between select-none overflow-hidden">
+    <div className="min-h-screen md:h-screen md:max-h-screen bg-surface-canvas flex flex-col justify-between select-none md:overflow-hidden">
       {/* Top Header: Clean, distraction-free */}
       <Header title="Kitchen Display" subtitle={`${activeTickets.length} active orders in kitchen`}>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 whitespace-nowrap">
           {/* Recall Last Bumped */}
           <button
             onClick={() => {
@@ -166,7 +167,7 @@ export const KDSPage: React.FC = () => {
       </Header>
 
       <OfflineBanner />
-      {viewMode === 'board' && <div className="flex flex-wrap items-center gap-2 px-4 py-2">
+      {viewMode === 'board' && <div className="flex flex-wrap items-center gap-2 px-3 sm:px-4 py-2">
         <label className="flex items-center gap-2 text-xs font-semibold">
           Station
           <select aria-label="Station" className="rounded border border-slate-300 bg-white p-1" value={activeKdsStation}
@@ -177,6 +178,32 @@ export const KDSPage: React.FC = () => {
         <button type="button" className="state-action" onClick={() => setShow86Modal(true)}>Stock ({outOfStockCount} sold out)</button>
       </div>}
 
+      {/* Mobile Lane Switcher (< md) */}
+      {viewMode === 'board' && (
+        <div className="md:hidden px-3 pb-2 flex items-center gap-1.5" role="tablist" aria-label="Kitchen lanes">
+          {[
+            { id: 'new' as const, label: 'Incoming', count: newTickets.length },
+            { id: 'cooking' as const, label: 'Preparing', count: cookingTickets.length },
+            { id: 'ready' as const, label: 'Ready', count: readyTickets.length },
+          ].map((lane) => (
+            <button
+              key={lane.id}
+              type="button"
+              role="tab"
+              aria-selected={activeMobileLane === lane.id}
+              onClick={() => setActiveMobileLane(lane.id)}
+              className={`flex-1 py-2 px-2 rounded-xl border-2 border-brand-ink text-xs font-bold transition-all ${
+                activeMobileLane === lane.id
+                  ? 'bg-brand-ink text-brand-paper shadow-[2px_2px_0px_#FF4F1A]'
+                  : 'bg-brand-paper text-brand-ink'
+              }`}
+            >
+              {lane.label} ({lane.count})
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Main View Area */}
       {viewMode === 'bumped_history' ? (
         <BumpedTicketsView
@@ -184,7 +211,7 @@ export const KDSPage: React.FC = () => {
           onPrintTicket={handlePrintKOT}
         />
       ) : (
-        <div className="flex-1 p-4 md:p-6 flex gap-4 md:gap-6 overflow-x-auto h-full">
+        <div className="flex-1 p-3 sm:p-4 md:p-6 flex gap-4 md:gap-6 md:overflow-x-auto md:h-full">
           {/* Column 1: Incoming Orders */}
           <div
             onDragOver={(e) => {
@@ -204,7 +231,9 @@ export const KDSPage: React.FC = () => {
               setDragOverLane(null);
               setDraggedTicketId(null);
             }}
-            className={`tikkit-kds-lane tikkit-lane-new flex-1 min-w-[290px] rounded-3xl p-4 flex flex-col transition-all duration-200 ${
+            className={`tikkit-kds-lane tikkit-lane-new flex-1 min-w-0 md:min-w-[290px] rounded-3xl p-3.5 sm:p-4 flex-col transition-all duration-200 ${
+              activeMobileLane === 'new' ? 'flex' : 'hidden md:flex'
+            } ${
               dragOverLane === 'new'
                 ? 'border-amber-400 bg-amber-50/50 ring-4 ring-amber-200/60 scale-[1.01]'
                 : 'border-slate-200 shadow-sm'
@@ -372,7 +401,9 @@ export const KDSPage: React.FC = () => {
               setDragOverLane(null);
               setDraggedTicketId(null);
             }}
-            className={`tikkit-kds-lane tikkit-lane-prep flex-1 min-w-[290px] rounded-3xl p-4 flex flex-col transition-all duration-200 ${
+            className={`tikkit-kds-lane tikkit-lane-prep flex-1 min-w-0 md:min-w-[290px] rounded-3xl p-3.5 sm:p-4 flex-col transition-all duration-200 ${
+              activeMobileLane === 'cooking' ? 'flex' : 'hidden md:flex'
+            } ${
               dragOverLane === 'cooking'
                 ? 'border-sky-400 bg-sky-50/50 ring-4 ring-sky-200/60 scale-[1.01]'
                 : 'border-slate-200 shadow-sm'
@@ -552,7 +583,9 @@ export const KDSPage: React.FC = () => {
               setDragOverLane(null);
               setDraggedTicketId(null);
             }}
-            className={`tikkit-kds-lane tikkit-lane-ready flex-1 min-w-[290px] rounded-3xl p-4 flex flex-col transition-all duration-200 ${
+            className={`tikkit-kds-lane tikkit-lane-ready flex-1 min-w-0 md:min-w-[290px] rounded-3xl p-3.5 sm:p-4 flex-col transition-all duration-200 ${
+              activeMobileLane === 'ready' ? 'flex' : 'hidden md:flex'
+            } ${
               dragOverLane === 'ready'
                 ? 'border-emerald-400 bg-emerald-50/50 ring-4 ring-emerald-200/60 scale-[1.01]'
                 : 'border-slate-200 shadow-sm'
