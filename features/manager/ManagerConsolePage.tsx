@@ -1,7 +1,7 @@
 "use client";
 import { DEFAULT_PRODUCT_IMAGE, ProductEditor } from './ProductEditor';
+import { AddTeamMemberModal } from '@/components/AddTeamMemberModal';
 import { StaffInvitation } from '@/components/StaffInvitation';
-import { createOutletStaffAction } from '@/app/operations/staff';
 import { supabase } from '@/lib/supabase/client';
 import React, { useState } from 'react';
 import { refreshOutletWorkspace, useAppStore } from '../../store';
@@ -81,16 +81,6 @@ export const ManagerConsolePage: React.FC = () => {
   const [showAddStaffModal, setShowAddStaffModal] = useState(false);
   const [pinResetStaff, setPinResetStaff] = useState<User | null>(null);
   const [newPinValue, setNewPinValue] = useState('');
-
-  // New staff form
-  const [newStaffName, setNewStaffName] = useState('');
-  const [newStaffRole, setNewStaffRole] = useState<Role>('cashier');
-  const [newStaffTitle, setNewStaffTitle] = useState('Cashier');
-  const [newStaffPin, setNewStaffPin] = useState('1234');
-  const [newStaffEmail, setNewStaffEmail] = useState('');
-  const [newStaffPassword, setNewStaffPassword] = useState('');
-  const [newStaffPhone, setNewStaffPhone] = useState('');
-  const [savingStaff, setSavingStaff] = useState(false);
   const canManageManagers = connectedOutlet
     ? connectedOutlet.role === 'owner' || connectedOutlet.title === 'Platform Super Admin'
     : true;
@@ -101,55 +91,6 @@ export const ManagerConsolePage: React.FC = () => {
     const matchesCat = selectedCategory === 'all' || p.categoryId === selectedCategory;
     return matchesSearch && matchesCat;
   });
-
-  const handleCreateStaff = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (savingStaff) return;
-    setStaffError('');
-    if (!connectedOutlet) {
-      sounds.playSuccess();
-      addStaff({
-        name: newStaffName,
-        role: newStaffRole,
-        title: newStaffTitle,
-        pin: newStaffPin,
-        email: newStaffEmail,
-        phone: newStaffPhone,
-        avatarInitials: newStaffName.slice(0, 2).toUpperCase(),
-        active: true,
-      });
-      setShowAddStaffModal(false);
-      setNewStaffName('');
-      return;
-    }
-
-    setSavingStaff(true);
-    try {
-      const res = await createOutletStaffAction({
-        name: newStaffName,
-        email: newStaffEmail,
-        password: newStaffPassword,
-        phone: newStaffPhone,
-        title: newStaffTitle,
-        role: (newStaffRole === 'manager' || newStaffRole === 'kitchen' ? newStaffRole : 'cashier'),
-        pin: newStaffPin || '1234',
-      });
-      if (!res.success) {
-        sounds.playError();
-        setStaffError(res.error || 'Could not add team member.');
-        return;
-      }
-      sounds.playSuccess();
-      await refreshOutletWorkspace(connectedOutlet.outletId);
-      setShowAddStaffModal(false);
-      setNewStaffName('');
-      setNewStaffEmail('');
-      setNewStaffPassword('');
-      setNewStaffPhone('');
-    } finally {
-      setSavingStaff(false);
-    }
-  };
 
   const handleCreateAddOnItem = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -612,14 +553,12 @@ export const ManagerConsolePage: React.FC = () => {
                 type="button"
                 onClick={() => {
                   setStaffError('');
-                  setNewStaffRole(canManageManagers ? 'manager' : 'cashier');
-                  setNewStaffTitle(canManageManagers ? 'Store Manager' : 'Cashier');
                   setShowAddStaffModal(true);
                 }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
               >
                 <Plus size={14} />
-                <span>{canManageManagers ? 'Add Manager / Staff' : 'Add Team Member'}</span>
+                <span>Add Staff</span>
               </button>
             </div>
 
@@ -927,124 +866,10 @@ export const ManagerConsolePage: React.FC = () => {
       )}
 
       {/* Add Staff Modal */}
-      {showAddStaffModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm p-4 select-none">
-          <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-md p-6 shadow-modal">
-            <h3 className="font-bold text-gray-900 text-base mb-1">
-              {canManageManagers ? 'Add Manager or Team Member' : 'Add Team Member'}
-            </h3>
-            <p className="text-[11px] text-gray-500 mb-4">
-              Creates a live account immediately so they can sign in at /login.
-            </p>
-            <form onSubmit={(e) => void handleCreateStaff(e)} className="space-y-3 text-xs">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Full Name</label>
-                <input
-                  type="text"
-                  value={newStaffName}
-                  onChange={(e) => setNewStaffName(e.target.value)}
-                  placeholder="e.g. Deepa Rao"
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Role</label>
-                <select
-                  value={newStaffRole}
-                  onChange={(e) => {
-                    const next = e.target.value as Role;
-                    setNewStaffRole(next);
-                    setNewStaffTitle(
-                      next === 'manager' ? 'Store Manager' : next === 'kitchen' ? 'Kitchen Staff' : 'Cashier'
-                    );
-                  }}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white"
-                >
-                  {canManageManagers && <option value="manager">Store Manager (Manages Staff & Menu)</option>}
-                  <option value="cashier">Cashier</option>
-                  <option value="kitchen">Kitchen Staff</option>
-                </select>
-              </div>
-
-              {connectedOutlet && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Work Email *</label>
-                    <input
-                      type="email"
-                      value={newStaffEmail}
-                      onChange={(e) => setNewStaffEmail(e.target.value)}
-                      placeholder="manager@outlet.com"
-                      className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-gray-700 mb-1">Password *</label>
-                    <input
-                      type="password"
-                      minLength={6}
-                      value={newStaffPassword}
-                      onChange={(e) => setNewStaffPassword(e.target.value)}
-                      placeholder="Min 6 characters"
-                      className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                      required
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-gray-700 mb-1">Job Title</label>
-                  <input
-                    type="text"
-                    value={newStaffTitle}
-                    onChange={(e) => setNewStaffTitle(e.target.value)}
-                    placeholder="e.g. Store Manager"
-                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-gray-700 mb-1">4-Digit PIN</label>
-                  <input
-                    type="text"
-                    maxLength={4}
-                    value={newStaffPin}
-                    onChange={(e) => setNewStaffPin(e.target.value.replace(/\D/g, ''))}
-                    className="w-full px-3 py-2 rounded-xl border border-gray-200 font-mono font-bold"
-                    required
-                  />
-                </div>
-              </div>
-
-              {staffError && <p role="alert" className="font-semibold text-red-700">{staffError}</p>}
-
-              <div className="flex gap-2 pt-3">
-                <button
-                  type="button"
-                  disabled={savingStaff}
-                  onClick={() => setShowAddStaffModal(false)}
-                  className="flex-1 py-2 rounded-xl border border-gray-200 font-semibold text-gray-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={savingStaff}
-                  className="flex-1 py-2 rounded-xl bg-gray-900 text-white font-bold disabled:opacity-50"
-                >
-                  {savingStaff ? 'Creating…' : 'Create Member'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <AddTeamMemberModal
+        isOpen={showAddStaffModal}
+        onClose={() => setShowAddStaffModal(false)}
+      />
 
       {/* Modal: Add New Modifier Item */}
       {showAddAddOnModal && (

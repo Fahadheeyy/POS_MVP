@@ -3,14 +3,17 @@ import { collections } from '@/lib/tax/collections';
 import { businessDate, businessDateDaysAgo } from '@/utils/businessDate';
 import React, { useState } from 'react';
 import { useNavigate } from "@/lib/navigation";
-import { useAppStore } from '../../store';
+import { refreshOutletWorkspace, useAppStore } from '../../store';
 import { Header } from '../../components/Header';
+import { AddTeamMemberModal } from '@/components/AddTeamMemberModal';
+import { supabase } from '@/lib/supabase/client';
 import { formatINR } from '../../utils/formatters';
 import {
   FileSpreadsheet,
   ChevronRight,
-  Printer,
+  Plus,
   ShieldCheck,
+  Users,
 } from 'lucide-react';
 import {
   AreaChart,
@@ -23,9 +26,11 @@ import {
 
 export const OwnerDashboardPage: React.FC = () => {
   const navigate = useNavigate();
-  const { orders, settings } = useAppStore();
+  const { orders, settings, users, connectedOutlet, toggleStaffStatus } = useAppStore();
 
   const [dateRange, setDateRange] = useState<'today' | 'yesterday' | '7days' | '30days'>('today');
+  const [showAddStaffModal, setShowAddStaffModal] = useState(false);
+  const [staffError, setStaffError] = useState('');
 
   // Filter orders by date range
   const now = new Date();
@@ -144,11 +149,24 @@ export const OwnerDashboardPage: React.FC = () => {
             </div>
 
             <button
+              type="button"
               onClick={() => navigate('/owner/reports')}
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800 shadow-xs transition-colors"
             >
               <FileSpreadsheet size={13} className="text-slate-500" />
               <span>Full Reports</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setStaffError('');
+                setShowAddStaffModal(true);
+              }}
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-brand-ink hover:bg-black text-brand-paper text-xs font-bold shadow-[2px_2px_0px_#161412] transition-all"
+            >
+              <Plus size={13} />
+              <span>Add Staff</span>
             </button>
           </div>
         </div>
@@ -286,6 +304,92 @@ export const OwnerDashboardPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Outlet Team & Managers */}
+        <div className="tikkit-card p-5 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
+                <Users size={15} />
+                <span>Outlet Team &amp; Managers ({users.length})</span>
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Add store managers, cashiers, or kitchen staff with direct /login credentials.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => navigate('/manager')}
+                className="px-3.5 py-2 rounded-xl border border-slate-300 bg-white/70 hover:bg-white text-xs font-bold text-slate-800 transition-colors"
+              >
+                Open Full Console
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setStaffError('');
+                  setShowAddStaffModal(true);
+                }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-ink hover:bg-black text-brand-paper text-xs font-bold shadow-[2px_3px_0px_#161412] transition-all"
+              >
+                <Plus size={14} />
+                <span>Add Staff</span>
+              </button>
+            </div>
+          </div>
+
+          {staffError && <p role="alert" className="text-xs font-semibold text-red-700">{staffError}</p>}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {users.map((member) => (
+              <div
+                key={member.id}
+                className="flex items-center justify-between gap-3 p-3 rounded-2xl bg-white/70 border border-[#D9CFC0]"
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-9 h-9 rounded-full bg-brand-ink text-brand-paper font-bold text-xs flex items-center justify-center shrink-0">
+                    {member.avatarInitials}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-bold text-xs text-brand-ink truncate">{member.name}</p>
+                    <p className="text-[11px] text-slate-500 truncate">
+                      {member.title}{member.email ? ` · ${member.email}` : ''}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-100 text-brand-ink border border-[#161412]/20">
+                    {member.role}
+                  </span>
+                  {['manager', 'cashier', 'kitchen'].includes(member.role) && member.active && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!connectedOutlet) return toggleStaffStatus(member.id);
+                        if (!window.confirm('Disable ' + member.name + ' at this outlet?')) return;
+                        const { error } = await supabase.rpc('disable_outlet_staff', {
+                          p_outlet: connectedOutlet.outletId,
+                          p_staff: member.id,
+                        });
+                        if (error) {
+                          setStaffError('Could not disable this staff assignment.');
+                        } else {
+                          setStaffError('');
+                          await refreshOutletWorkspace(connectedOutlet.outletId);
+                        }
+                      }}
+                      className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors"
+                      title="Click to deactivate"
+                    >
+                      Active
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Quiet System & Hardware Footer Notice */}
         <div className="p-3.5 rounded-xl bg-white/60 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -299,6 +403,11 @@ export const OwnerDashboardPage: React.FC = () => {
           </span>
         </div>
       </div>
+
+      <AddTeamMemberModal
+        isOpen={showAddStaffModal}
+        onClose={() => setShowAddStaffModal(false)}
+      />
     </div>
   );
 };
