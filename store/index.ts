@@ -30,7 +30,7 @@ import menuJson from '../public/assets/menu.json';
 import { formatRule46InvoiceNumber, getIndianFinancialYear } from '@/lib/tax/gstEngine';
 import { calculateCheckoutTotals } from '@/lib/tax/checkoutTotals';
 import { businessDate } from '@/utils/businessDate';
-import { orderService, pendingCheckoutKey, readPendingCheckout, RequestRejected } from '@/services/orderService';
+import { orderService, pendingCheckoutKey, readPendingCheckout, RequestRejected, type OutletWorkspace } from '@/services/orderService';
 import type { OutletAccess } from '@/lib/auth/operationalAccess';
 import { authService } from '@/lib/auth/authService';
 import {
@@ -1688,18 +1688,43 @@ if (broadcastChannel) {
 
 let latestWorkspaceRequest = 0;
 
-export function activateOutletWorkspace(access: OutletAccess) {
+function applyWorkspaceData(access: OutletAccess, workspace: OutletWorkspace) {
+  const [latest, ...history] = workspace.shifts;
   const state = useAppStore.getState();
-  if (state.connectedOutlet?.outletId === access.outletId && state.currentUser?.id === access.id) return;
-  latestWorkspaceRequest += 1;
+  const shift = latest?.id === state.currentShift.id
+    ? { ...latest, denominationCounts: latest.status === 'open' ? state.currentShift.denominationCounts : latest.denominationCounts }
+    : latest ?? emptyOutletShift(access);
   useAppStore.setState({
-    connectedOutlet: access, activeBusinessId: access.outletId, currentUser: access, currentRole: access.role,
-    operationalError: '', users: [access], businesses: [], orders: [], tickets: [], products: [],
-    categories: [], addOnGroups: [], approvals: [], shiftHistory: [], auditLog: [], heldOrders: [],
-    loyaltyCustomers: [], pettyCashExpenses: [], wasteLog: [], staffAttendance: [], kitchenAlert: null,
-    settings: emptyOutletSettings(), currentShift: emptyOutletShift(access), cartItems: [],
-    lastCreatedOrder: null, cartDiscountPercent: 0, customerName: 'Guest', guestCount: 1, tableNumber: '', orderType: 'takeaway',
+    settings: { ...emptyOutletSettings(), ...workspace.settings },
+    categories: workspace.categories,
+    products: workspace.products.filter((product) => workspace.categories.some((category) => category.id === product.categoryId)),
+    addOnGroups: workspace.addOnGroups,
+    orders: workspace.orders,
+    tickets: workspace.tickets,
+    currentShift: shift,
+    users: workspace.users.length ? workspace.users : [access],
+    shiftHistory: latest?.status === 'closed' ? workspace.shifts : history,
   });
+}
+
+export function activateOutletWorkspace(access: OutletAccess, initialWorkspace?: OutletWorkspace | null) {
+  const state = useAppStore.getState();
+  const sameSession = state.connectedOutlet?.outletId === access.outletId && state.currentUser?.id === access.id;
+  if (sameSession && !initialWorkspace) return;
+  if (!sameSession) {
+    latestWorkspaceRequest += 1;
+    useAppStore.setState({
+      connectedOutlet: access, activeBusinessId: access.outletId, currentUser: access, currentRole: access.role,
+      operationalError: '', users: [access], businesses: [], orders: [], tickets: [], products: [],
+      categories: [], addOnGroups: [], approvals: [], shiftHistory: [], auditLog: [], heldOrders: [],
+      loyaltyCustomers: [], pettyCashExpenses: [], wasteLog: [], staffAttendance: [], kitchenAlert: null,
+      settings: emptyOutletSettings(), currentShift: emptyOutletShift(access), cartItems: [],
+      lastCreatedOrder: null, cartDiscountPercent: 0, customerName: 'Guest', guestCount: 1, tableNumber: '', orderType: 'takeaway',
+    });
+  }
+  if (initialWorkspace) {
+    applyWorkspaceData(access, initialWorkspace);
+  }
 }
 
 function emptyOutletSettings(): SystemSettings {

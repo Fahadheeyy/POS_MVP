@@ -1,8 +1,8 @@
 import { SettingsPage } from '@/features/settings/SettingsPage';
-import { requireOperationalAccess } from '@/lib/auth/operationalAccess';
+import { requireOperationalWorkspace } from '@/lib/auth/operationalAccess';
 import { OutletWorkspace } from '@/components/OutletWorkspace';
 
 export default async function SettingsRoute() {
-  const access = await requireOperationalAccess('settings.manage');
-  return <OutletWorkspace access={access}><SettingsPage /></OutletWorkspace>;
+  const { access, initialWorkspace } = await requireOperationalWorkspace('settings.manage', 'counter');
+  return <OutletWorkspace access={access} initialWorkspace={initialWorkspace}><SettingsPage /></OutletWorkspace>;
 }

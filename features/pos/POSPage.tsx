@@ -60,10 +60,17 @@ export const POSPage: React.FC = () => {
   // Modals matching user's design flows
   const [showOrderSuccessModal, setShowOrderSuccessModal] = useState<boolean>(false);
   const [showRevenueModal, setShowRevenueModal] = useState<boolean>(false);
-  const tableInputRef = useRef<HTMLInputElement>(null);
-  const isDineIn = orderType === 'dine-in' || orderType === 'dine_in';
   const [checkoutError, setCheckoutError] = useState('');
   const [checkingOut, setCheckingOut] = useState(false);
+
+  useEffect(() => {
+    if (orderType !== 'takeaway') {
+      setOrderType('takeaway');
+    }
+    if (tableNumber) {
+      setTableNumber('');
+    }
+  }, [orderType, tableNumber, setOrderType, setTableNumber]);
 
   const [preferredPayment, setSelectedPaymentMode] = useState<PaymentMode>(
     settings.lastUsedPaymentMode || settings.defaultPaymentMode || 'cash'
@@ -189,11 +196,6 @@ export const POSPage: React.FC = () => {
   const handleDirectCheckout = () => {
     if (cartItems.length === 0 || checkingOut || pending || pendingError || !selectedPaymentMode) return;
     setCheckoutError('');
-    if (isDineIn && !tableNumber.trim()) {
-      setCheckoutError('Enter a table number for dine-in.');
-      tableInputRef.current?.focus();
-      return;
-    }
     void handleConfirmPayment(selectedPaymentMode, selectedPaymentMode === 'cash' ? cashTendered : undefined);
   };
 
@@ -319,33 +321,33 @@ export const POSPage: React.FC = () => {
 
           {/* 3. Category Row matching "Menu — populated order.png" */}
           <div className="counter-categories" aria-label="Menu categories">
-            {!categories.some((category) => isAllCategory(category.id)) && (
-              <button type="button" aria-pressed={isAllCategory(selectedCategory)} onClick={() => setSelectedCategory('all')}>All items</button>
-            )}
-            {categories.map((cat) => {
-              const isCatAll = isAllCategory(cat.id) || cat.slug === 'all';
-              const isSelected = isCatAll
-                ? isAllCategory(selectedCategory)
-                : selectedCategory === cat.id;
+            <button type="button" aria-pressed={isAllCategory(selectedCategory)} onClick={() => setSelectedCategory('all')}>All items</button>
+            {categories
+              .filter((cat) => {
+                if (isAllCategory(cat.id) || cat.slug === 'all') return false;
+                return products.some((p) => p.categoryId === cat.id);
+              })
+              .map((cat) => {
+                const isSelected = selectedCategory === cat.id;
 
-              return (
-                <button
-                  key={cat.id}
-                  aria-pressed={isSelected}
-                  onClick={() => {
-                    sounds.playClick();
-                    setSelectedCategory(isCatAll ? 'all' : cat.id);
-                  }}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                    isSelected
-                      ? 'bg-brand-orange text-white shadow-sm'
-                      : 'text-slate-700 hover:text-slate-900 hover:bg-white/40'
-                  }`}
-                >
-                  {cat.name}
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={cat.id}
+                    aria-pressed={isSelected}
+                    onClick={() => {
+                      sounds.playClick();
+                      setSelectedCategory(cat.id);
+                    }}
+                    className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                      isSelected
+                        ? 'bg-brand-orange text-white shadow-sm'
+                        : 'text-slate-700 hover:text-slate-900 hover:bg-white/40'
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                );
+              })}
 
             {addOnProducts.length > 0 && (
               <button type="button" aria-pressed={selectedCategory === 'addons'} onClick={() => setSelectedCategory('addons')}>Add-ons</button>
@@ -414,32 +416,15 @@ export const POSPage: React.FC = () => {
         <div className="tikkit-pos-cart w-[340px] xl:w-[390px] flex flex-col h-full select-none shrink-0">
           {/* Cart Header */}
           <div className="px-6 py-4 border-b-2 border-dashed border-brand-rule flex items-center justify-between shrink-0">
-            <h3 className="tikkit-heading text-2xl">Order</h3>
+            <div className="flex items-center gap-2.5">
+              <h3 className="tikkit-heading text-2xl">Order</h3>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-900 text-white">
+                Takeaway
+              </span>
+            </div>
             <span className="font-semibold text-lg text-slate-700">
               {totalCartQuantity}
             </span>
-          </div>
-
-          <div className="px-5 py-3 border-b border-dashed border-brand-rule">
-            <div className="counter-categories w-full" role="group" aria-label="Order type">
-              <button type="button" aria-pressed={!isDineIn} className="flex-1"
-                onClick={() => { setOrderType('takeaway'); setCheckoutError(''); }}>
-                Takeaway
-              </button>
-              <button type="button" aria-pressed={isDineIn} className="flex-1"
-                onClick={() => { setOrderType('dine-in'); setCheckoutError(''); }}>
-                Dine-in
-              </button>
-            </div>
-            {isDineIn && (
-              <label className="mt-2 flex items-center gap-3 text-xs font-semibold">
-                Table number
-                <input ref={tableInputRef} value={tableNumber} maxLength={40} placeholder="e.g. T-16"
-                  className="min-w-0 w-24 rounded-lg border px-2 py-1.5 text-sm"
-                  onChange={(event) => { setTableNumber(event.target.value); setCheckoutError(''); }}
-                />
-              </label>
-            )}
           </div>
 
           {/* Cart Content: Empty State or Populated Lines */}

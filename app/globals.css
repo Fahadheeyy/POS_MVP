@@ -10,9 +10,9 @@
   --oat: #F3EEE6;
   --muted: #5E554C;
   --rule: #D9CFC0;
-  --display: 'Bowlby One', 'Arial Black', sans-serif;
-  --mono: 'Space Mono', ui-monospace, monospace;
-  --sans: 'Inter', system-ui, sans-serif;
+  --display: var(--font-display), 'Bowlby One', 'Arial Black', sans-serif;
+  --mono: var(--font-mono), 'Space Mono', ui-monospace, monospace;
+  --sans: var(--font-sans), 'Inter', system-ui, sans-serif;
   --outline: 2px solid var(--ink);
   --shadow: 4px 4px 0 var(--ink);
 }

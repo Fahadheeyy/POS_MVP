@@ -31,11 +31,11 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  // Refresh auth session
+  // Refresh/verify auth session locally via JWKS (zero round-trip after initial JWKS cache)
   let user = null;
   try {
-    const { data } = await supabase.auth.getUser();
-    user = data?.user;
+    const { data } = await supabase.auth.getClaims();
+    user = data?.claims?.sub ?? null;
   } catch {
     // Supabase cloud unreachable or credentials missing
   }

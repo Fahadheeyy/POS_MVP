@@ -1,8 +1,8 @@
 import { ManagerConsolePage } from '@/features/manager/ManagerConsolePage';
-import { requireOperationalAccess } from '@/lib/auth/operationalAccess';
+import { requireOperationalWorkspace } from '@/lib/auth/operationalAccess';
 import { OutletWorkspace } from '@/components/OutletWorkspace';
 
 export default async function ManagerRoute() {
-  const access = await requireOperationalAccess('staff.manage');
-  return <OutletWorkspace access={access}><ManagerConsolePage /></OutletWorkspace>;
+  const { access, initialWorkspace } = await requireOperationalWorkspace('staff.manage', 'counter');
+  return <OutletWorkspace access={access} initialWorkspace={initialWorkspace}><ManagerConsolePage /></OutletWorkspace>;
 }

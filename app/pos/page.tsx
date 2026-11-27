@@ -1,8 +1,8 @@
 import { POSPage } from '@/features/pos/POSPage';
-import { requireOperationalAccess } from '@/lib/auth/operationalAccess';
+import { requireOperationalWorkspace } from '@/lib/auth/operationalAccess';
 import { OutletWorkspace } from '@/components/OutletWorkspace';
 
 export default async function POSRoute() {
-  const access = await requireOperationalAccess('pos.access');
-  return <OutletWorkspace access={access}><POSPage /></OutletWorkspace>;
+  const { access, initialWorkspace } = await requireOperationalWorkspace('pos.access', 'counter');
+  return <OutletWorkspace access={access} initialWorkspace={initialWorkspace}><POSPage /></OutletWorkspace>;
 }

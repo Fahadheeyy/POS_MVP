@@ -40,7 +40,21 @@ export const AuthPage: React.FC<{ initialError?: string | null; passwordUpdated?
       const user = res.user;
       setCurrentUser(user);
 
-      const targetRoute = user.role === 'admin' ? adminDestination(user.id) : '/';
+      const permissions = user.effectivePermissions || [];
+      let targetRoute = '/';
+      if (user.role === 'admin') {
+        targetRoute = adminDestination(user.id);
+      } else if (user.role === 'manager' && permissions.includes('staff.manage')) {
+        targetRoute = '/manager';
+      } else if (user.role === 'owner' && permissions.includes('reports.view')) {
+        targetRoute = '/owner';
+      } else if (permissions.includes('pos.access')) {
+        targetRoute = '/pos';
+      } else if (permissions.includes('kds.access')) {
+        targetRoute = '/kds';
+      } else if (permissions.includes('orders.view')) {
+        targetRoute = '/orders';
+      }
 
       if (typeof window !== 'undefined') {
         window.location.href = targetRoute;

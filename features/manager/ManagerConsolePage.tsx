@@ -1,9 +1,10 @@
 "use client";
 import { DEFAULT_PRODUCT_IMAGE, ProductEditor } from './ProductEditor';
 import { StaffInvitation } from '@/components/StaffInvitation';
+import { createOutletStaffAction } from '@/app/operations/staff';
 import { supabase } from '@/lib/supabase/client';
 import React, { useState } from 'react';
-import { useAppStore } from '../../store';
+import { refreshOutletWorkspace, useAppStore } from '../../store';
 import { Product, User, Role, Station, ApprovalRequest } from '../../types';
 import { Header } from '../../components/Header';
 import { formatINR, formatTime, formatDate } from '../../utils/formatters';
@@ -87,7 +88,12 @@ export const ManagerConsolePage: React.FC = () => {
   const [newStaffTitle, setNewStaffTitle] = useState('Cashier');
   const [newStaffPin, setNewStaffPin] = useState('1234');
   const [newStaffEmail, setNewStaffEmail] = useState('');
+  const [newStaffPassword, setNewStaffPassword] = useState('');
   const [newStaffPhone, setNewStaffPhone] = useState('');
+  const [savingStaff, setSavingStaff] = useState(false);
+  const canManageManagers = connectedOutlet
+    ? connectedOutlet.role === 'owner' || connectedOutlet.title === 'Platform Super Admin'
+    : true;
 
   // 1. Menu Filter
   const filteredProducts = products.filter((p) => {
@@ -96,21 +102,53 @@ export const ManagerConsolePage: React.FC = () => {
     return matchesSearch && matchesCat;
   });
 
-  const handleCreateStaff = (e: React.FormEvent) => {
+  const handleCreateStaff = async (e: React.FormEvent) => {
     e.preventDefault();
-    sounds.playSuccess();
-    addStaff({
-      name: newStaffName,
-      role: newStaffRole,
-      title: newStaffTitle,
-      pin: newStaffPin,
-      email: newStaffEmail,
-      phone: newStaffPhone,
-      avatarInitials: newStaffName.slice(0, 2).toUpperCase(),
-      active: true,
-    });
-    setShowAddStaffModal(false);
-    setNewStaffName('');
+    if (savingStaff) return;
+    setStaffError('');
+    if (!connectedOutlet) {
+      sounds.playSuccess();
+      addStaff({
+        name: newStaffName,
+        role: newStaffRole,
+        title: newStaffTitle,
+        pin: newStaffPin,
+        email: newStaffEmail,
+        phone: newStaffPhone,
+        avatarInitials: newStaffName.slice(0, 2).toUpperCase(),
+        active: true,
+      });
+      setShowAddStaffModal(false);
+      setNewStaffName('');
+      return;
+    }
+
+    setSavingStaff(true);
+    try {
+      const res = await createOutletStaffAction({
+        name: newStaffName,
+        email: newStaffEmail,
+        password: newStaffPassword,
+        phone: newStaffPhone,
+        title: newStaffTitle,
+        role: (newStaffRole === 'manager' || newStaffRole === 'kitchen' ? newStaffRole : 'cashier'),
+        pin: newStaffPin || '1234',
+      });
+      if (!res.success) {
+        sounds.playError();
+        setStaffError(res.error || 'Could not add team member.');
+        return;
+      }
+      sounds.playSuccess();
+      await refreshOutletWorkspace(connectedOutlet.outletId);
+      setShowAddStaffModal(false);
+      setNewStaffName('');
+      setNewStaffEmail('');
+      setNewStaffPassword('');
+      setNewStaffPhone('');
+    } finally {
+      setSavingStaff(false);
+    }
   };
 
   const handleCreateAddOnItem = async (e: React.FormEvent) => {
@@ -551,9 +589,14 @@ export const ManagerConsolePage: React.FC = () => {
         {/* TAB 2: STAFF & PIN RESET */}
         {activeTab === 'staff' && (
           <div className="space-y-6">
-            {connectedOutlet && <StaffInvitation outlet={connectedOutlet.outletId}/>}
-            {staffError && <p role="alert">{staffError}</p>}
-            <div className="flex items-center justify-between">
+            {connectedOutlet && (
+              <StaffInvitation
+                outlet={connectedOutlet.outletId}
+                canInviteManager={canManageManagers}
+              />
+            )}
+            {staffError && <p role="alert" className="text-xs font-semibold text-red-700">{staffError}</p>}
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="relative w-72">
                 <Search size={14} className="absolute left-3 top-2.5 text-gray-400" />
                 <input
@@ -565,14 +608,19 @@ export const ManagerConsolePage: React.FC = () => {
                 />
               </div>
 
-
-              {!connectedOutlet && <button
-                onClick={() => setShowAddStaffModal(true)}
+              <button
+                type="button"
+                onClick={() => {
+                  setStaffError('');
+                  setNewStaffRole(canManageManagers ? 'manager' : 'cashier');
+                  setNewStaffTitle(canManageManagers ? 'Store Manager' : 'Cashier');
+                  setShowAddStaffModal(true);
+                }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-xs font-bold shadow-subtle transition-colors"
               >
                 <Plus size={14} />
-                <span>Add Team Member</span>
-              </button>}
+                <span>{canManageManagers ? 'Add Manager / Staff' : 'Add Team Member'}</span>
+              </button>
             </div>
 
             <div className="bg-white border border-gray-200 rounded-3xl overflow-x-auto shadow-card">
@@ -615,12 +663,26 @@ export const ManagerConsolePage: React.FC = () => {
                         <td className="px-6 py-3.5 text-center">
                           <button
                             type="button"
-                            disabled={!!connectedOutlet && (!user.active || !['cashier','kitchen'].includes(user.role))}
+                            disabled={
+                              !!connectedOutlet &&
+                              (!user.active ||
+                                (canManageManagers
+                                  ? !['manager', 'cashier', 'kitchen'].includes(user.role)
+                                  : !['cashier', 'kitchen'].includes(user.role)))
+                            }
                             onClick={async () => {
                               if (!connectedOutlet) return toggleStaffStatus(user.id);
                               if (!window.confirm('Disable ' + user.name + ' at this outlet?')) return;
-                              const {error} = await supabase.rpc('disable_outlet_staff',{p_outlet:connectedOutlet.outletId,p_staff:user.id});
-                              setStaffError(error ? 'Could not disable this staff assignment.' : '');
+                              const { error } = await supabase.rpc('disable_outlet_staff', {
+                                p_outlet: connectedOutlet.outletId,
+                                p_staff: user.id,
+                              });
+                              if (error) {
+                                setStaffError('Could not disable this staff assignment.');
+                              } else {
+                                setStaffError('');
+                                await refreshOutletWorkspace(connectedOutlet.outletId);
+                              }
                             }}
                             className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                               user.active
@@ -867,9 +929,14 @@ export const ManagerConsolePage: React.FC = () => {
       {/* Add Staff Modal */}
       {showAddStaffModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 backdrop-blur-sm p-4 select-none">
-          <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-sm p-6 shadow-modal">
-            <h3 className="font-bold text-gray-900 text-base mb-4">Add Team Member</h3>
-            <form onSubmit={handleCreateStaff} className="space-y-3 text-xs">
+          <div className="bg-white border border-gray-200 rounded-3xl w-full max-w-md p-6 shadow-modal">
+            <h3 className="font-bold text-gray-900 text-base mb-1">
+              {canManageManagers ? 'Add Manager or Team Member' : 'Add Team Member'}
+            </h3>
+            <p className="text-[11px] text-gray-500 mb-4">
+              Creates a live account immediately so they can sign in at /login.
+            </p>
+            <form onSubmit={(e) => void handleCreateStaff(e)} className="space-y-3 text-xs">
               <div>
                 <label className="block font-semibold text-gray-700 mb-1">Full Name</label>
                 <input
@@ -886,42 +953,81 @@ export const ManagerConsolePage: React.FC = () => {
                 <label className="block font-semibold text-gray-700 mb-1">Role</label>
                 <select
                   value={newStaffRole}
-                  onChange={(e) => setNewStaffRole(e.target.value as any)}
+                  onChange={(e) => {
+                    const next = e.target.value as Role;
+                    setNewStaffRole(next);
+                    setNewStaffTitle(
+                      next === 'manager' ? 'Store Manager' : next === 'kitchen' ? 'Kitchen Staff' : 'Cashier'
+                    );
+                  }}
                   className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white"
                 >
+                  {canManageManagers && <option value="manager">Store Manager (Manages Staff & Menu)</option>}
                   <option value="cashier">Cashier</option>
                   <option value="kitchen">Kitchen Staff</option>
-                  <option value="manager">Store Manager</option>
                 </select>
               </div>
 
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Job Title</label>
-                <input
-                  type="text"
-                  value={newStaffTitle}
-                  onChange={(e) => setNewStaffTitle(e.target.value)}
-                  placeholder="e.g. Junior Cashier"
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
-                  required
-                />
+              {connectedOutlet && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Work Email *</label>
+                    <input
+                      type="email"
+                      value={newStaffEmail}
+                      onChange={(e) => setNewStaffEmail(e.target.value)}
+                      placeholder="manager@outlet.com"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-1">Password *</label>
+                    <input
+                      type="password"
+                      minLength={6}
+                      value={newStaffPassword}
+                      onChange={(e) => setNewStaffPassword(e.target.value)}
+                      placeholder="Min 6 characters"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">Job Title</label>
+                  <input
+                    type="text"
+                    value={newStaffTitle}
+                    onChange={(e) => setNewStaffTitle(e.target.value)}
+                    placeholder="e.g. Store Manager"
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-1">4-Digit PIN</label>
+                  <input
+                    type="text"
+                    maxLength={4}
+                    value={newStaffPin}
+                    onChange={(e) => setNewStaffPin(e.target.value.replace(/\D/g, ''))}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 font-mono font-bold"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">4-Digit PIN</label>
-                <input
-                  type="text"
-                  maxLength={4}
-                  value={newStaffPin}
-                  onChange={(e) => setNewStaffPin(e.target.value.replace(/\D/g, ''))}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 font-mono font-bold"
-                  required
-                />
-              </div>
+              {staffError && <p role="alert" className="font-semibold text-red-700">{staffError}</p>}
 
               <div className="flex gap-2 pt-3">
                 <button
                   type="button"
+                  disabled={savingStaff}
                   onClick={() => setShowAddStaffModal(false)}
                   className="flex-1 py-2 rounded-xl border border-gray-200 font-semibold text-gray-700"
                 >
@@ -929,9 +1035,10 @@ export const ManagerConsolePage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2 rounded-xl bg-gray-900 text-white font-bold"
+                  disabled={savingStaff}
+                  className="flex-1 py-2 rounded-xl bg-gray-900 text-white font-bold disabled:opacity-50"
                 >
-                  Create Member
+                  {savingStaff ? 'Creating…' : 'Create Member'}
                 </button>
               </div>
             </form>

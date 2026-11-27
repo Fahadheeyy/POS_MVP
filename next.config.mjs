@@ -4,6 +4,19 @@ const nextConfig = {
   async redirects() {
     return [{ source: '/admin/login', destination: '/login', permanent: false }];
   },
+  async headers() {
+    return [
+      {
+        source: '/assets/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
   images: {
     unoptimized: true,
   },

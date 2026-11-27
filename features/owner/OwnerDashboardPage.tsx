@@ -96,6 +96,12 @@ export const OwnerDashboardPage: React.FC = () => {
             Reports
           </button>
           <button
+            onClick={() => navigate('/manager')}
+            className="text-slate-500 hover:text-gray-900 transition-colors"
+          >
+            Team & Staff
+          </button>
+          <button
             onClick={() => navigate('/settings')}
             className="text-slate-500 hover:text-gray-900 transition-colors"
           >

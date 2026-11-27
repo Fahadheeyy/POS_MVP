@@ -2,7 +2,15 @@
 import {useState} from 'react';
 import {supabase} from '@/lib/supabase/client';
 
-export function StaffInvitation({outlet, owner = false}: {outlet: string; owner?: boolean}) {
+export function StaffInvitation({
+  outlet,
+  owner = false,
+  canInviteManager = false,
+}: {
+  outlet: string;
+  owner?: boolean;
+  canInviteManager?: boolean;
+}) {
   const [result,setResult] = useState('');
   const [link,setLink] = useState('');
   const [busy,setBusy] = useState(false);
@@ -23,7 +31,16 @@ export function StaffInvitation({outlet, owner = false}: {outlet: string; owner?
     <h3 className="font-bold sm:col-span-2">{owner ? 'Invite outlet owner' : 'Invite staff'}</h3>
     <label>Name<input required name="name" maxLength={120} className="block w-full rounded border p-2"/></label>
     <label>Email<input required name="email" type="email" className="block w-full rounded border p-2"/></label>
-    {!owner && <label>Role<select name="role" className="block w-full rounded border p-2"><option value="cashier">Cashier</option><option value="kitchen">Kitchen</option></select></label>}
+    {!owner && (
+      <label>
+        Role
+        <select name="role" className="block w-full rounded border p-2">
+          {canInviteManager && <option value="manager">Store Manager</option>}
+          <option value="cashier">Cashier</option>
+          <option value="kitchen">Kitchen</option>
+        </select>
+      </label>
+    )}
     <button disabled={busy} className="state-action">{busy ? 'Creating…' : 'Create invitation'}</button>
     {result && <p className="sm:col-span-2" role="status">{result}</p>}
     {link && <input className="sm:col-span-2 rounded border p-2" aria-label="Invitation link" value={link} readOnly onFocus={e=>e.target.select()}/>}

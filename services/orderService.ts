@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { supabase } from '@/lib/supabase/client';
 import type { AddOnGroup, CartItem, Category, KdsTicket, Order, OrderType, PaymentMode, Product, Shift, SystemSettings, User } from '@/types';
 
-interface OutletWorkspace {
+export interface OutletWorkspace {
   settings: Partial<SystemSettings>;
   categories: Category[];
   products: Product[];
