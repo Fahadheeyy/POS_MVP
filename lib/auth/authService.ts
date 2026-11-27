@@ -93,18 +93,35 @@ export class AuthService {
     }
 
     try {
-      // 1. Attempt Supabase Auth login
-      const { data, error } = await this.supabase.auth.signInWithPassword({
-        email: normalizedEmail,
-        password,
-      });
-
-      if (error) {
-        // Fallback for seed mock accounts if Supabase backend user is not yet created in auth.users
-        return { success: false, error: 'Unable to sign in with those credentials.' };
+      // 1. Attempt Supabase Auth login with jittered backoff if shared demo Wi-Fi IP triggers 429 burst limits
+      let data: Awaited<ReturnType<typeof this.supabase.auth.signInWithPassword>>['data'] | null = null;
+      let error: Awaited<ReturnType<typeof this.supabase.auth.signInWithPassword>>['error'] = null;
+      for (let attempt = 1; attempt <= 4; attempt += 1) {
+        const res = await this.supabase.auth.signInWithPassword({
+          email: normalizedEmail,
+          password,
+        });
+        data = res.data;
+        error = res.error;
+        const isRateLimited = error?.status === 429 || /rate limit/i.test(error?.message || '');
+        if (!error || !isRateLimited || attempt === 4) {
+          break;
+        }
+        const jitterDelay = 500 * attempt + Math.floor(Math.random() * 700);
+        await new Promise((resolve) => setTimeout(resolve, jitterDelay));
       }
 
-      if (!data.user) {
+      if (error) {
+        const isRateLimited = error?.status === 429 || /rate limit/i.test(error?.message || '');
+        return {
+          success: false,
+          error: isRateLimited
+            ? 'Login traffic is high right now. Please wait a second and tap Sign in again.'
+            : 'Unable to sign in with those credentials.',
+        };
+      }
+
+      if (!data?.user) {
         return { success: false, error: 'User not found in authentication record' };
       }
 
